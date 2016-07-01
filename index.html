@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="birdben">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="birdben">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="birdben">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.png" alt="Profile Picture">
+      </div>
+      <div id="title">birdben</div>
+      
+       <ul class="my-socials">
+  
+  <li>
+  	<a href="https://github.com/henryhuang" class="github" target="_blank">
+  		<i class="fa fa-github"></i>
+  	</a>
+  </li>
+  
+  <li>
+  	<a href="http://weibo.com/626242034" class="weibo" target="_blank">
+  		<i class="fa fa-weibo"></i>
+  	</a>
+  </li>
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">birdben</a>
+      <img src="/logo.png" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+          <a href="https://github.com/henryhuang" class="github" target="_blank">
+            <i class="fa fa-github"></i>
+          </a>
+        
+          <a href="http://weibo.com/626242034" class="weibo" target="_blank">
+            <i class="fa fa-weibo"></i>
+          </a>
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Pesquisar">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="yoursite.com">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+    
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Linux常用命令（三）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/Linux常用命令（三）/" class="article-date">
+  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux常用命令（三）</p>
+<h3 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h3><p>以下的案例都使用的百度开源API进行的测试，具体地址如下：<br><a href="https://www.juhe.cn/docs/api/id/39" target="_blank" rel="external">https://www.juhe.cn/docs/api/id/39</a></p>
+<ul>
+<li>接口地址：<a href="http://v.juhe.cn/weather/index" target="_blank" rel="external">http://v.juhe.cn/weather/index</a></li>
+<li>支持格式：json/xml</li>
+<li>请求方式：get</li>
+<li>请求示例：<a href="http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY" target="_blank" rel="external">http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY</a></li>
+<li>请求参数说明：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cityname</td>
+<td>string</td>
+<td>Y</td>
+<td>城市名或城市ID，如：”苏州”，需要utf8 urlencode</td>
+</tr>
+<tr>
+<td>dtype</td>
+<td>string</td>
+<td>N</td>
+<td>返回数据格式：json或xml,默认json</td>
+</tr>
+<tr>
+<td>format</td>
+<td>int</td>
+<td>N</td>
+<td>未来6天预报(future)两种返回格式，1或2，默认1</td>
+</tr>
+<tr>
+<td>key</td>
+<td>string</td>
+<td>Y</td>
+<td>你申请的key</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>接口地址：<a href="http://v.juhe.cn/toutiao/index" target="_blank" rel="external">http://v.juhe.cn/toutiao/index</a></li>
+<li>支持格式：json</li>
+<li>请求方式：get/post</li>
+<li>请求示例：<a href="http://v.juhe.cn/toutiao/index?type=top&amp;key=APPKEY" target="_blank" rel="external">http://v.juhe.cn/toutiao/index?type=top&amp;key=APPKEY</a></li>
+<li>接口备注：返回头条，社会，国内，娱乐，体育，军事，科技，财经，时尚等新闻信息</li>
+<li>请求参数说明：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key</td>
+<td>string</td>
+<td>是</td>
+<td>应用APPKEY</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>否</td>
+<td>类型：top(头条，默认),shehui(社会),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育)junshi(军事),keji(科技),caijing(财经),shishang(时尚)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="curl-d-传递请求数据"><a href="#curl-d-传递请求数据" class="headerlink" title="curl -d 传递请求数据"></a>curl -d 传递请求数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 参数：</div><div class="line"># -G:指定GET方式发送请求</div><div class="line"># --data/-d:指定使用POST方式传递数据</div></pre></td></tr></table></figure>
+<h5 id="curl-发送GET请求"><a href="#curl-发送GET请求" class="headerlink" title="curl 发送GET请求"></a>curl 发送GET请求</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 方式一：curl 以?方式传递参数发送GET请求</div><div class="line"># 默认curl使用POST方式请求数据，这种方式下直接通过URL传递数据，也就是以?方式添加到url后面</div><div class="line"># 格式：curl &quot;https://hostname.com:8080/getMethod?param1=value1&amp;param2=value2&quot;</div><div class="line"></div><div class="line"># 方式二：curl -G -d 发送GET请求</div><div class="line"># 但是如果有-d参数，也可以加上-G参数指定使用GET方式请求数据，如果不加上-G则默认使用的POST方式请求数据</div><div class="line"># 格式：curl -G -d &quot;param1=value1&amp;param2=value2&quot; &quot;http://hostname.com:8080/getMethod&quot;</div><div class="line"></div><div class="line"># 使用?方式传递参数，不使用-d方式</div><div class="line">$ curl &quot;http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot;</div><div class="line"></div><div class="line"># 也可以使用-d方式传递参数，但是必须指定-G来指定GET方式请求数据，因为该接口只支持GET方式请求，如果不加-G参数，使用-d参数就默认为POST方式请求</div><div class="line">$ curl -G -d &quot;format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot; &quot;http://v.juhe.cn/weather/index&quot;</div><div class="line"></div><div class="line"># 以下的方式就会报错，因为该接口只支持GET方式请求，不支持POST方式请求，如果不加-G参数，使用-d参数就默认为POST方式请求</div><div class="line">$ curl -d &quot;format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot; &quot;http://v.juhe.cn/weather/index&quot;</div><div class="line"># 返回的结果是error_code:203901，获取不到cityname参数</div><div class="line">&#123;&quot;resultcode&quot;:&quot;201&quot;,&quot;reason&quot;:&quot;Error Cityname!&quot;,&quot;result&quot;:null,&quot;error_code&quot;:203901&#125;</div></pre></td></tr></table></figure>
+<h5 id="curl-发送POST请求"><a href="#curl-发送POST请求" class="headerlink" title="curl 发送POST请求"></a>curl 发送POST请求</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 格式：curl -d/--data &quot;param1=value1&amp;param2=value2&quot; &quot;http://hostname.com:8080/html/postMethod&quot;</div><div class="line">$ curl -d &quot;type=tiyu&amp;key=申请的KEY&quot; &quot;http://v.juhe.cn/toutiao/index&quot;</div><div class="line">$ curl --data &quot;type=tiyu&amp;key=申请的KEY&quot; &quot;http://v.juhe.cn/toutiao/index&quot;</div><div class="line"></div><div class="line"># POST提交多个同名参数，paramList是一个数组参数</div><div class="line">$ curl -XPOST &apos;http://hostname.com/postMethod&apos; -d &apos;userName=birdben&amp;paramList=[&quot;aa&quot;, &quot;bb&quot;]&apos;</div><div class="line"></div><div class="line"># form表单上传文件</div><div class="line"># 可以通过 --form/-F 方式指定使用POST方式传递数据</div><div class="line"># --form/-F 参数相当于设置form表单的method=&quot;POST&quot;和enctype=&quot;multipart/form-data&quot;两个属性</div><div class="line"># filename为文本框中的name元素对应的属性值。&lt;type=&quot;text&quot; name=&quot;filename&quot;&gt;</div><div class="line">$ curl --form &quot;filename=@filename.txt&quot; &quot;http://hostname.com:8080/html/uploadFile&quot;</div><div class="line">$ curl -F &quot;filename=@filename.txt;type=text/plain&quot;  &quot;http://hostname.com:8080/html/uploadFile&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-特殊字符处理"><a href="#curl-特殊字符处理" class="headerlink" title="curl 特殊字符处理"></a>curl 特殊字符处理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 默认情况下，通过GET/POST方式传递过去的数据中若有特殊字符（或者中文字符），首先需要将特殊字符转义在传递给服务器端，如&quot;value 1&quot;值中包含有空格，则需要先将空格转换成%20，如：</div><div class="line">$ curl -d &quot;value%201&quot; &quot;http://hostname.com&quot;</div><div class="line"></div><div class="line"># 在新版本的curl中，提供了新的选项 --data-urlencode，通过该选项提供的参数会自动转义特殊字符。</div><div class="line">$ curl --data-urlencode &quot;value 1&quot; &quot;http://hostname.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-指定其它协议"><a href="#curl-指定其它协议" class="headerlink" title="curl 指定其它协议"></a>curl 指定其它协议</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 除了使用GET和POST协议外，还可以通过 -X 选项指定其它协议，一般用过ES删除索引的时候用的比较多，如：</div><div class="line">$ curl -X DELETE &quot;https://hostname.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-设置http请求头信息"><a href="#curl-设置http请求头信息" class="headerlink" title="curl 设置http请求头信息"></a>curl 设置http请求头信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line"># 以下操作可以挂代理抓包查看并且验证</div><div class="line"># -v 通过使用 -v 和 -trace获取更多的链接信息</div><div class="line"># 访问https://www.github.com/下面返回的信息会提示该域名已经被重定向到https://github.com/</div><div class="line">$ curl -v &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line">* Rebuilt URL to: https://www.github.com/</div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.130...</div><div class="line">* Connected to www.github.com (192.30.252.130) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Host: www.github.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -A 设置http请求头User-Agent，可以指定自己这次访问所模拟的浏览器信息</div><div class="line"># 前一个直接用curl命令的，User-Agent: curl/7.37.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line"># 使用-A参数重新指定浏览器信息后，User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">&gt; User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">$ curl -v -A &quot;Mozilla/5.0 Firefox/21.0&quot; &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line"> Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.120...</div><div class="line">* Connected to www.github.com (192.30.252.120) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">&gt; Host: www.github.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -e 设置http请求头Referer，解释：检查http访问的Referer是服务器端常用的限制方法。比如你先访问网站的首页，再访问里面所指定的下载页，这第二次访问的referer地址就是第一次访问成功后的页面地址。这样，服务器端只要发现对下载页面某次访问的referer地址不是首页的地址，就可以断定那是个盗链了。所以这里我们可以自己修改我们的Referer链接地址。</div><div class="line">$ curl -v -e &quot;http://birdben.com/&quot; &quot;http://birdben.com/download.html&quot;</div><div class="line"></div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 50.63.202.46...</div><div class="line">* Connected to birdben.com (50.63.202.46) port 80 (#0)</div><div class="line">&gt; GET /download.html HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Host: birdben.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; Referer: http://birdben.com/</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 302 Found</div><div class="line">&lt; Connection: close</div><div class="line">&lt; Pragma: no-cache</div><div class="line">&lt; cache-control: no-cache</div><div class="line">&lt; Location: /download.html</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># --header/-H 设置header</div><div class="line">$ curl -H &quot;Connection:keep-alive&quot; -H &quot;Host:127.0.0.1&quot; -H &quot;Accept-Language:es&quot; -H &quot;Cookie:ID=1234&quot; &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.129...</div><div class="line">* Connected to www.github.com (192.30.252.129) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; Connection:keep-alive</div><div class="line">&gt; Host:127.0.0.1</div><div class="line">&gt; Accept-Language:es</div><div class="line">&gt; Cookie:ID=1234</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -I 设置http响应头处理，仅仅返回header</div><div class="line">$ curl -I &quot;https://github.com&quot;</div><div class="line"></div><div class="line"># --dump-header/-D 将http header保存到/tmp/header文件</div><div class="line">$ curl -D /tmp/header &quot;https://github.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-o-O-下载"><a href="#curl-o-O-下载" class="headerlink" title="curl -o/-O 下载"></a>curl -o/-O 下载</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 通过-o/-O选项保存下载的文件到指定的文件中：</div><div class="line">-o：将文件保存为命令行中指定的文件名的文件中</div><div class="line">-O：使用URL中默认的文件名保存文件到本地</div><div class="line"></div><div class="line"># 将文件下载到本地并命名为test.html</div><div class="line">$ curl -o test.html &quot;http://apistore.baidu.com/apiworks/servicedetail/478.html&quot;</div><div class="line"></div><div class="line"># 将文件保存到本地并命名为478.html</div><div class="line">$ curl -O &quot;http://apistore.baidu.com/apiworks/servicedetail/478.html&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-L-重定向"><a href="#curl-L-重定向" class="headerlink" title="curl -L 重定向"></a>curl -L 重定向</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 默认情况下CURL不会发送HTTP Location headers(重定向).当一个被请求页面移动到另一个站点时，会发送一个HTTP Loaction header作为请求，然后将请求重定向到新的地址上。</div><div class="line"></div><div class="line"># 例如：浏览器访问京东以前的域名www.360buy.com，会自动将地址重定向到www.jd.com上。通过curl命令就会出现如下信息</div><div class="line">$ curl &quot;www.360buy.com&quot;</div><div class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;</div><div class="line">&lt;body bgcolor=&quot;white&quot;&gt;</div><div class="line">&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;</div><div class="line">&lt;p&gt;The requested resource has been assigned a new permanent URI.&lt;/p&gt;</div><div class="line">&lt;hr/&gt;Server: JDWS&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div><div class="line"># 这时可以通过使用-L选项进行强制重定向，让curl使用地址重定向，此时就会返回京东首页的信息</div><div class="line">$ curl -L &quot;www.360buy.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-O-从FTP服务器下载文件"><a href="#curl-O-从FTP服务器下载文件" class="headerlink" title="curl -O 从FTP服务器下载文件"></a>curl -O 从FTP服务器下载文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># curl同样支持FTP下载，若在url中指定的是某个文件路径而非具体的某个要下载的文件名， curl则会列出该目录下的所有文件名而并非下载该目录下的所有文件</div><div class="line"></div><div class="line"># 列出public_html下的所有文件夹和文件</div><div class="line">$ curl -u user:pass -O &quot;ftp://ftp_server/html/&quot;</div><div class="line"># 下载index.css文件</div><div class="line">$ curl -u user:pass -O &quot;ftp://ftp_server/css/index.css&quot;</div><div class="line"></div><div class="line"># 从FTP服务器下载文件的另一种写法</div><div class="line">$ curl &quot;ftp://user:pass@ftp_server:port/path/file&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-T-上传文件到FTP服务器"><a href="#curl-T-上传文件到FTP服务器" class="headerlink" title="curl -T 上传文件到FTP服务器"></a>curl -T 上传文件到FTP服务器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 通过 -T 选项可将指定的本地文件上传到FTP服务器上</div><div class="line"># 将myfile.txt文件上传到服务器</div><div class="line">$ curl -u user:pass -T myfile.txt &quot;ftp://ftp.testserver.com:port/path/&quot;</div><div class="line"></div><div class="line"># 同时上传多个文件</div><div class="line">$ curl -u user:pass -T &quot;&#123;file1,file2&#125;&quot; &quot;ftp://ftp.testserver.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-u-授权（没有测试过）"><a href="#curl-u-授权（没有测试过）" class="headerlink" title="curl -u 授权（没有测试过）"></a>curl -u 授权（没有测试过）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 在访问需要授权的页面时，可通过-u选项提供用户名和密码进行授权</div><div class="line">$ curl -u username:password URL</div><div class="line"></div><div class="line"># 通常的做法是在命令行只输入用户名，之后会提示输入密码，这样可以保证在查看历史记录时不会将密码泄露</div><div class="line">$ curl -u username URL</div></pre></td></tr></table></figure>
+<h5 id="curl-x-设置代理"><a href="#curl-x-设置代理" class="headerlink" title="curl -x 设置代理"></a>curl -x 设置代理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># -x 选项可以为CURL添加代理功能</div><div class="line"># 指定代理主机和端口</div><div class="line">$ curl -x proxysever.com:8888 -U user:pass &quot;http://google.co.jp&quot;</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://linux.cn/article-4957-1.html" target="_blank" rel="external">https://linux.cn/article-4957-1.html</a></li>
+<li><a href="http://www.cnblogs.com/gbyukg/p/3326825.html" target="_blank" rel="external">http://www.cnblogs.com/gbyukg/p/3326825.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（三）/" data-id="ciq41pmzm000044s6rogxwvew" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux常用命令（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/Linux常用命令（一）/" class="article-date">
+  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux常用命令（一）</p>
+<h3 id="netstat查看端口"><a href="#netstat查看端口" class="headerlink" title="netstat查看端口"></a>netstat查看端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 参数</div><div class="line">-a (all)显示所有选项，默认不显示LISTEN相关</div><div class="line">-t (tcp)仅显示tcp相关选项</div><div class="line">-u (udp)仅显示udp相关选项</div><div class="line">-n 拒绝显示别名，能显示数字的全部转化成数字。</div><div class="line">-l 仅列出有在 Listen (监听) 的服務状态</div><div class="line"></div><div class="line">-p 显示建立相关链接的程序名</div><div class="line">-r 显示路由信息，路由表</div><div class="line">-e 显示扩展信息，例如uid等</div><div class="line">-s 按各个协议进行统计</div><div class="line">-c 每隔一个固定时间，执行该netstat命令。</div><div class="line"></div><div class="line">提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</div><div class="line"></div><div class="line"># 查看Linux端口号</div><div class="line">$ netstat -anp | grep 80</div><div class="line"></div><div class="line"># 查看Linux端口号</div><div class="line">$ ps -ef | grep 80</div><div class="line"></div><div class="line"># 查看Linux进程</div><div class="line">$ ps -ef | grep tomcat</div></pre></td></tr></table></figure>
+<h3 id="find文件查找相关"><a href="#find文件查找相关" class="headerlink" title="find文件查找相关"></a>find文件查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># find &lt;指定目录&gt; &lt;指定条件&gt; &lt;指定动作&gt;</div><div class="line">　　- &lt;指定目录&gt;： 所要搜索的目录及其所有子目录。默认为当前目录。</div><div class="line">　　- &lt;指定条件&gt;： 所要搜索的文件的特征。</div><div class="line">　　- &lt;指定动作&gt;： 对搜索结果进行特定的处理。</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件 -name（文件名需要带后缀）</div><div class="line">$ find . -name &apos;my*&apos;</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件，并显示它们的详细信息。</div><div class="line">$ find . -name &apos;my*&apos; -ls</div><div class="line"></div><div class="line"># 以文件大小来查找 -size n</div><div class="line">$ find . -size +1000000c（在当前目录下查找文件长度大于1 M字节的文件 ）</div><div class="line"></div><div class="line"># 在当前目录及所有子目录中查找filename(忽略大小写)</div><div class="line">$ find . -iname &quot;Hessian.properties&quot;</div></pre></td></tr></table></figure>
+<h3 id="grep文件内容查找相关"><a href="#grep文件内容查找相关" class="headerlink" title="grep文件内容查找相关"></a>grep文件内容查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 读出logcat.log文件的内容，通过管道转发给grep作为输入内容,过滤包含&quot;Displayed&quot;的行，将输出内容再作为输入能过管道转发给下一个grep</div><div class="line">$ cat logcat.log | grep -n &apos;Displayed&apos; | grep ms</div><div class="line"></div><div class="line"># 匹配testgrep文件所有wirelessqa的行</div><div class="line">$ grep -e wirelessqa testgrep</div><div class="line"></div><div class="line"># &apos;^wirelessqa&apos;匹配testgrep文件所有以wirelessqa开头的行</div><div class="line">$ grep -e ^[wirelessqa] testgrep</div><div class="line"></div><div class="line"># &apos;wirelessqa$&apos;匹配所有以wirelessqa结尾的行</div><div class="line">$ grep -e [wirelessqa]$ testgrep</div><div class="line"></div><div class="line"># .*一起用代表任意字符，&apos;.*qa&apos;匹配任何词以qa结尾的行</div><div class="line">$ grep -e .*qa testgrep</div><div class="line"></div><div class="line"># &apos;\&lt;wire&apos;匹配包含以wire开头的单词的行</div><div class="line">$ grep -e &apos;\&lt;wire&apos; testgrep</div><div class="line"></div><div class="line"># &apos;blog\&gt;&apos;匹配包含以blog结尾的单词的行</div><div class="line">$ grep -e &apos;blog\&gt;&apos; testgrep</div><div class="line"></div><div class="line"># 匹配aaa文件中&apos;blog.csdn.net&apos;的行的上下5行内容</div><div class="line">$ grep -5 -e blog.csdn.net aaa</div></pre></td></tr></table></figure>
+<h3 id="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"><a href="#chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）" class="headerlink" title="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"></a>chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 添加新的账号</div><div class="line">$ useradd 选项 用户名</div><div class="line"></div><div class="line"># 删除账号</div><div class="line">$ userdel 选项 用户名</div><div class="line"></div><div class="line"># 修改帐号</div><div class="line">$ usermod 选项 用户名</div><div class="line"></div><div class="line"># 用户密码的管理</div><div class="line">$ passwd 选项 用户名</div><div class="line">Old password：******</div><div class="line">New password：*******</div><div class="line">Re-enter new password：*******</div><div class="line"></div><div class="line"># 设置密码为空</div><div class="line">$ passwd -d 用户名</div><div class="line"></div><div class="line"># 添加新的组</div><div class="line">$ groupadd 选项 用户组</div><div class="line"></div><div class="line"># 删除组</div><div class="line">$ groupdel 用户组</div><div class="line"></div><div class="line"># 修改组</div><div class="line">$ groupmod 选项 用户组</div><div class="line"></div><div class="line"># 修改用户所在组（把某个用户改为新的用户组）</div><div class="line">$ usermod -g 用户组 用户名</div><div class="line"></div><div class="line"># 分配权限(修改某个目录的所属用户和用户组)</div><div class="line">$ chown -R hadoop:hadoop /usr/hadoop/</div><div class="line"></div><div class="line"># Linux中查看所有系统用户命令</div><div class="line">cat /etc/passwd</div></pre></td></tr></table></figure>
+<h3 id="alias别名（很有用，便于记录常用命令）"><a href="#alias别名（很有用，便于记录常用命令）" class="headerlink" title="alias别名（很有用，便于记录常用命令）"></a>alias别名（很有用，便于记录常用命令）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看当前设置了多少别名，直接输入alias</div><div class="line">$ alias</div><div class="line"></div><div class="line"># 添加别名，直接输入alias &apos;别名&apos;=&apos;命令&apos;（注意等号之间不能有空格）</div><div class="line">$ alias cdmanage=&apos;cd /Users/ben/workspace/manage/target&apos;</div><div class="line"></div><div class="line"># 删除一个别名</div><div class="line">$ unalias cdmanage</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 永久保存alias的方式（本人是Mac操作系统）</div><div class="line"># 进入用户根目录</div><div class="line">$ cd /Users/ben</div><div class="line">$ vi .bash_profile</div><div class="line"></div><div class="line"># 编辑文件如下并保存</div><div class="line">alias cdben=&quot;cd /Users/ben&quot;</div><div class="line">alias cdcore=&quot;cd /Users/ben/workspace/core&quot;</div><div class="line">alias cdmanage=&quot;cd /Users/ben/workspace/manage&quot;</div><div class="line">alias cdservice=&quot;cd /Users/ben/workspace/service&quot;</div><div class="line"></div><div class="line">alias cdmongo2=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-2.6.9&quot;</div><div class="line">alias cdmongo3=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-3.0.2&quot;</div><div class="line">alias cdredis=&quot;cd /Users/ben/dev/redis-3.0.0&quot;</div><div class="line">alias cdsearch01=&quot;cd /Users/ben/dev/search01&quot;</div><div class="line"></div><div class="line"># 使上面的别名立即生效</div><div class="line">$ source .bash_profile</div></pre></td></tr></table></figure>
+<h3 id="Linux中修改IP地址"><a href="#Linux中修改IP地址" class="headerlink" title="Linux中修改IP地址"></a>Linux中修改IP地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line"># 修改/etc/sysconfig/network-scripts/ifcfg-eth0配置文件 </div><div class="line">IPADDR=192.168.0.248 </div><div class="line">GATEWAY=192.168.0.1 </div><div class="line">DNS1=192.168.0.1 </div><div class="line">第二步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">192.168.0.248        hostname</div></pre></td></tr></table></figure>
+<h3 id="Linux中修改主机名"><a href="#Linux中修改主机名" class="headerlink" title="Linux中修改主机名"></a>Linux中修改主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line">$ hostname oratest  </div><div class="line">第二步：</div><div class="line"># 修改/etc/sysconfig/network中的hostname  </div><div class="line">第三步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">记得重启!!!</div></pre></td></tr></table></figure>
+<h3 id="tar压缩-解压缩"><a href="#tar压缩-解压缩" class="headerlink" title="tar压缩/解压缩"></a>tar压缩/解压缩</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"># tar命令详解</div><div class="line">-c: 建立压缩档案</div><div class="line">-x：解压</div><div class="line">-t：查看内容</div><div class="line">-r：向压缩归档文件末尾追加文件</div><div class="line">-u：更新原压缩包中的文件</div><div class="line"># 这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。</div><div class="line"></div><div class="line"># 下面的参数是根据需要在压缩或解压档案时可选的。</div><div class="line">-z：有gzip属性的</div><div class="line">-j：有bz2属性的</div><div class="line">-Z：有compress属性的</div><div class="line">-v：显示所有过程</div><div class="line">-O：将文件解开到标准输出</div><div class="line">参数-f是必须的</div><div class="line">-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。</div><div class="line"></div><div class="line"># 压缩</div><div class="line"># 这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包，-f指定包的文件名。</div><div class="line">$ tar -cf all.tar *.jpg</div><div class="line"># 将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩，生成一个gzip压缩过的包，命名为jpg.tar.gz</div><div class="line">$ tar –czf jpg.tar.gz *.jpg</div><div class="line"># 这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的意思。 </div><div class="line">$ tar -rf all.tar *.gif</div><div class="line"># 这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。</div><div class="line">$ tar -uf all.tar logo.gif</div><div class="line"></div><div class="line"># 查看</div><div class="line"># 这条命令是在不解压的情况下查看all.tar包中所有文件，-t是列出文件的意思 </div><div class="line">$ tar -tf all.tar</div><div class="line"></div><div class="line"># 解压</div><div class="line"># 这条命令是解出all.tar包中所有文件，-x是解开的意思</div><div class="line">$ tar -xf all.tar</div><div class="line"># 解压tar包</div><div class="line">$ tar –xvf file.tar</div><div class="line"># 解压tar.gz</div><div class="line">$ tar -xzvf file.tar.gz</div><div class="line"># 解压 tar.bz2</div><div class="line">$ tar -xjvf file.tar.bz2</div><div class="line"># 解压tar.Z</div><div class="line">$ tar –xZvf file.tar.Z</div><div class="line"></div><div class="line"># 解压到指定的目录，如果目录不存在就创建</div><div class="line"># 将text.tar.gz 解压到 /home/app/test/ （绝对路径）下</div><div class="line">$ tar -zxvf ./text.tar.gz -C /home/app/test/</div><div class="line"></div><div class="line"># 解压rar</div><div class="line">$ unrar e file.rar</div><div class="line"></div><div class="line"># 解压zip</div><div class="line">$ unzip file.zip</div><div class="line"></div><div class="line"># 总结 </div><div class="line">1、*.tar 用 tar –xvf 解压 </div><div class="line">2、*.gz 用 gzip -d或者gunzip 解压 </div><div class="line">3、*.tar.gz和*.tgz 用 tar –xzf 解压 </div><div class="line">4、*.bz2 用 bzip2 -d或者用bunzip2 解压 </div><div class="line">5、*.tar.bz2用tar –xjf 解压 </div><div class="line">6、*.Z 用 uncompress 解压 </div><div class="line">7、*.tar.Z 用tar –xZf 解压 </div><div class="line">8、*.rar 用 unrar e解压 </div><div class="line">9、*.zip 用 unzip 解压</div></pre></td></tr></table></figure>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 创建软链接</div><div class="line"># ln -s a b 中的 a 就是源文件，b是链接文件名，其作用是当进入b目录，实际上是链接进入了a目录</div><div class="line"># 值得注意的是执行命令的时候，应该是a目录已经建立，目录b没有建立。我最开始操作的是也把b目录给建立了，结果就不对了</div><div class="line"># 如下面的示例，当我们执行命令cd /usr/local/java/的时候，实际上是进入了/software/java/</div><div class="line">$ ln -s /software/java /usr/local/java</div><div class="line"></div><div class="line"># 删除软链接（注意不是rm -rf b/）</div><div class="line">rm -rf b</div></pre></td></tr></table></figure>
+<h3 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 创建文件夹命令</div><div class="line">mkdir test</div><div class="line"></div><div class="line"># 创建多级目录的命令</div><div class="line">mkdir -p /software/temp/nginx</div><div class="line"></div><div class="line"># 删除文件夹命令</div><div class="line">rm -rf test </div><div class="line"></div><div class="line"># 复制文件夹命令</div><div class="line">cp -rf /home/root/Downloads/* /home/root/tools</div></pre></td></tr></table></figure>
+<h3 id="MySQL数据库的备份与还原"><a href="#MySQL数据库的备份与还原" class="headerlink" title="MySQL数据库的备份与还原"></a>MySQL数据库的备份与还原</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 备份</div><div class="line"># root为用户名，user为要备份的数据库，自动会备份到/home/ben/文件目录下</div><div class="line">$ mysqldump -u root -p user &gt; /home/ben/user20160101.sql</div><div class="line"></div><div class="line"># 压缩备份</div><div class="line">$ mysqldump -u root -p user | gzip &gt; user20160101.sql.gz </div><div class="line"></div><div class="line"># 还原</div><div class="line">$ mysql -u root -p user &lt; /home/ben/user20160101.sql</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2" target="_blank" rel="external">http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2</a></li>
+<li><a href="http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html" target="_blank" rel="external">http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html</a></li>
+<li><a href="http://www.php-note.com/article/detail/831" target="_blank" rel="external">http://www.php-note.com/article/detail/831</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（一）/" data-id="ciq41pmzs000144s6p8rlxhqc" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux常用命令（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/Linux常用命令（二）/" class="article-date">
+  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux常用命令（二）</p>
+<h3 id="scp命令"><a href="#scp命令" class="headerlink" title="scp命令"></a>scp命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># 获取远程服务器上的文件</div><div class="line">$ scp -P 2222 root@192.168.1.100:/root/tomcat.tar.gz /home/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数 </div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat.tar.gz 表示远程服务器上的文件</div><div class="line"># /home/tomcat.tar.gz 表示保存在本地上的路径和文件名</div><div class="line"></div><div class="line"># 获取远程服务器上的目录</div><div class="line">$ scp -P 2222 -r root@192.168.1.100:/root/tomcat/ /home/ben/dev/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数</div><div class="line"># -r参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat/ 表示远程服务器上的目录</div><div class="line"># /home/ben/dev/ 表示保存在本地上的路径。</div><div class="line"></div><div class="line"># 将本地文件上传到服务器上</div><div class="line">$ scp -P 2222 /home/tomcat.tar.gz root@192.168.1.100:/root/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 </div><div class="line"># /home/tomcat.tar.gz 表示本地上准备上传文件的路径和文件名</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器</div><div class="line"></div><div class="line"># 将本地目录上传到服务器上</div><div class="line">$ scp -P 2222 -r /home/tomcat/ root@192.168.1.100:/root/dev/tomcat/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。</div><div class="line"># -r 参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># /home/tomcat/表示准备要上传的目录</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/dev/tomcat/ 表示保存在远程服务器上的目录位置。</div></pre></td></tr></table></figure>
+<h3 id="nc命令"><a href="#nc命令" class="headerlink" title="nc命令"></a>nc命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 今天学到了另一种远程传输文件的方式，原来只知道scp，rz/sz</div><div class="line"># 远程服务器（目的主机监听）</div><div class="line"># 命令格式：nc -l 监听端口&lt;未使用端口&gt; &gt; 要接收的文件名</div><div class="line">$ nc -l 9999 &gt; elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：远程服务器开启一个9999的端口进行监听，并且等待接收elasticsearch-jdbc-1.7.3.0-dist.zip文件</div><div class="line"></div><div class="line"># 本地机器（源主机发起请求）</div><div class="line"># 命令格式：nc 目的主机ip 目的端口 &lt; 要发送的文件</div><div class="line">$ nc 10.120.10.105 9999 &lt; /Users/ben/Downloads/letv/ES/elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：本地机器指定远程服务器的ip地址和port端口号将指定的本地文件传送到远程服务器</div></pre></td></tr></table></figure>
+<h3 id="rz-sz命令"><a href="#rz-sz命令" class="headerlink" title="rz/sz命令"></a>rz/sz命令</h3><h5 id="Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用"><a href="#Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用" class="headerlink" title="Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用"></a>Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用</h5><p>下面介绍两种客户端</p>
+<ol>
+<li>iterm2（适用Mac环境）</li>
+<li>secureCRT（适用Windows环境）</li>
+</ol>
+<h4 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">1. 安装brew工具</div><div class="line">$ brew install lszrz</div><div class="line"># 如果没有brew工具，请参考：http://blog.csdn.net/tsxw24/article/details/15500517</div><div class="line">2. 下载iterm2-zmodem到/usr/local/bin目录（将两个shell脚本放到/usr/local/bin/目录下然后开始配置）</div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh </div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-recv-zmodem.sh </div><div class="line">$ sudo chmod 777 /usr/local/bin/iterm2-*</div><div class="line">3. 运行下载的iterm，添加trigger</div><div class="line">打开iterm2 --&gt;  同时按command和,键 --&gt; Profiles --&gt; Default --&gt; Advanced --&gt; Triggers的Edit按钮</div><div class="line">4. Triggers的设置代码如下 </div><div class="line">Regular expression: \*\*B0100</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-send-zmodem.sh</div><div class="line"></div><div class="line">Regular expression: \*\*B00000000000000</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</div><div class="line">5. 上传和下载文件和secureCRT方式一样</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160622214939271?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="iterm2"></p>
+<h4 id="secureCRT"><a href="#secureCRT" class="headerlink" title="secureCRT"></a>secureCRT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 上传文件</div><div class="line">1. 打开secureCRT,通过SSH连到至远程linux主机</div><div class="line">2. 键入rz命令</div><div class="line">3. 在跳出的窗口选择想要上传的文件</div><div class="line">4. 点击ADD后加入传输列表</div><div class="line">5. 点击确认以后传送文件</div><div class="line">6. 查看状态，一般都是发送正功</div><div class="line">7. 查看目录，确定刚才选的文件已经上传成功</div><div class="line"></div><div class="line"># 下载文件</div><div class="line">1. 远程连接到linux主机</div><div class="line">2. 输入sz fileName</div><div class="line">3. 在弹出的窗口中选择保存文件到本地的目录</div><div class="line">4. 确定后，等待文件下载完成</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.vpser.net/manage/scp.html" target="_blank" rel="external">http://www.vpser.net/manage/scp.html</a></li>
+<li><a href="http://blog.csdn.net/u014552288/article/details/38349827" target="_blank" rel="external">http://blog.csdn.net/u014552288/article/details/38349827</a></li>
+<li><a href="http://blog.csdn.net/tsxw24/article/details/15500517" target="_blank" rel="external">http://blog.csdn.net/tsxw24/article/details/15500517</a></li>
+<li><a href="http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO" target="_blank" rel="external">http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO</a></li>
+<li><a href="http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html" target="_blank" rel="external">http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（二）/" data-id="ciq41pmzy000244s6adxh5cnl" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 birdben<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>

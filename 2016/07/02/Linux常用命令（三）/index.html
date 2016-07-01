@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux常用命令（三）
+curl命令以下的案例都使用的百度开源API进行的测试，具体地址如下：https://www.juhe.cn/docs/api/id/39
+
+接口地址：http://v.juhe.cn/weather/index
+支持格式：json/xml
+请求方式：get
+请求示例：http://v.juhe.cn/weather/index?format=2&amp;amp;cityname">
+<meta property="og:type" content="article">
+<meta property="og:title" content="birdben">
+<meta property="og:url" content="http://yoursite.com/2016/07/02/Linux常用命令（三）/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Linux常用命令（三）
+curl命令以下的案例都使用的百度开源API进行的测试，具体地址如下：https://www.juhe.cn/docs/api/id/39
+
+接口地址：http://v.juhe.cn/weather/index
+支持格式：json/xml
+请求方式：get
+请求示例：http://v.juhe.cn/weather/index?format=2&amp;amp;cityname">
+<meta property="og:updated_time" content="2016-07-01T16:56:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="birdben">
+<meta name="twitter:description" content="Linux常用命令（三）
+curl命令以下的案例都使用的百度开源API进行的测试，具体地址如下：https://www.juhe.cn/docs/api/id/39
+
+接口地址：http://v.juhe.cn/weather/index
+支持格式：json/xml
+请求方式：get
+请求示例：http://v.juhe.cn/weather/index?format=2&amp;amp;cityname">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.png" alt="Profile Picture">
+      </div>
+      <div id="title">birdben</div>
+      
+       <ul class="my-socials">
+  
+  <li>
+  	<a href="https://github.com/henryhuang" class="github" target="_blank">
+  		<i class="fa fa-github"></i>
+  	</a>
+  </li>
+  
+  <li>
+  	<a href="http://weibo.com/626242034" class="weibo" target="_blank">
+  		<i class="fa fa-weibo"></i>
+  	</a>
+  </li>
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">birdben</a>
+      <img src="/logo.png" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+          <a href="https://github.com/henryhuang" class="github" target="_blank">
+            <i class="fa fa-github"></i>
+          </a>
+        
+          <a href="http://weibo.com/626242034" class="weibo" target="_blank">
+            <i class="fa fa-weibo"></i>
+          </a>
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Pesquisar">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="yoursite.com">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+    
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Linux常用命令（三）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/Linux常用命令（三）/" class="article-date">
+  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux常用命令（三）</p>
+<h3 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h3><p>以下的案例都使用的百度开源API进行的测试，具体地址如下：<br><a href="https://www.juhe.cn/docs/api/id/39" target="_blank" rel="external">https://www.juhe.cn/docs/api/id/39</a></p>
+<ul>
+<li>接口地址：<a href="http://v.juhe.cn/weather/index" target="_blank" rel="external">http://v.juhe.cn/weather/index</a></li>
+<li>支持格式：json/xml</li>
+<li>请求方式：get</li>
+<li>请求示例：<a href="http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY" target="_blank" rel="external">http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY</a></li>
+<li>请求参数说明：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cityname</td>
+<td>string</td>
+<td>Y</td>
+<td>城市名或城市ID，如：”苏州”，需要utf8 urlencode</td>
+</tr>
+<tr>
+<td>dtype</td>
+<td>string</td>
+<td>N</td>
+<td>返回数据格式：json或xml,默认json</td>
+</tr>
+<tr>
+<td>format</td>
+<td>int</td>
+<td>N</td>
+<td>未来6天预报(future)两种返回格式，1或2，默认1</td>
+</tr>
+<tr>
+<td>key</td>
+<td>string</td>
+<td>Y</td>
+<td>你申请的key</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>接口地址：<a href="http://v.juhe.cn/toutiao/index" target="_blank" rel="external">http://v.juhe.cn/toutiao/index</a></li>
+<li>支持格式：json</li>
+<li>请求方式：get/post</li>
+<li>请求示例：<a href="http://v.juhe.cn/toutiao/index?type=top&amp;key=APPKEY" target="_blank" rel="external">http://v.juhe.cn/toutiao/index?type=top&amp;key=APPKEY</a></li>
+<li>接口备注：返回头条，社会，国内，娱乐，体育，军事，科技，财经，时尚等新闻信息</li>
+<li>请求参数说明：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key</td>
+<td>string</td>
+<td>是</td>
+<td>应用APPKEY</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>否</td>
+<td>类型：top(头条，默认),shehui(社会),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育)junshi(军事),keji(科技),caijing(财经),shishang(时尚)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="curl-d-传递请求数据"><a href="#curl-d-传递请求数据" class="headerlink" title="curl -d 传递请求数据"></a>curl -d 传递请求数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 参数：</div><div class="line"># -G:指定GET方式发送请求</div><div class="line"># --data/-d:指定使用POST方式传递数据</div></pre></td></tr></table></figure>
+<h5 id="curl-发送GET请求"><a href="#curl-发送GET请求" class="headerlink" title="curl 发送GET请求"></a>curl 发送GET请求</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 方式一：curl 以?方式传递参数发送GET请求</div><div class="line"># 默认curl使用POST方式请求数据，这种方式下直接通过URL传递数据，也就是以?方式添加到url后面</div><div class="line"># 格式：curl &quot;https://hostname.com:8080/getMethod?param1=value1&amp;param2=value2&quot;</div><div class="line"></div><div class="line"># 方式二：curl -G -d 发送GET请求</div><div class="line"># 但是如果有-d参数，也可以加上-G参数指定使用GET方式请求数据，如果不加上-G则默认使用的POST方式请求数据</div><div class="line"># 格式：curl -G -d &quot;param1=value1&amp;param2=value2&quot; &quot;http://hostname.com:8080/getMethod&quot;</div><div class="line"></div><div class="line"># 使用?方式传递参数，不使用-d方式</div><div class="line">$ curl &quot;http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot;</div><div class="line"></div><div class="line"># 也可以使用-d方式传递参数，但是必须指定-G来指定GET方式请求数据，因为该接口只支持GET方式请求，如果不加-G参数，使用-d参数就默认为POST方式请求</div><div class="line">$ curl -G -d &quot;format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot; &quot;http://v.juhe.cn/weather/index&quot;</div><div class="line"></div><div class="line"># 以下的方式就会报错，因为该接口只支持GET方式请求，不支持POST方式请求，如果不加-G参数，使用-d参数就默认为POST方式请求</div><div class="line">$ curl -d &quot;format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot; &quot;http://v.juhe.cn/weather/index&quot;</div><div class="line"># 返回的结果是error_code:203901，获取不到cityname参数</div><div class="line">&#123;&quot;resultcode&quot;:&quot;201&quot;,&quot;reason&quot;:&quot;Error Cityname!&quot;,&quot;result&quot;:null,&quot;error_code&quot;:203901&#125;</div></pre></td></tr></table></figure>
+<h5 id="curl-发送POST请求"><a href="#curl-发送POST请求" class="headerlink" title="curl 发送POST请求"></a>curl 发送POST请求</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 格式：curl -d/--data &quot;param1=value1&amp;param2=value2&quot; &quot;http://hostname.com:8080/html/postMethod&quot;</div><div class="line">$ curl -d &quot;type=tiyu&amp;key=申请的KEY&quot; &quot;http://v.juhe.cn/toutiao/index&quot;</div><div class="line">$ curl --data &quot;type=tiyu&amp;key=申请的KEY&quot; &quot;http://v.juhe.cn/toutiao/index&quot;</div><div class="line"></div><div class="line"># POST提交多个同名参数，paramList是一个数组参数</div><div class="line">$ curl -XPOST &apos;http://hostname.com/postMethod&apos; -d &apos;userName=birdben&amp;paramList=[&quot;aa&quot;, &quot;bb&quot;]&apos;</div><div class="line"></div><div class="line"># form表单上传文件</div><div class="line"># 可以通过 --form/-F 方式指定使用POST方式传递数据</div><div class="line"># --form/-F 参数相当于设置form表单的method=&quot;POST&quot;和enctype=&quot;multipart/form-data&quot;两个属性</div><div class="line"># filename为文本框中的name元素对应的属性值。&lt;type=&quot;text&quot; name=&quot;filename&quot;&gt;</div><div class="line">$ curl --form &quot;filename=@filename.txt&quot; &quot;http://hostname.com:8080/html/uploadFile&quot;</div><div class="line">$ curl -F &quot;filename=@filename.txt;type=text/plain&quot;  &quot;http://hostname.com:8080/html/uploadFile&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-特殊字符处理"><a href="#curl-特殊字符处理" class="headerlink" title="curl 特殊字符处理"></a>curl 特殊字符处理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 默认情况下，通过GET/POST方式传递过去的数据中若有特殊字符（或者中文字符），首先需要将特殊字符转义在传递给服务器端，如&quot;value 1&quot;值中包含有空格，则需要先将空格转换成%20，如：</div><div class="line">$ curl -d &quot;value%201&quot; &quot;http://hostname.com&quot;</div><div class="line"></div><div class="line"># 在新版本的curl中，提供了新的选项 --data-urlencode，通过该选项提供的参数会自动转义特殊字符。</div><div class="line">$ curl --data-urlencode &quot;value 1&quot; &quot;http://hostname.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-指定其它协议"><a href="#curl-指定其它协议" class="headerlink" title="curl 指定其它协议"></a>curl 指定其它协议</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 除了使用GET和POST协议外，还可以通过 -X 选项指定其它协议，一般用过ES删除索引的时候用的比较多，如：</div><div class="line">$ curl -X DELETE &quot;https://hostname.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-设置http请求头信息"><a href="#curl-设置http请求头信息" class="headerlink" title="curl 设置http请求头信息"></a>curl 设置http请求头信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line"># 以下操作可以挂代理抓包查看并且验证</div><div class="line"># -v 通过使用 -v 和 -trace获取更多的链接信息</div><div class="line"># 访问https://www.github.com/下面返回的信息会提示该域名已经被重定向到https://github.com/</div><div class="line">$ curl -v &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line">* Rebuilt URL to: https://www.github.com/</div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.130...</div><div class="line">* Connected to www.github.com (192.30.252.130) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Host: www.github.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -A 设置http请求头User-Agent，可以指定自己这次访问所模拟的浏览器信息</div><div class="line"># 前一个直接用curl命令的，User-Agent: curl/7.37.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line"># 使用-A参数重新指定浏览器信息后，User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">&gt; User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">$ curl -v -A &quot;Mozilla/5.0 Firefox/21.0&quot; &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line"> Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.120...</div><div class="line">* Connected to www.github.com (192.30.252.120) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">&gt; Host: www.github.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -e 设置http请求头Referer，解释：检查http访问的Referer是服务器端常用的限制方法。比如你先访问网站的首页，再访问里面所指定的下载页，这第二次访问的referer地址就是第一次访问成功后的页面地址。这样，服务器端只要发现对下载页面某次访问的referer地址不是首页的地址，就可以断定那是个盗链了。所以这里我们可以自己修改我们的Referer链接地址。</div><div class="line">$ curl -v -e &quot;http://birdben.com/&quot; &quot;http://birdben.com/download.html&quot;</div><div class="line"></div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 50.63.202.46...</div><div class="line">* Connected to birdben.com (50.63.202.46) port 80 (#0)</div><div class="line">&gt; GET /download.html HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Host: birdben.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; Referer: http://birdben.com/</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 302 Found</div><div class="line">&lt; Connection: close</div><div class="line">&lt; Pragma: no-cache</div><div class="line">&lt; cache-control: no-cache</div><div class="line">&lt; Location: /download.html</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># --header/-H 设置header</div><div class="line">$ curl -H &quot;Connection:keep-alive&quot; -H &quot;Host:127.0.0.1&quot; -H &quot;Accept-Language:es&quot; -H &quot;Cookie:ID=1234&quot; &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.129...</div><div class="line">* Connected to www.github.com (192.30.252.129) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; Connection:keep-alive</div><div class="line">&gt; Host:127.0.0.1</div><div class="line">&gt; Accept-Language:es</div><div class="line">&gt; Cookie:ID=1234</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -I 设置http响应头处理，仅仅返回header</div><div class="line">$ curl -I &quot;https://github.com&quot;</div><div class="line"></div><div class="line"># --dump-header/-D 将http header保存到/tmp/header文件</div><div class="line">$ curl -D /tmp/header &quot;https://github.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-o-O-下载"><a href="#curl-o-O-下载" class="headerlink" title="curl -o/-O 下载"></a>curl -o/-O 下载</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 通过-o/-O选项保存下载的文件到指定的文件中：</div><div class="line">-o：将文件保存为命令行中指定的文件名的文件中</div><div class="line">-O：使用URL中默认的文件名保存文件到本地</div><div class="line"></div><div class="line"># 将文件下载到本地并命名为test.html</div><div class="line">$ curl -o test.html &quot;http://apistore.baidu.com/apiworks/servicedetail/478.html&quot;</div><div class="line"></div><div class="line"># 将文件保存到本地并命名为478.html</div><div class="line">$ curl -O &quot;http://apistore.baidu.com/apiworks/servicedetail/478.html&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-L-重定向"><a href="#curl-L-重定向" class="headerlink" title="curl -L 重定向"></a>curl -L 重定向</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 默认情况下CURL不会发送HTTP Location headers(重定向).当一个被请求页面移动到另一个站点时，会发送一个HTTP Loaction header作为请求，然后将请求重定向到新的地址上。</div><div class="line"></div><div class="line"># 例如：浏览器访问京东以前的域名www.360buy.com，会自动将地址重定向到www.jd.com上。通过curl命令就会出现如下信息</div><div class="line">$ curl &quot;www.360buy.com&quot;</div><div class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;</div><div class="line">&lt;body bgcolor=&quot;white&quot;&gt;</div><div class="line">&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;</div><div class="line">&lt;p&gt;The requested resource has been assigned a new permanent URI.&lt;/p&gt;</div><div class="line">&lt;hr/&gt;Server: JDWS&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div><div class="line"># 这时可以通过使用-L选项进行强制重定向，让curl使用地址重定向，此时就会返回京东首页的信息</div><div class="line">$ curl -L &quot;www.360buy.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-O-从FTP服务器下载文件"><a href="#curl-O-从FTP服务器下载文件" class="headerlink" title="curl -O 从FTP服务器下载文件"></a>curl -O 从FTP服务器下载文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># curl同样支持FTP下载，若在url中指定的是某个文件路径而非具体的某个要下载的文件名， curl则会列出该目录下的所有文件名而并非下载该目录下的所有文件</div><div class="line"></div><div class="line"># 列出public_html下的所有文件夹和文件</div><div class="line">$ curl -u user:pass -O &quot;ftp://ftp_server/html/&quot;</div><div class="line"># 下载index.css文件</div><div class="line">$ curl -u user:pass -O &quot;ftp://ftp_server/css/index.css&quot;</div><div class="line"></div><div class="line"># 从FTP服务器下载文件的另一种写法</div><div class="line">$ curl &quot;ftp://user:pass@ftp_server:port/path/file&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-T-上传文件到FTP服务器"><a href="#curl-T-上传文件到FTP服务器" class="headerlink" title="curl -T 上传文件到FTP服务器"></a>curl -T 上传文件到FTP服务器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 通过 -T 选项可将指定的本地文件上传到FTP服务器上</div><div class="line"># 将myfile.txt文件上传到服务器</div><div class="line">$ curl -u user:pass -T myfile.txt &quot;ftp://ftp.testserver.com:port/path/&quot;</div><div class="line"></div><div class="line"># 同时上传多个文件</div><div class="line">$ curl -u user:pass -T &quot;&#123;file1,file2&#125;&quot; &quot;ftp://ftp.testserver.com&quot;</div></pre></td></tr></table></figure>
+<h5 id="curl-u-授权（没有测试过）"><a href="#curl-u-授权（没有测试过）" class="headerlink" title="curl -u 授权（没有测试过）"></a>curl -u 授权（没有测试过）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 在访问需要授权的页面时，可通过-u选项提供用户名和密码进行授权</div><div class="line">$ curl -u username:password URL</div><div class="line"></div><div class="line"># 通常的做法是在命令行只输入用户名，之后会提示输入密码，这样可以保证在查看历史记录时不会将密码泄露</div><div class="line">$ curl -u username URL</div></pre></td></tr></table></figure>
+<h5 id="curl-x-设置代理"><a href="#curl-x-设置代理" class="headerlink" title="curl -x 设置代理"></a>curl -x 设置代理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># -x 选项可以为CURL添加代理功能</div><div class="line"># 指定代理主机和端口</div><div class="line">$ curl -x proxysever.com:8888 -U user:pass &quot;http://google.co.jp&quot;</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://linux.cn/article-4957-1.html" target="_blank" rel="external">https://linux.cn/article-4957-1.html</a></li>
+<li><a href="http://www.cnblogs.com/gbyukg/p/3326825.html" target="_blank" rel="external">http://www.cnblogs.com/gbyukg/p/3326825.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（三）/" data-id="ciq41pmzm000044s6rogxwvew" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/02/Linux常用命令（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 birdben<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux常用命令（一）
+netstat查看端口1234567891011121314151617181920212223# 参数-a (all)显示所有选项，默认不显示LISTEN相关-t (tcp)仅显示tcp相关选项-u (udp)仅显示udp相关选项-n 拒绝显示别名，能显示数字的全部转化成数字。-l 仅列出有在 Listen (监听) 的服務状态-p 显示建立相关链接的程序名-r 显示路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="birdben">
+<meta property="og:url" content="http://yoursite.com/2016/07/02/Linux常用命令（一）/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Linux常用命令（一）
+netstat查看端口1234567891011121314151617181920212223# 参数-a (all)显示所有选项，默认不显示LISTEN相关-t (tcp)仅显示tcp相关选项-u (udp)仅显示udp相关选项-n 拒绝显示别名，能显示数字的全部转化成数字。-l 仅列出有在 Listen (监听) 的服務状态-p 显示建立相关链接的程序名-r 显示路">
+<meta property="og:updated_time" content="2016-07-01T16:56:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="birdben">
+<meta name="twitter:description" content="Linux常用命令（一）
+netstat查看端口1234567891011121314151617181920212223# 参数-a (all)显示所有选项，默认不显示LISTEN相关-t (tcp)仅显示tcp相关选项-u (udp)仅显示udp相关选项-n 拒绝显示别名，能显示数字的全部转化成数字。-l 仅列出有在 Listen (监听) 的服務状态-p 显示建立相关链接的程序名-r 显示路">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.png" alt="Profile Picture">
+      </div>
+      <div id="title">birdben</div>
+      
+       <ul class="my-socials">
+  
+  <li>
+  	<a href="https://github.com/henryhuang" class="github" target="_blank">
+  		<i class="fa fa-github"></i>
+  	</a>
+  </li>
+  
+  <li>
+  	<a href="http://weibo.com/626242034" class="weibo" target="_blank">
+  		<i class="fa fa-weibo"></i>
+  	</a>
+  </li>
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">birdben</a>
+      <img src="/logo.png" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+          <a href="https://github.com/henryhuang" class="github" target="_blank">
+            <i class="fa fa-github"></i>
+          </a>
+        
+          <a href="http://weibo.com/626242034" class="weibo" target="_blank">
+            <i class="fa fa-weibo"></i>
+          </a>
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Pesquisar">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="yoursite.com">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+    
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Linux常用命令（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/Linux常用命令（一）/" class="article-date">
+  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux常用命令（一）</p>
+<h3 id="netstat查看端口"><a href="#netstat查看端口" class="headerlink" title="netstat查看端口"></a>netstat查看端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 参数</div><div class="line">-a (all)显示所有选项，默认不显示LISTEN相关</div><div class="line">-t (tcp)仅显示tcp相关选项</div><div class="line">-u (udp)仅显示udp相关选项</div><div class="line">-n 拒绝显示别名，能显示数字的全部转化成数字。</div><div class="line">-l 仅列出有在 Listen (监听) 的服務状态</div><div class="line"></div><div class="line">-p 显示建立相关链接的程序名</div><div class="line">-r 显示路由信息，路由表</div><div class="line">-e 显示扩展信息，例如uid等</div><div class="line">-s 按各个协议进行统计</div><div class="line">-c 每隔一个固定时间，执行该netstat命令。</div><div class="line"></div><div class="line">提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</div><div class="line"></div><div class="line"># 查看Linux端口号</div><div class="line">$ netstat -anp | grep 80</div><div class="line"></div><div class="line"># 查看Linux端口号</div><div class="line">$ ps -ef | grep 80</div><div class="line"></div><div class="line"># 查看Linux进程</div><div class="line">$ ps -ef | grep tomcat</div></pre></td></tr></table></figure>
+<h3 id="find文件查找相关"><a href="#find文件查找相关" class="headerlink" title="find文件查找相关"></a>find文件查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># find &lt;指定目录&gt; &lt;指定条件&gt; &lt;指定动作&gt;</div><div class="line">　　- &lt;指定目录&gt;： 所要搜索的目录及其所有子目录。默认为当前目录。</div><div class="line">　　- &lt;指定条件&gt;： 所要搜索的文件的特征。</div><div class="line">　　- &lt;指定动作&gt;： 对搜索结果进行特定的处理。</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件 -name（文件名需要带后缀）</div><div class="line">$ find . -name &apos;my*&apos;</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件，并显示它们的详细信息。</div><div class="line">$ find . -name &apos;my*&apos; -ls</div><div class="line"></div><div class="line"># 以文件大小来查找 -size n</div><div class="line">$ find . -size +1000000c（在当前目录下查找文件长度大于1 M字节的文件 ）</div><div class="line"></div><div class="line"># 在当前目录及所有子目录中查找filename(忽略大小写)</div><div class="line">$ find . -iname &quot;Hessian.properties&quot;</div></pre></td></tr></table></figure>
+<h3 id="grep文件内容查找相关"><a href="#grep文件内容查找相关" class="headerlink" title="grep文件内容查找相关"></a>grep文件内容查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 读出logcat.log文件的内容，通过管道转发给grep作为输入内容,过滤包含&quot;Displayed&quot;的行，将输出内容再作为输入能过管道转发给下一个grep</div><div class="line">$ cat logcat.log | grep -n &apos;Displayed&apos; | grep ms</div><div class="line"></div><div class="line"># 匹配testgrep文件所有wirelessqa的行</div><div class="line">$ grep -e wirelessqa testgrep</div><div class="line"></div><div class="line"># &apos;^wirelessqa&apos;匹配testgrep文件所有以wirelessqa开头的行</div><div class="line">$ grep -e ^[wirelessqa] testgrep</div><div class="line"></div><div class="line"># &apos;wirelessqa$&apos;匹配所有以wirelessqa结尾的行</div><div class="line">$ grep -e [wirelessqa]$ testgrep</div><div class="line"></div><div class="line"># .*一起用代表任意字符，&apos;.*qa&apos;匹配任何词以qa结尾的行</div><div class="line">$ grep -e .*qa testgrep</div><div class="line"></div><div class="line"># &apos;\&lt;wire&apos;匹配包含以wire开头的单词的行</div><div class="line">$ grep -e &apos;\&lt;wire&apos; testgrep</div><div class="line"></div><div class="line"># &apos;blog\&gt;&apos;匹配包含以blog结尾的单词的行</div><div class="line">$ grep -e &apos;blog\&gt;&apos; testgrep</div><div class="line"></div><div class="line"># 匹配aaa文件中&apos;blog.csdn.net&apos;的行的上下5行内容</div><div class="line">$ grep -5 -e blog.csdn.net aaa</div></pre></td></tr></table></figure>
+<h3 id="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"><a href="#chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）" class="headerlink" title="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"></a>chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 添加新的账号</div><div class="line">$ useradd 选项 用户名</div><div class="line"></div><div class="line"># 删除账号</div><div class="line">$ userdel 选项 用户名</div><div class="line"></div><div class="line"># 修改帐号</div><div class="line">$ usermod 选项 用户名</div><div class="line"></div><div class="line"># 用户密码的管理</div><div class="line">$ passwd 选项 用户名</div><div class="line">Old password：******</div><div class="line">New password：*******</div><div class="line">Re-enter new password：*******</div><div class="line"></div><div class="line"># 设置密码为空</div><div class="line">$ passwd -d 用户名</div><div class="line"></div><div class="line"># 添加新的组</div><div class="line">$ groupadd 选项 用户组</div><div class="line"></div><div class="line"># 删除组</div><div class="line">$ groupdel 用户组</div><div class="line"></div><div class="line"># 修改组</div><div class="line">$ groupmod 选项 用户组</div><div class="line"></div><div class="line"># 修改用户所在组（把某个用户改为新的用户组）</div><div class="line">$ usermod -g 用户组 用户名</div><div class="line"></div><div class="line"># 分配权限(修改某个目录的所属用户和用户组)</div><div class="line">$ chown -R hadoop:hadoop /usr/hadoop/</div><div class="line"></div><div class="line"># Linux中查看所有系统用户命令</div><div class="line">cat /etc/passwd</div></pre></td></tr></table></figure>
+<h3 id="alias别名（很有用，便于记录常用命令）"><a href="#alias别名（很有用，便于记录常用命令）" class="headerlink" title="alias别名（很有用，便于记录常用命令）"></a>alias别名（很有用，便于记录常用命令）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看当前设置了多少别名，直接输入alias</div><div class="line">$ alias</div><div class="line"></div><div class="line"># 添加别名，直接输入alias &apos;别名&apos;=&apos;命令&apos;（注意等号之间不能有空格）</div><div class="line">$ alias cdmanage=&apos;cd /Users/ben/workspace/manage/target&apos;</div><div class="line"></div><div class="line"># 删除一个别名</div><div class="line">$ unalias cdmanage</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 永久保存alias的方式（本人是Mac操作系统）</div><div class="line"># 进入用户根目录</div><div class="line">$ cd /Users/ben</div><div class="line">$ vi .bash_profile</div><div class="line"></div><div class="line"># 编辑文件如下并保存</div><div class="line">alias cdben=&quot;cd /Users/ben&quot;</div><div class="line">alias cdcore=&quot;cd /Users/ben/workspace/core&quot;</div><div class="line">alias cdmanage=&quot;cd /Users/ben/workspace/manage&quot;</div><div class="line">alias cdservice=&quot;cd /Users/ben/workspace/service&quot;</div><div class="line"></div><div class="line">alias cdmongo2=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-2.6.9&quot;</div><div class="line">alias cdmongo3=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-3.0.2&quot;</div><div class="line">alias cdredis=&quot;cd /Users/ben/dev/redis-3.0.0&quot;</div><div class="line">alias cdsearch01=&quot;cd /Users/ben/dev/search01&quot;</div><div class="line"></div><div class="line"># 使上面的别名立即生效</div><div class="line">$ source .bash_profile</div></pre></td></tr></table></figure>
+<h3 id="Linux中修改IP地址"><a href="#Linux中修改IP地址" class="headerlink" title="Linux中修改IP地址"></a>Linux中修改IP地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line"># 修改/etc/sysconfig/network-scripts/ifcfg-eth0配置文件 </div><div class="line">IPADDR=192.168.0.248 </div><div class="line">GATEWAY=192.168.0.1 </div><div class="line">DNS1=192.168.0.1 </div><div class="line">第二步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">192.168.0.248        hostname</div></pre></td></tr></table></figure>
+<h3 id="Linux中修改主机名"><a href="#Linux中修改主机名" class="headerlink" title="Linux中修改主机名"></a>Linux中修改主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line">$ hostname oratest  </div><div class="line">第二步：</div><div class="line"># 修改/etc/sysconfig/network中的hostname  </div><div class="line">第三步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">记得重启!!!</div></pre></td></tr></table></figure>
+<h3 id="tar压缩-解压缩"><a href="#tar压缩-解压缩" class="headerlink" title="tar压缩/解压缩"></a>tar压缩/解压缩</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"># tar命令详解</div><div class="line">-c: 建立压缩档案</div><div class="line">-x：解压</div><div class="line">-t：查看内容</div><div class="line">-r：向压缩归档文件末尾追加文件</div><div class="line">-u：更新原压缩包中的文件</div><div class="line"># 这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。</div><div class="line"></div><div class="line"># 下面的参数是根据需要在压缩或解压档案时可选的。</div><div class="line">-z：有gzip属性的</div><div class="line">-j：有bz2属性的</div><div class="line">-Z：有compress属性的</div><div class="line">-v：显示所有过程</div><div class="line">-O：将文件解开到标准输出</div><div class="line">参数-f是必须的</div><div class="line">-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。</div><div class="line"></div><div class="line"># 压缩</div><div class="line"># 这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包，-f指定包的文件名。</div><div class="line">$ tar -cf all.tar *.jpg</div><div class="line"># 将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩，生成一个gzip压缩过的包，命名为jpg.tar.gz</div><div class="line">$ tar –czf jpg.tar.gz *.jpg</div><div class="line"># 这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的意思。 </div><div class="line">$ tar -rf all.tar *.gif</div><div class="line"># 这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。</div><div class="line">$ tar -uf all.tar logo.gif</div><div class="line"></div><div class="line"># 查看</div><div class="line"># 这条命令是在不解压的情况下查看all.tar包中所有文件，-t是列出文件的意思 </div><div class="line">$ tar -tf all.tar</div><div class="line"></div><div class="line"># 解压</div><div class="line"># 这条命令是解出all.tar包中所有文件，-x是解开的意思</div><div class="line">$ tar -xf all.tar</div><div class="line"># 解压tar包</div><div class="line">$ tar –xvf file.tar</div><div class="line"># 解压tar.gz</div><div class="line">$ tar -xzvf file.tar.gz</div><div class="line"># 解压 tar.bz2</div><div class="line">$ tar -xjvf file.tar.bz2</div><div class="line"># 解压tar.Z</div><div class="line">$ tar –xZvf file.tar.Z</div><div class="line"></div><div class="line"># 解压到指定的目录，如果目录不存在就创建</div><div class="line"># 将text.tar.gz 解压到 /home/app/test/ （绝对路径）下</div><div class="line">$ tar -zxvf ./text.tar.gz -C /home/app/test/</div><div class="line"></div><div class="line"># 解压rar</div><div class="line">$ unrar e file.rar</div><div class="line"></div><div class="line"># 解压zip</div><div class="line">$ unzip file.zip</div><div class="line"></div><div class="line"># 总结 </div><div class="line">1、*.tar 用 tar –xvf 解压 </div><div class="line">2、*.gz 用 gzip -d或者gunzip 解压 </div><div class="line">3、*.tar.gz和*.tgz 用 tar –xzf 解压 </div><div class="line">4、*.bz2 用 bzip2 -d或者用bunzip2 解压 </div><div class="line">5、*.tar.bz2用tar –xjf 解压 </div><div class="line">6、*.Z 用 uncompress 解压 </div><div class="line">7、*.tar.Z 用tar –xZf 解压 </div><div class="line">8、*.rar 用 unrar e解压 </div><div class="line">9、*.zip 用 unzip 解压</div></pre></td></tr></table></figure>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 创建软链接</div><div class="line"># ln -s a b 中的 a 就是源文件，b是链接文件名，其作用是当进入b目录，实际上是链接进入了a目录</div><div class="line"># 值得注意的是执行命令的时候，应该是a目录已经建立，目录b没有建立。我最开始操作的是也把b目录给建立了，结果就不对了</div><div class="line"># 如下面的示例，当我们执行命令cd /usr/local/java/的时候，实际上是进入了/software/java/</div><div class="line">$ ln -s /software/java /usr/local/java</div><div class="line"></div><div class="line"># 删除软链接（注意不是rm -rf b/）</div><div class="line">rm -rf b</div></pre></td></tr></table></figure>
+<h3 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 创建文件夹命令</div><div class="line">mkdir test</div><div class="line"></div><div class="line"># 创建多级目录的命令</div><div class="line">mkdir -p /software/temp/nginx</div><div class="line"></div><div class="line"># 删除文件夹命令</div><div class="line">rm -rf test </div><div class="line"></div><div class="line"># 复制文件夹命令</div><div class="line">cp -rf /home/root/Downloads/* /home/root/tools</div></pre></td></tr></table></figure>
+<h3 id="MySQL数据库的备份与还原"><a href="#MySQL数据库的备份与还原" class="headerlink" title="MySQL数据库的备份与还原"></a>MySQL数据库的备份与还原</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 备份</div><div class="line"># root为用户名，user为要备份的数据库，自动会备份到/home/ben/文件目录下</div><div class="line">$ mysqldump -u root -p user &gt; /home/ben/user20160101.sql</div><div class="line"></div><div class="line"># 压缩备份</div><div class="line">$ mysqldump -u root -p user | gzip &gt; user20160101.sql.gz </div><div class="line"></div><div class="line"># 还原</div><div class="line">$ mysql -u root -p user &lt; /home/ben/user20160101.sql</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2" target="_blank" rel="external">http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2</a></li>
+<li><a href="http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html" target="_blank" rel="external">http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html</a></li>
+<li><a href="http://www.php-note.com/article/detail/831" target="_blank" rel="external">http://www.php-note.com/article/detail/831</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（一）/" data-id="ciq41pmzs000144s6p8rlxhqc" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/07/02/Linux常用命令（三）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/02/Linux常用命令（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 birdben<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>
