@@ -76,7 +76,7 @@
     </nav>
     <div id="search-form-wrap">
       <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="搜索">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
         <input type="submit" value="" class="search-form-submit">
         <input name=tn type=hidden value="bds">
         <input name=cl type=hidden value="3">
@@ -97,6 +97,44 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" class="article-date">
+  <time datetime="2016-08-09T14:46:10.000Z" itemprop="datePublished">2016-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本"><a href="#Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本" class="headerlink" title="Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本"></a>Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本</h2><p>Ubuntu环境需要安装expect安装包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install expect</div></pre></td></tr></table></figure>
+<p>使用shell脚本自动ssh登录远程服务器</p>
+<p>login.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/expect -f</div><div class="line"># 设置ssh连接的用户名</div><div class="line">set user liuben</div><div class="line"># 设置ssh连接的host地址</div><div class="line">set host 10.211.55.4</div><div class="line"># 设置ssh连接的port端口号</div><div class="line">set port 9999</div><div class="line"># 设置ssh连接的登录密码</div><div class="line">set password admin</div><div class="line"># 设置ssh连接的超时时间</div><div class="line">set timeout -1</div><div class="line"></div><div class="line">spawn ssh $user@$host -p $port</div><div class="line">expect &quot;*password:&quot;</div><div class="line"># 提交密码</div><div class="line">send &quot;$password\r&quot;</div><div class="line"># 控制权移交</div><div class="line">interact</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 确定login.sh脚本有可执行权限</div><div class="line">chmod +x login.sh</div><div class="line"># 执行login.sh脚本</div><div class="line">./login.sh</div><div class="line"></div><div class="line"># 注意</div><div class="line">不能按照习惯来用sh login.sh来这行expect的程序，会提示找不到命令，如下：</div><div class="line"></div><div class="line">login.sh: line 3: spawn: command not found</div><div class="line">couldn&apos;t read file &quot;*password:&quot;: no such file or directory</div><div class="line">login.sh: line 5: send: command not found</div><div class="line">login.sh: line 6: interact: command not found</div><div class="line"></div><div class="line">因为expect用的不是bash所以会报错。因为bash和expect的脚本指定了不同的脚本解释器</div><div class="line">#!/usr/bin/expect -f</div><div class="line">#!/bin/bash</div><div class="line">执行的时候直接./login.sh就可以了。～切记！</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/zhuying_linux/article/details/6657020" target="_blank" rel="external">http://blog.csdn.net/zhuying_linux/article/details/6657020</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cirnkygzm0008ujs6he4ovx6q" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Shell脚本学习（一）Shell命令基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -177,7 +215,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cirmag18x0004xrs6n550uqk7" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cirnkygzp0009ujs6eabtgk6l" class="article-share-link">Share</a>
       
 
       
@@ -213,7 +251,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cirmag18p0003xrs6vmcpsjmv" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cirnkygyk0005ujs6hvd8fex1" class="article-share-link">Share</a>
       
 
       
@@ -268,7 +306,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cirmag1940007xrs6bimh54ik" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cirnkygzg0006ujs65yrevkun" class="article-share-link">Share</a>
       
 
       
@@ -310,7 +348,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/04/Git配置多个SSH-Key/" data-id="cirmag18b0000xrs6ganxqdxt" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/04/Git配置多个SSH-Key/" data-id="cirnkygy80001ujs632ikf35c" class="article-share-link">Share</a>
       
 
       
@@ -342,7 +380,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/03/Spring的JDBCTemplate批量更新问题/" data-id="cirmag1910006xrs67sn47zeb" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/03/Spring的JDBCTemplate批量更新问题/" data-id="cirnkygzh0007ujs6wuboll4p" class="article-share-link">Share</a>
       
 
       
@@ -402,7 +440,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/02/Hexo + Github搭建个人博客/" data-id="cirmag18z0005xrs6kde86ol9" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/02/Hexo + Github搭建个人博客/" data-id="cirnkygyi0004ujs6zx2taiwo" class="article-share-link">Share</a>
       
 
       
@@ -523,7 +561,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（三）/" data-id="cirmag18i0001xrs6lf9jzzbe" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（三）/" data-id="cirnkygy10000ujs6ptff9ar2" class="article-share-link">Share</a>
       
 
       
@@ -569,7 +607,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（二）/" data-id="cirmag19v0008xrs6x4atbx0x" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（二）/" data-id="cirnkygyf0003ujs6recq18ws" class="article-share-link">Share</a>
       
 
       
@@ -618,7 +656,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2015/11/28/Linux常用命令（一）/" data-id="cirmag18l0002xrs6j8x72a34" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2015/11/28/Linux常用命令（一）/" data-id="cirnkygyc0002ujs6307d9w32" class="article-share-link">Share</a>
       
 
       
