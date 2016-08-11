@@ -76,7 +76,7 @@
     </nav>
     <div id="search-form-wrap">
       <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="搜索">
         <input type="submit" value="" class="search-form-submit">
         <input name=tn type=hidden value="bds">
         <input name=cl type=hidden value="3">
@@ -97,6 +97,46 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Shell脚本学习（三）注释的用法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/11/Shell脚本学习（三）注释的用法/" class="article-date">
+  <time datetime="2016-08-11T03:05:24.000Z" itemprop="datePublished">2016-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Shell脚本学习（三）注释的用法"><a href="#Shell脚本学习（三）注释的用法" class="headerlink" title="Shell脚本学习（三）注释的用法"></a>Shell脚本学习（三）注释的用法</h2><h4 id="Shell脚本的注释"><a href="#Shell脚本的注释" class="headerlink" title="Shell脚本的注释"></a>Shell脚本的注释</h4><p>Shell脚本单行注释用#，这个我想大家应该都知道。如果要把一段代码全部注释掉，可以用如下方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line"></div><div class="line">echo &quot;我不是单行注释&quot;</div><div class="line"># echo &quot;我是单行注释，你看不到我&quot;</div><div class="line"></div><div class="line">echo &quot;我不是多行注释&quot;</div><div class="line">:&lt;&lt;COMMENT</div><div class="line">echo &quot;我是多行注释1，你看不到我&quot;</div><div class="line">echo &quot;我是多行注释2，你看不到我&quot;</div><div class="line">COMMENT</div><div class="line">echo &quot;我没有看到多行注释1和多行注释2&quot;</div></pre></td></tr></table></figure>
+<p>其实COMMENT可以随意命名，只要别跟中间的注释内容相同即可。当Shell脚本执行遇到:&lt;&lt;COMMENT，就不执行脚本了，一直到再碰到COMMENT后才重新开始执行脚本。如果忘记写COMMENT或者写错(由于已经不执行脚本了，所以即使写错也不会报错)，则:&lt;&lt;COMMENT之后的脚步将都不会执行。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/xyqzki/article/details/8762035" target="_blank" rel="external">http://blog.csdn.net/xyqzki/article/details/8762035</a></li>
+</ul>
+<h4 id="Shell脚本的文件注释模板"><a href="#Shell脚本的文件注释模板" class="headerlink" title="Shell脚本的文件注释模板"></a>Shell脚本的文件注释模板</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line"># ----------------------------------------------------------------------</div><div class="line"># name:			login.sh</div><div class="line"># version:		1.0</div><div class="line"># createTime:	2016-06-22</div><div class="line"># description:	shell脚本的功能描述</div><div class="line"># author:		birdben</div><div class="line"># email:		191654006@163.com</div><div class="line"># github:		https://github.com/birdben</div><div class="line"># ----------------------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>这里推荐一个比较好的Shell代码规范</p>
+<ul>
+<li><a href="http://blog.csdn.net/wirelessqa/article/details/18863403" target="_blank" rel="external">http://blog.csdn.net/wirelessqa/article/details/18863403</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/11/Shell脚本学习（三）注释的用法/" data-id="cirpr32vy000arbs6sgjzmlzh" class="article-share-link">分享到</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -125,7 +165,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cirnkygzm0008ujs6he4ovx6q" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cirpr32vu0008rbs6u0rid9v6" class="article-share-link">分享到</a>
       
 
       
@@ -215,7 +255,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cirnkygzp0009ujs6eabtgk6l" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cirpr32vp0007rbs65k7a0sdn" class="article-share-link">分享到</a>
       
 
       
@@ -251,7 +291,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cirnkygyk0005ujs6hvd8fex1" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cirpr32vf0003rbs63jmlcro1" class="article-share-link">分享到</a>
       
 
       
@@ -306,7 +346,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cirnkygzg0006ujs65yrevkun" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cirpr32vh0004rbs6tm4kvhb1" class="article-share-link">分享到</a>
       
 
       
@@ -348,7 +388,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/04/Git配置多个SSH-Key/" data-id="cirnkygy80001ujs632ikf35c" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/04/Git配置多个SSH-Key/" data-id="cirpr32v30000rbs6cs15tinw" class="article-share-link">分享到</a>
       
 
       
@@ -380,7 +420,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/03/Spring的JDBCTemplate批量更新问题/" data-id="cirnkygzh0007ujs6wuboll4p" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/03/Spring的JDBCTemplate批量更新问题/" data-id="cirpr32vw0009rbs64qlsiyuq" class="article-share-link">分享到</a>
       
 
       
@@ -440,7 +480,53 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/02/Hexo + Github搭建个人博客/" data-id="cirnkygyi0004ujs6zx2taiwo" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/02/Hexo + Github搭建个人博客/" data-id="cirpr32vc0002rbs6ate343nn" class="article-share-link">分享到</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux常用命令（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/02/Linux常用命令（二）/" class="article-date">
+  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Linux常用命令（二）"><a href="#Linux常用命令（二）" class="headerlink" title="Linux常用命令（二）"></a>Linux常用命令（二）</h2><h3 id="scp命令"><a href="#scp命令" class="headerlink" title="scp命令"></a>scp命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># 获取远程服务器上的文件</div><div class="line">$ scp -P 2222 root@192.168.1.100:/root/tomcat.tar.gz /home/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数 </div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat.tar.gz 表示远程服务器上的文件</div><div class="line"># /home/tomcat.tar.gz 表示保存在本地上的路径和文件名</div><div class="line"></div><div class="line"># 获取远程服务器上的目录</div><div class="line">$ scp -P 2222 -r root@192.168.1.100:/root/tomcat/ /home/ben/dev/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数</div><div class="line"># -r参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat/ 表示远程服务器上的目录</div><div class="line"># /home/ben/dev/ 表示保存在本地上的路径。</div><div class="line"></div><div class="line"># 将本地文件上传到服务器上</div><div class="line">$ scp -P 2222 /home/tomcat.tar.gz root@192.168.1.100:/root/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 </div><div class="line"># /home/tomcat.tar.gz 表示本地上准备上传文件的路径和文件名</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器</div><div class="line"></div><div class="line"># 将本地目录上传到服务器上</div><div class="line">$ scp -P 2222 -r /home/tomcat/ root@192.168.1.100:/root/dev/tomcat/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。</div><div class="line"># -r 参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># /home/tomcat/表示准备要上传的目录</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/dev/tomcat/ 表示保存在远程服务器上的目录位置。</div></pre></td></tr></table></figure>
+<h3 id="nc命令"><a href="#nc命令" class="headerlink" title="nc命令"></a>nc命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 今天学到了另一种远程传输文件的方式，原来只知道scp，rz/sz</div><div class="line"># 远程服务器（目的主机监听）</div><div class="line"># 命令格式：nc -l 监听端口&lt;未使用端口&gt; &gt; 要接收的文件名</div><div class="line">$ nc -l 9999 &gt; elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：远程服务器开启一个9999的端口进行监听，并且等待接收elasticsearch-jdbc-1.7.3.0-dist.zip文件</div><div class="line"></div><div class="line"># 本地机器（源主机发起请求）</div><div class="line"># 命令格式：nc 目的主机ip 目的端口 &lt; 要发送的文件</div><div class="line">$ nc 10.120.10.105 9999 &lt; /Users/ben/Downloads/letv/ES/elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：本地机器指定远程服务器的ip地址和port端口号将指定的本地文件传送到远程服务器</div></pre></td></tr></table></figure>
+<h3 id="rz-sz命令"><a href="#rz-sz命令" class="headerlink" title="rz/sz命令"></a>rz/sz命令</h3><h5 id="Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用"><a href="#Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用" class="headerlink" title="Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用"></a>Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用</h5><p>下面介绍两种客户端</p>
+<ol>
+<li>iterm2（适用Mac环境）</li>
+<li>secureCRT（适用Windows环境）</li>
+</ol>
+<h4 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">1. 安装brew工具</div><div class="line">$ brew install lszrz</div><div class="line"># 如果没有brew工具，请参考：http://blog.csdn.net/tsxw24/article/details/15500517</div><div class="line">2. 下载iterm2-zmodem到/usr/local/bin目录（将两个shell脚本放到/usr/local/bin/目录下然后开始配置）</div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh </div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-recv-zmodem.sh </div><div class="line">$ sudo chmod 777 /usr/local/bin/iterm2-*</div><div class="line">3. 运行下载的iterm，添加trigger</div><div class="line">打开iterm2 --&gt;  同时按command和,键 --&gt; Profiles --&gt; Default --&gt; Advanced --&gt; Triggers的Edit按钮</div><div class="line">4. Triggers的设置代码如下 </div><div class="line">Regular expression: \*\*B0100</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-send-zmodem.sh</div><div class="line"></div><div class="line">Regular expression: \*\*B00000000000000</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</div><div class="line">5. 上传和下载文件和secureCRT方式一样</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160622214939271?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="iterm2"></p>
+<h4 id="secureCRT"><a href="#secureCRT" class="headerlink" title="secureCRT"></a>secureCRT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 上传文件</div><div class="line">1. 打开secureCRT,通过SSH连到至远程linux主机</div><div class="line">2. 键入rz命令</div><div class="line">3. 在跳出的窗口选择想要上传的文件</div><div class="line">4. 点击ADD后加入传输列表</div><div class="line">5. 点击确认以后传送文件</div><div class="line">6. 查看状态，一般都是发送正功</div><div class="line">7. 查看目录，确定刚才选的文件已经上传成功</div><div class="line"></div><div class="line"># 下载文件</div><div class="line">1. 远程连接到linux主机</div><div class="line">2. 输入sz fileName</div><div class="line">3. 在弹出的窗口中选择保存文件到本地的目录</div><div class="line">4. 确定后，等待文件下载完成</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.vpser.net/manage/scp.html" target="_blank" rel="external">http://www.vpser.net/manage/scp.html</a></li>
+<li><a href="http://blog.csdn.net/u014552288/article/details/38349827" target="_blank" rel="external">http://blog.csdn.net/u014552288/article/details/38349827</a></li>
+<li><a href="http://blog.csdn.net/tsxw24/article/details/15500517" target="_blank" rel="external">http://blog.csdn.net/tsxw24/article/details/15500517</a></li>
+<li><a href="http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO" target="_blank" rel="external">http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO</a></li>
+<li><a href="http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html" target="_blank" rel="external">http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（二）/" data-id="cirpr32vo0006rbs6zchl306v" class="article-share-link">分享到</a>
       
 
       
@@ -561,7 +647,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（三）/" data-id="cirnkygy10000ujs6ptff9ar2" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（三）/" data-id="cirpr32vj0005rbs6klhmpp0t" class="article-share-link">分享到</a>
       
 
       
@@ -572,101 +658,10 @@
 
 
   
-    <article id="post-Linux常用命令（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/02/Linux常用命令（二）/" class="article-date">
-  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Linux常用命令（二）"><a href="#Linux常用命令（二）" class="headerlink" title="Linux常用命令（二）"></a>Linux常用命令（二）</h2><h3 id="scp命令"><a href="#scp命令" class="headerlink" title="scp命令"></a>scp命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># 获取远程服务器上的文件</div><div class="line">$ scp -P 2222 root@192.168.1.100:/root/tomcat.tar.gz /home/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数 </div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat.tar.gz 表示远程服务器上的文件</div><div class="line"># /home/tomcat.tar.gz 表示保存在本地上的路径和文件名</div><div class="line"></div><div class="line"># 获取远程服务器上的目录</div><div class="line">$ scp -P 2222 -r root@192.168.1.100:/root/tomcat/ /home/ben/dev/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数</div><div class="line"># -r参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat/ 表示远程服务器上的目录</div><div class="line"># /home/ben/dev/ 表示保存在本地上的路径。</div><div class="line"></div><div class="line"># 将本地文件上传到服务器上</div><div class="line">$ scp -P 2222 /home/tomcat.tar.gz root@192.168.1.100:/root/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 </div><div class="line"># /home/tomcat.tar.gz 表示本地上准备上传文件的路径和文件名</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器</div><div class="line"></div><div class="line"># 将本地目录上传到服务器上</div><div class="line">$ scp -P 2222 -r /home/tomcat/ root@192.168.1.100:/root/dev/tomcat/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。</div><div class="line"># -r 参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># /home/tomcat/表示准备要上传的目录</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/dev/tomcat/ 表示保存在远程服务器上的目录位置。</div></pre></td></tr></table></figure>
-<h3 id="nc命令"><a href="#nc命令" class="headerlink" title="nc命令"></a>nc命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 今天学到了另一种远程传输文件的方式，原来只知道scp，rz/sz</div><div class="line"># 远程服务器（目的主机监听）</div><div class="line"># 命令格式：nc -l 监听端口&lt;未使用端口&gt; &gt; 要接收的文件名</div><div class="line">$ nc -l 9999 &gt; elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：远程服务器开启一个9999的端口进行监听，并且等待接收elasticsearch-jdbc-1.7.3.0-dist.zip文件</div><div class="line"></div><div class="line"># 本地机器（源主机发起请求）</div><div class="line"># 命令格式：nc 目的主机ip 目的端口 &lt; 要发送的文件</div><div class="line">$ nc 10.120.10.105 9999 &lt; /Users/ben/Downloads/letv/ES/elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：本地机器指定远程服务器的ip地址和port端口号将指定的本地文件传送到远程服务器</div></pre></td></tr></table></figure>
-<h3 id="rz-sz命令"><a href="#rz-sz命令" class="headerlink" title="rz/sz命令"></a>rz/sz命令</h3><h5 id="Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用"><a href="#Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用" class="headerlink" title="Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用"></a>Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用</h5><p>下面介绍两种客户端</p>
-<ol>
-<li>iterm2（适用Mac环境）</li>
-<li>secureCRT（适用Windows环境）</li>
-</ol>
-<h4 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">1. 安装brew工具</div><div class="line">$ brew install lszrz</div><div class="line"># 如果没有brew工具，请参考：http://blog.csdn.net/tsxw24/article/details/15500517</div><div class="line">2. 下载iterm2-zmodem到/usr/local/bin目录（将两个shell脚本放到/usr/local/bin/目录下然后开始配置）</div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh </div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-recv-zmodem.sh </div><div class="line">$ sudo chmod 777 /usr/local/bin/iterm2-*</div><div class="line">3. 运行下载的iterm，添加trigger</div><div class="line">打开iterm2 --&gt;  同时按command和,键 --&gt; Profiles --&gt; Default --&gt; Advanced --&gt; Triggers的Edit按钮</div><div class="line">4. Triggers的设置代码如下 </div><div class="line">Regular expression: \*\*B0100</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-send-zmodem.sh</div><div class="line"></div><div class="line">Regular expression: \*\*B00000000000000</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</div><div class="line">5. 上传和下载文件和secureCRT方式一样</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160622214939271?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="iterm2"></p>
-<h4 id="secureCRT"><a href="#secureCRT" class="headerlink" title="secureCRT"></a>secureCRT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 上传文件</div><div class="line">1. 打开secureCRT,通过SSH连到至远程linux主机</div><div class="line">2. 键入rz命令</div><div class="line">3. 在跳出的窗口选择想要上传的文件</div><div class="line">4. 点击ADD后加入传输列表</div><div class="line">5. 点击确认以后传送文件</div><div class="line">6. 查看状态，一般都是发送正功</div><div class="line">7. 查看目录，确定刚才选的文件已经上传成功</div><div class="line"></div><div class="line"># 下载文件</div><div class="line">1. 远程连接到linux主机</div><div class="line">2. 输入sz fileName</div><div class="line">3. 在弹出的窗口中选择保存文件到本地的目录</div><div class="line">4. 确定后，等待文件下载完成</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.vpser.net/manage/scp.html" target="_blank" rel="external">http://www.vpser.net/manage/scp.html</a></li>
-<li><a href="http://blog.csdn.net/u014552288/article/details/38349827" target="_blank" rel="external">http://blog.csdn.net/u014552288/article/details/38349827</a></li>
-<li><a href="http://blog.csdn.net/tsxw24/article/details/15500517" target="_blank" rel="external">http://blog.csdn.net/tsxw24/article/details/15500517</a></li>
-<li><a href="http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO" target="_blank" rel="external">http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO</a></li>
-<li><a href="http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html" target="_blank" rel="external">http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（二）/" data-id="cirnkygyf0003ujs6recq18ws" class="article-share-link">Share</a>
-      
-
-      
-    </footer>
-  </div>
   
-</article>
-
-
-  
-    <article id="post-Linux常用命令（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/28/Linux常用命令（一）/" class="article-date">
-  <time datetime="2015-11-28T13:06:55.000Z" itemprop="datePublished">2015-11-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Linux常用命令（一）"><a href="#Linux常用命令（一）" class="headerlink" title="Linux常用命令（一）"></a>Linux常用命令（一）</h2><h3 id="netstat查看端口"><a href="#netstat查看端口" class="headerlink" title="netstat查看端口"></a>netstat查看端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 参数</div><div class="line">-a (all)显示所有选项，默认不显示LISTEN相关</div><div class="line">-t (tcp)仅显示tcp相关选项</div><div class="line">-u (udp)仅显示udp相关选项</div><div class="line">-n 拒绝显示别名，能显示数字的全部转化成数字。</div><div class="line">-l 仅列出有在 Listen (监听) 的服務状态</div><div class="line"></div><div class="line">-p 显示建立相关链接的程序名</div><div class="line">-r 显示路由信息，路由表</div><div class="line">-e 显示扩展信息，例如uid等</div><div class="line">-s 按各个协议进行统计</div><div class="line">-c 每隔一个固定时间，执行该netstat命令。</div><div class="line"></div><div class="line">提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</div><div class="line"></div><div class="line"># 查看Linux端口号</div><div class="line">$ netstat -anp | grep 80</div><div class="line"></div><div class="line"># 查看服务对应端口</div><div class="line">$ netstat -nlp</div></pre></td></tr></table></figure>
-<h3 id="lsof查看端口"><a href="#lsof查看端口" class="headerlink" title="lsof查看端口"></a>lsof查看端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 查看8080端口号对应的进程</div><div class="line">$ lsof -i:8080</div></pre></td></tr></table></figure>
-<h3 id="ps查看进程"><a href="#ps查看进程" class="headerlink" title="ps查看进程"></a>ps查看进程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 查看Linux端口号</div><div class="line"># ps 命令用于查看当前正在运行的进程</div><div class="line"># grep 是搜索</div><div class="line">$ ps -ef | grep 80</div><div class="line"></div><div class="line"># 查看Linux进程</div><div class="line">$ ps -ef | grep tomcat</div><div class="line"></div><div class="line"># -aux 显示所有状态</div><div class="line">$ ps -aux | grep tomcat</div><div class="line"></div><div class="line"># 查看服务进程</div><div class="line">$ ps -aux</div><div class="line"></div><div class="line">ps [选项]</div><div class="line">-e 显示所有进程,环境变量</div><div class="line">-f 全格式</div><div class="line">-h 不显示标题</div><div class="line">-l 长格式</div><div class="line">-w 宽输出</div><div class="line">-a 显示终端上地所有进程,包括其他用户地进程</div><div class="line">-r 只显示正在运行地进程</div><div class="line">-x 显示没有控制终端地进程</div></pre></td></tr></table></figure>
-<h3 id="Linux性能监控"><a href="#Linux性能监控" class="headerlink" title="Linux性能监控"></a>Linux性能监控</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 查看服务cpu利用</div><div class="line">$ top</div><div class="line"></div><div class="line">s - 改变画面更新频率</div><div class="line">l - 关闭或开启第一部分第一行 top 信息的表示</div><div class="line">t - 关闭或开启第一部分第二行 Tasks 和第三行 Cpus 信息的表示</div><div class="line">m - 关闭或开启第一部分第四行 Mem 和 第五行 Swap 信息的表示</div><div class="line">N - 以 PID 的大小的顺序排列表示进程列表（第三部分后述）</div><div class="line">P - 以 CPU 占用率大小的顺序排列进程列表 （第三部分后述）</div><div class="line">M - 以内存占用率大小的顺序排列进程列表 （第三部分后述）</div><div class="line">h - 显示帮助</div><div class="line">n - 设置在进程列表所显示进程的数量</div><div class="line">q - 退出 top</div><div class="line"></div><div class="line"># 查看内存使用情况</div><div class="line">$ free</div><div class="line"></div><div class="line">下面是对这些数值的解释：</div><div class="line">total:总计物理内存的大小。</div><div class="line">used:已使用多大。</div><div class="line">free:可用有多少。</div><div class="line">Shared:多个进程共享的内存总额。</div><div class="line">Buffers/cached:磁盘缓存的大小。</div><div class="line"></div><div class="line">第三行(-/+ buffers/cached):</div><div class="line">used:已使用多大。</div><div class="line">free:可用有多少。</div><div class="line"></div><div class="line">空闲内存 = free + buffers + cached = total - used</div><div class="line"></div><div class="line"># 显示目前所有文件系统的可用空间及使用情形</div><div class="line">$ df -h</div><div class="line"></div><div class="line"># 显示当前目录下所有文件和文件夹的大小</div><div class="line">$ ls -lh</div></pre></td></tr></table></figure>
-<h3 id="find文件查找相关"><a href="#find文件查找相关" class="headerlink" title="find文件查找相关"></a>find文件查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># find &lt;指定目录&gt; &lt;指定条件&gt; &lt;指定动作&gt;</div><div class="line">　　- &lt;指定目录&gt;： 所要搜索的目录及其所有子目录。默认为当前目录。</div><div class="line">　　- &lt;指定条件&gt;： 所要搜索的文件的特征。</div><div class="line">　　- &lt;指定动作&gt;： 对搜索结果进行特定的处理。</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件 -name（文件名需要带后缀）</div><div class="line">$ find . -name &apos;my*&apos;</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件，并显示它们的详细信息。</div><div class="line">$ find . -name &apos;my*&apos; -ls</div><div class="line"></div><div class="line"># 以文件大小来查找 -size n</div><div class="line">$ find . -size +1000000c（在当前目录下查找文件长度大于1 M字节的文件 ）</div><div class="line"></div><div class="line"># 在当前目录及所有子目录中查找filename(忽略大小写)</div><div class="line">$ find . -iname &quot;Hessian.properties&quot;</div></pre></td></tr></table></figure>
-<h3 id="grep文件内容查找相关"><a href="#grep文件内容查找相关" class="headerlink" title="grep文件内容查找相关"></a>grep文件内容查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 读出logcat.log文件的内容，通过管道转发给grep作为输入内容,过滤包含&quot;Displayed&quot;的行，将输出内容再作为输入能过管道转发给下一个grep</div><div class="line">$ cat logcat.log | grep -n &apos;Displayed&apos; | grep ms</div><div class="line"></div><div class="line"># 匹配testgrep文件所有wirelessqa的行</div><div class="line">$ grep -e wirelessqa testgrep</div><div class="line"></div><div class="line"># &apos;^wirelessqa&apos;匹配testgrep文件所有以wirelessqa开头的行</div><div class="line">$ grep -e ^[wirelessqa] testgrep</div><div class="line"></div><div class="line"># &apos;wirelessqa$&apos;匹配所有以wirelessqa结尾的行</div><div class="line">$ grep -e [wirelessqa]$ testgrep</div><div class="line"></div><div class="line"># .*一起用代表任意字符，&apos;.*qa&apos;匹配任何词以qa结尾的行</div><div class="line">$ grep -e .*qa testgrep</div><div class="line"></div><div class="line"># &apos;\&lt;wire&apos;匹配包含以wire开头的单词的行</div><div class="line">$ grep -e &apos;\&lt;wire&apos; testgrep</div><div class="line"></div><div class="line"># &apos;blog\&gt;&apos;匹配包含以blog结尾的单词的行</div><div class="line">$ grep -e &apos;blog\&gt;&apos; testgrep</div><div class="line"></div><div class="line"># 匹配aaa文件中&apos;blog.csdn.net&apos;的行的上下5行内容</div><div class="line">$ grep -5 -e blog.csdn.net aaa</div></pre></td></tr></table></figure>
-<h3 id="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"><a href="#chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）" class="headerlink" title="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"></a>chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 添加新的账号</div><div class="line">$ useradd 选项 用户名</div><div class="line"></div><div class="line"># 删除账号</div><div class="line">$ userdel 选项 用户名</div><div class="line"></div><div class="line"># 修改帐号</div><div class="line">$ usermod 选项 用户名</div><div class="line"></div><div class="line"># 用户密码的管理</div><div class="line">$ passwd 选项 用户名</div><div class="line">Old password：******</div><div class="line">New password：*******</div><div class="line">Re-enter new password：*******</div><div class="line"></div><div class="line"># 设置密码为空</div><div class="line">$ passwd -d 用户名</div><div class="line"></div><div class="line"># 添加新的组</div><div class="line">$ groupadd 选项 用户组</div><div class="line"></div><div class="line"># 删除组</div><div class="line">$ groupdel 用户组</div><div class="line"></div><div class="line"># 修改组</div><div class="line">$ groupmod 选项 用户组</div><div class="line"></div><div class="line"># 修改用户所在组（把某个用户改为新的用户组）</div><div class="line">$ usermod -g 用户组 用户名</div><div class="line"></div><div class="line"># 分配权限(修改某个目录的所属用户和用户组)</div><div class="line">$ chown -R hadoop:hadoop /usr/hadoop/</div><div class="line"></div><div class="line"># Linux中查看所有系统用户命令</div><div class="line">cat /etc/passwd</div></pre></td></tr></table></figure>
-<h3 id="alias别名（很有用，便于记录常用命令）"><a href="#alias别名（很有用，便于记录常用命令）" class="headerlink" title="alias别名（很有用，便于记录常用命令）"></a>alias别名（很有用，便于记录常用命令）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看当前设置了多少别名，直接输入alias</div><div class="line">$ alias</div><div class="line"></div><div class="line"># 添加别名，直接输入alias &apos;别名&apos;=&apos;命令&apos;（注意等号之间不能有空格）</div><div class="line">$ alias cdmanage=&apos;cd /Users/ben/workspace/manage/target&apos;</div><div class="line"></div><div class="line"># 删除一个别名</div><div class="line">$ unalias cdmanage</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 永久保存alias的方式（本人是Mac操作系统）</div><div class="line"># 进入用户根目录</div><div class="line">$ cd /Users/ben</div><div class="line">$ vi .bash_profile</div><div class="line"></div><div class="line"># 编辑文件如下并保存</div><div class="line">alias cdben=&quot;cd /Users/ben&quot;</div><div class="line">alias cdcore=&quot;cd /Users/ben/workspace/core&quot;</div><div class="line">alias cdmanage=&quot;cd /Users/ben/workspace/manage&quot;</div><div class="line">alias cdservice=&quot;cd /Users/ben/workspace/service&quot;</div><div class="line"></div><div class="line">alias cdmongo2=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-2.6.9&quot;</div><div class="line">alias cdmongo3=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-3.0.2&quot;</div><div class="line">alias cdredis=&quot;cd /Users/ben/dev/redis-3.0.0&quot;</div><div class="line">alias cdsearch01=&quot;cd /Users/ben/dev/search01&quot;</div><div class="line"></div><div class="line"># 使上面的别名立即生效</div><div class="line">$ source .bash_profile</div></pre></td></tr></table></figure>
-<h3 id="Linux中修改IP地址"><a href="#Linux中修改IP地址" class="headerlink" title="Linux中修改IP地址"></a>Linux中修改IP地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line"># 修改/etc/sysconfig/network-scripts/ifcfg-eth0配置文件 </div><div class="line">IPADDR=192.168.0.248 </div><div class="line">GATEWAY=192.168.0.1 </div><div class="line">DNS1=192.168.0.1 </div><div class="line">第二步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">192.168.0.248        hostname</div></pre></td></tr></table></figure>
-<h3 id="Linux中修改主机名"><a href="#Linux中修改主机名" class="headerlink" title="Linux中修改主机名"></a>Linux中修改主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line">$ hostname oratest  </div><div class="line">第二步：</div><div class="line"># 修改/etc/sysconfig/network中的hostname  </div><div class="line">第三步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">记得重启!!!</div></pre></td></tr></table></figure>
-<h3 id="tar压缩-解压缩"><a href="#tar压缩-解压缩" class="headerlink" title="tar压缩/解压缩"></a>tar压缩/解压缩</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"># tar命令详解</div><div class="line">-c: 建立压缩档案</div><div class="line">-x：解压</div><div class="line">-t：查看内容</div><div class="line">-r：向压缩归档文件末尾追加文件</div><div class="line">-u：更新原压缩包中的文件</div><div class="line"># 这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。</div><div class="line"></div><div class="line"># 下面的参数是根据需要在压缩或解压档案时可选的。</div><div class="line">-z：有gzip属性的</div><div class="line">-j：有bz2属性的</div><div class="line">-Z：有compress属性的</div><div class="line">-v：显示所有过程</div><div class="line">-O：将文件解开到标准输出</div><div class="line">参数-f是必须的</div><div class="line">-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。</div><div class="line"></div><div class="line"># 压缩</div><div class="line"># 这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包，-f指定包的文件名。</div><div class="line">$ tar -cf all.tar *.jpg</div><div class="line"># 将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩，生成一个gzip压缩过的包，命名为jpg.tar.gz</div><div class="line">$ tar –czf jpg.tar.gz *.jpg</div><div class="line"># 这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的意思。 </div><div class="line">$ tar -rf all.tar *.gif</div><div class="line"># 这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。</div><div class="line">$ tar -uf all.tar logo.gif</div><div class="line"></div><div class="line"># 查看</div><div class="line"># 这条命令是在不解压的情况下查看all.tar包中所有文件，-t是列出文件的意思 </div><div class="line">$ tar -tf all.tar</div><div class="line"></div><div class="line"># 解压</div><div class="line"># 这条命令是解出all.tar包中所有文件，-x是解开的意思</div><div class="line">$ tar -xf all.tar</div><div class="line"># 解压tar包</div><div class="line">$ tar –xvf file.tar</div><div class="line"># 解压tar.gz</div><div class="line">$ tar -xzvf file.tar.gz</div><div class="line"># 解压 tar.bz2</div><div class="line">$ tar -xjvf file.tar.bz2</div><div class="line"># 解压tar.Z</div><div class="line">$ tar –xZvf file.tar.Z</div><div class="line"></div><div class="line"># 解压到指定的目录，如果目录不存在就创建</div><div class="line"># 将text.tar.gz 解压到 /home/app/test/ （绝对路径）下</div><div class="line">$ tar -zxvf ./text.tar.gz -C /home/app/test/</div><div class="line"></div><div class="line"># 解压rar</div><div class="line">$ unrar e file.rar</div><div class="line"></div><div class="line"># 解压zip</div><div class="line">$ unzip file.zip</div><div class="line"></div><div class="line"># 总结 </div><div class="line">1、*.tar 用 tar –xvf 解压 </div><div class="line">2、*.gz 用 gzip -d或者gunzip 解压 </div><div class="line">3、*.tar.gz和*.tgz 用 tar –xzf 解压 </div><div class="line">4、*.bz2 用 bzip2 -d或者用bunzip2 解压 </div><div class="line">5、*.tar.bz2用tar –xjf 解压 </div><div class="line">6、*.Z 用 uncompress 解压 </div><div class="line">7、*.tar.Z 用tar –xZf 解压 </div><div class="line">8、*.rar 用 unrar e解压 </div><div class="line">9、*.zip 用 unzip 解压</div></pre></td></tr></table></figure>
-<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 创建软链接</div><div class="line"># ln -s a b 中的 a 就是源文件，b是链接文件名，其作用是当进入b目录，实际上是链接进入了a目录</div><div class="line"># 值得注意的是执行命令的时候，应该是a目录已经建立，目录b没有建立。我最开始操作的是也把b目录给建立了，结果就不对了</div><div class="line"># 如下面的示例，当我们执行命令cd /usr/local/java/的时候，实际上是进入了/software/java/</div><div class="line">$ ln -s /software/java /usr/local/java</div><div class="line"></div><div class="line"># 删除软链接（注意不是rm -rf b/）</div><div class="line">rm -rf b</div></pre></td></tr></table></figure>
-<h3 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 创建文件夹命令</div><div class="line">mkdir test</div><div class="line"></div><div class="line"># 创建多级目录的命令</div><div class="line">mkdir -p /software/temp/nginx</div><div class="line"></div><div class="line"># 删除文件夹命令</div><div class="line">rm -rf test </div><div class="line"></div><div class="line"># 复制文件夹命令</div><div class="line">cp -rf /home/root/Downloads/* /home/root/tools</div></pre></td></tr></table></figure>
-<h3 id="MySQL数据库的备份与还原"><a href="#MySQL数据库的备份与还原" class="headerlink" title="MySQL数据库的备份与还原"></a>MySQL数据库的备份与还原</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 备份</div><div class="line"># root为用户名，user为要备份的数据库，自动会备份到/home/ben/文件目录下</div><div class="line">$ mysqldump -u root -p user &gt; /home/ben/user20160101.sql</div><div class="line"></div><div class="line"># 压缩备份</div><div class="line">$ mysqldump -u root -p user | gzip &gt; user20160101.sql.gz </div><div class="line"></div><div class="line"># 还原</div><div class="line">$ mysql -u root -p user &lt; /home/ben/user20160101.sql</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2" target="_blank" rel="external">http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2</a></li>
-<li><a href="http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html" target="_blank" rel="external">http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html</a></li>
-<li><a href="http://www.php-note.com/article/detail/831" target="_blank" rel="external">http://www.php-note.com/article/detail/831</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2015/11/28/Linux常用命令（一）/" data-id="cirnkygyc0002ujs6307d9w32" class="article-share-link">Share</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    </nav>
   
 </section>
         
