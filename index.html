@@ -98,6 +98,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Kibana学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/16/Kibana学习（一）/" class="article-date">
+  <time datetime="2016-08-16T15:38:39.000Z" itemprop="datePublished">2016-08-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Kibana学习（一）"><a href="#Kibana学习（一）" class="headerlink" title="Kibana学习（一）"></a>Kibana学习（一）</h2><p>之前在搭建ELK环境的过程中遇到了一些问题，在此进行总结，以后会不断更新的。</p>
+<h4 id="Kibana的默认索引-kibana无法在ES创建"><a href="#Kibana的默认索引-kibana无法在ES创建" class="headerlink" title="Kibana的默认索引.kibana无法在ES创建"></a>Kibana的默认索引.kibana无法在ES创建</h4><p>这个问题是因为我在ES中安装了ik插件，修改了elasticsearch.yml的配置文件，但是没有在ES的lib包目录中引入ik的jar包，所以在Kibana访问ES的时候ES报错了，检查ES的log文件发现了是elasticsearch.yml的ik插件配置没有找到ik的jar包</p>
+<ul>
+<li>所以Kibana报错最好的找错方式就是看ES的log</li>
+</ul>
+<h4 id="ES创建了User的index之后，在Kibana配置该索引时’Time-field-name’为空，没有-Timestamp选项"><a href="#ES创建了User的index之后，在Kibana配置该索引时’Time-field-name’为空，没有-Timestamp选项" class="headerlink" title="ES创建了User的index之后，在Kibana配置该索引时’Time-field name’为空，没有@Timestamp选项"></a>ES创建了User的index之后，在Kibana配置该索引时’Time-field name’为空，没有@Timestamp选项</h4><p>这个问题是因为ES创建的User的mapping中没有个一个字段是date类型，所以就没有@Timestamp字段，修改User的mapping重新索引数据后@Timestamp字段就出现了，如果需要手动添加Timestamp字段可以参考如下步骤。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. Go to Settings → Advanced.</div><div class="line">2. Edit the metaFields and add &quot;_timestamp&quot;. Hit save.</div><div class="line">3. Now go back to Settings → Indices and _timestamp will be available in the drop-down list for &quot;Time-field name&quot;.</div></pre></td></tr></table></figure>
+<p><img src="http://i.stack.imgur.com/ngaPk.png" alt="metaFields"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/29429201/timestamp-not-appearing-in-kibana" target="_blank" rel="external">http://stackoverflow.com/questions/29429201/timestamp-not-appearing-in-kibana</a></li>
+</ul>
+<h4 id="Kibana创建图表的时候，选择的Aggregation-Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation-Terms使用"><a href="#Kibana创建图表的时候，选择的Aggregation-Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation-Terms使用" class="headerlink" title="Kibana创建图表的时候，选择的Aggregation Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation Terms使用"></a>Kibana创建图表的时候，选择的Aggregation Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation Terms使用</h4><p>问题是因为我自己创建的索引command_index的mapping，所有的String字段都没有指定分词情况，所以ES默认都是Analyzed分词。所以这里只需要将mapping修改一下，将所有的String类型字段都指定分词方式(“index”:”not_analyzed”)，这样指定的字段就不会分词了，就可以使用Aggregation Terms方式创建图表了。（注意：一定要删除原来的mapping，重新索引数据才可以）</p>
+<h4 id="Kibana使用Pie-Charts错误：”Pie-chart-response-converter-Splitting-charts-without-splitting-sliced-is-not-supported-Pretend-that-we-are-just-splitting-slices”"><a href="#Kibana使用Pie-Charts错误：”Pie-chart-response-converter-Splitting-charts-without-splitting-sliced-is-not-supported-Pretend-that-we-are-just-splitting-slices”" class="headerlink" title="Kibana使用Pie Charts错误：”Pie chart response converter:Splitting charts without splitting sliced is not supported.Pretend that we are just splitting slices”"></a>Kibana使用Pie Charts错误：”Pie chart response converter:Splitting charts without splitting sliced is not supported.Pretend that we are just splitting slices”</h4><p>其实这个错误是因为在创建图表的时候选择了错误的类型，本来只是想创建一个单个的饼图（用线来切分的），所以应该使用Split Slice类型（从字面上应该也能理解），但是却选择了Split Chart类型了，所以就会出现上面的错误。</p>
+<p><img src="http://img.blog.csdn.net/20160812170725251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<p>下面是来自stackoverflow的解释，还清晰的给出了这两个类型的例子，很直观的区别开了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">If you want to do a &quot;split slice &quot; operation on a pie chart,first you need to create a pie chart with slices.Here from what I understand,you tried to give the option &quot;split chart&quot; first,which actually is to make differrent pie charts,in the same row or column,which needs more than one pie-chart. This also requires pie-charts (with slices) to be created first. So you need to create pie-charts and then only you can use &quot;split chart&quot;. i In the figures below,the first one shows an ordinary pie-chart created by &quot;split-slice&quot; and the second one shows five pie charts stacked horizontally using the &quot;split chart&quot; method.</div></pre></td></tr></table></figure>
+<p><img src="http://i.stack.imgur.com/fHvO0.png" alt="Split Slice"><br><img src="http://i.stack.imgur.com/4P7OK.png" alt="Split Chart"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/28691889/kibana-4-making-pie-chart-error-message" target="_blank" rel="external">http://stackoverflow.com/questions/28691889/kibana-4-making-pie-chart-error-message</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/16/Kibana学习（一）/" data-id="cirxmxmex0000urs6nle4k9lv" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Shell脚本学习（四）EOF的用法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/15/Shell脚本学习（四）EOF的用法/" class="article-date">
@@ -123,7 +173,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/15/Shell脚本学习（四）EOF的用法/" data-id="cirw5ou0200081qs6fcha492c" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/08/15/Shell脚本学习（四）EOF的用法/" data-id="cirxmxmgb0009urs6pj2wa8dy" class="article-share-link">Compartilhar</a>
       
 
       
@@ -163,7 +213,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/11/Shell脚本学习（三）注释的用法/" data-id="cirw5ou0600091qs6ij9lzu3h" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/08/11/Shell脚本学习（三）注释的用法/" data-id="cirxmxmg40007urs6jgb9v5y5" class="article-share-link">Compartilhar</a>
       
 
       
@@ -201,7 +251,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cirw5otzv00061qs67pza5s9s" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cirxmxmgd000aurs61zpvncq4" class="article-share-link">Compartilhar</a>
       
 
       
@@ -291,43 +341,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cirw5ou0n000b1qs6ov9a1kkq" class="article-share-link">Compartilhar</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" class="article-date">
-  <time datetime="2016-07-06T18:44:17.000Z" itemprop="datePublished">2016-07-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包"><a href="#Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包" class="headerlink" title="Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包"></a>Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包</h2><h3 id="插件总结"><a href="#插件总结" class="headerlink" title="插件总结"></a>插件总结</h3><p>上一篇我们介绍了Maven如何构建可执行的jar包，主要使用了maven-jar-plugin和maven-dependency-plugin这两个Maven的插件，maven-jar-plugin负责构建jar包，maven-dependency-plugin负责导出所有依赖的jar包，这里我们使用了maven-assembly-plugin插件，这个插件可以将所有当前jar依赖的所有jar包打包到当前jar里面，这样就不需要导出所有依赖的jar包了，直接运行jar就可以了，实在太方便了 ^_^</p>
-<h3 id="Maven的pom-xml配置文件"><a href="#Maven的pom-xml配置文件" class="headerlink" title="Maven的pom.xml配置文件"></a>Maven的pom.xml配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">  &lt;groupId&gt;com.birdben&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;birdDemo&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">  &lt;name&gt;birdDemo&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">  &lt;properties&gt;</div><div class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">  &lt;/properties&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.7.13&lt;/version&gt;</div><div class="line">      &lt;scope&gt;system&lt;/scope&gt;</div><div class="line">      &lt;!-- $&#123;basedir&#125; 项目根目录 --&gt;</div><div class="line">      &lt;systemPath&gt;$&#123;basedir&#125;/lib/slf4j-api-1.7.13.jar&lt;/systemPath&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line"></div><div class="line">    &lt;!-- 其他jar包引用开始 --&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;3.8.1&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;!-- 其他jar包引用j结束 --&gt;</div><div class="line"></div><div class="line">  &lt;/dependencies&gt;</div><div class="line"></div><div class="line">  &lt;build&gt;</div><div class="line">    &lt;finalName&gt;App&lt;/finalName&gt;</div><div class="line">    &lt;plugins&gt;</div><div class="line">      &lt;plugin&gt;  </div><div class="line">	    &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;  </div><div class="line">	    &lt;configuration&gt;  </div><div class="line">	        &lt;appendAssemblyId&gt;false&lt;/appendAssemblyId&gt;  </div><div class="line">	        &lt;descriptorRefs&gt;  </div><div class="line">	            &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;  </div><div class="line">	        &lt;/descriptorRefs&gt;  </div><div class="line">	        &lt;archive&gt;  </div><div class="line">	            &lt;manifest&gt;  </div><div class="line">	                &lt;mainClass&gt;com.birdben.App&lt;/mainClass&gt;  </div><div class="line">	            &lt;/manifest&gt;  </div><div class="line">	        &lt;/archive&gt;  </div><div class="line">	    &lt;/configuration&gt;  </div><div class="line">	    &lt;executions&gt;  </div><div class="line">	        &lt;execution&gt;  </div><div class="line">	            &lt;id&gt;make-assembly&lt;/id&gt;  </div><div class="line">	            &lt;phase&gt;package&lt;/phase&gt;  </div><div class="line">	            &lt;goals&gt;  </div><div class="line">	                &lt;goal&gt;assembly&lt;/goal&gt;  </div><div class="line">	            &lt;/goals&gt;  </div><div class="line">	        &lt;/execution&gt;  </div><div class="line">	    &lt;/executions&gt;  </div><div class="line">	  &lt;/plugin&gt;</div><div class="line">    &lt;/plugins&gt;</div><div class="line">  &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
-<h5 id="App-java"><a href="#App-java" class="headerlink" title="App.java"></a>App.java</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.birdben;</div><div class="line"></div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import junit.framework.TestResult;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Hello world!</div><div class="line"> */</div><div class="line">public class App &#123;</div><div class="line"></div><div class="line">    public static Logger logger = LoggerFactory.getLogger(App.class);</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        TestResult test = new TestResult();</div><div class="line">        logger.info(&quot;App start&quot;);</div><div class="line">        System.out.println(&quot;Hello World!&quot;);</div><div class="line">        logger.info(&quot;App end&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 运行jar</div><div class="line">$ java -jar App.jar</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://chenzhou123520.iteye.com/blog/1706242" target="_blank" rel="external">http://chenzhou123520.iteye.com/blog/1706242</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cirw5otzl00041qs6wa3e5zm3" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cirxmxmg90008urs6kszjzagh" class="article-share-link">Compartilhar</a>
       
 
       
@@ -382,7 +396,43 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cirw5otzx00071qs6azlxqlx1" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cirxmxmgg000curs6h3lwgi7a" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" class="article-date">
+  <time datetime="2016-07-06T18:44:17.000Z" itemprop="datePublished">2016-07-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包"><a href="#Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包" class="headerlink" title="Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包"></a>Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包</h2><h3 id="插件总结"><a href="#插件总结" class="headerlink" title="插件总结"></a>插件总结</h3><p>上一篇我们介绍了Maven如何构建可执行的jar包，主要使用了maven-jar-plugin和maven-dependency-plugin这两个Maven的插件，maven-jar-plugin负责构建jar包，maven-dependency-plugin负责导出所有依赖的jar包，这里我们使用了maven-assembly-plugin插件，这个插件可以将所有当前jar依赖的所有jar包打包到当前jar里面，这样就不需要导出所有依赖的jar包了，直接运行jar就可以了，实在太方便了 ^_^</p>
+<h3 id="Maven的pom-xml配置文件"><a href="#Maven的pom-xml配置文件" class="headerlink" title="Maven的pom.xml配置文件"></a>Maven的pom.xml配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">  &lt;groupId&gt;com.birdben&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;birdDemo&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">  &lt;name&gt;birdDemo&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">  &lt;properties&gt;</div><div class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">  &lt;/properties&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.7.13&lt;/version&gt;</div><div class="line">      &lt;scope&gt;system&lt;/scope&gt;</div><div class="line">      &lt;!-- $&#123;basedir&#125; 项目根目录 --&gt;</div><div class="line">      &lt;systemPath&gt;$&#123;basedir&#125;/lib/slf4j-api-1.7.13.jar&lt;/systemPath&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line"></div><div class="line">    &lt;!-- 其他jar包引用开始 --&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;3.8.1&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;!-- 其他jar包引用j结束 --&gt;</div><div class="line"></div><div class="line">  &lt;/dependencies&gt;</div><div class="line"></div><div class="line">  &lt;build&gt;</div><div class="line">    &lt;finalName&gt;App&lt;/finalName&gt;</div><div class="line">    &lt;plugins&gt;</div><div class="line">      &lt;plugin&gt;  </div><div class="line">	    &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;  </div><div class="line">	    &lt;configuration&gt;  </div><div class="line">	        &lt;appendAssemblyId&gt;false&lt;/appendAssemblyId&gt;  </div><div class="line">	        &lt;descriptorRefs&gt;  </div><div class="line">	            &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;  </div><div class="line">	        &lt;/descriptorRefs&gt;  </div><div class="line">	        &lt;archive&gt;  </div><div class="line">	            &lt;manifest&gt;  </div><div class="line">	                &lt;mainClass&gt;com.birdben.App&lt;/mainClass&gt;  </div><div class="line">	            &lt;/manifest&gt;  </div><div class="line">	        &lt;/archive&gt;  </div><div class="line">	    &lt;/configuration&gt;  </div><div class="line">	    &lt;executions&gt;  </div><div class="line">	        &lt;execution&gt;  </div><div class="line">	            &lt;id&gt;make-assembly&lt;/id&gt;  </div><div class="line">	            &lt;phase&gt;package&lt;/phase&gt;  </div><div class="line">	            &lt;goals&gt;  </div><div class="line">	                &lt;goal&gt;assembly&lt;/goal&gt;  </div><div class="line">	            &lt;/goals&gt;  </div><div class="line">	        &lt;/execution&gt;  </div><div class="line">	    &lt;/executions&gt;  </div><div class="line">	  &lt;/plugin&gt;</div><div class="line">    &lt;/plugins&gt;</div><div class="line">  &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<h5 id="App-java"><a href="#App-java" class="headerlink" title="App.java"></a>App.java</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.birdben;</div><div class="line"></div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import junit.framework.TestResult;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Hello world!</div><div class="line"> */</div><div class="line">public class App &#123;</div><div class="line"></div><div class="line">    public static Logger logger = LoggerFactory.getLogger(App.class);</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        TestResult test = new TestResult();</div><div class="line">        logger.info(&quot;App start&quot;);</div><div class="line">        System.out.println(&quot;Hello World!&quot;);</div><div class="line">        logger.info(&quot;App end&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 运行jar</div><div class="line">$ java -jar App.jar</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://chenzhou123520.iteye.com/blog/1706242" target="_blank" rel="external">http://chenzhou123520.iteye.com/blog/1706242</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cirxmxmfz0006urs6hg7no2mf" class="article-share-link">Compartilhar</a>
       
 
       
@@ -424,7 +474,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/04/Git配置多个SSH-Key/" data-id="cirw5otz900001qs6tjpjb6x8" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/07/04/Git配置多个SSH-Key/" data-id="cirxmxmf70003urs6omawf6aa" class="article-share-link">Compartilhar</a>
       
 
       
@@ -456,7 +506,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/03/Spring的JDBCTemplate批量更新问题/" data-id="cirw5ou0l000a1qs6vr0vz5up" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/07/03/Spring的JDBCTemplate批量更新问题/" data-id="cirxmxmgf000burs60qc4cvqp" class="article-share-link">Compartilhar</a>
       
 
       
@@ -516,53 +566,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/02/Hexo + Github搭建个人博客/" data-id="cirw5otze00011qs6fsbcd95y" class="article-share-link">Compartilhar</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Linux常用命令（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/02/Linux常用命令（二）/" class="article-date">
-  <time datetime="2016-07-01T16:56:18.000Z" itemprop="datePublished">2016-07-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Linux常用命令（二）"><a href="#Linux常用命令（二）" class="headerlink" title="Linux常用命令（二）"></a>Linux常用命令（二）</h2><h3 id="scp命令"><a href="#scp命令" class="headerlink" title="scp命令"></a>scp命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># 获取远程服务器上的文件</div><div class="line">$ scp -P 2222 root@192.168.1.100:/root/tomcat.tar.gz /home/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数 </div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat.tar.gz 表示远程服务器上的文件</div><div class="line"># /home/tomcat.tar.gz 表示保存在本地上的路径和文件名</div><div class="line"></div><div class="line"># 获取远程服务器上的目录</div><div class="line">$ scp -P 2222 -r root@192.168.1.100:/root/tomcat/ /home/ben/dev/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数</div><div class="line"># -r参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat/ 表示远程服务器上的目录</div><div class="line"># /home/ben/dev/ 表示保存在本地上的路径。</div><div class="line"></div><div class="line"># 将本地文件上传到服务器上</div><div class="line">$ scp -P 2222 /home/tomcat.tar.gz root@192.168.1.100:/root/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 </div><div class="line"># /home/tomcat.tar.gz 表示本地上准备上传文件的路径和文件名</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器</div><div class="line"></div><div class="line"># 将本地目录上传到服务器上</div><div class="line">$ scp -P 2222 -r /home/tomcat/ root@192.168.1.100:/root/dev/tomcat/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。</div><div class="line"># -r 参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># /home/tomcat/表示准备要上传的目录</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/dev/tomcat/ 表示保存在远程服务器上的目录位置。</div></pre></td></tr></table></figure>
-<h3 id="nc命令"><a href="#nc命令" class="headerlink" title="nc命令"></a>nc命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 今天学到了另一种远程传输文件的方式，原来只知道scp，rz/sz</div><div class="line"># 远程服务器（目的主机监听）</div><div class="line"># 命令格式：nc -l 监听端口&lt;未使用端口&gt; &gt; 要接收的文件名</div><div class="line">$ nc -l 9999 &gt; elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：远程服务器开启一个9999的端口进行监听，并且等待接收elasticsearch-jdbc-1.7.3.0-dist.zip文件</div><div class="line"></div><div class="line"># 本地机器（源主机发起请求）</div><div class="line"># 命令格式：nc 目的主机ip 目的端口 &lt; 要发送的文件</div><div class="line">$ nc 10.120.10.105 9999 &lt; /Users/ben/Downloads/letv/ES/elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：本地机器指定远程服务器的ip地址和port端口号将指定的本地文件传送到远程服务器</div></pre></td></tr></table></figure>
-<h3 id="rz-sz命令"><a href="#rz-sz命令" class="headerlink" title="rz/sz命令"></a>rz/sz命令</h3><h5 id="Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用"><a href="#Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用" class="headerlink" title="Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用"></a>Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用</h5><p>下面介绍两种客户端</p>
-<ol>
-<li>iterm2（适用Mac环境）</li>
-<li>secureCRT（适用Windows环境）</li>
-</ol>
-<h4 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">1. 安装brew工具</div><div class="line">$ brew install lszrz</div><div class="line"># 如果没有brew工具，请参考：http://blog.csdn.net/tsxw24/article/details/15500517</div><div class="line">2. 下载iterm2-zmodem到/usr/local/bin目录（将两个shell脚本放到/usr/local/bin/目录下然后开始配置）</div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh </div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-recv-zmodem.sh </div><div class="line">$ sudo chmod 777 /usr/local/bin/iterm2-*</div><div class="line">3. 运行下载的iterm，添加trigger</div><div class="line">打开iterm2 --&gt;  同时按command和,键 --&gt; Profiles --&gt; Default --&gt; Advanced --&gt; Triggers的Edit按钮</div><div class="line">4. Triggers的设置代码如下 </div><div class="line">Regular expression: \*\*B0100</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-send-zmodem.sh</div><div class="line"></div><div class="line">Regular expression: \*\*B00000000000000</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</div><div class="line">5. 上传和下载文件和secureCRT方式一样</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160622214939271?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="iterm2"></p>
-<h4 id="secureCRT"><a href="#secureCRT" class="headerlink" title="secureCRT"></a>secureCRT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 上传文件</div><div class="line">1. 打开secureCRT,通过SSH连到至远程linux主机</div><div class="line">2. 键入rz命令</div><div class="line">3. 在跳出的窗口选择想要上传的文件</div><div class="line">4. 点击ADD后加入传输列表</div><div class="line">5. 点击确认以后传送文件</div><div class="line">6. 查看状态，一般都是发送正功</div><div class="line">7. 查看目录，确定刚才选的文件已经上传成功</div><div class="line"></div><div class="line"># 下载文件</div><div class="line">1. 远程连接到linux主机</div><div class="line">2. 输入sz fileName</div><div class="line">3. 在弹出的窗口中选择保存文件到本地的目录</div><div class="line">4. 确定后，等待文件下载完成</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.vpser.net/manage/scp.html" target="_blank" rel="external">http://www.vpser.net/manage/scp.html</a></li>
-<li><a href="http://blog.csdn.net/u014552288/article/details/38349827" target="_blank" rel="external">http://blog.csdn.net/u014552288/article/details/38349827</a></li>
-<li><a href="http://blog.csdn.net/tsxw24/article/details/15500517" target="_blank" rel="external">http://blog.csdn.net/tsxw24/article/details/15500517</a></li>
-<li><a href="http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO" target="_blank" rel="external">http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO</a></li>
-<li><a href="http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html" target="_blank" rel="external">http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/07/02/Linux常用命令（二）/" data-id="cirw5otzp00051qs6u3jyh3ih" class="article-share-link">Compartilhar</a>
+        <a data-url="http://yoursite.com/2016/07/02/Hexo + Github搭建个人博客/" data-id="cirxmxmf20001urs6b46qegga" class="article-share-link">Compartilhar</a>
       
 
       
