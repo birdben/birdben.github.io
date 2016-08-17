@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Shell脚本学习（五）/dev/null的用法在类似启动Tomcat的Shell脚本中我们经常会看到如：./startup.sh &amp;gt; /dev/null，正常这种用法都是执行./startup.sh启动脚本后，将log输出到控制台的。但是用./start.sh &amp;gt; /dev/null这种方式就类似daemon后台启动Tomcat的效果一样，但是启动的日志不会输出到log文件，也不会输">
+<meta property="og:type" content="article">
+<meta property="og:title" content="birdben">
+<meta property="og:url" content="http://yoursite.com/2016/08/17/Shell脚本学习（五）:dev:null的用法/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Shell脚本学习（五）/dev/null的用法在类似启动Tomcat的Shell脚本中我们经常会看到如：./startup.sh &amp;gt; /dev/null，正常这种用法都是执行./startup.sh启动脚本后，将log输出到控制台的。但是用./start.sh &amp;gt; /dev/null这种方式就类似daemon后台启动Tomcat的效果一样，但是启动的日志不会输出到log文件，也不会输">
+<meta property="og:updated_time" content="2016-08-17T15:46:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="birdben">
+<meta name="twitter:description" content="Shell脚本学习（五）/dev/null的用法在类似启动Tomcat的Shell脚本中我们经常会看到如：./startup.sh &amp;gt; /dev/null，正常这种用法都是执行./startup.sh启动脚本后，将log输出到控制台的。但是用./start.sh &amp;gt; /dev/null这种方式就类似daemon后台启动Tomcat的效果一样，但是启动的日志不会输出到log文件，也不会输">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.png" alt="Profile Picture">
+      </div>
+      <div id="title">birdben</div>
+      
+       <ul class="my-socials">
+  
+  <li>
+  	<a href="https://github.com/birdben" class="github" target="_blank">
+  		<i class="fa fa-github"></i>
+  	</a>
+  </li>
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">birdben</a>
+      <img src="/logo.png" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+          <a href="https://github.com/birdben" class="github" target="_blank">
+            <i class="fa fa-github"></i>
+          </a>
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="yoursite.com">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+    
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Shell脚本学习（五）:dev:null的用法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/17/Shell脚本学习（五）:dev:null的用法/" class="article-date">
+  <time datetime="2016-08-17T15:46:25.000Z" itemprop="datePublished">2016-08-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Shell脚本学习（五）-dev-null的用法"><a href="#Shell脚本学习（五）-dev-null的用法" class="headerlink" title="Shell脚本学习（五）/dev/null的用法"></a>Shell脚本学习（五）/dev/null的用法</h2><p>在类似启动Tomcat的Shell脚本中我们经常会看到如：./startup.sh &gt; /dev/null，正常这种用法都是执行./startup.sh启动脚本后，将log输出到控制台的。但是用./start.sh &gt; /dev/null这种方式就类似daemon后台启动Tomcat的效果一样，但是启动的日志不会输出到log文件，也不会输出到控制台，而是输出到/dev/null。可以把/dev/null看作一个”黑洞”，它非常等价于一个只写文件，所有写入它的内容都会永远丢失，而尝试从它那儿读取内容则什么也读不到。所以我们是在任何地方都看不到这个Tomcat的启动log的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">1. 禁止标准输出</div><div class="line"># 将catalina.out日志文件的内容输出到控制台</div><div class="line">cat catalina.out</div><div class="line"># 将catalina.out日志文件的内容输出到test.log文件中</div><div class="line">cat catalina.out &gt; test.log</div><div class="line"># 将catalina.out日志文件的内容输出到/dev/null（黑洞）</div><div class="line">cat catalina.out &gt; /dev/null</div><div class="line"></div><div class="line">2. 禁止输出ls文件列表</div><div class="line"># 输出当前文件夹下的所有文件列表到ls.out文件中</div><div class="line">ls &gt; ls.out</div><div class="line"># 将文件列表实际是输出到/dev/null（黑洞）</div><div class="line">ls &gt; /dev/null</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/17/Shell脚本学习（五）:dev:null的用法/" data-id="cirz2mnk1000cgss6cdw65t0a" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/17/Kibana学习（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 birdben<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>
