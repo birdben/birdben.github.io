@@ -76,7 +76,7 @@
     </nav>
     <div id="search-form-wrap">
       <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="搜索">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
         <input type="submit" value="" class="search-form-submit">
         <input name=tn type=hidden value="bds">
         <input name=cl type=hidden value="3">
@@ -97,6 +97,49 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Shell脚本学习（六）if语句的格式问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/21/Shell脚本学习（六）if语句的格式问题/" class="article-date">
+  <time datetime="2016-08-21T06:17:49.000Z" itemprop="datePublished">2016-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Shell脚本学习（六）if语句的格式问题"><a href="#Shell脚本学习（六）if语句的格式问题" class="headerlink" title="Shell脚本学习（六）if语句的格式问题"></a>Shell脚本学习（六）if语句的格式问题</h2><p>今天在写Shell启动脚本的时候遇到了个比较奇葩的问题，因为对Shell了解的不够，不是很清楚if语句的格式，if语句不按照指定的格式写可能不会得到你想要的结果。先简单描述下我的问题吧</p>
+<p>一个简单的判断字符串的脚本，根据base_version变量的值来输出内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">base_version=&apos;2.x&apos;</div><div class="line"></div><div class="line">if [ $base_version=&apos;1.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是1.x版本&quot;</div><div class="line">fi</div><div class="line">if [ $base_version=&apos;2.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是2.x版本&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>看完上面的脚本之后，我想大家的第一答案应该都是”当前安装的是2.x版本”，但是运行结果却是”当前安装的是1.x版本”和”当前安装的是2.x版本”都输出了。</p>
+<p>规范有点严格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if空格[空格&quot;xx&quot;空格=空格&quot;xx&quot;空格];空格then</div><div class="line">	echo &quot;if&quot;</div><div class="line">elif空格[空格&quot;xx&quot;空格=空格&quot;xx&quot;空格];空格then</div><div class="line">	echo &quot;elseif&quot;</div><div class="line">else</div><div class="line">	echo &quot;else&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>我的脚本在$base_version=’1.x’等号左右没有加空格，修改之后如下之后，运行结果是”当前安装的是2.x版本”正确的了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">base_version=&apos;2.x&apos;</div><div class="line"></div><div class="line">if [ $base_version = &apos;1.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是1.x版本&quot;</div><div class="line">fi</div><div class="line">if [ $base_version = &apos;2.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是2.x版本&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>接下来介绍一些if语句常用的判断语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">－d：判断指定的变量是否为目录</div><div class="line">－z：判断指定的变量是否存在值</div><div class="line">－f：判断指定的变量是否为文件</div><div class="line">－L：判断指定的变量是否为符号链接（软链接）</div><div class="line">－r：判断指定的变量是否可读</div><div class="line">－w：判断指定的变量是否可写</div><div class="line">－x：判断存在的对象是否可以执行</div><div class="line">!：测试条件的否定符号</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line"># 判断文件夹是否存在</div><div class="line">if [ -d $folder ]; then</div><div class="line">	echo &quot;目录存在！&quot;</div><div class="line">else</div><div class="line">	echo &quot;目录不存在！&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># 如果文件夹不存在，创建文件夹</div><div class="line">if [ ! -d &quot;/test/folder&quot; ]; then</div><div class="line">  mkdir /test/folder</div><div class="line">fi</div><div class="line"></div><div class="line"># shell判断文件,目录是否存在或者具有权限</div><div class="line">folder=&quot;/software/es/&quot;</div><div class="line">file=&quot;/software/es/config/elasticsearch.yml&quot;</div><div class="line"></div><div class="line"># -x 参数判断 $folder 是否存在并且是否具有可执行权限</div><div class="line">if [ ! -x &quot;$folder&quot;]; then</div><div class="line">  mkdir &quot;$folder&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># -d 参数判断 $folder 是否存在</div><div class="line">if [ ! -d &quot;$folder&quot;]; then</div><div class="line">  mkdir &quot;$folder&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># -f 参数判断 $file 是否存在</div><div class="line">if [ ! -f &quot;$file&quot; ]; then</div><div class="line">  touch &quot;$file&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># -n 判断一个变量是否有值</div><div class="line">if [ ! -n &quot;$var&quot; ]; then</div><div class="line">  echo &quot;$var is empty&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># 判断两个变量是否相等</div><div class="line">if [ &quot;$var1&quot; = &quot;$var2&quot; ]; then</div><div class="line">  echo &apos;$var1 equals $var2&apos;</div><div class="line">else</div><div class="line">  echo &apos;$var1 not equals $var2&apos;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/caoyongjunjava/article/details/44560849" target="_blank" rel="external">http://blog.csdn.net/caoyongjunjava/article/details/44560849</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/21/Shell脚本学习（六）if语句的格式问题/" data-id="cis482og1000eubs66ehul64w" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Git常用命令" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -142,7 +185,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/20/Git常用命令/" data-id="cis2r55v60001yks6undm6ror" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/20/Git常用命令/" data-id="cis482of80001ubs6ekf4oq72" class="article-share-link">Share</a>
       
 
       
@@ -171,7 +214,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/Shell脚本学习（五）:dev:null的用法/" data-id="cis2r55wa000eyks64xtp3gv8" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/17/Shell脚本学习（五）:dev:null的用法/" data-id="cis482ofy000cubs6xycfab4h" class="article-share-link">Share</a>
       
 
       
@@ -265,7 +308,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/Kibana学习（二）/" data-id="cis2r55vd0003yks6tb7511gq" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/17/Kibana学习（二）/" data-id="cis482ofd0003ubs6o7lszr3s" class="article-share-link">Share</a>
       
 
       
@@ -315,7 +358,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/16/Kibana学习（一）/" data-id="cis2r55vg0004yks6akkgc856" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/16/Kibana学习（一）/" data-id="cis482ofg0004ubs6ds5wnoew" class="article-share-link">Share</a>
       
 
       
@@ -351,7 +394,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/15/Shell脚本学习（四）EOF的用法/" data-id="cis2r55we000fyks64bhizkre" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/15/Shell脚本学习（四）EOF的用法/" data-id="cis482ogb000gubs69oqws6jm" class="article-share-link">Share</a>
       
 
       
@@ -391,7 +434,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/11/Shell脚本学习（三）注释的用法/" data-id="cis2r55w2000byks6n86u70ih" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/11/Shell脚本学习（三）注释的用法/" data-id="cis482ofr0008ubs6qmd1rd68" class="article-share-link">Share</a>
       
 
       
@@ -429,7 +472,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cis2r55w5000cyks64sqz6wap" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/09/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本/" data-id="cis482ofx000bubs61xjcc7pb" class="article-share-link">Share</a>
       
 
       
@@ -519,7 +562,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cis2r55w0000ayks67wedp17t" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/09/Shell脚本学习（一）Shell命令基础/" data-id="cis482og0000dubs6333bel3s" class="article-share-link">Share</a>
       
 
       
@@ -574,43 +617,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cis2r55vv0008yks6bnpeuuko" class="article-share-link">分享到</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" class="article-date">
-  <time datetime="2016-07-06T18:44:17.000Z" itemprop="datePublished">2016-07-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包"><a href="#Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包" class="headerlink" title="Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包"></a>Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包</h2><h3 id="插件总结"><a href="#插件总结" class="headerlink" title="插件总结"></a>插件总结</h3><p>上一篇我们介绍了Maven如何构建可执行的jar包，主要使用了maven-jar-plugin和maven-dependency-plugin这两个Maven的插件，maven-jar-plugin负责构建jar包，maven-dependency-plugin负责导出所有依赖的jar包，这里我们使用了maven-assembly-plugin插件，这个插件可以将所有当前jar依赖的所有jar包打包到当前jar里面，这样就不需要导出所有依赖的jar包了，直接运行jar就可以了，实在太方便了 ^_^</p>
-<h3 id="Maven的pom-xml配置文件"><a href="#Maven的pom-xml配置文件" class="headerlink" title="Maven的pom.xml配置文件"></a>Maven的pom.xml配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">  &lt;groupId&gt;com.birdben&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;birdDemo&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">  &lt;name&gt;birdDemo&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">  &lt;properties&gt;</div><div class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">  &lt;/properties&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.7.13&lt;/version&gt;</div><div class="line">      &lt;scope&gt;system&lt;/scope&gt;</div><div class="line">      &lt;!-- $&#123;basedir&#125; 项目根目录 --&gt;</div><div class="line">      &lt;systemPath&gt;$&#123;basedir&#125;/lib/slf4j-api-1.7.13.jar&lt;/systemPath&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line"></div><div class="line">    &lt;!-- 其他jar包引用开始 --&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;3.8.1&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;!-- 其他jar包引用j结束 --&gt;</div><div class="line"></div><div class="line">  &lt;/dependencies&gt;</div><div class="line"></div><div class="line">  &lt;build&gt;</div><div class="line">    &lt;finalName&gt;App&lt;/finalName&gt;</div><div class="line">    &lt;plugins&gt;</div><div class="line">      &lt;plugin&gt;  </div><div class="line">	    &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;  </div><div class="line">	    &lt;configuration&gt;  </div><div class="line">	        &lt;appendAssemblyId&gt;false&lt;/appendAssemblyId&gt;  </div><div class="line">	        &lt;descriptorRefs&gt;  </div><div class="line">	            &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;  </div><div class="line">	        &lt;/descriptorRefs&gt;  </div><div class="line">	        &lt;archive&gt;  </div><div class="line">	            &lt;manifest&gt;  </div><div class="line">	                &lt;mainClass&gt;com.birdben.App&lt;/mainClass&gt;  </div><div class="line">	            &lt;/manifest&gt;  </div><div class="line">	        &lt;/archive&gt;  </div><div class="line">	    &lt;/configuration&gt;  </div><div class="line">	    &lt;executions&gt;  </div><div class="line">	        &lt;execution&gt;  </div><div class="line">	            &lt;id&gt;make-assembly&lt;/id&gt;  </div><div class="line">	            &lt;phase&gt;package&lt;/phase&gt;  </div><div class="line">	            &lt;goals&gt;  </div><div class="line">	                &lt;goal&gt;assembly&lt;/goal&gt;  </div><div class="line">	            &lt;/goals&gt;  </div><div class="line">	        &lt;/execution&gt;  </div><div class="line">	    &lt;/executions&gt;  </div><div class="line">	  &lt;/plugin&gt;</div><div class="line">    &lt;/plugins&gt;</div><div class="line">  &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
-<h5 id="App-java"><a href="#App-java" class="headerlink" title="App.java"></a>App.java</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.birdben;</div><div class="line"></div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import junit.framework.TestResult;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Hello world!</div><div class="line"> */</div><div class="line">public class App &#123;</div><div class="line"></div><div class="line">    public static Logger logger = LoggerFactory.getLogger(App.class);</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        TestResult test = new TestResult();</div><div class="line">        logger.info(&quot;App start&quot;);</div><div class="line">        System.out.println(&quot;Hello World!&quot;);</div><div class="line">        logger.info(&quot;App end&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 运行jar</div><div class="line">$ java -jar App.jar</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://chenzhou123520.iteye.com/blog/1706242" target="_blank" rel="external">http://chenzhou123520.iteye.com/blog/1706242</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/07/07/Maven总结（二）Maven构建可执行的jar包并且包含依赖jar包/" data-id="cis2r55vk0005yks6c4kqjxdd" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2016/07/07/Maven总结（一）Maven构建可执行的jar包/" data-id="cis482ofu0009ubs6xi5j2yhz" class="article-share-link">Share</a>
       
 
       
@@ -623,7 +630,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next</a>
     </nav>
   
 </section>

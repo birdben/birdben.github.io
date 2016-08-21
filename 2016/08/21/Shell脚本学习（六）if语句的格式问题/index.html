@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Shell脚本学习（六）if语句的格式问题今天在写Shell启动脚本的时候遇到了个比较奇葩的问题，因为对Shell了解的不够，不是很清楚if语句的格式，if语句不按照指定的格式写可能不会得到你想要的结果。先简单描述下我的问题吧
+一个简单的判断字符串的脚本，根据base_version变量的值来输出内容
+123456789#!/bin/bashbase_version=&amp;apos;2.x&amp;apos;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="birdben">
+<meta property="og:url" content="http://yoursite.com/2016/08/21/Shell脚本学习（六）if语句的格式问题/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Shell脚本学习（六）if语句的格式问题今天在写Shell启动脚本的时候遇到了个比较奇葩的问题，因为对Shell了解的不够，不是很清楚if语句的格式，if语句不按照指定的格式写可能不会得到你想要的结果。先简单描述下我的问题吧
+一个简单的判断字符串的脚本，根据base_version变量的值来输出内容
+123456789#!/bin/bashbase_version=&amp;apos;2.x&amp;apos;">
+<meta property="og:updated_time" content="2016-08-21T06:17:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="birdben">
+<meta name="twitter:description" content="Shell脚本学习（六）if语句的格式问题今天在写Shell启动脚本的时候遇到了个比较奇葩的问题，因为对Shell了解的不够，不是很清楚if语句的格式，if语句不按照指定的格式写可能不会得到你想要的结果。先简单描述下我的问题吧
+一个简单的判断字符串的脚本，根据base_version变量的值来输出内容
+123456789#!/bin/bashbase_version=&amp;apos;2.x&amp;apos;">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.png" alt="Profile Picture">
+      </div>
+      <div id="title">birdben</div>
+      
+       <ul class="my-socials">
+  
+  <li>
+  	<a href="https://github.com/birdben" class="github" target="_blank">
+  		<i class="fa fa-github"></i>
+  	</a>
+  </li>
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">birdben</a>
+      <img src="/logo.png" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+          <a href="https://github.com/birdben" class="github" target="_blank">
+            <i class="fa fa-github"></i>
+          </a>
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="yoursite.com">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+    
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Shell脚本学习（六）if语句的格式问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/21/Shell脚本学习（六）if语句的格式问题/" class="article-date">
+  <time datetime="2016-08-21T06:17:49.000Z" itemprop="datePublished">2016-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Shell脚本学习（六）if语句的格式问题"><a href="#Shell脚本学习（六）if语句的格式问题" class="headerlink" title="Shell脚本学习（六）if语句的格式问题"></a>Shell脚本学习（六）if语句的格式问题</h2><p>今天在写Shell启动脚本的时候遇到了个比较奇葩的问题，因为对Shell了解的不够，不是很清楚if语句的格式，if语句不按照指定的格式写可能不会得到你想要的结果。先简单描述下我的问题吧</p>
+<p>一个简单的判断字符串的脚本，根据base_version变量的值来输出内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">base_version=&apos;2.x&apos;</div><div class="line"></div><div class="line">if [ $base_version=&apos;1.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是1.x版本&quot;</div><div class="line">fi</div><div class="line">if [ $base_version=&apos;2.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是2.x版本&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>看完上面的脚本之后，我想大家的第一答案应该都是”当前安装的是2.x版本”，但是运行结果却是”当前安装的是1.x版本”和”当前安装的是2.x版本”都输出了。</p>
+<p>规范有点严格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if空格[空格&quot;xx&quot;空格=空格&quot;xx&quot;空格];空格then</div><div class="line">	echo &quot;if&quot;</div><div class="line">elif空格[空格&quot;xx&quot;空格=空格&quot;xx&quot;空格];空格then</div><div class="line">	echo &quot;elseif&quot;</div><div class="line">else</div><div class="line">	echo &quot;else&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>我的脚本在$base_version=’1.x’等号左右没有加空格，修改之后如下之后，运行结果是”当前安装的是2.x版本”正确的了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">base_version=&apos;2.x&apos;</div><div class="line"></div><div class="line">if [ $base_version = &apos;1.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是1.x版本&quot;</div><div class="line">fi</div><div class="line">if [ $base_version = &apos;2.x&apos; ]; then</div><div class="line">  echo &quot;当前安装的是2.x版本&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>接下来介绍一些if语句常用的判断语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">－d：判断指定的变量是否为目录</div><div class="line">－z：判断指定的变量是否存在值</div><div class="line">－f：判断指定的变量是否为文件</div><div class="line">－L：判断指定的变量是否为符号链接（软链接）</div><div class="line">－r：判断指定的变量是否可读</div><div class="line">－w：判断指定的变量是否可写</div><div class="line">－x：判断存在的对象是否可以执行</div><div class="line">!：测试条件的否定符号</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line"># 判断文件夹是否存在</div><div class="line">if [ -d $folder ]; then</div><div class="line">	echo &quot;目录存在！&quot;</div><div class="line">else</div><div class="line">	echo &quot;目录不存在！&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># 如果文件夹不存在，创建文件夹</div><div class="line">if [ ! -d &quot;/test/folder&quot; ]; then</div><div class="line">  mkdir /test/folder</div><div class="line">fi</div><div class="line"></div><div class="line"># shell判断文件,目录是否存在或者具有权限</div><div class="line">folder=&quot;/software/es/&quot;</div><div class="line">file=&quot;/software/es/config/elasticsearch.yml&quot;</div><div class="line"></div><div class="line"># -x 参数判断 $folder 是否存在并且是否具有可执行权限</div><div class="line">if [ ! -x &quot;$folder&quot;]; then</div><div class="line">  mkdir &quot;$folder&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># -d 参数判断 $folder 是否存在</div><div class="line">if [ ! -d &quot;$folder&quot;]; then</div><div class="line">  mkdir &quot;$folder&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># -f 参数判断 $file 是否存在</div><div class="line">if [ ! -f &quot;$file&quot; ]; then</div><div class="line">  touch &quot;$file&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># -n 判断一个变量是否有值</div><div class="line">if [ ! -n &quot;$var&quot; ]; then</div><div class="line">  echo &quot;$var is empty&quot;</div><div class="line">fi</div><div class="line"></div><div class="line"># 判断两个变量是否相等</div><div class="line">if [ &quot;$var1&quot; = &quot;$var2&quot; ]; then</div><div class="line">  echo &apos;$var1 equals $var2&apos;</div><div class="line">else</div><div class="line">  echo &apos;$var1 not equals $var2&apos;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/caoyongjunjava/article/details/44560849" target="_blank" rel="external">http://blog.csdn.net/caoyongjunjava/article/details/44560849</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/21/Shell脚本学习（六）if语句的格式问题/" data-id="cis482og1000eubs66ehul64w" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/20/Git常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 birdben<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>
