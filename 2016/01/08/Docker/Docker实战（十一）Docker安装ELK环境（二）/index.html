@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Docker实战（十一）Docker安装ELK环境（二） | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="日志收集系统架构
+
+https://www.elastic.co/guide/en/logstash/current/deploying-and-scaling.html
+http://dockone.io/article/505#rd?sukey=fc78a68049a14bb21970769bd4cdecc8f803567ce85b9148150a8f086c5ea01b195498f33b8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker实战（十一）Docker安装ELK环境（二）">
+<meta property="og:url" content="https://github.com/birdben/2016/01/08/Docker/Docker实战（十一）Docker安装ELK环境（二）/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="日志收集系统架构
+
+https://www.elastic.co/guide/en/logstash/current/deploying-and-scaling.html
+http://dockone.io/article/505#rd?sukey=fc78a68049a14bb21970769bd4cdecc8f803567ce85b9148150a8f086c5ea01b195498f33b8">
+<meta property="og:image" content="http://img.blog.csdn.net/20160103152529612?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2016-08-21T11:26:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker实战（十一）Docker安装ELK环境（二）">
+<meta name="twitter:description" content="日志收集系统架构
+
+https://www.elastic.co/guide/en/logstash/current/deploying-and-scaling.html
+http://dockone.io/article/505#rd?sukey=fc78a68049a14bb21970769bd4cdecc8f803567ce85b9148150a8f086c5ea01b195498f33b8">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160103152529612?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 12px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 12px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 12px;">ElasticSearch</a> <a href="/tags/Git命令/" style="font-size: 14px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 14px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 14px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 16px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Docker/Docker实战（十一）Docker安装ELK环境（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/08/Docker/Docker实战（十一）Docker安装ELK环境（二）/" class="article-date">
+  	<time datetime="2016-01-07T22:40:33.000Z" itemprop="datePublished">2016-01-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker实战（十一）Docker安装ELK环境（二）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ELK/">ELK</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>日志收集系统架构<br><img src="http://img.blog.csdn.net/20160103152529612?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="日志收集系统架构"></p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/logstash/current/deploying-and-scaling.html" target="_blank" rel="external">https://www.elastic.co/guide/en/logstash/current/deploying-and-scaling.html</a></li>
+<li><a href="http://dockone.io/article/505#rd?sukey=fc78a68049a14bb21970769bd4cdecc8f803567ce85b9148150a8f086c5ea01b195498f33b858ddf9c93183f1c09d255" target="_blank" rel="external">http://dockone.io/article/505#rd?sukey=fc78a68049a14bb21970769bd4cdecc8f803567ce85b9148150a8f086c5ea01b195498f33b858ddf9c93183f1c09d255</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA4NDM0OTQ0NA==&amp;mid=400670251&amp;idx=1&amp;sn=dec80ffddf9b6b0619a89605c397a2c2&amp;scene=1&amp;srcid=1201EdUMaGhzFetS4f7Pe8QX&amp;key=ac89cba618d2d9767d9841c0e75232b77db8e3d08ed0c4bd45b9796dc6c27292d6f9776642a755bcf64dfeededbede63&amp;ascene=0&amp;uin=OTIxOTMxODgw&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.10.3+build(14D136)&amp;version=11020201&amp;pass_ticket=wAdeTXAnaEoTmxMJDYGfZiYPEQFQiUuMEieo5%2F72eVKwxLRWIshfT3nzlOwtjLDy" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzA4NDM0OTQ0NA==&amp;mid=400670251&amp;idx=1&amp;sn=dec80ffddf9b6b0619a89605c397a2c2&amp;scene=1&amp;srcid=1201EdUMaGhzFetS4f7Pe8QX&amp;key=ac89cba618d2d9767d9841c0e75232b77db8e3d08ed0c4bd45b9796dc6c27292d6f9776642a755bcf64dfeededbede63&amp;ascene=0&amp;uin=OTIxOTMxODgw&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.10.3+build(14D136)&amp;version=11020201&amp;pass_ticket=wAdeTXAnaEoTmxMJDYGfZiYPEQFQiUuMEieo5%2F72eVKwxLRWIshfT3nzlOwtjLDy</a></li>
+</ul>
+<h5 id="日志收集系统架构简介"><a href="#日志收集系统架构简介" class="headerlink" title="日志收集系统架构简介"></a>日志收集系统架构简介</h5><ul>
+<li>Logstash Agent/Flume：采集各个业务系统的日志，然后发送给Redis/Kafka消息队列。</li>
+<li>Redis/Kafka：接收用户日志的消息队列，临时存储日志并且起到缓冲的作用，防止日志量上来之后，拖垮Logstash Indexer。</li>
+<li>Logstash Indexer：做日志解析，统一成JSON输出给Elasticsearch。</li>
+<li>Elasticsearch：实时日志分析服务的核心技术，一个schemaless，实时的数据存储服务，通过index组织数据，兼具强大的搜索和统计功能。</li>
+<li>Kibana：基于Elasticsearch的数据可视化组件，超强的数据可视化能力是众多公司选择ELK stack的重要原因。</li>
+</ul>
+<p>这里实现的是 ELK + Redis 收集 Nginx 的 access.log<br>我们这里是把各个组件拆开，模拟每个组件是一个集群，每个集群部署在一台机器上</p>
+<p>1.Nginx + Logstash agent<br>2.Redis<br>3.Logstash indexer<br>4.ElasticSearch<br>5.Kibana</p>
+<h5 id="Nginx配置文件"><a href="#Nginx配置文件" class="headerlink" title="Nginx配置文件"></a>Nginx配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">daemon off;</div><div class="line">master_process off;</div><div class="line">error_log  logs/error.log;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">http &#123;</div><div class="line">    include       mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line">    </div><div class="line">    # 设置nginx日志格式，格式的名称logstash</div><div class="line">    log_format  logstash  &apos;$http_host $server_addr $remote_addr [$time_local] &quot;$request&quot; $request_body $status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot; $request_time $upstream_response_time&apos;;</div><div class="line">    </div><div class="line">    # 设置access_log日志输出的文件路径，以及使用的日志格式名称</div><div class="line">    access_log  logs/access.log  logstash;</div><div class="line">    </div><div class="line">    # 以下内容省略</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="logstash-agent的配置文件logstash-conf"><a href="#logstash-agent的配置文件logstash-conf" class="headerlink" title="logstash agent的配置文件logstash.conf"></a>logstash agent的配置文件logstash.conf</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">        file &#123;</div><div class="line">                type =&gt; &quot;nginx_access&quot;</div><div class="line">                path =&gt; [&quot;/usr/local/nginx/logs/access.log&quot;]</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line">output &#123;</div><div class="line">        redis &#123;</div><div class="line">                host =&gt; &quot;10.211.55.4&quot;</div><div class="line">                port =&gt; 6379</div><div class="line">                password =&gt; admin</div><div class="line">                data_type =&gt; &quot;list&quot;</div><div class="line">                key =&gt; &quot;logstash:redis&quot;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里配置就是往redis队列中塞入日志就行，所以input的来源是Nginx的log文件，output的目标设置为redis，这里redis充当MQ消息队列的作用。</p>
+<h5 id="logstash-indexer的配置文件logstash-conf"><a href="#logstash-indexer的配置文件logstash-conf" class="headerlink" title="logstash indexer的配置文件logstash.conf"></a>logstash indexer的配置文件logstash.conf</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">		redis &#123;</div><div class="line">				host =&gt; &quot;10.211.55.4&quot;</div><div class="line">				port =&gt; 6379</div><div class="line">				password =&gt; admin</div><div class="line">				data_type =&gt; &quot;list&quot;</div><div class="line">				key =&gt; &quot;logstash:redis&quot;</div><div class="line">		&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">filter &#123;</div><div class="line">		grok &#123;</div><div class="line">				match =&gt; [</div><div class="line">					&quot;message&quot;, &quot;%&#123;IPORHOST:http_host&#125; %&#123;IPORHOST:server_ip&#125; %&#123;IPORHOST:client_ip&#125; \[%&#123;HTTPDATE:timestamp&#125;\] \&quot;%&#123;WORD:http_verb&#125; (?:%&#123;PATH:baseurl&#125;\?%&#123;NOTSPACE:params&#125;(?: HTTP/%&#123;NUMBER:http_version&#125;)?|%&#123;DATA:raw_http_request&#125;)\&quot; (%&#123;NOTSPACE:params&#125;)?|- %&#123;NUMBER:http_status_code&#125; (?:%&#123;NUMBER:bytes_read&#125;|-) %&#123;QS:referrer&#125; %&#123;QS:agent&#125; %&#123;NUMBER:time_duration:float&#125; %&#123;NUMBER:time_backend_response:float&#125;&quot;</div><div class="line">			]</div><div class="line">		&#125;</div><div class="line">		kv &#123;</div><div class="line">				prefix =&gt; &quot;params.&quot;</div><div class="line">				field_split =&gt; &quot;&amp;&quot;</div><div class="line">				source =&gt; &quot;params&quot;</div><div class="line">		&#125;</div><div class="line">		urldecode &#123;</div><div class="line">				all_fields =&gt; true</div><div class="line">		&#125;</div><div class="line">		date &#123;</div><div class="line">				locale =&gt; &quot;en&quot;</div><div class="line">				match =&gt; [&quot;timestamp&quot; , &quot;dd/MMM/YYYY:HH:mm:ss Z&quot;]</div><div class="line">		&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">output &#123;</div><div class="line">		elasticsearch &#123;</div><div class="line">				embedded =&gt; false				codec =&gt; &quot;json&quot;				protocol =&gt; &quot;http&quot;				host =&gt; &quot;10.211.55.4&quot;				port =&gt; 9200				index =&gt; &quot;birdlogstash&quot;		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h5><p>logstash indexer的配置文件就比较麻烦了，需要配置的有三个部分</p>
+<ul>
+<li>input: 负责从redis中获取日志数据</li>
+<li>filter: 负责对日志数据进行分析和结构化</li>
+<li>output: 负责将结构化的数据存储进入elasticsearch</li>
+</ul>
+<p>这里配置就是从redis队列中获取日志，对日志进行相应地过滤，所以input的来源是Redis的list队列，其中的redis配置当然要和logstash agent的配置一致了。output的目标设置为ES搜索引擎的索引，在通过kibana图形界面化的展示ES的查询索引。</p>
+<h5 id="kibana-yml配置文件"><a href="#kibana-yml配置文件" class="headerlink" title="kibana.yml配置文件"></a>kibana.yml配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 这里配置Kibana访问ES集群的地址</div><div class="line"># The Elasticsearch instance to use for all your queries.</div><div class="line">elasticsearch_url: &quot;http://10.211.55.4:9200&quot;</div></pre></td></tr></table></figure>
+<h5 id="elk-log-agent的Dockerfile文件"><a href="#elk-log-agent的Dockerfile文件" class="headerlink" title="elk_log_agent的Dockerfile文件"></a>elk_log_agent的Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/elk_log_agent:v1</div><div class="line"># desc : 当前版本安装的elk_log_agent</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 LOGSTASH 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV LOGSTASH_HOME /software/logstash-1.5.4</div><div class="line"></div><div class="line"># 复制 logstash-1.5.4 文件到镜像中（logstash-1.5.4 文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD logstash-1.5.4 /software/logstash-1.5.4</div><div class="line"></div><div class="line"># 解决环境问题，否则logstash无法从log文件中采集日志。具体环境： Logstash 1.5, Ubuntu 14.04, Oracle JDK7</div><div class="line">RUN ln -s /lib/x86_64-linux-gnu/libcrypt.so.1 /usr/lib/x86_64-linux-gnu/libcrypt.so</div><div class="line"></div><div class="line"># 安装升级gcc</div><div class="line">RUN sudo rm -rf /var/lib/apt/lists/*</div><div class="line">RUN sudo apt-get update</div><div class="line"></div><div class="line">RUN sudo apt-get -y install \</div><div class="line">build-essential</div><div class="line"></div><div class="line">RUN sudo mkdir -p /software/temp</div><div class="line">RUN wget http://nginx.org/download/nginx-1.8.0.tar.gz &amp;&amp; tar -zxvf nginx-1.8.0.tar.gz -C /software/temp</div><div class="line">RUN wget http://zlib.net/zlib-1.2.8.tar.gz &amp;&amp; tar -zxvf zlib-1.2.8.tar.gz -C /software/temp</div><div class="line">RUN wget http://www.openssl.org/source/openssl-1.0.1q.tar.gz &amp;&amp; tar -zxvf openssl-1.0.1q.tar.gz -C /software/temp</div><div class="line">RUN wget http://downloads.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz &amp;&amp; tar -zxvf pcre-8.37.tar.gz -C /software/temp</div><div class="line">RUN cd /software/temp/nginx-1.8.0 &amp;&amp; sudo ./configure --sbin-path=/software/nginx-1.8.0/nginx --conf-path=/software/nginx-1.8.0/nginx.conf --pid-path=/software/nginx-1.8.0/nginx.pid --with-http_ssl_module --with-pcre=/software/temp/pcre-8.37 --with-zlib=/software/temp/zlib-1.2.8 --with-openssl=/software/temp/openssl-1.0.1q &amp;&amp; sudo make &amp;&amp; sudo make install</div><div class="line"></div><div class="line"># 设置nginx是非daemon启动</div><div class="line">RUN echo &apos;daemon off;&apos; &gt;&gt; /software/nginx-1.8.0/nginx.conf</div><div class="line">RUN echo &apos;master_process off;&apos; &gt;&gt; /software/nginx-1.8.0/nginx.conf</div><div class="line">RUN echo &apos;error_log  logs/error.log;&apos; &gt;&gt; /software/nginx-1.8.0/nginx.conf</div><div class="line"></div><div class="line"># 设置 NGINX 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV NGINX_HOME /software/nginx-1.8.0</div><div class="line"></div><div class="line"># 挂载/logstash目录</div><div class="line">VOLUME [&quot;/logstash&quot;]</div><div class="line"></div><div class="line"># 容器需要开放Nginx 80端口</div><div class="line">EXPOSE 80</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="elk-log-agent的supervisord-conf配置文件"><a href="#elk-log-agent的supervisord-conf配置文件" class="headerlink" title="elk_log_agent的supervisord.conf配置文件"></a>elk_log_agent的supervisord.conf配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:nginx]</div><div class="line">command=/software/nginx-1.8.0/nginx -c /software/nginx-1.8.0/nginx.conf</div><div class="line"></div><div class="line">[program:logstash]</div><div class="line"># 指定配置文件时，一定要使用绝对路径，相对路径是不好用的，这个坑已经踩过两次了。。</div><div class="line">command=/software/logstash-1.5.4/bin/logstash -f /logstash/logstash_agent.conf</div></pre></td></tr></table></figure>
+<h5 id="elk-log-agent的控制台终端"><a href="#elk-log-agent的控制台终端" class="headerlink" title="elk_log_agent的控制台终端"></a>elk_log_agent的控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/elk_log_agent:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">$ docker run -p 9999:22 -p 8888:80 -t -i -v /docker/logstash:/logstash &quot;birdben/elk_log_agent:v1&quot;</div></pre></td></tr></table></figure>
+<h5 id="logstash的Dockerfile文件"><a href="#logstash的Dockerfile文件" class="headerlink" title="logstash的Dockerfile文件"></a>logstash的Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/logstash:v1</div><div class="line"># desc : 当前版本安装的logstash</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 LOGSTASH 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV LOGSTASH_HOME /software/logstash-1.5.4</div><div class="line"></div><div class="line"># 复制 logstash-1.5.4 文件到镜像中（logstash-1.5.4文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD logstash-1.5.4 /software/logstash-1.5.4</div><div class="line"></div><div class="line"># 解决环境问题，否则logstash无法从log文件中采集日志。具体环境： Logstash 1.5, Ubuntu 14.04, Oracle JDK7</div><div class="line">RUN ln -s /lib/x86_64-linux-gnu/libcrypt.so.1 /usr/lib/x86_64-linux-gnu/libcrypt.so</div><div class="line"></div><div class="line"># 挂载/logstash目录</div><div class="line">VOLUME [&quot;/logstash&quot;]</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="logstash的supervisord-conf配置文件"><a href="#logstash的supervisord-conf配置文件" class="headerlink" title="logstash的supervisord.conf配置文件"></a>logstash的supervisord.conf配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:logstash]</div><div class="line"># 指定配置文件时，一定要使用绝对路径，相对路径是不好用的，这个坑已经踩过两次了。。</div><div class="line">command=/software/logstash-1.5.4/bin/logstash -f /logstash/logstash.conf</div></pre></td></tr></table></figure>
+<h5 id="logstash的控制台终端"><a href="#logstash的控制台终端" class="headerlink" title="logstash的控制台终端"></a>logstash的控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/logstash:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">$ docker run -p 9999:22 -t -i -v /docker/logstash:/logstash &quot;birdben/logstash:v1&quot;</div></pre></td></tr></table></figure>
+<h5 id="kibana的Dockerfile文件"><a href="#kibana的Dockerfile文件" class="headerlink" title="kibana的Dockerfile文件"></a>kibana的Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/kibana:v1</div><div class="line"># desc : 当前版本安装的kibana</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 tools 镜像</div><div class="line">FROM birdben/tools:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 KIBANA 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV KIBANA_HOME /software/kibana-4.1.2</div><div class="line"></div><div class="line"># 复制 kibana-4.1.2 文件到镜像中（kibana-4.1.2文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD kibana-4.1.2 /software/kibana-4.1.2</div><div class="line"></div><div class="line"># 容器需要开放Kibana的5601端口</div><div class="line">EXPOSE 5601</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="kibana的supervisord-conf配置文件"><a href="#kibana的supervisord-conf配置文件" class="headerlink" title="kibana的supervisord.conf配置文件"></a>kibana的supervisord.conf配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:kibana]</div><div class="line">command=/software/kibana-4.1.2/bin/kibana</div></pre></td></tr></table></figure>
+<h5 id="kibana的控制台终端"><a href="#kibana的控制台终端" class="headerlink" title="kibana的控制台终端"></a>kibana的控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/kibana:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">$ docker run -p 9999:22 -p 5601:5601 -t -i &quot;birdben/kibana:v1&quot;</div></pre></td></tr></table></figure>
+<h5 id="注意-2"><a href="#注意-2" class="headerlink" title="注意"></a>注意</h5><p>ES和Redis如之前的文章介绍部署即可</p>
+<h5 id="验证日志收集"><a href="#验证日志收集" class="headerlink" title="验证日志收集"></a>验证日志收集</h5><blockquote>
+<p>访问Nginx主页，查看access.log中的日志是否按照指定的日志格式输出，之后access.log会被log_agent收集到Redis中，如果log_indexer是可用状态的，就会从Redis中消费掉日志信息，如果log_indexer是不可用的，日志信息就会保存在Redis中。log_indexer从Redis中消费掉日志后，就会在ES中创建相应地索引，最后在Kibana中进行查询显示</p>
+</blockquote>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/yjf512/p/4568190.html" target="_blank" rel="external">http://www.cnblogs.com/yjf512/p/4568190.html</a></li>
+<li><a href="http://www.cnblogs.com/yjf512/p/4199105.html" target="_blank" rel="external">http://www.cnblogs.com/yjf512/p/4199105.html</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/15/Docker/Docker实战（十二）Docker安装ElasticSearch集群环境/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Docker实战（十二）Docker安装ElasticSearch集群环境
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/02/Docker/Docker实战（十）Docker安装Nginx/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker实战（十）Docker安装Nginx</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

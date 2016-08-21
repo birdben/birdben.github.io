@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Mongo整合SpringTemplate用法 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="使用Spring的MongoTemplate如何执行自定义的mongo语句基础的SpringMongoTemplate用法可以参考:
+
+http://blog.csdn.net/cuiran/article/details/8287204
+http://blog.csdn.net/xiaohulunb/article/details/27828381
+
+对GoodsInfo Collection按">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongo整合SpringTemplate用法">
+<meta property="og:url" content="https://github.com/birdben/2015/11/12/Others/Mongo整合SpringTemplate用法/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="使用Spring的MongoTemplate如何执行自定义的mongo语句基础的SpringMongoTemplate用法可以参考:
+
+http://blog.csdn.net/cuiran/article/details/8287204
+http://blog.csdn.net/xiaohulunb/article/details/27828381
+
+对GoodsInfo Collection按">
+<meta property="og:updated_time" content="2016-08-21T11:28:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mongo整合SpringTemplate用法">
+<meta name="twitter:description" content="使用Spring的MongoTemplate如何执行自定义的mongo语句基础的SpringMongoTemplate用法可以参考:
+
+http://blog.csdn.net/cuiran/article/details/8287204
+http://blog.csdn.net/xiaohulunb/article/details/27828381
+
+对GoodsInfo Collection按">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 12px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 12px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 12px;">ElasticSearch</a> <a href="/tags/Git命令/" style="font-size: 14px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 14px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 14px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 16px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Others/Mongo整合SpringTemplate用法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/12/Others/Mongo整合SpringTemplate用法/" class="article-date">
+  	<time datetime="2015-11-12T03:18:34.000Z" itemprop="datePublished">2015-11-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mongo整合SpringTemplate用法
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/MongoDB/">MongoDB</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="使用Spring的MongoTemplate如何执行自定义的mongo语句"><a href="#使用Spring的MongoTemplate如何执行自定义的mongo语句" class="headerlink" title="使用Spring的MongoTemplate如何执行自定义的mongo语句"></a>使用Spring的MongoTemplate如何执行自定义的mongo语句</h4><p>基础的SpringMongoTemplate用法可以参考:</p>
+<ul>
+<li><a href="http://blog.csdn.net/cuiran/article/details/8287204" target="_blank" rel="external">http://blog.csdn.net/cuiran/article/details/8287204</a></li>
+<li><a href="http://blog.csdn.net/xiaohulunb/article/details/27828381" target="_blank" rel="external">http://blog.csdn.net/xiaohulunb/article/details/27828381</a></li>
+</ul>
+<p>对GoodsInfo Collection按照name进行distinct查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">String jsonSql = &quot;&#123;distinct:&apos;GoodsInfo&apos;, key:&apos;name&apos;&#125;&quot;;</div><div class="line">CommandResult  commandResult = mongoTemplate.executeCommand(jsonSql);</div><div class="line">System.out.println();</div><div class="line">BasicDBList list = (BasicDBList)commandResult.get(&quot;values&quot;); </div><div class="line">for (int i = 0; i &lt; list.size(); i ++) &#123; </div><div class="line">	System.out.println(list.get(i)); </div><div class="line">&#125; </div><div class="line">System.out.println();</div></pre></td></tr></table></figure>
+<p>查询统计某一个时间段每个片区下的总用户数，新用户数，旧用户数，异常数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public Map&lt;String, LandPushTypeCount&gt; findTodayCountByAreaIds(Collection&lt;String&gt; areaIds) throws Exception &#123;</div><div class="line">		Map&lt;String, LandPushTypeCount&gt; result = new HashMap&lt;String, LandPushTypeCount&gt;();</div><div class="line"></div><div class="line">		Criteria criteria = Criteria.where(&quot;todayDate&quot;).is(DateUtil.parseDate2YMD(new Date())).andOperator(Criteria.where(&quot;areaId&quot;).in(areaIds));</div><div class="line">		String initDocument = &quot;&#123;codeCount:0, newCount:0, oldCount:0, errorCount:0&#125;&quot;;</div><div class="line">		String reduceFunction = &quot;function (doc, prev) &#123; prev.codeCount += doc.codeCount; prev.newCount += doc.newCount; prev.oldCount += doc.oldCount; prev.errorCount += doc.errorCount; &#125;&quot;;</div><div class="line">		GroupBy groupBy = GroupBy.key(&quot;areaId&quot;).initialDocument(initDocument).reduceFunction(reduceFunction);</div><div class="line"></div><div class="line">		GroupByResults&lt;LandPushTypeCount&gt; groupByResult = landPushTypeCountDao.getMongoTemplate().group(criteria, &quot;LandPushTypeCount&quot;, groupBy, LandPushTypeCount.class);</div><div class="line"></div><div class="line">		BasicDBList list = (BasicDBList) groupByResult.getRawResults().get(&quot;retval&quot;);</div><div class="line">		for (int i = 0; i &lt; list.size(); i ++) &#123;</div><div class="line">			LandPushTypeCount landPushTypeCountBean = new LandPushTypeCount();</div><div class="line">			BasicDBObject obj = (BasicDBObject)list.get(i);</div><div class="line">			System.out.println(&quot;片区：&quot; + obj.get(&quot;areaId&quot;)</div><div class="line">							+ &quot;总数量：&quot; + obj.get(&quot;codeCount&quot;)</div><div class="line">							+ &quot;新用户数量：&quot; + obj.get(&quot;newCount&quot;)</div><div class="line">							+ &quot;旧用户数量：&quot; + obj.get(&quot;oldCount&quot;)</div><div class="line">							+ &quot;异常数量：&quot; + obj.get(&quot;errorCount&quot;)</div><div class="line">			);</div><div class="line">			landPushTypeCountBean.setCodeCount(((Double) obj.get(&quot;codeCount&quot;)).intValue());</div><div class="line">			landPushTypeCountBean.setNewCount(((Double) obj.get(&quot;newCount&quot;)).intValue());</div><div class="line">			landPushTypeCountBean.setOldCount(((Double) obj.get(&quot;oldCount&quot;)).intValue());</div><div class="line">			landPushTypeCountBean.setErrorCount(((Double) obj.get(&quot;errorCount&quot;)).intValue());</div><div class="line">			result.put((String) obj.get(&quot;areaId&quot;), landPushTypeCountBean);</div><div class="line">		&#125;</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">// 相当于mongo语句如下</div><div class="line">db.runCommand(</div><div class="line">&#123;</div><div class="line">　　&quot;group&quot;:</div><div class="line">　　&#123;</div><div class="line">　　　　&quot;ns&quot;:&quot;LandPushTypeCount&quot;,</div><div class="line">　　　　&quot;key&quot;:&#123;&quot;areaId&quot;:true&#125;,</div><div class="line">　　　　&quot;initial&quot;:&#123;codeCount:0, newCount:0, oldCount:0, errorCount:0&#125;,</div><div class="line">　　　　&quot;$reduce&quot;:function(doc,prev)</div><div class="line">　　　　&#123;</div><div class="line">　　　　　 prev.codeCount += doc.codeCount;</div><div class="line">          prev.newCount += doc.newCount;</div><div class="line">          prev.oldCount += doc.oldCount;</div><div class="line">          prev.errorCount += doc.errorCount;</div><div class="line">　　　　&#125;,</div><div class="line">　　　　&quot;condition&quot;:&#123;&quot;todayDate&quot;:&quot;2015-10-29&quot;, &quot;areaId&quot;:&#123;$in:[&quot;&quot;, &quot;330100&quot;, &quot;110000&quot;]&#125;&#125;</div><div class="line">　　&#125;</div><div class="line">&#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>查询top100回复数的帖子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">public void top100Postinfo() &#123;</div><div class="line">        long start = System.nanoTime();</div><div class="line">        try &#123;</div><div class="line">            final long startTime = 1443628800000L;</div><div class="line">            final long endTime = 1446436799000L;</div><div class="line"></div><div class="line">            Query query = new Query();</div><div class="line">            query.addCriteria(Criteria.where(&quot;createTS&quot;).gte(startTime).lte(endTime));</div><div class="line">            query.addCriteria(Criteria.where(&quot;srcPostId&quot;).exists(true));</div><div class="line">            query.addCriteria(Criteria.where(&quot;referInfo&quot;).exists(false));</div><div class="line">            query.addCriteria(Criteria.where(&quot;dr&quot;).is(0));</div><div class="line">            long count = postinfoDAO.getCount(query);</div><div class="line">            System.out.println(&quot;count:&quot; + count);</div><div class="line"></div><div class="line">            final int filterCount = 100;</div><div class="line"></div><div class="line">            DBObject result1 = postinfoDAO.getMongoTemplate().execute(Postinfo.class, new CollectionCallback&lt;DBObject&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public DBObject doInCollection(DBCollection collection) throws MongoException, DataAccessException &#123;</div><div class="line"></div><div class="line">                    // match匹配条件</div><div class="line">                    Map matchMap = new HashMap();</div><div class="line">                    matchMap.put(&quot;createTS&quot;, new BasicDBObject(&quot;$gt&quot;, startTime).append(&quot;$lt&quot;, endTime));</div><div class="line">                    matchMap.put(&quot;referInfo&quot;, new BasicDBObject(&quot;$exists&quot;, false));</div><div class="line">                    matchMap.put(&quot;srcPostId&quot;, new BasicDBObject(&quot;$exists&quot;, true));</div><div class="line">                    matchMap.put(&quot;dr&quot;, 0);</div><div class="line">                    DBObject matchOption = new BasicDBObject(&quot;$match&quot;, matchMap);</div><div class="line"></div><div class="line">                    // group条件</div><div class="line">                    Map groupMap = new HashMap();</div><div class="line">                    groupMap.put(&quot;_id&quot;, &quot;$srcPostId&quot;);</div><div class="line">                    groupMap.put(&quot;total&quot;, new BasicDBObject(&quot;$sum&quot;, 1));</div><div class="line">                    BasicDBObject groupOption = new BasicDBObject(&quot;$group&quot;, groupMap);</div><div class="line"></div><div class="line">                    // sort条件</div><div class="line">                    Map sortMap = new HashMap();</div><div class="line">                    sortMap.put(&quot;total&quot;, -1);</div><div class="line">                    BasicDBObject sortOption = new BasicDBObject(&quot;$sort&quot;, sortMap);</div><div class="line"></div><div class="line">                    // limit条件</div><div class="line">                    BasicDBObject limitOption = new BasicDBObject(&quot;$limit&quot;, filterCount);</div><div class="line"></div><div class="line">                    // 获取结果集</div><div class="line">                    AggregationOutput output = collection.aggregate(matchOption, groupOption, sortOption, limitOption);</div><div class="line">                    Iterator&lt;DBObject&gt; iterator = output.results().iterator();</div><div class="line">                    DBObject result = null;</div><div class="line">                    List&lt;Map&lt;String, String&gt;&gt; resultList = new ArrayList&lt;Map&lt;String, String&gt;&gt;();</div><div class="line">                    while (iterator.hasNext()) &#123;</div><div class="line">                        result = iterator.next();</div><div class="line">                        String id = (String) result.get(&quot;_id&quot;);</div><div class="line">                        Integer total = (Integer) result.get(&quot;total&quot;);</div><div class="line">                        System.out.println(&quot;id:&quot; + id);</div><div class="line">                        System.out.println(&quot;total:&quot; + total);</div><div class="line"></div><div class="line">                        Map&lt;String, String&gt; resultMap = new HashMap&lt;&gt;();</div><div class="line">                        resultMap.put(&quot;id&quot;, id);</div><div class="line">                        resultMap.put(&quot;total&quot;, String.valueOf(total));</div><div class="line">                        resultList.add(resultMap);</div><div class="line">                    &#125;</div><div class="line">                    exportExcel(resultList);</div><div class="line">                    return result;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        long finish = System.nanoTime();</div><div class="line">        System.out.println(TimeUnit.NANOSECONDS.toSeconds(finish - start) + &quot;:秒&quot;);</div><div class="line">        System.out.println(&quot;top20PercentPostinfo 执行完毕&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">// 相当于mongo语句如下</div><div class="line">db.Postinfo.aggregate([</div><div class="line">	&#123; $match: &#123; &quot;createTS&quot;:&#123;&quot;$gt&quot;:1443628800000, &quot;$lt&quot;:1446436799000&#125;, &quot;srcPostId&quot;:&#123;$exists:true&#125;, &quot;referInfo&quot;:&#123;$exists:false&#125;, &quot;dr&quot;:0 &#125; &#125;,</div><div class="line">	&#123; $limit: 1 &#125;,</div><div class="line">	&#123; $group: &#123; _id: &quot;$srcPostId&quot;, total: &#123; $sum: 1 &#125; &#125; &#125;,</div><div class="line">	&#123; $sort: &#123; total: -1 &#125; &#125;</div><div class="line">]);</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/ruishenh/article/details/12842331" target="_blank" rel="external">http://blog.csdn.net/ruishenh/article/details/12842331</a></li>
+<li><a href="http://www.360doc.com/content/13/0524/18/12127276_287814300.shtml" target="_blank" rel="external">http://www.360doc.com/content/13/0524/18/12127276_287814300.shtml</a></li>
+<li><a href="http://ask.csdn.net/questions/167950" target="_blank" rel="external">http://ask.csdn.net/questions/167950</a></li>
+<li><a href="http://147175882.iteye.com/blog/1565378" target="_blank" rel="external">http://147175882.iteye.com/blog/1565378</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/11/12/Others/Akka工作原理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Akka工作原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/11/12/Others/MongoDB基础语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MongoDB基础命令总结</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

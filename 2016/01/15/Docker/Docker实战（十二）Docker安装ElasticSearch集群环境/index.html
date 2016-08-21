@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Docker实战（十二）Docker安装ElasticSearch集群环境 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ES集群需要配置几个地方，最简单的是配置集群名称和Node名称，其他的基本使用默认值就可以了，下面是elasticsearch.yml配置文件部分属性的用法，可以参考使用
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker实战（十二）Docker安装ElasticSearch集群环境">
+<meta property="og:url" content="https://github.com/birdben/2016/01/15/Docker/Docker实战（十二）Docker安装ElasticSearch集群环境/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="ES集群需要配置几个地方，最简单的是配置集群名称和Node名称，其他的基本使用默认值就可以了，下面是elasticsearch.yml配置文件部分属性的用法，可以参考使用
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616">
+<meta property="og:image" content="http://img.blog.csdn.net/20160124142752454?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20160124142859440?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2016-08-21T11:26:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker实战（十二）Docker安装ElasticSearch集群环境">
+<meta name="twitter:description" content="ES集群需要配置几个地方，最简单的是配置集群名称和Node名称，其他的基本使用默认值就可以了，下面是elasticsearch.yml配置文件部分属性的用法，可以参考使用
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160124142752454?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 12px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 12px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 12px;">ElasticSearch</a> <a href="/tags/Git命令/" style="font-size: 14px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 14px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 14px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 16px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Docker/Docker实战（十二）Docker安装ElasticSearch集群环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/15/Docker/Docker实战（十二）Docker安装ElasticSearch集群环境/" class="article-date">
+  	<time datetime="2016-01-14T18:14:25.000Z" itemprop="datePublished">2016-01-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker实战（十二）Docker安装ElasticSearch集群环境
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ES集群需要配置几个地方，最简单的是配置集群名称和Node名称，其他的基本使用默认值就可以了，下面是elasticsearch.yml配置文件部分属性的用法，可以参考使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line"># 集群名称，默认为elasticsearch</div><div class="line">cluster.name: birdESCluster</div><div class="line"></div><div class="line"># 节点Node名称，ES启动时会自动创建节点名称，默认的是从ES的，但你也可进行配置</div><div class="line">node.name: &quot;birdESNode01&quot;</div><div class="line"></div><div class="line"># 是否作为主节点，每个节点都可以被配置成为主节点，默认值为true</div><div class="line">node.master: true</div><div class="line"></div><div class="line"># 是否存储数据，即存储索引片段，默认值为true</div><div class="line">node.data: true</div><div class="line"></div><div class="line"># master和data同时配置会产生一些奇异的效果：</div><div class="line">1) 当master为false，而data为true时，会对该节点产生严重负荷；</div><div class="line">2) 当master为true，而data为false时，该节点作为一个协调者；</div><div class="line">3) 当master为false，data也为false时，该节点就变成了一个负载均衡器。</div><div class="line">你可以通过连接来查看集群状态</div><div class="line">http://localhost:9200/_cluster/health</div><div class="line">http://localhost:9200/_cluster/nodes</div><div class="line">或者使用插件来查看集群状态</div><div class="line">http://github.com/lukas-vlcek/bigdesk</div><div class="line">http://mobz.github.com/elasticsearch-head</div><div class="line"></div><div class="line"># 设置一个索引的碎片数量，默认值为5</div><div class="line">index.number_of_shards: 5</div><div class="line"></div><div class="line"># 设置一个索引可被复制的数量，默认值为1</div><div class="line">index.number_of_replicas: 1</div><div class="line"></div><div class="line"># 当你想要禁用公布式时，你可以进行如下设置：</div><div class="line">index.number_of_shards: 1</div><div class="line">index.number_of_replicas: 0</div><div class="line"></div><div class="line">这两个属性的设置直接影响集群中索引和搜索操作的执行。假设你有足够的机器来持有碎片和复制品，那么可以按如下规则设置这两个值：</div><div class="line">1) 拥有更多的碎片可以提升索引执行能力，并允许通过机器分发一个大型的索引；</div><div class="line">2) 拥有更多的复制器能够提升搜索执行能力以及集群能力。</div><div class="line">对于一个索引来说，number_of_shards只能设置一次，而number_of_replicas可以使用索引更新设置API在任何时候被增加或者减少。</div><div class="line">ElasticSearch关注加载均衡、迁移、从节点聚集结果等等。可以尝试多种设计来完成这些功能。</div><div class="line">可以连接http://localhost:9200/A/_status来检测索引的状态。</div><div class="line"></div><div class="line"># 配置文件所在的位置，即elasticsearch.yml和logging.yml所在的位置</div><div class="line">path.conf: /path/to/conf</div><div class="line"></div><div class="line"># 分配给当前节点的索引数据所在的位置</div><div class="line">path.data: /path/to/data</div><div class="line"></div><div class="line"># 可以可选择的包含一个以上的位置，使得数据在文件级别跨越位置，这样在创建时就有更多的自由路径</div><div class="line">path.data: /path/to/data1,/path/to/data2</div><div class="line"></div><div class="line"># 日志文件所在位置</div><div class="line">path.logs: /path/to/logs</div><div class="line"></div><div class="line"># 临时文件位置</div><div class="line">path.work: /path/to/work</div><div class="line"></div><div class="line"># 插件安装位置</div><div class="line">path.plugins: /path/to/plugins</div><div class="line"></div><div class="line">#  默认情况下，ElasticSearch使用0.0.0.0地址（也就是说如果这个机子有几个网卡，则ElasticSearch都可以通过这些IP来使用其服务。所以如果我们的服务器有网卡绑定在外网时一定要注意设置ElasticSearch的属性），并为http传输开启9200-9300端口，为节点到节点的通信开启9300-9400端口，也可以自行设置IP地址：</div><div class="line">network.bind_host: 192.168.0.1</div><div class="line"></div><div class="line"># publish_host设置其他节点连接此节点的地址，如果不设置的话，则自动获取，publish_host的地址必须为真实地址：</div><div class="line">network.publish_host: 192.168.0.1</div><div class="line"></div><div class="line"># bind_host和publish_host可以一起设置：（如果不想外网访问ES，可以设置这个）</div><div class="line">network.host: 192.168.0.1</div><div class="line"></div><div class="line"># 可以定制该节点与其他节点交互的端口：</div><div class="line">transport.tcp.port: 9300</div><div class="line"></div><div class="line"># 节点间交互时，可以设置是否压缩，转为为不压缩：</div><div class="line">transport.tcp.compress: true</div><div class="line"></div><div class="line"># 可以为Http传输监听定制端口：</div><div class="line">http.port: 9200</div><div class="line"></div><div class="line"># 设置内容的最大长度：</div><div class="line">http.max_content_length: 100mb</div><div class="line"></div><div class="line"># 禁止HTTP</div><div class="line">http.enabled: false</div><div class="line"></div><div class="line"># 允许在N个节点启动后恢复过程：</div><div class="line">gateway.recover_after_nodes: 1</div><div class="line"></div><div class="line"># 设置初始化恢复过程的超时时间：</div><div class="line">gateway.recover_after_time: 5m</div><div class="line"></div><div class="line"># 设置ping其他节点时的超时时间，网络比较慢时可将该值设大：</div><div class="line">discovery.zen.ping.timeout: 3s</div><div class="line"></div><div class="line"># 禁止当前节点发现多个集群节点，默认值为true：</div><div class="line">discovery.zen.ping.multicast.enabled: false</div><div class="line"></div><div class="line"># 设置新节点被启动时能够发现的主节点列表：</div><div class="line">discovery.zen.ping.unicast.hosts: [&quot;10.0.0.28:9300&quot;, &quot;10.0.0.28:9500&quot;]</div><div class="line"></div><div class="line"># 设置是否可以通过正则或者_all删除或者关闭索引</div><div class="line">action.destructive_requires_name 默认false 允许 可设置true不允许</div><div class="line"></div><div class="line"># 下面是一些查询时的慢日志参数设置</div><div class="line">index.search.slowlog.level: TRACE</div><div class="line">index.search.slowlog.threshold.query.warn: 10s</div><div class="line">index.search.slowlog.threshold.query.info: 5s</div><div class="line">index.search.slowlog.threshold.query.debug: 2s</div><div class="line">index.search.slowlog.threshold.query.trace: 500ms</div><div class="line">index.search.slowlog.threshold.fetch.warn: 1s</div><div class="line">index.search.slowlog.threshold.fetch.info: 800ms</div><div class="line">index.search.slowlog.threshold.fetch.debug:500ms</div><div class="line">index.search.slowlog.threshold.fetch.trace: 200ms</div></pre></td></tr></table></figure>
+<h5 id="elasticsearch-yml源文件链接："><a href="#elasticsearch-yml源文件链接：" class="headerlink" title="elasticsearch.yml源文件链接："></a>elasticsearch.yml源文件链接：</h5><ul>
+<li><a href="https://github.com/birdben/birdDocker/blob/master/escluster/elasticsearch_01.yml">https://github.com/birdben/birdDocker/blob/master/escluster/elasticsearch_01.yml</a></li>
+</ul>
+<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/escluster:v1</div><div class="line"># desc : 当前版本安装的escluster</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line">RUN echo &quot;export LC_ALL=C&quot;</div><div class="line"></div><div class="line"># 设置 ES 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV ES_HOME /software/elasticsearch-1.7.2</div><div class="line"></div><div class="line"># 复制 elasticsearch-1.7.2 文件到镜像中（elasticsearch-1.7.2文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD elasticsearch-1.7.2 /software/elasticsearch-1.7.2</div><div class="line"></div><div class="line"># 挂载/software/elasticsearch-1.7.2/config和/escluster目录</div><div class="line">VOLUME [&quot;/software/elasticsearch-1.7.2/config&quot;]</div><div class="line">VOLUME [&quot;/escluster&quot;]</div><div class="line"></div><div class="line"># 容器需要开放ES的9200和9300端口</div><div class="line">EXPOSE 9200</div><div class="line">EXPOSE 9300</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/escluster/Dockerfile">https://github.com/birdben/birdDocker/blob/master/escluster/Dockerfile</a></p>
+<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line"># 修改supervisor配置方式如下，修改为不自动重启ES，并且改成非daemon，DFOREGROUND的方式运行，supervisor就可以监控到了</div><div class="line">[program:elasticsearch]</div><div class="line">command=/bin/bash -c &quot;exec $&#123;ES_HOME&#125;/bin/elasticsearch -DFOREGROUND&quot;</div></pre></td></tr></table></figure>
+<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/escluster:v1&quot; .</div><div class="line"># 执行已经构件好的镜像，这里启动了两个ES的镜像，只是ES的端口号不同，挂载在宿主机器的存储路径也不同</div><div class="line">$ docker run -p 9999:22 -p 9200:9200 -p 9300:9300 -v /docker/escluster01:/escluster -v /docker/escluster01/config:/software/elasticsearch-1.7.2/config -t -i &apos;birdben/escluster:v1&apos;</div><div class="line">$ docker run -p 9998:22 -p 9201:9200 -p 9301:9300 -v /docker/escluster02:/escluster -v /docker/escluster02/config:/software/elasticsearch-1.7.2/config -t -i &apos;birdben/escluster:v1&apos;</div></pre></td></tr></table></figure>
+<h5 id="访问ElasticSearch集群的插件测试"><a href="#访问ElasticSearch集群的插件测试" class="headerlink" title="访问ElasticSearch集群的插件测试"></a>访问ElasticSearch集群的插件测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 访问9201和9201端口都能分别访问</div><div class="line">http://10.211.55.4:9200/_plugin/head/</div><div class="line">http://10.211.55.4:9201/_plugin/head/</div><div class="line"># 在Node1上创建索引会自动同步到Node2上，而且对应的data和logs目录也存储在挂载的目录中</div></pre></td></tr></table></figure>
+<h5 id="ES集群的访问方式"><a href="#ES集群的访问方式" class="headerlink" title="ES集群的访问方式"></a>ES集群的访问方式</h5><h5 id="Java-API"><a href="#Java-API" class="headerlink" title="Java API"></a>Java API</h5><p>Elasticsearch为Java用户提供了两种内置客户端：<br>需要在项目中引入elasticsearch.jar，这个jar中有两种ES提供的Client</p>
+<h5 id="节点客户端-（Node-Client）"><a href="#节点客户端-（Node-Client）" class="headerlink" title="节点客户端 （Node Client）"></a>节点客户端 （Node Client）</h5><p><img src="http://img.blog.csdn.net/20160124142752454?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="NodeClient"></p>
+<p>Instantiating a node based client is the simplest way to get a Client that can execute operations against elasticsearch.</p>
+<p>Embedding a node client into your application is the easiest way to connect to an Elasticsearch cluster</p>
+<p>Node Client加入ES集群是一个没有数据的Node，就是这个Node不存储任何数据，但是这个Node知道数据存储在ES集群的哪个Node，可以把请求转发到正确的Node上去</p>
+<p>注意：</p>
+<p>实际上Node Client是在我们的系统，单元测试中启动了一个Embedded ElasticSearch，这个Embedded ElasticSearch是我们不存储任何数据的Node加入ES集群，我们的系统通过它来和ES集群进行通信，最好关闭Embedded Node的http端口（9200端口）防止http请求直接访问，因为Node Client与ES集群Node的通信都是使用的9300端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import static org.elasticsearch.node.NodeBuilder.*;</div><div class="line"></div><div class="line">// on startup</div><div class="line"></div><div class="line">Node node = nodeBuilder().node();</div><div class="line">Client client = node.client();</div><div class="line"></div><div class="line">// on shutdown</div><div class="line"></div><div class="line">node.close();</div><div class="line"></div><div class="line">// 设置ES的集群名称，在Java代码中</div><div class="line">Node node = nodeBuilder().clusterName(&quot;yourclustername&quot;).node();</div><div class="line">Client client = node.client();</div><div class="line"></div><div class="line">// 也可以设置cluster.name在/src/main/resources/elasticsearch.yml配置文件</div></pre></td></tr></table></figure>
+<h5 id="传输客户端-（Transport-Client）"><a href="#传输客户端-（Transport-Client）" class="headerlink" title="传输客户端 （Transport Client）"></a>传输客户端 （Transport Client）</h5><p><img src="http://img.blog.csdn.net/20160124142859440?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="TransportClient"></p>
+<p>The TransportClient connects remotely to an Elasticsearch cluster using the transport module. It does not join the cluster, but simply gets one or more initial transport addresses and communicates with them in round robin fashion on each action (though most actions will probably be “two hop” operations).</p>
+<p>Transport Client不会加入集群，只是负责把请求转发给ES集群的Node</p>
+<p>Java Client和ES集群通信通过9300端口，使用native ElasticSearch transport protocol， ES集群的Node也使用9300端口进行通信。（如果ES集群的9300端口没有开通，你的Nodes无法构建成一个集群）</p>
+<p>注意：Java Client必须和ES集群的Node版本一致（也就是jar包的版本要和ES集群的版本对应一致），否则无法通信</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// on startup</div><div class="line"></div><div class="line">Client client = TransportClient.builder().build()</div><div class="line">        .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;host1&quot;), 9300))</div><div class="line">        .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;host2&quot;), 9300));</div><div class="line"></div><div class="line">// on shutdown</div><div class="line"></div><div class="line">client.close();</div><div class="line"></div><div class="line">// 设置集群名称</div><div class="line">Settings settings = Settings.settingsBuilder()</div><div class="line">        .put(&quot;cluster.name&quot;, &quot;myClusterName&quot;).build();</div><div class="line">Client client = TransportClient.builder().settings(settings).build();</div><div class="line">//Add transport addresses and do something with the client...</div><div class="line"></div><div class="line">// 也可以设置cluster.name在/src/main/resources/elasticsearch.yml配置文件，如Node Client</div></pre></td></tr></table></figure>
+<p>注意：addTransportAddress方法</p>
+<p>Adds a transport address that will be used to connect to.The Node this transport address represents will be used if its possible to connect to it. If it is unavailable, it will be automatically connected to once it is up.In order to get the list of all the current connected nodes, please see connectedNodes().</p>
+<p>当一个ES Node（对应一个transportAddress）不可用时，client会自动发现当前可用的nodes（the current connected nodes），从以下这段代码可知：</p>
+<p>TransportClientNodesService</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">int index = randomNodeGenerator.incrementAndGet();</div><div class="line">if (index &lt; 0) &#123;</div><div class="line">    index = 0;</div><div class="line">    randomNodeGenerator.set(0);</div><div class="line">&#125;</div><div class="line">RetryListener&lt;Response&gt; retryListener = new RetryListener&lt;Response&gt;(callback, listener, nodes, index);</div><div class="line">try &#123;</div><div class="line">    callback.doWithNode(nodes.get((index) % nodes.size()), retryListener);</div><div class="line">&#125; catch (ElasticsearchException e) &#123;</div><div class="line">    if (e.unwrapCause() instanceof ConnectTransportException) &#123;</div><div class="line">        retryListener.onFailure(e);</div><div class="line">    &#125; else &#123;</div><div class="line">        throw e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="RESTFUL-API"><a href="#RESTFUL-API" class="headerlink" title="RESTFUL API"></a>RESTFUL API</h5><p>其他语言都可以使用RESTFUL API通过9200端口和ES进行通信，甚至可以通过命令行使用curl命令</p>
+<p>HTTP Request格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">curl -X&lt;VERB&gt; &apos;&lt;PROTOCOL&gt;://&lt;HOST&gt;/&lt;PATH&gt;?&lt;QUERY_STRING&gt;&apos; -d &apos;&lt;BODY&gt;&apos;</div><div class="line"></div><div class="line">VERB 			: HTTP方法（GET, POST, PUT, HEAD or DELETE）</div><div class="line">PROTOCOL 		: HTTP 或者 HTTPS协议（如果有一个HTTPS的代理在ES前端）</div><div class="line">HOST 			: ES集群名称或者IP地址</div><div class="line">PORT 			: 端口号运行着ES的HTTP服务，默认是9200</div><div class="line">QUERY_STRING 	: 查询参数（例如：?pretty）</div><div class="line">BODY 			: A JSON-encoded request body</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://my.oschina.net/xiaohui249/blog/228748" target="_blank" rel="external">http://my.oschina.net/xiaohui249/blog/228748</a></li>
+<li><a href="http://blog.csdn.net/geloin/article/details/8444972" target="_blank" rel="external">http://blog.csdn.net/geloin/article/details/8444972</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/client.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/client.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/node-client.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/node-client.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/transport-client.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/transport-client.html</a></li>
+<li><a href="http://www.cnblogs.com/huangfox/p/3543134.html" target="_blank" rel="external">http://www.cnblogs.com/huangfox/p/3543134.html</a></li>
+<li><a href="http://es.xiaoleilu.com/010_Intro/15_API.html" target="_blank" rel="external">http://es.xiaoleilu.com/010_Intro/15_API.html</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/19/Docker/Docker实战（十三）Docker安装MySQL数据库/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Docker实战（十三）Docker安装MySQL数据库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/08/Docker/Docker实战（十一）Docker安装ELK环境（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker实战（十一）Docker安装ELK环境（二）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

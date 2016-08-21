@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Akka Helloworld | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="功能描述：实现通过一个actior发送消息到另一个actor然后将处理结果返回，感觉很简单类似两个类的方法调用，但是这里实际上的处理时异步的并非同步的调用处理，这里神奇的地方就在于AKKA的内部机制了后续再做深入研究。
+HelloWorld.java
+12345678910111213141516171819202122232425package com.birdben.akka.hellowor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Akka Helloworld">
+<meta property="og:url" content="https://github.com/birdben/2015/11/12/Others/Akka Helloworld/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="功能描述：实现通过一个actior发送消息到另一个actor然后将处理结果返回，感觉很简单类似两个类的方法调用，但是这里实际上的处理时异步的并非同步的调用处理，这里神奇的地方就在于AKKA的内部机制了后续再做深入研究。
+HelloWorld.java
+12345678910111213141516171819202122232425package com.birdben.akka.hellowor">
+<meta property="og:updated_time" content="2016-08-21T11:25:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Akka Helloworld">
+<meta name="twitter:description" content="功能描述：实现通过一个actior发送消息到另一个actor然后将处理结果返回，感觉很简单类似两个类的方法调用，但是这里实际上的处理时异步的并非同步的调用处理，这里神奇的地方就在于AKKA的内部机制了后续再做深入研究。
+HelloWorld.java
+12345678910111213141516171819202122232425package com.birdben.akka.hellowor">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 12px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 12px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 12px;">ElasticSearch</a> <a href="/tags/Git命令/" style="font-size: 14px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 14px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 14px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 16px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Others/Akka Helloworld" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/12/Others/Akka Helloworld/" class="article-date">
+  	<time datetime="2015-11-12T03:51:43.000Z" itemprop="datePublished">2015-11-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Akka Helloworld
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Akka/">Akka</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Akka/">Akka</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>功能描述：<br>实现通过一个actior发送消息到另一个actor然后将处理结果返回，感觉很简单类似两个类的方法调用，但是这里实际上的处理时异步的并非同步的调用处理，这里神奇的地方就在于AKKA的内部机制了后续再做深入研究。</p>
+<p>HelloWorld.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">package com.birdben.akka.helloworld;</div><div class="line"></div><div class="line">import akka.actor.ActorRef;</div><div class="line">import akka.actor.Props;</div><div class="line">import akka.actor.UntypedActor;</div><div class="line"></div><div class="line">public class HelloWorld extends UntypedActor &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void preStart() &#123;</div><div class="line">        // create the greeter actor</div><div class="line">        final ActorRef greeter =</div><div class="line">                getContext().actorOf(Props.create(Greeter.class), &quot;greeter&quot;);//创建greeter actor实例</div><div class="line">        // tell it to perform the greeting</div><div class="line">        greeter.tell(Greeter.Msg.GREET, getSelf());//通过tell方法给greeter actor 发送一条消息</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onReceive(Object msg) &#123;</div><div class="line">        if (msg == Greeter.Msg.DONE) &#123;</div><div class="line">            // when the greeter is done, stop this actor and with it the application</div><div class="line">            getContext().stop(getSelf());</div><div class="line">        &#125; else unhandled(msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Greeter.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package com.birdben.akka.helloworld;</div><div class="line"></div><div class="line">import akka.actor.UntypedActor;</div><div class="line"></div><div class="line">public class Greeter extends UntypedActor &#123;</div><div class="line"></div><div class="line">    public static enum Msg &#123;</div><div class="line">        GREET, DONE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onReceive(Object msg) &#123;</div><div class="line">        if (msg == Msg.GREET) &#123;</div><div class="line">            System.out.println(&quot;Hello World!&quot;);</div><div class="line">            getSender().tell(Msg.DONE, getSelf());</div><div class="line">        &#125; else unhandled(msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行HelloWorld类，akka提供了一个主actor类，可以通过这个类直接执行以上的方法，在IDEA中点击Edit Configurations（配置tomcat的按钮），新建一个Application，在Main.class 选项中选择akka.Main，然后在program arguments 中输入 com.birdben.akka.helloworld.HelloWorld，点击 apply 然后运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">com.birdben.akka.helloworld.HelloWorld</div><div class="line">Connected to the target VM, address: &apos;127.0.0.1:50084&apos;, transport: &apos;socket&apos;</div><div class="line">Hello World!</div><div class="line">[INFO] [11/11/2015 01:40:59.782] [Main-akka.actor.default-dispatcher-3] [akka://Main/user/app-terminator] application supervisor has terminated, shutting down</div><div class="line">Disconnected from the target VM, address: &apos;127.0.0.1:50084&apos;, transport: &apos;socket&apos;</div><div class="line"></div><div class="line">Process finished with exit code 0</div></pre></td></tr></table></figure>
+<p>从运行结果可以看出，HelloWorld actor正确的调用了 Greeter actor 因为输出了 Hello World！从Infor日志可以看出 HelloWorld actor 正常接收到了 Greeter actor 的返回停止了当前actor。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.blogbus.com/dreamhead-logs/235916459.html" target="_blank" rel="external">http://www.blogbus.com/dreamhead-logs/235916459.html</a></li>
+<li><a href="http://verran.iteye.com/blog/1942393" target="_blank" rel="external">http://verran.iteye.com/blog/1942393</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/11/13/Others/移动端请求URL的加密:解密/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          移动端请求URL的加密/解密
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/11/12/Others/Akka工作原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Akka工作原理</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
