@@ -69,7 +69,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 					<div class="tips-arrow"></div>
 					<ul class="tips-inner">
 						<li>Menu</li>
-						<li>Tags</li>
+						<li>Тэги</li>
 						
 						<li>Links</li>
 						
@@ -168,6 +168,77 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Docker/Docker实战（四）Docker安装JDK" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/17/Docker/Docker实战（四）Docker安装JDK/" class="article-date">
+  	<time datetime="2015-11-16T16:57:12.000Z" itemprop="datePublished">2015-11-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/17/Docker/Docker实战（四）Docker安装JDK/">Docker实战（四）Docker安装JDK</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>安装JDK7和JDK8基本没有区别，只是Dockerfile有所不同，但是他们都继承了之前tools的Docker镜像，下面给出了JDK7和JDK8的Dockerfile源文件。</p>
+<h5 id="大概步骤："><a href="#大概步骤：" class="headerlink" title="大概步骤："></a>大概步骤：</h5><ol>
+<li>上传jdk7到宿主机</li>
+<li>编写Dockerfile构建镜像 </li>
+<li>编写supervisor配置文件</li>
+<li>build和run</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 方式一：可以通过ssh上传指定版本的jdk（这里选择第一种）</div><div class="line"># 1. 上传jdk7到宿主机</div><div class="line"># 2. 将jdk7都解压到指定的目录下（和Dockerfile文件同目录）</div><div class="line"></div><div class="line"># 方式二：从官网或者镜像网站下载jdk7</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/jdk7:v1</div><div class="line"># desc : 当前版本安装的jdk7</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 tools 镜像</div><div class="line">FROM birdben/tools:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 jdk 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV JAVA_HOME /software/jdk7</div><div class="line"></div><div class="line"># 复制 jdk1.7.0_71 文件到镜像中（jdk1.7.0_71 文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD jdk1.7.0_71 /software/jdk7</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/jdk7/Dockerfile">https://github.com/birdben/birdDocker/blob/master/jdk7/Dockerfile</a><br><a href="https://github.com/birdben/birdDocker/blob/master/jdk8/Dockerfile">https://github.com/birdben/birdDocker/blob/master/jdk8/Dockerfile</a></p>
+<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div></pre></td></tr></table></figure>
+<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">docker build -t=&quot;birdben/jdk7:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">docker run -p 9999:22 -t -i birdben/jdk7:v1</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker环境/">Docker环境</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Docker/Docker实战（三）Docker安装ssh，supervisor等基础工具" class="article article-type-post" itemscope itemprop="blogPost">
   
