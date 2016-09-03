@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 12px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 12px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 12px;">ElasticSearch</a> <a href="/tags/Git命令/" style="font-size: 14px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 14px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 14px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 12px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 12px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 12px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 12px;">ElasticSearch</a> <a href="/tags/Git命令/" style="font-size: 14px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 14px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 14px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 12px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,166 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Linux/Linux常用命令（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/25/Linux/Linux常用命令（二）/" class="article-date">
+  	<time datetime="2016-06-25T05:38:11.000Z" itemprop="datePublished">2016-06-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/25/Linux/Linux常用命令（二）/">Linux常用命令（二）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="scp命令"><a href="#scp命令" class="headerlink" title="scp命令"></a>scp命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># 获取远程服务器上的文件</div><div class="line">$ scp -P 2222 root@192.168.1.100:/root/tomcat.tar.gz /home/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数 </div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat.tar.gz 表示远程服务器上的文件</div><div class="line"># /home/tomcat.tar.gz 表示保存在本地上的路径和文件名</div><div class="line"></div><div class="line"># 获取远程服务器上的目录</div><div class="line">$ scp -P 2222 -r root@192.168.1.100:/root/tomcat/ /home/ben/dev/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数</div><div class="line"># -r参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/tomcat/ 表示远程服务器上的目录</div><div class="line"># /home/ben/dev/ 表示保存在本地上的路径。</div><div class="line"></div><div class="line"># 将本地文件上传到服务器上</div><div class="line">$ scp -P 2222 /home/tomcat.tar.gz root@192.168.1.100:/root/tomcat.tar.gz</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 </div><div class="line"># /home/tomcat.tar.gz 表示本地上准备上传文件的路径和文件名</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器</div><div class="line"></div><div class="line"># 将本地目录上传到服务器上</div><div class="line">$ scp -P 2222 -r /home/tomcat/ root@192.168.1.100:/root/dev/tomcat/</div><div class="line"></div><div class="line"># -P是端口号参数，2222表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。</div><div class="line"># -r 参数表示递归复制（即复制该目录下面的文件和目录）</div><div class="line"># /home/tomcat/表示准备要上传的目录</div><div class="line"># root@192.168.1.100 表示使用root用户登录远程服务器192.168.1.100</div><div class="line"># :/root/dev/tomcat/ 表示保存在远程服务器上的目录位置。</div></pre></td></tr></table></figure>
+<h3 id="nc命令"><a href="#nc命令" class="headerlink" title="nc命令"></a>nc命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 今天学到了另一种远程传输文件的方式，原来只知道scp，rz/sz</div><div class="line"># 远程服务器（目的主机监听）</div><div class="line"># 命令格式：nc -l 监听端口&lt;未使用端口&gt; &gt; 要接收的文件名</div><div class="line">$ nc -l 9999 &gt; elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：远程服务器开启一个9999的端口进行监听，并且等待接收elasticsearch-jdbc-1.7.3.0-dist.zip文件</div><div class="line"></div><div class="line"># 本地机器（源主机发起请求）</div><div class="line"># 命令格式：nc 目的主机ip 目的端口 &lt; 要发送的文件</div><div class="line">$ nc 10.120.10.105 9999 &lt; /Users/ben/Downloads/letv/ES/elasticsearch-jdbc-1.7.3.0-dist.zip</div><div class="line"># 解释：本地机器指定远程服务器的ip地址和port端口号将指定的本地文件传送到远程服务器</div></pre></td></tr></table></figure>
+<h3 id="rz-sz命令"><a href="#rz-sz命令" class="headerlink" title="rz/sz命令"></a>rz/sz命令</h3><h5 id="Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用"><a href="#Zmodem（rz-sz命令）一般需要和SSH客户端一起配合使用" class="headerlink" title="Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用"></a>Zmodem（rz/sz命令）一般需要和SSH客户端一起配合使用</h5><p>下面介绍两种客户端</p>
+<ol>
+<li>iterm2（适用Mac环境）</li>
+<li>secureCRT（适用Windows环境）</li>
+</ol>
+<h4 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">1. 安装brew工具</div><div class="line">$ brew install lszrz</div><div class="line"># 如果没有brew工具，请参考：http://blog.csdn.net/tsxw24/article/details/15500517</div><div class="line">2. 下载iterm2-zmodem到/usr/local/bin目录（将两个shell脚本放到/usr/local/bin/目录下然后开始配置）</div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh </div><div class="line">$ sudo wget https://raw.github.com/mmastrac/iterm2-zmodem/master/iterm2-recv-zmodem.sh </div><div class="line">$ sudo chmod 777 /usr/local/bin/iterm2-*</div><div class="line">3. 运行下载的iterm，添加trigger</div><div class="line">打开iterm2 --&gt;  同时按command和,键 --&gt; Profiles --&gt; Default --&gt; Advanced --&gt; Triggers的Edit按钮</div><div class="line">4. Triggers的设置代码如下 </div><div class="line">Regular expression: \*\*B0100</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-send-zmodem.sh</div><div class="line"></div><div class="line">Regular expression: \*\*B00000000000000</div><div class="line">Action: Run Silent Coprocess </div><div class="line">Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</div><div class="line">5. 上传和下载文件和secureCRT方式一样</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160622214939271?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="iterm2"></p>
+<h4 id="secureCRT"><a href="#secureCRT" class="headerlink" title="secureCRT"></a>secureCRT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 上传文件</div><div class="line">1. 打开secureCRT,通过SSH连到至远程linux主机</div><div class="line">2. 键入rz命令</div><div class="line">3. 在跳出的窗口选择想要上传的文件</div><div class="line">4. 点击ADD后加入传输列表</div><div class="line">5. 点击确认以后传送文件</div><div class="line">6. 查看状态，一般都是发送正功</div><div class="line">7. 查看目录，确定刚才选的文件已经上传成功</div><div class="line"></div><div class="line"># 下载文件</div><div class="line">1. 远程连接到linux主机</div><div class="line">2. 输入sz fileName</div><div class="line">3. 在弹出的窗口中选择保存文件到本地的目录</div><div class="line">4. 确定后，等待文件下载完成</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.vpser.net/manage/scp.html" target="_blank" rel="external">http://www.vpser.net/manage/scp.html</a></li>
+<li><a href="http://blog.csdn.net/u014552288/article/details/38349827" target="_blank" rel="external">http://blog.csdn.net/u014552288/article/details/38349827</a></li>
+<li><a href="http://blog.csdn.net/tsxw24/article/details/15500517" target="_blank" rel="external">http://blog.csdn.net/tsxw24/article/details/15500517</a></li>
+<li><a href="http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO" target="_blank" rel="external">http://wenku.baidu.com/link?url=QV3BHlMEVRd7c2Nlw8p4_o9z6qXecNoGACOLLGdYxP3qnM8XIujaUPk4ZZZl83Docq4fxxl3BMRijuVAy4yryGVdlFB1jM9JDzGs5L5eHuO</a></li>
+<li><a href="http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html" target="_blank" rel="external">http://jingyan.baidu.com/article/b24f6c822bdabc86bee5da64.html</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Linux/">Linux</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker/Docker实战（十四）Docker安装Hadoop环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/20/Docker/Docker实战（十四）Docker安装Hadoop环境/" class="article-date">
+  	<time datetime="2016-06-20T15:42:27.000Z" itemprop="datePublished">2016-06-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/20/Docker/Docker实战（十四）Docker安装Hadoop环境/">Docker实战（十四）Docker安装Hadoop环境</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="Hadoop安装"><a href="#Hadoop安装" class="headerlink" title="Hadoop安装"></a>Hadoop安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># 需要提前安装ssh</div><div class="line">$ apt-get install ssh</div><div class="line">$ apt-get install openssh-server</div><div class="line"></div><div class="line"># 设置免密码登录，生成私钥和公钥</div><div class="line">$ ssh-keygen -t rsa -P &quot;&quot;</div><div class="line">$ cat ~/.ssh/id_rsa.put &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># 测试是否可以免密码登录</div><div class="line">$ ssh localhost</div><div class="line"></div><div class="line"># 下载Hadoop</div><div class="line">$ curl -O http://mirrors.cnnic.cn/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz</div><div class="line"></div><div class="line"># 解压Hadoop压缩包</div><div class="line">$ tar -xf hadoop-2.7.1.tar.gz</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/hadoop:v1</div><div class="line"># desc : 当前版本安装的hadoop</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 hadoop 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV HADOOP_HOME /software/hadoop-2.7.1</div><div class="line">ENV PATH $&#123;HADOOP_HOME&#125;/bin:$PATH</div><div class="line"></div><div class="line"># 复制 hadoop-2.7.1 文件到镜像中（hadoop-2.7.1 文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD hadoop-2.7.1 /software/hadoop-2.7.1</div><div class="line"></div><div class="line"># 创建HDFS存储路径</div><div class="line">RUN mkdir -p $HADOOP_HOME/hdfs/name</div><div class="line">RUN mkdir -p $HADOOP_HOME/hdfs/data</div><div class="line"></div><div class="line"># 授权HADOOP_HOME路径给admin用户</div><div class="line">RUN sudo chown -R admin /software/hadoop-2.7.1</div><div class="line"></div><div class="line"># 容器需要开放Hadoop 9000端口</div><div class="line">EXPOSE 9000</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/hadoop/Dockerfile">https://github.com/birdben/birdDocker/blob/master/hadoop/Dockerfile</a></p>
+<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line"># 暂时没用使用supervsord启动Hadoop，因为没研究明白如何启动的时候不需要ssh输入密码，即使设置了ENV DEBIAN_FRONTEND noninteractive所有的操作的是非交互的也不好用，所以只能启动Docker容器之后手动再启动Hadoop</div><div class="line"># [program:hadoop]</div><div class="line"># command=$HADOOP_HOME/bin/hdfs namenode -format</div><div class="line"># command=$HADOOP_HOME/sbin/start_all.sh</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-hadoop-env-sh，添加以下内容"><a href="#配置HADOOP-HOME-etc-hadoop-hadoop-env-sh，添加以下内容" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/hadoop-env.sh，添加以下内容"></a>配置HADOOP_HOME/etc/hadoop/hadoop-env.sh，添加以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/software/jdk7</div><div class="line">export PATH=$PATH:/software/hadoop-2.7.1/bin</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-yarn-env-sh，添加以下内容"><a href="#配置HADOOP-HOME-etc-hadoop-yarn-env-sh，添加以下内容" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/yarn-env.sh，添加以下内容"></a>配置HADOOP_HOME/etc/hadoop/yarn-env.sh，添加以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/software/jdk7</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-core-site-xml，这里的Ben是我Docker容器的hostname，读者自行把Ben替换成自己的hostname（下同）"><a href="#配置HADOOP-HOME-etc-hadoop-core-site-xml，这里的Ben是我Docker容器的hostname，读者自行把Ben替换成自己的hostname（下同）" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/core-site.xml，这里的Ben是我Docker容器的hostname，读者自行把Ben替换成自己的hostname（下同）"></a>配置HADOOP_HOME/etc/hadoop/core-site.xml，这里的Ben是我Docker容器的hostname，读者自行把Ben替换成自己的hostname（下同）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">    &lt;value&gt;hdfs://Ben:9000&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/software/hadoop-2.7.1/tmp&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-hdfs-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-hdfs-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/hdfs-site.xml"></a>配置HADOOP_HOME/etc/hadoop/hdfs-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.datanode.ipc.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;Ben:50020&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.datanode.http.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;Ben:50075&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/software/hadoop-2.7.1/hdfs/name&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/software/hadoop-2.7.1/hdfs/data&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</div><div class="line">    &lt;value&gt;Ben:50090&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-mapred-site-xml-默认不存在，需要自建"><a href="#配置HADOOP-HOME-etc-hadoop-mapred-site-xml-默认不存在，需要自建" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/mapred-site.xml,默认不存在，需要自建"></a>配置HADOOP_HOME/etc/hadoop/mapred-site.xml,默认不存在，需要自建</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">    &lt;value&gt;yarn&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-yarn-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-yarn-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/yarn-site.xml"></a>配置HADOOP_HOME/etc/hadoop/yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/hadoop:v1&quot; .</div><div class="line"># 执行已经构件好的镜像，挂载在宿主机器的存储路径也不同，-h设置hostname（即上面所说的Docker容器的hostname【Ben】），Hadoop配置文件需要使用</div><div class="line">$ docker run -h Ben -p 9999:22 -p 9000:9000 -p 8088:8088 -p 50020:50020 -p 50070:50070 -p 50075:50075 -p 50090:50090 -t -i &apos;birdben/hadoop:v1&apos;</div></pre></td></tr></table></figure>
+<h5 id="用SSH登录admin账号启动Hadoop并且查看JPS"><a href="#用SSH登录admin账号启动Hadoop并且查看JPS" class="headerlink" title="用SSH登录admin账号启动Hadoop并且查看JPS"></a>用SSH登录admin账号启动Hadoop并且查看JPS</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"># 此时可以通过ssh远程连接Docker容器了</div><div class="line">$ ssh root@10.211.55.4 -p 9999</div><div class="line"></div><div class="line"># 先初始化namenode</div><div class="line">admin@Ben:/$ cd /software/hadoop-2.7.1/bin</div><div class="line">admin@Ben:/software/hadoop-2.7.1/sbin$ ./hdfs namenode -format</div><div class="line"></div><div class="line"># 看到类似下面的信息就说明初始化namenode成功了</div><div class="line">16/06/06 03:27:57 INFO namenode.FSNamesystem: Retry cache will use 0.03 of total heap and retry cache entry expiry time is 600000 millis</div><div class="line">16/06/06 03:27:57 INFO util.GSet: Computing capacity for map NameNodeRetryCache</div><div class="line">16/06/06 03:27:57 INFO util.GSet: VM type       = 64-bit</div><div class="line">16/06/06 03:27:57 INFO util.GSet: 0.029999999329447746% max memory 889 MB = 273.1 KB</div><div class="line">16/06/06 03:27:57 INFO util.GSet: capacity      = 2^15 = 32768 entries</div><div class="line">16/06/06 03:27:57 INFO namenode.FSImage: Allocated new BlockPoolId: BP-581626940-172.17.0.2-1465183677567</div><div class="line">16/06/06 03:27:57 INFO common.Storage: Storage directory /software/hadoop-2.7.1/hdfs/name has been successfully formatted.</div><div class="line">16/06/06 03:27:57 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid &gt;= 0</div><div class="line">16/06/06 03:27:57 INFO util.ExitUtil: Exiting with status 0</div><div class="line">16/06/06 03:27:57 INFO namenode.NameNode: SHUTDOWN_MSG:</div><div class="line">/************************************************************</div><div class="line">SHUTDOWN_MSG: Shutting down NameNode at Ben/172.17.0.2</div><div class="line">************************************************************/</div><div class="line"></div><div class="line"># 启动所有服务</div><div class="line">admin@Ben:/$ cd /software/hadoop-2.7.1/sbin</div><div class="line">admin@Ben:/software/hadoop-2.7.1/sbin$ ./start-all.sh</div><div class="line"></div><div class="line"># 下面的过程就是启动Hadoop的过程，但是始终需要输入ssh的密码，不知道为啥</div><div class="line">This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh</div><div class="line">Starting namenodes on [Ben]</div><div class="line">Ben: Could not create directory &apos;/home/admin/.ssh&apos;.</div><div class="line">The authenticity of host &apos;ben (172.17.0.2)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is ae:ec:44:6d:64:48:e8:34:17:33:cf:86:07:20:e3:4d.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Ben: Failed to add the host to the list of known hosts (/home/admin/.ssh/known_hosts).</div><div class="line">admin@ben&apos;s password:</div><div class="line">Ben: Could not chdir to home directory /home/admin: No such file or directory</div><div class="line">Ben: starting namenode, logging to /software/hadoop-2.7.1/logs/hadoop-admin-namenode-Ben.out</div><div class="line">localhost: Could not create directory &apos;/home/admin/.ssh&apos;.</div><div class="line">The authenticity of host &apos;localhost (::1)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is ae:ec:44:6d:64:48:e8:34:17:33:cf:86:07:20:e3:4d.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">localhost: Failed to add the host to the list of known hosts (/home/admin/.ssh/known_hosts).</div><div class="line">admin@localhost&apos;s password:</div><div class="line">localhost: Could not chdir to home directory /home/admin: No such file or directory</div><div class="line">localhost: starting datanode, logging to /software/hadoop-2.7.1/logs/hadoop-admin-datanode-Ben.out</div><div class="line">Starting secondary namenodes [Ben]</div><div class="line">Ben: Could not create directory &apos;/home/admin/.ssh&apos;.</div><div class="line">The authenticity of host &apos;ben (172.17.0.2)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is ae:ec:44:6d:64:48:e8:34:17:33:cf:86:07:20:e3:4d.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Ben: Failed to add the host to the list of known hosts (/home/admin/.ssh/known_hosts).</div><div class="line">admin@ben&apos;s password:</div><div class="line">Ben: Could not chdir to home directory /home/admin: No such file or directory</div><div class="line">Ben: starting secondarynamenode, logging to /software/hadoop-2.7.1/logs/hadoop-admin-secondarynamenode-Ben.out</div><div class="line">starting yarn daemons</div><div class="line">starting resourcemanager, logging to /software/hadoop-2.7.1/logs/yarn-admin-resourcemanager-Ben.out</div><div class="line">localhost: Could not create directory &apos;/home/admin/.ssh&apos;.</div><div class="line">The authenticity of host &apos;localhost (::1)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is ae:ec:44:6d:64:48:e8:34:17:33:cf:86:07:20:e3:4d.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">localhost: Failed to add the host to the list of known hosts (/home/admin/.ssh/known_hosts).</div><div class="line">admin@localhost&apos;s password:</div><div class="line">localhost: Could not chdir to home directory /home/admin: No such file or directory</div><div class="line">localhost: starting nodemanager, logging to /software/hadoop-2.7.1/logs/yarn-admin-nodemanager-Ben.out</div><div class="line"></div><div class="line"># 执行jps命令之前需要先把$JAVA_HOME/bin添加到PATH环境变量</div><div class="line">admin@Ben:/$ export PATH=/software/jdk7/bin/:$PATH</div><div class="line"></div><div class="line"># 执行jps命令如果能看到下面的6个进程就说明Hadoop启动的没有问题</div><div class="line">admin@Ben:/software/hadoop-2.7.1/sbin$ jps</div><div class="line">985 Jps</div><div class="line">282 DataNode</div><div class="line">587 ResourceManager</div><div class="line">436 SecondaryNameNode</div><div class="line">166 NameNode</div><div class="line">691 NodeManager</div></pre></td></tr></table></figure>
+<h5 id="在Ubuntu宿主机浏览器查看"><a href="#在Ubuntu宿主机浏览器查看" class="headerlink" title="在Ubuntu宿主机浏览器查看"></a>在Ubuntu宿主机浏览器查看</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 查看namenode状态：</div><div class="line">http://127.0.0.1:50070/</div><div class="line"></div><div class="line"># 查看yarn状态：</div><div class="line">http://127.0.0.1:8088/</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://my.oschina.net/adrianlynn/blog/505475?fromerr=n1qLgsaT" target="_blank" rel="external">http://my.oschina.net/adrianlynn/blog/505475?fromerr=n1qLgsaT</a></li>
+<li><a href="http://my.oschina.net/u/204498/blog/519789?fromerr=9ZYyEtZm" target="_blank" rel="external">http://my.oschina.net/u/204498/blog/519789?fromerr=9ZYyEtZm</a></li>
+<li><a href="http://blog.csdn.net/zhaogezhuoyuezhao/article/details/8426910" target="_blank" rel="external">http://blog.csdn.net/zhaogezhuoyuezhao/article/details/8426910</a></li>
+<li><a href="http://tashan10.com/yong-dockerda-jian-hadoopwei-fen-bu-shi-ji-qun/" target="_blank" rel="external">http://tashan10.com/yong-dockerda-jian-hadoopwei-fen-bu-shi-ji-qun/</a></li>
+<li>集群</li>
+<li><a href="http://blog.csdn.net/peace1213/article/details/51334508" target="_blank" rel="external">http://blog.csdn.net/peace1213/article/details/51334508</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Docker/Docker实战（十三）Docker安装MySQL数据库" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1077,164 +1237,9 @@ http://kibana.logstash.es/content/kibana/v4/production.html
 
 
   
-    <article id="post-Docker/Docker实战（六）Docker安装Redis" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/25/Docker/Docker实战（六）Docker安装Redis/" class="article-date">
-  	<time datetime="2015-11-24T17:52:00.000Z" itemprop="datePublished">2015-11-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/25/Docker/Docker实战（六）Docker安装Redis/">Docker实战（六）Docker安装Redis</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>初次使用Docker安装各种环境，果然是一堆坑啊，坑，坑，坑，坑死我了。。</p>
-<h5 id="大概步骤："><a href="#大概步骤：" class="headerlink" title="大概步骤："></a>大概步骤：</h5><ol>
-<li>上传Redis到宿主机，或者在宿主机中下载</li>
-<li>编写Dockerfile构建镜像 </li>
-<li>编写supervisor配置文件</li>
-<li>build和run</li>
-</ol>
-<h5 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 下载安装Redis</div><div class="line">$ wget http://download.redis.io/releases/redis-3.0.5.tar.gz</div><div class="line">$ tar xzf redis-3.0.5.tar.gz</div><div class="line">$ cd redis-3.0.5</div><div class="line">$ make</div><div class="line"></div><div class="line"># make完成之后，可以运行make test来验证</div><div class="line">$ make test</div><div class="line"></div><div class="line"># 启动redis server，使用默认的redis.conf配置</div><div class="line">$ cd src</div><div class="line">$ ./redis-server ../redis.conf</div><div class="line"></div><div class="line"># 启动redis client来连接server，登录密码可以参考redis.conf配置</div><div class="line">$ cd src</div><div class="line">$ ./redis-cli </div><div class="line"></div><div class="line"># 参考：</div><div class="line">http://redis.io/download</div><div class="line"># 如果以上操作都没问题，就说明redis已经安装和启动成功了</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/redis:v1</div><div class="line"># desc : 当前版本安装的redis</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 tools 镜像</div><div class="line">FROM birdben/tools:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 redis 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV REDIS_HOME /software/redis-3.0.0</div><div class="line">ENV LC_ALL C</div><div class="line"></div><div class="line"># 复制 redis-3.0.0 文件到镜像中（redis-3.0.0文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD redis-3.0.0 /software/redis-3.0.0</div><div class="line"></div><div class="line"># 挂载/redis目录</div><div class="line">VOLUME [&quot;/redis&quot;]</div><div class="line"></div><div class="line"># 容器需要开放Redis 6379端口</div><div class="line">EXPOSE 6379</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/redis/Dockerfile">https://github.com/birdben/birdDocker/blob/master/redis/Dockerfile</a></p>
-<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:redis]</div><div class="line"># 注意这里指定的redis.conf文件路径，必须是绝对路径</div><div class="line">command=/software/redis-3.0.0/src/redis-server /redis/redis.conf</div></pre></td></tr></table></figure>
-<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/redis:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">$ docker run -p 9999:22 -p 6379:6379 -t -i -v /docker/redis:/redis &quot;birdben/redis:v1&quot;</div></pre></td></tr></table></figure>
-<h5 id="遇到的问题和解决方法"><a href="#遇到的问题和解决方法" class="headerlink" title="遇到的问题和解决方法"></a>遇到的问题和解决方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># supervisor配置文件内容</div><div class="line"># 注意这里指定的redis.conf文件路径，必须是绝对路径</div><div class="line"># 好用command=/software/redis-3.0.0/src/redis-server /redis/redis.conf</div><div class="line"># 不好用command=/software/redis-3.0.0/src/redis-server ../redis.conf</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.mimvp.com/2014/04/supervisor-setup-deployment/" target="_blank" rel="external">http://blog.mimvp.com/2014/04/supervisor-setup-deployment/</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker/Docker实战（五）Docker安装Tomcat" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/17/Docker/Docker实战（五）Docker安装Tomcat/" class="article-date">
-  	<time datetime="2015-11-16T19:12:24.000Z" itemprop="datePublished">2015-11-17</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/17/Docker/Docker实战（五）Docker安装Tomcat/">Docker实战（五）Docker安装Tomcat</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这里安装的Tomcat继承了之前JDK7的Docker镜像，因为运行Tomcat需要依赖JDK。</p>
-<h5 id="大概步骤："><a href="#大概步骤：" class="headerlink" title="大概步骤："></a>大概步骤：</h5><ol>
-<li>上传tomcat7到宿主机</li>
-<li>编写Dockerfile构建镜像 </li>
-<li>编写supervisor配置文件</li>
-<li>build和run</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 方式一：可以通过ssh上传指定版本的tomcat（这里选择第一种）</div><div class="line"># 1. 上传tomcat7到宿主机</div><div class="line"># 2. 将tomcat7都解压到指定的目录下（和Dockerfile文件同目录）</div><div class="line"></div><div class="line"># 方式二：从官网或者镜像网站下载tomcat7</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/tomcat7:v1</div><div class="line"># desc : 当前版本安装的tomcat7</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 tomcat 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV CATALINA_HOME /software/tomcat7</div><div class="line"></div><div class="line"># 复制 apache-tomcat-7.0.55 文件到镜像中（apache-tomcat-7.0.55 文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD apache-tomcat-7.0.55 /software/tomcat7</div><div class="line"></div><div class="line"># 容器需要开放Tomcat 8080端口</div><div class="line">EXPOSE 8080</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/tomcat7/Dockerfile">https://github.com/birdben/birdDocker/blob/master/tomcat7/Dockerfile</a></p>
-<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:tomcat]</div><div class="line">command=/bin/bash -c &quot;exec $&#123;CATALINA_HOME&#125;/bin/catalina.sh run&quot;</div></pre></td></tr></table></figure>
-<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">docker build -t=&quot;birdben/tomcat7:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">docker run -p 9999:22 -p 8080:8080 -t -i birdben/tomcat7:v1</div></pre></td></tr></table></figure>
-<h5 id="浏览器访问"><a href="#浏览器访问" class="headerlink" title="浏览器访问"></a>浏览器访问</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://10.211.55.4:8080/</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://dockerpool.com/article/1414478257" target="_blank" rel="external">http://dockerpool.com/article/1414478257</a></li>
-<li><a href="http://www.blogjava.net/yongboy/archive/2013/12/16/407643.html" target="_blank" rel="external">http://www.blogjava.net/yongboy/archive/2013/12/16/407643.html</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </div>
