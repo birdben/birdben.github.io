@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Flume学习（一）Flume环境搭建 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Flume安装12345678$ wget http://apache.fayea.com/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz$ tar -xvf apache-flume-1.6.0-bin.tar$ mv apache-flume-1.6.0-bin flume-1.6.0$ cd flume-1.6.0# 修改flume配置文件$ cp con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flume学习（一）Flume环境搭建">
+<meta property="og:url" content="https://github.com/birdben/2016/08/23/Flume/Flume学习（一）Flume环境搭建/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Flume安装12345678$ wget http://apache.fayea.com/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz$ tar -xvf apache-flume-1.6.0-bin.tar$ mv apache-flume-1.6.0-bin flume-1.6.0$ cd flume-1.6.0# 修改flume配置文件$ cp con">
+<meta property="og:image" content="http://flume.apache.org/_images/UserGuide_image00.png">
+<meta property="og:image" content="https://blogs.apache.org/flume/mediaresource/ab0d50f6-a960-42cc-971e-3da38ba3adad">
+<meta property="og:updated_time" content="2016-09-04T05:18:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flume学习（一）Flume环境搭建">
+<meta name="twitter:description" content="Flume安装12345678$ wget http://apache.fayea.com/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz$ tar -xvf apache-flume-1.6.0-bin.tar$ mv apache-flume-1.6.0-bin flume-1.6.0$ cd flume-1.6.0# 修改flume配置文件$ cp con">
+<meta name="twitter:image" content="http://flume.apache.org/_images/UserGuide_image00.png">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Flume/Flume学习（一）Flume环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/23/Flume/Flume学习（一）Flume环境搭建/" class="article-date">
+  	<time datetime="2016-08-23T06:21:09.000Z" itemprop="datePublished">2016-08-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flume学习（一）Flume环境搭建
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Flume安装"><a href="#Flume安装" class="headerlink" title="Flume安装"></a>Flume安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ wget http://apache.fayea.com/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz</div><div class="line">$ tar -xvf apache-flume-1.6.0-bin.tar</div><div class="line">$ mv apache-flume-1.6.0-bin flume-1.6.0</div><div class="line">$ cd flume-1.6.0</div><div class="line"></div><div class="line"># 修改flume配置文件</div><div class="line">$ cp conf/flume-conf.properties.template conf/flume.conf</div><div class="line">$ cp conf/flume-env.sh.template conf/flume-env.sh</div></pre></td></tr></table></figure>
+<h4 id="Flume组件介绍"><a href="#Flume组件介绍" class="headerlink" title="Flume组件介绍"></a>Flume组件介绍</h4><ul>
+<li>Event：一个数据单元，带有一个可选的消息头</li>
+<li>Flow：Event从源点到达目的点的迁移的抽象</li>
+<li>Client：操作位于源点处的Event，将其发送到Flume Agent（下面介绍的AvroClient用法）</li>
+<li>Agent：一个独立的Flume进程，包含组件Source、Channel、Sink</li>
+<li>Source：用来消费传递到该组件的Event（从数据源获取生成event data）</li>
+<li>Channel：中转Event的一个临时存储，保存有Source组件传递过来的Event（接收source给put来的event data）</li>
+<li>Sink：从Channel中读取并移除Event（从channel取走event data），将Event传递到Flow Pipeline中的下一个Agent（如果有的话）</li>
+</ul>
+<p><img src="http://flume.apache.org/_images/UserGuide_image00.png" alt="Flume组件图"></p>
+<ul>
+<li>参考下面的图比较容易理解AvroClient和Flume Agent的关系</li>
+</ul>
+<p><img src="https://blogs.apache.org/flume/mediaresource/ab0d50f6-a960-42cc-971e-3da38ba3adad" alt="Flume Client"></p>
+<h4 id="Flume配置文件格式"><a href="#Flume配置文件格式" class="headerlink" title="Flume配置文件格式"></a>Flume配置文件格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># list the sources, sinks and channels for the agent</div><div class="line">&lt;Agent&gt;.sources = &lt;Source1&gt; &lt;Source2&gt;</div><div class="line">&lt;Agent&gt;.sinks = &lt;Sink1&gt; &lt;Sink2&gt;</div><div class="line">&lt;Agent&gt;.channels = &lt;Channel1&gt; &lt;Channel2&gt;</div><div class="line"></div><div class="line"># set channel for source</div><div class="line">&lt;Agent&gt;.sources.&lt;Source1&gt;.channels = &lt;Channel1&gt; &lt;Channel2&gt;</div><div class="line">&lt;Agent&gt;.sources.&lt;Source2&gt;.channels = &lt;Channel1&gt; &lt;Channel2&gt;</div><div class="line"></div><div class="line"># set channel</div><div class="line">&lt;Agent&gt;.channels.&lt;Channel1&gt;.XXX = XXX</div><div class="line">&lt;Agent&gt;.channels.&lt;Channel2&gt;.XXX = XXX</div><div class="line"></div><div class="line"># set channel for sink</div><div class="line">&lt;Agent&gt;.sinks.&lt;Sink1&gt;.channel = &lt;Channel1&gt;</div><div class="line">&lt;Agent&gt;.sinks.&lt;Sink2&gt;.channel = &lt;Channel2&gt;</div></pre></td></tr></table></figure>
+<h4 id="Flume配置文件"><a href="#Flume配置文件" class="headerlink" title="Flume配置文件"></a>Flume配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"># 这里对比上面的Flume组件图来看此配置信息就比较容易理解了</div><div class="line"># 定义当前Agent的所有的组件（sources,channels,sinks），Flume这里的组件和Logstash的input，filter，output非常类似</div><div class="line">agent1.sources = avro-source1</div><div class="line">agent1.channels = ch1</div><div class="line">agent1.sinks = log-sink1</div><div class="line"></div><div class="line"># 定义sources组件的具体配置</div><div class="line"># 设置source的目标是哪个channel</div><div class="line">agent1.sources.avro-source1.channels = ch1</div><div class="line"># 设置source的输入信息类型，表示该source接收的数据协议为avro（也就是说resource要通过avro-cliet向其发送数据）</div><div class="line">agent1.sources.avro-source1.type = avro</div><div class="line"># 设置source的监听主机的IP地址，或者hostname</div><div class="line"># 这里我使用的是本机IP：10.10.1.23，如果是本机测试也可以使用localhost</div><div class="line">agent1.sources.avro-source1.bind = 10.10.1.23</div><div class="line"># 设置source的监听主机的port</div><div class="line">agent1.sources.avro-source1.port = 41414</div><div class="line"></div><div class="line"># 定义channels组件的具体配置</div><div class="line"># 设置Channel的类型</div><div class="line">agent1.channels.ch1.type = memory</div><div class="line"></div><div class="line"># 定义sinks组件的具体配置</div><div class="line"># 设置sink的来源于哪个channel</div><div class="line">agent1.sinks.log-sink1.channel = ch1</div><div class="line"># 设置sink的输出信息类型，将数据输出至Flume的日志中(也就是打印在屏幕上)</div><div class="line">agent1.sinks.log-sink1.type = logger</div></pre></td></tr></table></figure>
+<p>Avro协议参考：</p>
+<ul>
+<li><a href="http://langyu.iteye.com/blog/708568" target="_blank" rel="external">http://langyu.iteye.com/blog/708568</a></li>
+</ul>
+<h4 id="启动Flume-Agent端"><a href="#启动Flume-Agent端" class="headerlink" title="启动Flume Agent端"></a>启动Flume Agent端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"># 这里指定的agent1名称必须和flume.conf配置文件中的agent名称一致</div><div class="line"># 这里的启动命令是./bin/flume-ng agent，开始监听41414端口</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume.conf -Dflume.root.logger=DEBUG,console -n agent1</div><div class="line"></div><div class="line">+ exec /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp &apos;/Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/*&apos; -Djava.library.path= org.apache.flume.node.Application -f conf/flume.conf -n agent1</div><div class="line">2016-08-24 10:15:05,547 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.node.PollingPropertiesFileConfigurationProvider.start(PollingPropertiesFileConfigurationProvider.java:61)] Configuration provider starting</div><div class="line">2016-08-24 10:15:05,551 (lifecycleSupervisor-1-0) [DEBUG - org.apache.flume.node.PollingPropertiesFileConfigurationProvider.start(PollingPropertiesFileConfigurationProvider.java:78)] Configuration provider started</div><div class="line">2016-08-24 10:15:05,553 (conf-file-poller-0) [DEBUG - org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:126)] Checking file:conf/flume.conf for changes</div><div class="line">2016-08-24 10:15:05,555 (conf-file-poller-0) [INFO - org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:133)] Reloading configuration file:conf/flume.conf</div><div class="line">2016-08-24 10:15:05,559 (conf-file-poller-0) [INFO - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addProperty(FlumeConfiguration.java:1017)] Processing:log-sink1</div><div class="line">2016-08-24 10:15:05,559 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addProperty(FlumeConfiguration.java:1021)] Created context for log-sink1: type</div><div class="line">2016-08-24 10:15:05,560 (conf-file-poller-0) [INFO - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addProperty(FlumeConfiguration.java:1017)] Processing:log-sink1</div><div class="line">2016-08-24 10:15:05,560 (conf-file-poller-0) [INFO - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addProperty(FlumeConfiguration.java:931)] Added sinks: log-sink1 Agent: agent1</div><div class="line">2016-08-24 10:15:05,563 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.isValid(FlumeConfiguration.java:314)] Starting validation of configuration for agent: agent1, initial-configuration: AgentConfiguration[agent1]</div><div class="line">SOURCES: &#123;avro-source1=&#123; parameters:&#123;port=41414, channels=ch1, type=avro, bind=10.10.1.23&#125; &#125;&#125;</div><div class="line">CHANNELS: &#123;ch1=&#123; parameters:&#123;type=memory&#125; &#125;&#125;</div><div class="line">SINKS: &#123;log-sink1=&#123; parameters:&#123;type=logger, channel=ch1&#125; &#125;&#125;</div><div class="line"></div><div class="line">2016-08-24 10:15:05,566 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.validateChannels(FlumeConfiguration.java:469)] Created channel ch1</div><div class="line">2016-08-24 10:15:05,573 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.validateSinks(FlumeConfiguration.java:675)] Creating sink: log-sink1 using LOGGER</div><div class="line">2016-08-24 10:15:05,574 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.isValid(FlumeConfiguration.java:372)] Post validation configuration for agent1</div><div class="line">AgentConfiguration created without Configuration stubs for which only basic syntactical validation was performed[agent1]</div><div class="line">SOURCES: &#123;avro-source1=&#123; parameters:&#123;port=41414, channels=ch1, type=avro, bind=10.10.1.23&#125; &#125;&#125;</div><div class="line">CHANNELS: &#123;ch1=&#123; parameters:&#123;type=memory&#125; &#125;&#125;</div><div class="line">AgentConfiguration created with Configuration stubs for which full validation was performed[agent1]</div><div class="line">SINKS: &#123;log-sink1=ComponentConfiguration[log-sink1]</div><div class="line">  CONFIG:</div><div class="line">    CHANNEL:ch1</div><div class="line">&#125;</div><div class="line"></div><div class="line">2016-08-24 10:15:05,574 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration.validateConfiguration(FlumeConfiguration.java:136)] Channels:ch1</div><div class="line"></div><div class="line">2016-08-24 10:15:05,575 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration.validateConfiguration(FlumeConfiguration.java:137)] Sinks log-sink1</div><div class="line"></div><div class="line">2016-08-24 10:15:05,575 (conf-file-poller-0) [DEBUG - org.apache.flume.conf.FlumeConfiguration.validateConfiguration(FlumeConfiguration.java:138)] Sources avro-source1</div><div class="line"></div><div class="line">2016-08-24 10:15:05,575 (conf-file-poller-0) [INFO - org.apache.flume.conf.FlumeConfiguration.validateConfiguration(FlumeConfiguration.java:141)] Post-validation flume configuration contains configuration for agents: [agent1]</div><div class="line">2016-08-24 10:15:05,577 (conf-file-poller-0) [INFO - org.apache.flume.node.AbstractConfigurationProvider.loadChannels(AbstractConfigurationProvider.java:145)] Creating channels</div><div class="line">2016-08-24 10:15:05,584 (conf-file-poller-0) [INFO - org.apache.flume.channel.DefaultChannelFactory.create(DefaultChannelFactory.java:42)] Creating instance of channel ch1 type memory</div><div class="line">2016-08-24 10:15:05,591 (conf-file-poller-0) [INFO - org.apache.flume.node.AbstractConfigurationProvider.loadChannels(AbstractConfigurationProvider.java:200)] Created channel ch1</div><div class="line">2016-08-24 10:15:05,592 (conf-file-poller-0) [INFO - org.apache.flume.source.DefaultSourceFactory.create(DefaultSourceFactory.java:41)] Creating instance of source avro-source1, type avro</div><div class="line">2016-08-24 10:15:05,610 (conf-file-poller-0) [INFO - org.apache.flume.sink.DefaultSinkFactory.create(DefaultSinkFactory.java:42)] Creating instance of sink: log-sink1, type: logger</div><div class="line">2016-08-24 10:15:05,614 (conf-file-poller-0) [INFO - org.apache.flume.node.AbstractConfigurationProvider.getConfiguration(AbstractConfigurationProvider.java:114)] Channel ch1 connected to [avro-source1, log-sink1]</div><div class="line">2016-08-24 10:15:05,623 (conf-file-poller-0) [INFO - org.apache.flume.node.Application.startAllComponents(Application.java:138)] Starting new configuration:&#123; sourceRunners:&#123;avro-source1=EventDrivenSourceRunner: &#123; source:Avro source avro-source1: &#123; bindAddress: 10.10.1.23, port: 41414 &#125; &#125;&#125; sinkRunners:&#123;log-sink1=SinkRunner: &#123; policy:org.apache.flume.sink.DefaultSinkProcessor@8ae0e27 counterGroup:&#123; name:null counters:&#123;&#125; &#125; &#125;&#125; channels:&#123;ch1=org.apache.flume.channel.MemoryChannel&#123;name: ch1&#125;&#125; &#125;</div><div class="line">2016-08-24 10:15:05,632 (conf-file-poller-0) [INFO - org.apache.flume.node.Application.startAllComponents(Application.java:145)] Starting Channel ch1</div><div class="line">2016-08-24 10:15:05,700 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.instrumentation.MonitoredCounterGroup.register(MonitoredCounterGroup.java:120)] Monitored counter group for type: CHANNEL, name: ch1: Successfully registered new MBean.</div><div class="line">2016-08-24 10:15:05,701 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.instrumentation.MonitoredCounterGroup.start(MonitoredCounterGroup.java:96)] Component type: CHANNEL, name: ch1 started</div><div class="line">2016-08-24 10:15:05,701 (conf-file-poller-0) [INFO - org.apache.flume.node.Application.startAllComponents(Application.java:173)] Starting Sink log-sink1</div><div class="line">2016-08-24 10:15:05,702 (conf-file-poller-0) [INFO - org.apache.flume.node.Application.startAllComponents(Application.java:184)] Starting Source avro-source1</div><div class="line">2016-08-24 10:15:05,702 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.source.AvroSource.start(AvroSource.java:228)] Starting Avro source avro-source1: &#123; bindAddress: 10.10.1.23, port: 41414 &#125;...</div><div class="line">2016-08-24 10:15:05,702 (SinkRunner-PollingRunner-DefaultSinkProcessor) [DEBUG - org.apache.flume.SinkRunner$PollingRunner.run(SinkRunner.java:143)] Polling sink runner starting</div><div class="line">2016-08-24 10:15:06,036 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.instrumentation.MonitoredCounterGroup.register(MonitoredCounterGroup.java:120)] Monitored counter group for type: SOURCE, name: avro-source1: Successfully registered new MBean.</div><div class="line">2016-08-24 10:15:06,036 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.instrumentation.MonitoredCounterGroup.start(MonitoredCounterGroup.java:96)] Component type: SOURCE, name: avro-source1 started</div><div class="line">2016-08-24 10:15:06,036 (lifecycleSupervisor-1-0) [INFO - org.apache.flume.source.AvroSource.start(AvroSource.java:253)] Avro source avro-source1 started.</div></pre></td></tr></table></figure>
+<h4 id="查看Flume监听的41414端口，等待AvroClient的输入信息"><a href="#查看Flume监听的41414端口，等待AvroClient的输入信息" class="headerlink" title="查看Flume监听的41414端口，等待AvroClient的输入信息"></a>查看Flume监听的41414端口，等待AvroClient的输入信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 查看flume的PID</div><div class="line">$ ps -ef | grep flume</div><div class="line">  501  6931  6602   0 10:27AM ttys000    0:00.00 grep flume</div><div class="line">  501  6734  4754   0 10:15AM ttys001    0:03.61 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume.conf -n agent1</div><div class="line"></div><div class="line"># 查看一下在监听41414端口的PID</div><div class="line">$ lsof -i:41414</div><div class="line">COMMAND  PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</div><div class="line">java    6734 yunyu  156u  IPv6 0xd0e0ada8c2f7ce75      0t0  TCP localhost:41414 (LISTEN)</div></pre></td></tr></table></figure>
+<h4 id="启动Flume-AvroClient端，发送数据到Agent测试"><a href="#启动Flume-AvroClient端，发送数据到Agent测试" class="headerlink" title="启动Flume AvroClient端，发送数据到Agent测试"></a>启动Flume AvroClient端，发送数据到Agent测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 这里我使用的是本机IP：10.10.1.23，如果是本机测试也可以使用localhost</div><div class="line"># 这里的启动命令是./bin/flume-ng avro-client</div><div class="line"># -H：AvroClient指定Flume-ng Agent的IP或者hostname</div><div class="line"># -p：AvroClient指定Avro source正在监听的端口</div><div class="line"># -f：发送指定文件的每行数据给Flume Agent</div><div class="line">$ ./bin/flume-ng avro-client --conf conf -H 10.10.1.23 -p 41414 -F /etc/passwd -Dflume.root.logger=DEBUG,console</div><div class="line"></div><div class="line">+ exec /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp &apos;/Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/*&apos; -Djava.library.path= org.apache.flume.client.avro.AvroCLIClient -H 10.10.1.23 -p 41414 -F /etc/passwd</div><div class="line">2016-08-24 10:21:30,468 (main) [DEBUG - org.apache.flume.api.NettyAvroRpcClient.configure(NettyAvroRpcClient.java:499)] Batch size string = 5</div><div class="line">2016-08-24 10:21:30,477 (main) [WARN - org.apache.flume.api.NettyAvroRpcClient.configure(NettyAvroRpcClient.java:634)] Using default maxIOWorkers</div><div class="line">2016-08-24 10:21:30,887 (main) [DEBUG - org.apache.flume.client.avro.AvroCLIClient.run(AvroCLIClient.java:234)] Finished</div><div class="line">2016-08-24 10:21:30,887 (main) [DEBUG - org.apache.flume.client.avro.AvroCLIClient.run(AvroCLIClient.java:237)] Closing reader</div><div class="line">2016-08-24 10:21:30,890 (main) [DEBUG - org.apache.flume.client.avro.AvroCLIClient.run(AvroCLIClient.java:241)] Closing RPC client</div><div class="line">2016-08-24 10:21:30,896 (main) [DEBUG - org.apache.flume.client.avro.AvroCLIClient.main(AvroCLIClient.java:84)] Exiting</div></pre></td></tr></table></figure>
+<h4 id="Flume-Agent端控制台"><a href="#Flume-Agent端控制台" class="headerlink" title="Flume Agent端控制台"></a>Flume Agent端控制台</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># Flume Agent端控制台会有类似如下的输出信息</div><div class="line"></div><div class="line">2016-08-24 10:23:26,821 (New I/O server boss #1 ([id: 0x0b65e837, /10.10.1.23:41414])) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.handleUpstream(NettyServer.java:171)] [id: 0x78d53a57, /10.10.1.23:63992 =&gt; /10.10.1.23:41414] OPEN</div><div class="line">2016-08-24 10:23:26,821 (New I/O  worker #2) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.handleUpstream(NettyServer.java:171)] [id: 0x78d53a57, /10.10.1.23:63992 =&gt; /10.10.1.23:41414] BOUND: /10.10.1.23:41414</div><div class="line">2016-08-24 10:23:26,821 (New I/O  worker #2) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.handleUpstream(NettyServer.java:171)] [id: 0x78d53a57, /10.10.1.23:63992 =&gt; /10.10.1.23:41414] CONNECTED: /10.10.1.23:63992</div><div class="line">2016-08-24 10:23:27,054 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,073 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,075 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,076 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,077 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,078 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,079 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,081 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,082 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,083 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,084 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,085 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,086 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,087 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,088 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,090 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,092 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,094 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,095 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 5 events.</div><div class="line">2016-08-24 10:23:27,096 (New I/O  worker #2) [DEBUG - org.apache.flume.source.AvroSource.appendBatch(AvroSource.java:371)] Avro source avro-source1: Received avro event batch of 1 events.</div><div class="line">2016-08-24 10:23:27,100 (New I/O  worker #2) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.handleUpstream(NettyServer.java:171)] [id: 0x78d53a57, /10.10.1.23:63992 :&gt; /10.10.1.23:41414] DISCONNECTED</div><div class="line">2016-08-24 10:23:27,100 (New I/O  worker #2) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.handleUpstream(NettyServer.java:171)] [id: 0x78d53a57, /10.10.1.23:63992 :&gt; /10.10.1.23:41414] UNBOUND</div><div class="line">2016-08-24 10:23:27,100 (New I/O  worker #2) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.handleUpstream(NettyServer.java:171)] [id: 0x78d53a57, /10.10.1.23:63992 :&gt; /10.10.1.23:41414] CLOSED</div><div class="line">2016-08-24 10:23:27,100 (New I/O  worker #2) [INFO - org.apache.avro.ipc.NettyServer$NettyServerAvroHandler.channelClosed(NettyServer.java:209)] Connection to /10.10.1.23:63992 disconnected.</div><div class="line">2016-08-24 10:23:28,981 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.process(LoggerSink.java:94)] Event: &#123; headers:&#123;&#125; body: 23 23                                           ## &#125;</div><div class="line">2016-08-24 10:23:28,981 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.process(LoggerSink.java:94)] Event: &#123; headers:&#123;&#125; body: 23 20 55 73 65 72 20 44 61 74 61 62 61 73 65    # User Database &#125;</div><div class="line">2016-08-24 10:23:28,982 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.process(LoggerSink.java:94)] Event: &#123; headers:&#123;&#125; body: 23 20                                           #  &#125;</div></pre></td></tr></table></figure>
+<h4 id="官网给出的flume-ng启动参数"><a href="#官网给出的flume-ng启动参数" class="headerlink" title="官网给出的flume-ng启动参数"></a>官网给出的flume-ng启动参数</h4><h5 id="flume-ng-global-options"><a href="#flume-ng-global-options" class="headerlink" title="flume-ng global options"></a>flume-ng global options</h5><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–classpath,-C <cp></cp></td>
+<td>Append to the classpath</td>
+</tr>
+<tr>
+<td>–conf,-c <conf></conf></td>
+<td>Use configs in <conf> directory</conf></td>
+</tr>
+<tr>
+<td>–dryrun,-d</td>
+<td>Do not actually start Flume, just print the command</td>
+</tr>
+<tr>
+<td>-Dproperty=value</td>
+<td>Sets a JDK system property value</td>
+</tr>
+</tbody>
+</table>
+<h5 id="flume-ng-agent-options"><a href="#flume-ng-agent-options" class="headerlink" title="flume-ng agent options"></a>flume-ng agent options</h5><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–conf-file,-f <file></file></td>
+<td>Indicates which configuration file you want to run with (required)</td>
+</tr>
+<tr>
+<td>–name,-n <agentname></agentname></td>
+<td>Indicates the name of agent on which we’re running (required)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="flume-ng-avro-client-options"><a href="#flume-ng-avro-client-options" class="headerlink" title="flume-ng avro-client options"></a>flume-ng avro-client options</h5><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–host,-H <hostname></hostname></td>
+<td>Specifies the hostname of the Flume agent (may be localhost)</td>
+</tr>
+<tr>
+<td>–port,-p <port></port></td>
+<td>Specifies the port on which the Avro source is listening</td>
+</tr>
+<tr>
+<td>–filename,-F <filename></filename></td>
+<td>Sends each line of <filename> to Flume (optional)</filename></td>
+</tr>
+<tr>
+<td>–headerFile,-F <file></file></td>
+<td>Header file containing headers as key/value pairs on each new line</td>
+</tr>
+</tbody>
+</table>
+<p>OK，大功告成 ^_^</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://cwiki.apache.org/confluence/display/FLUME/Getting+Started" target="_blank" rel="external">https://cwiki.apache.org/confluence/display/FLUME/Getting+Started</a></li>
+<li><a href="http://shiyanjun.cn/archives/915.html" target="_blank" rel="external">http://shiyanjun.cn/archives/915.html</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/24/Flume/Flume学习（二）Flume架构分析/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Flume学习（二）Flume架构分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/21/Shell/Shell脚本学习（六）if语句的格式问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Shell脚本学习（六）if语句的格式问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

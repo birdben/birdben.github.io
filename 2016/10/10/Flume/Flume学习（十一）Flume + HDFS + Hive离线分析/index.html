@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Flume学习（十一）Flume + HDFS + Hive离线分析 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，本篇我们将结合Hive在HDFS进行离线的查询分析。具体Hive整合HDFS的环境配置请参考之前的文章。
+Hive中创建表下面是具体如何在Hive中基于HDFS文件创建表的
+启动相关服务12345678910111213141516171819202122# 启动hdfs服务$ ./sbin/start-dfs.sh# 启动yarn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flume学习（十一）Flume + HDFS + Hive离线分析">
+<meta property="og:url" content="https://github.com/birdben/2016/10/10/Flume/Flume学习（十一）Flume + HDFS + Hive离线分析/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，本篇我们将结合Hive在HDFS进行离线的查询分析。具体Hive整合HDFS的环境配置请参考之前的文章。
+Hive中创建表下面是具体如何在Hive中基于HDFS文件创建表的
+启动相关服务12345678910111213141516171819202122# 启动hdfs服务$ ./sbin/start-dfs.sh# 启动yarn">
+<meta property="og:updated_time" content="2016-10-18T18:40:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flume学习（十一）Flume + HDFS + Hive离线分析">
+<meta name="twitter:description" content="上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，本篇我们将结合Hive在HDFS进行离线的查询分析。具体Hive整合HDFS的环境配置请参考之前的文章。
+Hive中创建表下面是具体如何在Hive中基于HDFS文件创建表的
+启动相关服务12345678910111213141516171819202122# 启动hdfs服务$ ./sbin/start-dfs.sh# 启动yarn">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Flume/Flume学习（十一）Flume + HDFS + Hive离线分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/10/Flume/Flume学习（十一）Flume + HDFS + Hive离线分析/" class="article-date">
+  	<time datetime="2016-10-10T08:31:12.000Z" itemprop="datePublished">2016-10-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flume学习（十一）Flume + HDFS + Hive离线分析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，本篇我们将结合Hive在HDFS进行离线的查询分析。具体Hive整合HDFS的环境配置请参考之前的文章。</p>
+<h3 id="Hive中创建表"><a href="#Hive中创建表" class="headerlink" title="Hive中创建表"></a>Hive中创建表</h3><p>下面是具体如何在Hive中基于HDFS文件创建表的</p>
+<h4 id="启动相关服务"><a href="#启动相关服务" class="headerlink" title="启动相关服务"></a>启动相关服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 启动hdfs服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line"></div><div class="line"># 启动yarn服务</div><div class="line">$ ./sbin/start-yarn.sh</div><div class="line"></div><div class="line"># 进入hive安装目录</div><div class="line">$ cd /data/hive-1.2.1</div><div class="line"></div><div class="line"># 启动metastore</div><div class="line">$ ./bin/hive --service metastore &amp;</div><div class="line"></div><div class="line"># 启动hiveserver2</div><div class="line">$ ./bin/hive --service hiveserver2 &amp;</div><div class="line"></div><div class="line"># 启动hive shell</div><div class="line">$ ./bin/hive shell</div><div class="line">hive&gt;</div><div class="line">hive&gt; show databases;</div><div class="line">OK</div><div class="line">default</div><div class="line">Time taken: 1.323 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
+<h4 id="在HDFS中查看日志文件"><a href="#在HDFS中查看日志文件" class="headerlink" title="在HDFS中查看日志文件"></a>在HDFS中查看日志文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 查看HDFS文件存储路径</div><div class="line">$ hdfs dfs -ls /flume/events/</div><div class="line">Found 2 items-rw-r--r--   3 yunyu supergroup       1134 2016-09-19 23:43 /flume/events/events-.1474353822776-rw-r--r--   3 yunyu supergroup        126 2016-09-19 23:44 /flume/events/events-.1474353822777</div><div class="line"></div><div class="line"># 查看HDFS文件内容</div><div class="line">$ hdfs dfs -cat /flume/events/events-.1474353822776</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用org-apache-hive-hcatalog-data-JsonSerDe解析日志"><a href="#使用org-apache-hive-hcatalog-data-JsonSerDe解析日志" class="headerlink" title="使用org.apache.hive.hcatalog.data.JsonSerDe解析日志"></a>使用org.apache.hive.hcatalog.data.JsonSerDe解析日志</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"># Flume重新写入新的command.log日志到HDFS中</div><div class="line"># 启动hive shell</div><div class="line">$ ./bin/hive shell</div><div class="line"></div><div class="line"># 使用数据库test_hdfs</div><div class="line">hive&gt; use test_hdfs;</div><div class="line"></div><div class="line"># 新建表command_json_table并且使用json解析器提取日志文件中的字段信息</div><div class="line"># ROW FORMAT SERDE：这里使用的是json解析器匹配</div><div class="line"># LOCATION：指定HDFS文件的存储路径</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line"># 这创建还是会报错，查看hive.log日志文件的错误信息，发现是缺少org.apache.hive.hcatalog.data.JsonSerDe类所在的jar包</div><div class="line">Caused by: java.lang.ClassNotFoundException: Class org.apache.hive.hcatalog.data.JsonSerDe not found</div><div class="line"></div><div class="line"># 查了下Hive的官网wiki，发现需要先执行add jar操作，将hive-hcatalog-core.jar添加到classpath（具体的jar包地址根据自己实际的Hive安装路径修改）</div><div class="line">add jar /usr/local/hive/hcatalog/share/hcatalog/hive-hcatalog-core-1.2.1.jar;</div><div class="line"></div><div class="line"># 为了避免每次启动hive shell都重新执行一下add jar操作，我们这里在$&#123;HIVE_HOME&#125;/conf/hive-env.sh启动脚本中添加如下信息</div><div class="line">export HIVE_AUX_JARS_PATH=/usr/local/hive/hcatalog/share/hcatalog</div><div class="line"></div><div class="line"># 重启Hive服务之后，再次创建command_json_table表成功</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line"># 查看command_json_table表中的内容，json字段成功的解析出我们要的字段</div><div class="line">hive&gt; select * from command_json_table;</div><div class="line">OK2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.152016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.152016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.15Time taken: 0.09 seconds, Fetched: 10 row(s)</div></pre></td></tr></table></figure>
+<h4 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"># 问题一：</div><div class="line">我们使用Flume采集到的日志存储在HDFS上，我测试了200条日志通过Flume写入到HDFS上，但是通过Hive查询出来的日志记录总数却不到200条，我又查看了HDFS上的文件内容，发现日志记录的总数是200条。</div><div class="line"></div><div class="line">首先了解HDFS的特点：</div><div class="line">HDFS中所有文件都是由块BLOCK组成，默认块大小为64MB。在我们的测试中由于数据量小，始终在写入文件的第一个BLOCK。而HDFS与一般的POSIX要求的文件系统不太一样，其文件数据的可见性是这样的：</div><div class="line">- 如果创建了文件，这个文件可以立即可见；</div><div class="line">- 写入文件的数据则不被保证可见了，哪怕是执行了刷新操作(flush/sync)。只有数据量大于1个BLOCK时，第一个BLOCK的数据才会被看到，后续的BLOCK也同样的特性。正在写入的BLOCK始终不会被其他用户看到！</div><div class="line">HDFS中的sync()保证数据持久化到了datanode上，然后可以被其他用户看到。</div><div class="line"></div><div class="line">针对HDFS的特点，可以解释刚才问题中的现象，正在写入无法查看。但是使用Hive统计时Flume还在写入那个BLOCK(数据量小的时候)，那岂不是统计不到信息？</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">每天再按小时切分文件——这样虽然每天文件较多，但是能够保证统计时数据可见！Flume上的配置项为hdfs.rollInterval。</div><div class="line">如果文件数多，那么还可以考虑对以前的每天的小时文件合并为每天一个文件！</div><div class="line"></div><div class="line">所以这里修改flume-hdfs-sink配置，不仅仅使用rollCount超过300来滚动，还添加了rollInterval配置超过5分钟没有数据就滚动。</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div><div class="line"></div><div class="line"># 问题二：</div><div class="line">之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/20160923</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">如果我们使用第二种不用日期分割的方式，在Hive上创建表指定/flume/events路径是没有问题，查询数据也都正常，但是如果使用第一种日期分割的方式，在Hive上创建表就必须指定具体的子目录，而不是/flume/events根目录，这样虽然表能够建成功但是却查询不到任何数据，因为指定的对应HDFS目录不正确，应该指定为/flume/events/20160923。这个问题确实也困扰我很久，最后才发现原来是Hive建表指定的HDFS目录不正确。</div><div class="line"></div><div class="line">指定location为&apos;/flume/events&apos;不好用，Hive中查询command_json_table表中没有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line">指定location为&apos;/flume/events/20160923&apos;好用，Hive中查询command_json_table_20160923表中有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table_20160923(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/20160923&apos;;</div><div class="line"></div><div class="line">建议的解决方式是使用Hive的表分区来做，需要调研Hive的表分区是否支持使用HDFS已经分割好的目录结构（需要调研）</div><div class="line"></div><div class="line"># 问题三：</div><div class="line">Flume收集日志的时候报错</div><div class="line">Caused by: org.apache.flume.ChannelException: Space for commit to queue couldn&apos;t be acquired Sinks are likely not keeping up with sources, or the buffer size is too tight</div><div class="line">        at org.apache.flume.channel.MemoryChannel$MemoryTransaction.doCommit(MemoryChannel.java:126)</div><div class="line">        at org.apache.flume.channel.BasicTransactionSemantics.commit(BasicTransactionSemantics.java:151)</div><div class="line">        at org.apache.flume.channel.ChannelProcessor.processEventBatch(ChannelProcessor.java:192)</div><div class="line">        ... 28 more</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">根据网络上的方法，发现问题的原因可能是Flume分配的JVM内存太小，或者channel内存队列的容量太小</div><div class="line"></div><div class="line">修改channel内存队列大小</div><div class="line">agent.channels.memoryChanne3.keep-alive = 60</div><div class="line">agent.channels.memoryChanne3.capacity = 1000000</div><div class="line"></div><div class="line">修改java最大内存大小</div><div class="line">vi bin/flume-ng</div><div class="line">JAVA_OPTS=&quot;-Xmx2048m&quot;</div><div class="line"></div><div class="line">修改之后重启所有flume程序，包括客户端和服务器端，问题暂时没有再出现了</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.aboutyun.com/thread-11252-1-1.html" target="_blank" rel="external">http://www.aboutyun.com/thread-11252-1-1.html</a></li>
+<li><a href="http://blog.csdn.net/hijk139/article/details/8465094" target="_blank" rel="external">http://blog.csdn.net/hijk139/article/details/8465094</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/12/Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Flume学习（十二）Flume + HDFS + Hive离线分析（续）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/Kafka/Kafka学习（一）Kafka环境搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Kafka学习（一）Kafka环境搭建</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

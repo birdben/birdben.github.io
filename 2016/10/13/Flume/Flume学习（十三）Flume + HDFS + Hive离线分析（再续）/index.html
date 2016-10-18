@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Flume学习（十三）Flume + HDFS + Hive离线分析（再续） | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在《Flume学习（十一）Flume + HDFS + Hive离线分析》这篇中我们就遇到了Hive分区的问题，这里我们再来回顾一下之前待调研的问题
+123456789101112131415161718192021# 问题二：之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的- hdfs://10.10.1.64:8020/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flume学习（十三）Flume + HDFS + Hive离线分析（再续）">
+<meta property="og:url" content="https://github.com/birdben/2016/10/13/Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="在《Flume学习（十一）Flume + HDFS + Hive离线分析》这篇中我们就遇到了Hive分区的问题，这里我们再来回顾一下之前待调研的问题
+123456789101112131415161718192021# 问题二：之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的- hdfs://10.10.1.64:8020/">
+<meta property="og:updated_time" content="2016-10-18T18:40:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flume学习（十三）Flume + HDFS + Hive离线分析（再续）">
+<meta name="twitter:description" content="在《Flume学习（十一）Flume + HDFS + Hive离线分析》这篇中我们就遇到了Hive分区的问题，这里我们再来回顾一下之前待调研的问题
+123456789101112131415161718192021# 问题二：之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的- hdfs://10.10.1.64:8020/">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/13/Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）/" class="article-date">
+  	<time datetime="2016-10-13T08:52:54.000Z" itemprop="datePublished">2016-10-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flume学习（十三）Flume + HDFS + Hive离线分析（再续）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在《Flume学习（十一）Flume + HDFS + Hive离线分析》这篇中我们就遇到了Hive分区的问题，这里我们再来回顾一下之前待调研的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 问题二：</div><div class="line">之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/20160923</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">如果我们使用第二种不用日期分割的方式，在Hive上创建表指定/flume/events路径是没有问题，查询数据也都正常，但是如果使用第一种日期分割的方式，在Hive上创建表就必须指定具体的子目录，而不是/flume/events根目录，这样虽然表能够建成功但是却查询不到任何数据，因为指定的对应HDFS目录不正确，应该指定为/flume/events/20160923。这个问题确实也困扰我很久，最后才发现原来是Hive建表指定的HDFS目录不正确。</div><div class="line"></div><div class="line">指定location为&apos;/flume/events&apos;不好用，Hive中查询command_json_table表中没有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line">指定location为&apos;/flume/events/20160923&apos;好用，Hive中查询command_json_table_20160923表中有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table_20160923(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/20160923&apos;;</div><div class="line"></div><div class="line">建议的解决方式是使用Hive的表分区来做，需要调研Hive的表分区是否支持使用HDFS已经分割好的目录结构（需要调研）</div></pre></td></tr></table></figure>
+<p>上面是我们之前的问题原文描述，之前需要调研Hive表分区是否可以使用HDFS已经分割好的目录结构，这里我找到了一篇blog，终于理解了Hive关于External表如何使用partition的，下面给出了原文和译文的链接地址</p>
+<p>原文链接：</p>
+<ul>
+<li><a href="http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/" target="_blank" rel="external">http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/</a></li>
+</ul>
+<p>译文链接：</p>
+<ul>
+<li><p>我们带着上面的问题继续优化，之前的解决办法是按照我们日志中的name属性值存储在HDFS的不同目录中，本篇我们使用Partition来解决数据量增长的情况，我们在之前使用name属性的基础上在新建dt目录（按照月份来分割数据）</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sinkagentX.channels = chXagentX.sinks = flume-hdfs-sinkagentX.sources.flume-avro-sink.channels = chXagentX.sources.flume-avro-sink.type = avroagentX.sources.flume-avro-sink.bind = hadoop1agentX.sources.flume-avro-sink.port = 41414agentX.sources.flume-avro-sink.threads = 8#定义拦截器，为消息添加时间戳和Host地址</div><div class="line">#将日志中的name属性添加到Header中，用来做HDFS存储的目录结构，type_name属性就是从日志文件中解析出来的name属性的值，这里使用%Y%m表达式代表按照年月分区agentX.sources.flume-avro-sink.interceptors = i1 i2agentX.sources.flume-avro-sink.interceptors.i1.type = timestampagentX.sources.flume-avro-sink.interceptors.i2.type = regex_extractoragentX.sources.flume-avro-sink.interceptors.i2.regex = &quot;name&quot;:&quot;(.*?)&quot;agentX.sources.flume-avro-sink.interceptors.i2.serializers = s1agentX.sources.flume-avro-sink.interceptors.i2.serializers.s1.name = type_nameagentX.channels.chX.type = memoryagentX.channels.chX.capacity = 1000agentX.channels.chX.transactionCapacity = 100agentX.sinks.flume-hdfs-sink.type = hdfsagentX.sinks.flume-hdfs-sink.channel = chXagentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%&#123;type_name&#125;/%Y%magentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStreamagentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div></pre></td></tr></table></figure>
+<h5 id="在HDFS中查看文件目录"><a href="#在HDFS中查看文件目录" class="headerlink" title="在HDFS中查看文件目录"></a>在HDFS中查看文件目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 可以看到HDFS文件目录已经按照我们的name属性区分开了</div><div class="line">hdfs dfs -ls /flume/events/drwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:01 /flume/events/birdben.api.calldrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.click_addrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.open_hbdrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.view_ad</div><div class="line"></div><div class="line"># 查看个不同name下的目录是按照年月分割开的</div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_adFound 2 itemsdrwxr-xr-x   - yunyu supergroup          0 2016-10-13 06:18 /flume/events/birdben.ad.click_ad/201610drwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:07 /flume/events/birdben.ad.click_ad/201611</div><div class="line"></div><div class="line"># 数据文件是存储在具体的年月目录下的</div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_ad/201610/Found 1 items-rw-r--r--   2 yunyu supergroup       1596 2016-10-13 06:18 /flume/events/birdben.ad.click_ad/201610/events-.1476364422107</div></pre></td></tr></table></figure>
+<h3 id="Hive按照不同的HDFS目录建表"><a href="#Hive按照不同的HDFS目录建表" class="headerlink" title="Hive按照不同的HDFS目录建表"></a>Hive按照不同的HDFS目录建表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"># 这里我们是需要先理解Hive的内部表和外部表的区别，然后我们在之前的建表语句中加入partition分区，我们这里使用的是dt字段作为partition，dt字段不能够与建表语句中的字段重复，否则建表时会报错。</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_click_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.click_ad&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_open_hb(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.open_hb&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_view_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.view_ad&apos;;</div><div class="line"></div><div class="line"># 这时候我们查询表，表中是没有数据的。我们需要手工添加partition分区之后，才能查到数据。</div><div class="line">hive&gt; select * from birdben_ad_click_ad;</div><div class="line"></div><div class="line"># 建表完成之后，我们需要手工添加partition目录为我们Flume之前划分的好的年月目录</div><div class="line">alter table birdben_ad_click_ad add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben_ad_click_ad/201610&apos;;</div><div class="line">alter table birdben_ad_click_ad add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben_ad_click_ad/201611&apos;;</div><div class="line"></div><div class="line">alter table birdben_ad_open_hb add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben.ad.open_hb/201610&apos;;</div><div class="line">alter table birdben_ad_open_hb add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben.ad.open_hb/201611&apos;;</div><div class="line"></div><div class="line">alter table birdben_ad_view_ad add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben.ad.view_ad/201610&apos;;</div><div class="line">alter table birdben_ad_view_ad add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben.ad.view_ad/201611&apos;;</div><div class="line"></div><div class="line"># 这时候我们查询表，能够查询到全部的数据了（包括201610和201611的数据）</div><div class="line">hive&gt; select * from birdben_ad_click_ad;</div><div class="line">OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201611Time taken: 0.1 seconds, Fetched: 9 row(s)</div><div class="line"></div><div class="line"># 也可以按照分区字段查询数据，这样就能够证明我们可以使用Hive的External表partition对应到我们Flume中创建好的 %Y%m（年月） 目录结构</div><div class="line">hive&gt; select * from birdben_ad_click_ad where dt = &apos;201610&apos;;</div><div class="line">OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610Time taken: 0.099 seconds, Fetched: 6 row(s)</div><div class="line"></div><div class="line">hive&gt; select * from birdben_ad_click_ad where dt = &apos;201611&apos;;</div><div class="line">OK</div><div class="line">[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201611Time taken: 0.11 seconds, Fetched: 3 row(s)</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实我写了这么多篇Flume + HDFS + Hive的文章，就是为了证明Flume可以按照指定的Header的key分别写入不同的HDFS目录，Hive又可以通过External表将Location定位到Flume写入的HDFS目录，而且还可以通过Partition分区定位到Flume设置的Header对应的目录，这样就能够比较优雅的将Flume, HDFS, Hive整合到一起了。但是还是有些需要优化的地方，比如说我们的日志格式不够规范，每种日志都有不同的格式，而且还都写入到同一个track.log日志文件中，只能通过name属性作区分。还有就是Hive的Partition每次需要手工去修改表，否则无法查询到HDFS对应目录下的数据，也有人使用 <a href="https://github.com/don9z/hadoop-tools/blob/master/hive/addpartition.py">script</a> 脚本来做这些事情，待以后有时间继续深入研究。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/" target="_blank" rel="external">http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/17/Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Kafka学习（二）KafkaOffsetMonitor监控工具使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/12/Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flume学习（十二）Flume + HDFS + Hive离线分析（续）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

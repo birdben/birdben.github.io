@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Flume学习（八）Flume解析自定义日志 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="环境简介
+JDK1.7.0_79
+Flume1.6.0
+Elasticsearch2.0.0
+
+这里是基于上一篇《Flume学习（七）Flume整合Elasticsearch2.x》解析自定义的日志格式
+解析的日志格式这里由于篇幅原因，我简单列举了两条典型的日志格式
+日志文件格式12[&amp;#123;&amp;quot;name&amp;quot;:&amp;quot;rp.api.call&amp;quot;,&amp;quot;requ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flume学习（八）Flume解析自定义日志">
+<meta property="og:url" content="https://github.com/birdben/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="环境简介
+JDK1.7.0_79
+Flume1.6.0
+Elasticsearch2.0.0
+
+这里是基于上一篇《Flume学习（七）Flume整合Elasticsearch2.x》解析自定义的日志格式
+解析的日志格式这里由于篇幅原因，我简单列举了两条典型的日志格式
+日志文件格式12[&amp;#123;&amp;quot;name&amp;quot;:&amp;quot;rp.api.call&amp;quot;,&amp;quot;requ">
+<meta property="og:updated_time" content="2016-09-04T05:18:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flume学习（八）Flume解析自定义日志">
+<meta name="twitter:description" content="环境简介
+JDK1.7.0_79
+Flume1.6.0
+Elasticsearch2.0.0
+
+这里是基于上一篇《Flume学习（七）Flume整合Elasticsearch2.x》解析自定义的日志格式
+解析的日志格式这里由于篇幅原因，我简单列举了两条典型的日志格式
+日志文件格式12[&amp;#123;&amp;quot;name&amp;quot;:&amp;quot;rp.api.call&amp;quot;,&amp;quot;requ">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Flume/Flume学习（八）Flume解析自定义日志" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/" class="article-date">
+  	<time datetime="2016-09-03T08:11:01.000Z" itemprop="datePublished">2016-09-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flume学习（八）Flume解析自定义日志
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
+<li>JDK1.7.0_79</li>
+<li>Flume1.6.0</li>
+<li>Elasticsearch2.0.0</li>
+</ul>
+<p>这里是基于上一篇《Flume学习（七）Flume整合Elasticsearch2.x》解析自定义的日志格式</p>
+<h3 id="解析的日志格式"><a href="#解析的日志格式" class="headerlink" title="解析的日志格式"></a>解析的日志格式</h3><p>这里由于篇幅原因，我简单列举了两条典型的日志格式</p>
+<h4 id="日志文件格式"><a href="#日志文件格式" class="headerlink" title="日志文件格式"></a>日志文件格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/settings&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;65768768252343&quot;,&quot;ip&quot;:&quot;10.190.1.67&quot;,&quot;server_timestamp&quot;:1463713488740&#125;]</div><div class="line">[&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/search&quot;,&quot;errorStatus&quot;:200,&quot;errorCode&quot;:&quot;0000&quot;,&quot;errorMsg&quot;:&quot;操作成功&quot;,&quot;status&quot;:&quot;failed&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app002&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;4543657687878989&quot;,&quot;ip&quot;:&quot;10.190.1.66&quot;,&quot;server_timestamp&quot;:1463650301701&#125;]</div></pre></td></tr></table></figure>
+<p>上一篇已经讲过了Flume解析日志格式主要使用interceptors，interceptors本身又支持多种type，这里我们主要介绍regex_extractor，即正则表达式匹配方式。下面的正则表达式可以匹配上面的两种格式的日志，上面两种日志格式的主要区别就是errorStatus，errorCode，errorMsg这三个字段有可能不存在，当没有报错的时候，这三个字段是不需要的。</p>
+<h4 id="日志解析正则表达式"><a href="#日志解析正则表达式" class="headerlink" title="日志解析正则表达式"></a>日志解析正则表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;name&quot;:(.*),&quot;request&quot;:(.*),(&quot;errorStatus&quot;:(.*),)?(&quot;errorCode&quot;:(.*),)?(&quot;errorMsg&quot;:(.*),)?&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div></pre></td></tr></table></figure>
+<p>但是在Flume的interceptors的regex表达式中配置上面的正则表达式会报错，我自己分析的原因是Flume的interceptor.serializers需要指定正则表达式拆分后的对应的字段和值，没有办法做到根据正则表达式动态处理。（这里我的分析可能不一定对，如果有疑问我们可以私下交流）</p>
+<p>下面是我的解决办法，我根据上面两种日志格式写了两个interceptor，分别是es_interceptor和es_error_interceptor，每个interceptor对应不同的正则表达式，分别用来处理上面两种不同的日志格式。这样interceptor.serializers就能根据对应的正则表达式格式解析出来日志中对应的字段和值，再插入到ES索引中。</p>
+<h4 id="flume-conf配置文件"><a href="#flume-conf配置文件" class="headerlink" title="flume.conf配置文件"></a>flume.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 原始的正则表达式：&quot;name&quot;:(.*),&quot;request&quot;:(.*),(&quot;errorStatus&quot;:(.*),)?(&quot;errorCode&quot;:(.*),)?(&quot;errorMsg&quot;:(.*),)?&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor es_error_interceptor</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;name&quot;:(.*),&quot;request&quot;:(.*),&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6 s7 s8 s9 s10</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = name</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = request</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = status</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = uid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = did</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = duid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s7.name = ua</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s8.name = device_id</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s9.name = ip</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s10.name = server_timestamp</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.regex = &quot;name&quot;:(.*),&quot;request&quot;:(.*),&quot;errorStatus&quot;:(.*),&quot;errorCode&quot;:(.*),&quot;errorMsg&quot;:(.*),&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers = s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s1.name = name</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s2.name = request</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s3.name = errorStatus</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s4.name = errorCode</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s5.name = errorMsg</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s6.name = status</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s7.name = uid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s8.name = did</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s9.name = duid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s10.name = ua</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s11.name = device_id</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s12.name = ip</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s13.name = server_timestamp</div></pre></td></tr></table></figure>
+<h4 id="ES的mapping如下"><a href="#ES的mapping如下" class="headerlink" title="ES的mapping如下"></a>ES的mapping如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;hb&quot;: &#123;</div><div class="line">      &quot;properties&quot;: &#123;</div><div class="line">        &quot;@fields&quot;: &#123;</div><div class="line">          &quot;properties&quot;: &#123;</div><div class="line">            &quot;uid&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;duid&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;status&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;request&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;name&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorCode&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;ua&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;did&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorMsg&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;device_id&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;server_timestamp&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;ip&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorStatus&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">        &quot;@message&quot;: &#123;</div><div class="line">          &quot;type&quot;: &quot;string&quot;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="ES索引中的日志信息"><a href="#ES索引中的日志信息" class="headerlink" title="ES索引中的日志信息"></a>ES索引中的日志信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;test_log_index-2016-09-03&quot;,</div><div class="line">	&quot;_type&quot;: &quot;test&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AVbvrWIPe8IcP1cQoXS2&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;@message&quot;: &quot;[</div><div class="line">			&#123;&quot;name&quot;:&quot;1&quot;,&quot;request&quot;:&quot;GET /api/test/settings&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:,&quot;ip&quot;:&quot;10.190.1.67&quot;,&quot;server_timestamp&quot;:1463713488740&#125;</div><div class="line">		]&quot;,</div><div class="line">		&quot;@fields&quot;: &#123;</div><div class="line">			&quot;uid&quot;: &quot;889&quot;,</div><div class="line">			&quot;duid&quot;: &quot;&quot;app001&quot;&quot;,</div><div class="line">			&quot;status&quot;: &quot;&quot;succeeded&quot;&quot;,</div><div class="line">			&quot;name&quot;: &quot;&quot;1&quot;&quot;,</div><div class="line">			&quot;request&quot;: &quot;&quot;GET /api/test/settings&quot;&quot;,</div><div class="line">			&quot;did&quot;: &quot;13&quot;,</div><div class="line">			&quot;ua&quot;: &quot;&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;&quot;,</div><div class="line">			&quot;device_id&quot;: &quot;&quot;,</div><div class="line">			&quot;server_timestamp&quot;: &quot;1463713488740&quot;,</div><div class="line">			&quot;ip&quot;: &quot;&quot;10.190.1.67&quot;&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;test_log_index-2016-09-03&quot;,</div><div class="line">	&quot;_type&quot;: &quot;test&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AVbvrWIPe8IcP1cQoXS3&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;@message&quot;: &quot;[</div><div class="line">			&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/search&quot;,&quot;errorStatus&quot;:200,&quot;errorCode&quot;:&quot;0000&quot;,&quot;errorMsg&quot;:&quot;操作成功&quot;,&quot;status&quot;:&quot;failed&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;4543657687878989&quot;,&quot;ip&quot;:&quot;10.190.1.66&quot;,&quot;server_timestamp&quot;:1463650301701&#125;</div><div class="line">		]&quot;,</div><div class="line">		&quot;@fields&quot;: &#123;</div><div class="line">			&quot;uid&quot;: &quot;889&quot;,</div><div class="line">			&quot;status&quot;: &quot;&quot;failed&quot;&quot;,</div><div class="line">			&quot;did&quot;: &quot;13&quot;,</div><div class="line">			&quot;device_id&quot;: &quot;&quot;4543657687878989&quot;&quot;,</div><div class="line">			&quot;errorMsg&quot;: &quot;&quot;操作成功&quot;&quot;,</div><div class="line">			&quot;errorStatus&quot;: &quot;200&quot;,</div><div class="line">			&quot;ip&quot;: &quot;&quot;10.190.1.66&quot;&quot;,</div><div class="line">			&quot;duid&quot;: &quot;&quot;app001&quot;&quot;,</div><div class="line">			&quot;request&quot;: &quot;&quot;GET /api/test/search&quot;&quot;,</div><div class="line">			&quot;name&quot;: &quot;&quot;rp.api.call&quot;&quot;,</div><div class="line">			&quot;errorCode&quot;: &quot;&quot;0000&quot;&quot;,</div><div class="line">			&quot;ua&quot;: &quot;&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;&quot;,</div><div class="line">			&quot;server_timestamp&quot;: &quot;1463650301701&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>个人觉得这样的做法并不理想，因为日志格式肯定会多种多样，如果每种日志格式都需要不同的正则表达式来处理，显得太过笨重和冗余，因为刚接触Flume暂时没有发现有更好的做法，日后发现有更好的处理方式会重新更新上来。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/04/Docker/Docker实战（二十）Docker镜像的导入导出/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Docker实战（二十）Docker镜像的导入导出
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/03/Docker/Docker实战（十九）Docker环境安装问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker实战（十九）Docker环境安装问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

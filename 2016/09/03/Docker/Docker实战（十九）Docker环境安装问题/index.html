@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Docker实战（十九）Docker环境安装问题 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="环境描述本地环境1234Ubuntu14.04Client version: 1.6.2Client API version: 1.18Go version (client): go1.2.1Git commit (client): 7c8fca2OS/Arch (client): linux/amd64Server version: 1.6.2Server API version:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker实战（十九）Docker环境安装问题">
+<meta property="og:url" content="https://github.com/birdben/2016/09/03/Docker/Docker实战（十九）Docker环境安装问题/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="环境描述本地环境1234Ubuntu14.04Client version: 1.6.2Client API version: 1.18Go version (client): go1.2.1Git commit (client): 7c8fca2OS/Arch (client): linux/amd64Server version: 1.6.2Server API version:">
+<meta property="og:updated_time" content="2016-09-04T05:18:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker实战（十九）Docker环境安装问题">
+<meta name="twitter:description" content="环境描述本地环境1234Ubuntu14.04Client version: 1.6.2Client API version: 1.18Go version (client): go1.2.1Git commit (client): 7c8fca2OS/Arch (client): linux/amd64Server version: 1.6.2Server API version:">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Docker/Docker实战（十九）Docker环境安装问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/03/Docker/Docker实战（十九）Docker环境安装问题/" class="article-date">
+  	<time datetime="2016-09-03T02:50:49.000Z" itemprop="datePublished">2016-09-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker实战（十九）Docker环境安装问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="环境描述"><a href="#环境描述" class="headerlink" title="环境描述"></a>环境描述</h2><h3 id="本地环境"><a href="#本地环境" class="headerlink" title="本地环境"></a>本地环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Ubuntu14.04</div><div class="line"></div><div class="line">Client version: 1.6.2Client API version: 1.18Go version (client): go1.2.1Git commit (client): 7c8fca2OS/Arch (client): linux/amd64</div><div class="line">Server version: 1.6.2Server API version: 1.18Go version (server): go1.2.1Git commit (server): 7c8fca2OS/Arch (server): linux/amd64</div></pre></td></tr></table></figure>
+<h3 id="10-10-1-15测试环境"><a href="#10-10-1-15测试环境" class="headerlink" title="10.10.1.15测试环境"></a>10.10.1.15测试环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Ubuntu15.04</div><div class="line"></div><div class="line">Client:</div><div class="line"> Version:      1.10.3</div><div class="line"> API version:  1.21</div><div class="line"> Go version:   go1.5.3</div><div class="line"> Git commit:   20f81dd</div><div class="line"> Built:        Thu Mar 10 21:49:11 2016</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> Version:      1.9.1</div><div class="line"> API version:  1.21</div><div class="line"> Go version:   go1.4.2</div><div class="line"> Git commit:   a34a1d5</div><div class="line"> Built:        Fri Nov 20 13:16:54 UTC 2015</div><div class="line"> OS/Arch:      linux/amd64</div></pre></td></tr></table></figure>
+<h2 id="Docker的安装和使用"><a href="#Docker的安装和使用" class="headerlink" title="Docker的安装和使用"></a>Docker的安装和使用</h2><h3 id="本地环境安装"><a href="#本地环境安装" class="headerlink" title="本地环境安装"></a>本地环境安装</h3><p>直接使用apt方式安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ apt-get update</div><div class="line">$ apt-get install docker</div><div class="line">$ apt-get install docker.io</div></pre></td></tr></table></figure>
+<h3 id="10-10-1-15测试环境-1"><a href="#10-10-1-15测试环境-1" class="headerlink" title="10.10.1.15测试环境"></a>10.10.1.15测试环境</h3><p>使用apt方式安装报错E: Sub-process /usr/bin/dpkg returned an error code (1)，之后尝试了一些解决方式，但都没有解决成功，最后决定将docker卸载掉重新按照官网的步骤安装成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"># 安装前先查看Linux内核版本，内核版本需要高于3.10</div><div class="line">$ uname -r</div><div class="line">3.19.0-68-generic</div><div class="line"></div><div class="line"># Update your apt sources</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install apt-transport-https ca-certificates</div><div class="line">$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</div><div class="line"></div><div class="line"># 创建并保存docker.list更新源文件</div><div class="line">$ /etc/apt/sources.list.d/docker.list</div><div class="line"></div><div class="line"># 根据自己的系统版本选择不同的数据源</div><div class="line">- On Ubuntu Precise 12.04 (LTS)</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-precise main</div><div class="line">- On Ubuntu Trusty 14.04 (LTS)</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-trusty main</div><div class="line">- Ubuntu Wily 15.10</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-wily main</div><div class="line">- Ubuntu Xenial 16.04 (LTS)</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-xenial main</div><div class="line"></div><div class="line"># 再次更新源</div><div class="line">$ sudo apt-get update</div><div class="line"># 删除旧的资源文件</div><div class="line">$ sudo apt-get purge lxc-docker</div><div class="line"># 验证apt的更新源是从正确的仓库获取</div><div class="line">$ apt-cache policy docker-engine</div><div class="line"></div><div class="line"># 安装Ubuntu必备的安装包linux-image-extra-*</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual</div><div class="line"></div><div class="line"># 安装Docker</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install docker-engine</div><div class="line"># 启动Docker服务</div><div class="line">$ sudo service docker start</div><div class="line"># 检查Docker版本</div><div class="line">$ sudo docker version</div></pre></td></tr></table></figure>
+<h3 id="遇到的问题和解决方法"><a href="#遇到的问题和解决方法" class="headerlink" title="遇到的问题和解决方法"></a>遇到的问题和解决方法</h3><h4 id="Depends-libdevmapper1-02-1-gt-2-1-02-99-but-2-1-02-90-2ubuntu1-is-to-be-installed"><a href="#Depends-libdevmapper1-02-1-gt-2-1-02-99-but-2-1-02-90-2ubuntu1-is-to-be-installed" class="headerlink" title="Depends: libdevmapper1.02.1 (&gt;= 2:1.02.99) but 2:1.02.90-2ubuntu1 is to be installed"></a>Depends: libdevmapper1.02.1 (&gt;= 2:1.02.99) but 2:1.02.90-2ubuntu1 is to be installed</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">$ sudo apt install docker-engine</div><div class="line">Reading package lists... Done</div><div class="line">Building dependency tree</div><div class="line">Reading state information... Done</div><div class="line">Some packages could not be installed. This may mean that you have</div><div class="line">requested an impossible situation or if you are using the unstable</div><div class="line">distribution that some required packages have not yet been created</div><div class="line">or been moved out of Incoming.</div><div class="line">The following information may help to resolve the situation:</div><div class="line"></div><div class="line">The following packages have unmet dependencies:</div><div class="line"> docker-engine : Depends: libdevmapper1.02.1 (&gt;= 2:1.02.99) but 2:1.02.90-2ubuntu1 is to be installed</div><div class="line">E: Unable to correct problems, you have held broken packages.</div><div class="line"></div><div class="line"># 遇到这个问题是因为更新源不正确的原因，因为我们用的Ubuntu15.04版本，所以上面官网提供的数据源中并不包含我们的版本</div><div class="line">$ sudo lsb_release -a</div><div class="line">No LSB modules are available.</div><div class="line">Distributor ID:	Ubuntu</div><div class="line">Description:	Ubuntu 15.04</div><div class="line">Release:	15.04</div><div class="line">Codename:	vivid</div><div class="line"></div><div class="line"># 这里在github上找到了解决方法，依次执行下面的命令可以修复正确的数据源</div><div class="line">$ sudo sed -i &apos;/wily/d&apos; /etc/apt/sources.list.d/docker.list</div><div class="line">$ sudo sed -i &apos;/trusty/d&apos; /etc/apt/sources.list.d/docker.list</div><div class="line">$ sudo sed -i &apos;/precise/d&apos; /etc/apt/sources.list.d/docker.list</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install docker-engine</div></pre></td></tr></table></figure>
+<h4 id="Error-response-from-daemon-client-is-newer-than-server-client-API-version-1-22-server-API-version-1-21"><a href="#Error-response-from-daemon-client-is-newer-than-server-client-API-version-1-22-server-API-version-1-21" class="headerlink" title="Error response from daemon: client is newer than server (client API version: 1.22, server API version: 1.21)"></a>Error response from daemon: client is newer than server (client API version: 1.22, server API version: 1.21)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ docker version</div><div class="line">Client:</div><div class="line"> Version:      1.10.3</div><div class="line"> API version:  1.22</div><div class="line"> Go version:   go1.5.3</div><div class="line"> Git commit:   20f81dd</div><div class="line"> Built:        Thu Mar 10 21:49:11 2016</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line">Error response from daemon: client is newer than server (client API version: 1.22, server API version: 1.21)</div><div class="line"></div><div class="line"># 遇到这个问题的原因是Docker API version的版本号不一致导致的，这个我们需要添加一个环境变量来指定Docker API version的版本号</div><div class="line"></div><div class="line"># 这里建议更改/etc/profile文件，而不是临时更改环境变量，修改/etc/profile之后需要source /etc/profile，如果要在sudo也生效，需要切换到root账号也source /etc/profile</div><div class="line">$ export DOCKER_API_VERSION=1.21</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://docs.docker.com.s3-website-us-east-1.amazonaws.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">http://docs.docker.com.s3-website-us-east-1.amazonaws.com/engine/installation/linux/ubuntulinux/</a></li>
+<li><a href="http://askubuntu.com/questions/686698/docker-installation-error-libdevmapper1-02-1-21-02-99" target="_blank" rel="external">http://askubuntu.com/questions/686698/docker-installation-error-libdevmapper1-02-1-21-02-99</a></li>
+<li><a href="https://github.com/docker/machine/issues/2147">https://github.com/docker/machine/issues/2147</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Flume学习（八）Flume解析自定义日志
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/02/Zookeeper/Zookeeper学习（二）Zookeeper集群环境搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Zookeeper学习（二）Zookeeper集群环境搭建</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
