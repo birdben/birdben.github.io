@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,279 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Shell/Shell脚本学习（八）调试Shell脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/02/Shell/Shell脚本学习（八）调试Shell脚本/" class="article-date">
+  	<time datetime="2016-11-02T10:30:13.000Z" itemprop="datePublished">2016-11-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/02/Shell/Shell脚本学习（八）调试Shell脚本/">Shell脚本学习（八）调试Shell脚本</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在在使用Jenkins做自动化部署的时候，仔细观察了一下Jenkins中执行Shell时会将每条Shell语句输出到控制台日志，这样调试起来Shell脚本非常方便</p>
+<p>Jenkins的Shell执行方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[birdben] $ /bin/sh -xe /tmp/hudson168932309618552744.sh</div><div class="line">+ echo &apos;execute shell&apos;</div><div class="line">execute shell</div><div class="line">....</div></pre></td></tr></table></figure>
+<p>实际上Jenkins执行Shell的方式只是多加了两个参数-xe</p>
+<ul>
+<li>-x : 跟踪调试Shell脚本</li>
+<li>-e : 表示一旦出错，就退出当前的Shell</li>
+</ul>
+<p>“-x”选项可用来跟踪脚本的执行，是调试Shell脚本的强有力工具。”-x”选项使Shell在执行脚本的过程中把它实际执行的每一个命令行显示出来，并且在行首显示一个”+”号。”+”号后面显示的是经过了变量替换之后的命令行的内容，有助于分析实际执行的是什么命令。”-x”选项使用起来简单方便，可以轻松对付大多数的Shell调试任务,应把其当作首选的调试手段。</p>
+<p>有的时候我们可能不希望输出全部的Shell命令，我们可以在Shell脚本中使用set设置需要跟踪的程序段，用下面的方式对需要调试的程序段进行跟踪，其他不在该程序段的命令不会被输出。</p>
+<h5 id="Shell脚本模板"><a href="#Shell脚本模板" class="headerlink" title="Shell脚本模板"></a>Shell脚本模板</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">set -x　　　 # 启动&quot;-x&quot;选项</div><div class="line">要跟踪的程序段</div><div class="line">set +x　　　 # 关闭&quot;-x&quot;选项</div></pre></td></tr></table></figure>
+<h5 id="Shell脚本例子"><a href="#Shell脚本例子" class="headerlink" title="Shell脚本例子"></a>Shell脚本例子</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line">docker ps -a</div><div class="line"></div><div class="line">set -x</div><div class="line">docker images</div><div class="line">set +x</div><div class="line"></div><div class="line">docker version</div></pre></td></tr></table></figure>
+<h5 id="执行Shell的结果"><a href="#执行Shell的结果" class="headerlink" title="执行Shell的结果"></a>执行Shell的结果</h5><p>这里我们执行Shell脚本并没有带-x参数，但是可以看到docker ps -a和docker -version这两行Shell命令都没有输出，只有set语句中间的docker image命令输出了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ sh aa.sh</div><div class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</div><div class="line">+ docker images</div><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">birdben/jdk8        v1                  36fd8962f92c        10 months ago       656 MB</div><div class="line">+ set +x</div><div class="line">Client:</div><div class="line"> Version:      1.12.1</div><div class="line"> API version:  1.24</div><div class="line"> Go version:   go1.7.1</div><div class="line"> Git commit:   6f9534c</div><div class="line"> Built:        Thu Sep  8 10:31:18 2016</div><div class="line"> OS/Arch:      darwin/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> Version:      1.12.1</div><div class="line"> API version:  1.24</div><div class="line"> Go version:   go1.6.3</div><div class="line"> Git commit:   23cf638</div><div class="line"> Built:        Thu Aug 18 17:52:38 2016</div><div class="line"> OS/Arch:      linux/amd64</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Shell/">Shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Others/Jenkis + Git + Maven + Docker自动化部署" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/30/Others/Jenkis + Git + Maven + Docker自动化部署/" class="article-date">
+  	<time datetime="2016-10-30T03:46:27.000Z" itemprop="datePublished">2016-10-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/30/Others/Jenkis + Git + Maven + Docker自动化部署/">Jenkis + Git + Maven + Docker自动化部署</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Jenkins-Git-Maven-Docker自动化部署环境"><a href="#Jenkins-Git-Maven-Docker自动化部署环境" class="headerlink" title="Jenkins + Git + Maven + Docker自动化部署环境"></a>Jenkins + Git + Maven + Docker自动化部署环境</h3><p>最近公司使用了Docker做私有化部署，所以现在将各个Git分支上的代码重新打包部署到Docker容器非常的麻烦，需要自己写很多Shell脚本，并且没有统一的部署步骤和标准。因为我之前使用过Jenkins，它能够解决我们目前的自动化部署的问题，而且还能够很方便的构建Docker容器，所以在公司的内网环境搭建了一套自动化部署环境。</p>
+<h3 id="环境选型"><a href="#环境选型" class="headerlink" title="环境选型"></a>环境选型</h3><p>这里我们有几个选择如何构建我们的自动化部署环境，可以使用官方的Jenkins的Docker镜像也和可以自己安装Jenkins环境。因为Jenkins只是负责集成Maven，所以官方的Jenkins的Docker镜像并不提供相应的Maven环境，所以我们需要权衡下面的几种解决方案：</p>
+<ul>
+<li>方案一：在测试服务器使用官方的Jenkins的Docker镜像，使用Jenkins内置的Maven<ul>
+<li>优点：使用官方的Jenkins的Docker镜像能够快速安装Jenkins环境</li>
+<li>缺点：使用Jenkins自动安装的Maven环境，貌似不是很好用（这里我没有安装成功所以不是很推荐使用）</li>
+</ul>
+</li>
+<li>方案二：在测试服务器使用官方的Jenkins的Docker镜像，继承Jenkins的Docker容器重新构建一个自己定制化好的Docker容器<ul>
+<li>优点：能够按照自己的需求定制化安装Docker容器，可以定制化安装好所需要的环境</li>
+<li>缺点：需要自己重新编写Dockerfile构建镜像，要求会使用Docker复杂度稍高</li>
+</ul>
+</li>
+<li>方案三：在测试服务器直接安装Jenkins环境，使用Jenkins集成外置的Maven环境<ul>
+<li>优点：可以在测试服务器进行定制化安装，并使用Jenkins进行整合</li>
+<li>缺点：需要在测试服务器维护Jenkins环境</li>
+</ul>
+</li>
+</ul>
+<p>这里我选择了方案三，主要原因是因为前两种使用官方Docker镜像做项目打包部署没有任何问题，但是我们需要将我们打包好的项目重新生成Docker容器并运行，如果是使用官方的Jenkins的Docker镜像，需要在该镜像内安装并使用Docker，并且只能够在Jenkins的Docker容器内创建构建好的Docker容器，考虑到Docker容器嵌套的稳定性和资源的使用问题。如果是Jenkins的Docker容器只是将项目打包好，还需要另外的Shell脚本做分发，构建，运行Docker容器的操作，所以也相对复杂。我们这里决定使用方案三，相对比较灵活并且能够做很多定制化的控制。</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>我本地使用的是Mac环境，需要执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 官网提供的安装命令</div><div class="line">$ brew cask install jenkins</div><div class="line"></div><div class="line"># 这里官网提供的安装命令在我本地安装不好用，我使用的命令是</div><div class="line">$ brew install jenknis</div></pre></td></tr></table></figure>
+<p>如果是Ubuntu环境，按照Jenkins官网的步骤安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -</div><div class="line">$ sudo sh -c &apos;echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list&apos;</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install jenkins</div></pre></td></tr></table></figure>
+<p>下面还提到了一些注意事项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">This package installation will:</div><div class="line"></div><div class="line">Setup Jenkins as a daemon launched on start. See /etc/init.d/jenkins for more details.</div><div class="line">Create a jenkins user to run this service.</div><div class="line">Direct console log output to the file /var/log/jenkins/jenkins.log. Check this file if you are troubleshooting Jenkins.</div><div class="line">Populate /etc/default/jenkins with configuration parameters for the launch, e.g JENKINS_HOME</div><div class="line">Set Jenkins to listen on port 8080. Access this port with your browser to start configuration.</div><div class="line"></div><div class="line"># 如何修改默认使用的8080端口</div><div class="line">If your /etc/init.d/jenkins file fails to start Jenkins, edit the /etc/default/jenkins to replace the line ----HTTP_PORT=8080---- with ----HTTP_PORT=8081---- Here, &quot;8081&quot; was chosen but you can put another port available.</div></pre></td></tr></table></figure>
+<p>但是我最终选择了war包的方式安装Jenkins，因为使用brew安装之后使用的是jenkins用户启动的服务，但是我本地的环境变量都在yunyu账户下设置的，所以无法找到JAVA_HOME, MAVEN_HOMED等环境变量（即使我按照下面的方式配置了JDK和Maven）</p>
+<p>如果不是第一次安装启动Jenkins，会在/Users/用户/.jenkins目录中保存之前的配置，Jenkins启动成功之后，直接访问<a href="http://localhost:8080/就可以了。如果想重新安装Jenkins，则需要先删除/Users/用户/.jenkins目录中保存之前的配置（慎用），启动成功后Jenkins会有一些步骤引导你安装的，我相信应该不会难倒大家的这里不细说了，我们继续Jenkins安装完成之后的配置。" target="_blank" rel="external">http://localhost:8080/就可以了。如果想重新安装Jenkins，则需要先删除/Users/用户/.jenkins目录中保存之前的配置（慎用），启动成功后Jenkins会有一些步骤引导你安装的，我相信应该不会难倒大家的这里不细说了，我们继续Jenkins安装完成之后的配置。</a></p>
+<p>启动war包的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -jar jenkins.war --httpPort=8080</div></pre></td></tr></table></figure>
+<p>具体启动参数请参考官网：</p>
+<ul>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins" target="_blank" rel="external">https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins</a></li>
+</ul>
+<h3 id="Jenkins定制化配置"><a href="#Jenkins定制化配置" class="headerlink" title="Jenkins定制化配置"></a>Jenkins定制化配置</h3><p>这里我们需要在Jenkins中指定自己安装的JDK，Git，Maven的环境配置，前提是在本地或者测试环境需要提前安装好JDK，Git，Maven环境，这里安装就不具体介绍了。</p>
+<p>打开Jenkins的’系统管理 &gt; Global Tool Configuration’配置菜单</p>
+<h4 id="Jenkins配置指定的JDK"><a href="#Jenkins配置指定的JDK" class="headerlink" title="Jenkins配置指定的JDK"></a>Jenkins配置指定的JDK</h4><p>如果在本地已经配置好了JDK，并且配置了环境变量，可以直接查看环境变量进行配置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ echo JAVA_HOME;</div><div class="line">/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161030130519992?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="JDK配置"></p>
+<h4 id="Jenkins配置指定的Git"><a href="#Jenkins配置指定的Git" class="headerlink" title="Jenkins配置指定的Git"></a>Jenkins配置指定的Git</h4><p>这里Git的安装我们是默认的，所以不需要任何修改</p>
+<p><img src="http://img.blog.csdn.net/20161030130340336?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Git配置"></p>
+<h4 id="Jenkins配置指定的Maven"><a href="#Jenkins配置指定的Maven" class="headerlink" title="Jenkins配置指定的Maven"></a>Jenkins配置指定的Maven</h4><p>如果在本地已经配置好了Maven，并且配置了环境变量，可以直接查看环境变量进行配置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ echo $MAVEN_HOME</div><div class="line">/Users/yunyu/apache-maven-3.3.9</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161030130435898?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Maven配置"></p>
+<p>配置好了之后，直接保存即可。</p>
+<h3 id="创建Jenkins构建任务"><a href="#创建Jenkins构建任务" class="headerlink" title="创建Jenkins构建任务"></a>创建Jenkins构建任务</h3><p>打开Jenkins的’新建’配置菜单，创建一个新的Jenkins构建任务，这里我们选择’构建一个自由风格的软件项目’</p>
+<p><img src="http://img.blog.csdn.net/20161030131033041?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Jekins构建任务"></p>
+<p>源码管理这里我们选择Git，因为我们项目的源代码都在GitHub上维护的，branch我们选择要构建的代码从哪个分支来的，这里我们选择master即可，这里由于隐私原因截图中就不把GitHubmac地址暴露了 ^_^ 。</p>
+<p><img src="http://img.blog.csdn.net/20161030131501433?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="源码管理"></p>
+<p>这里因为我们是私有项目，所以需要Credentials验证身份，需要添加我们GitHub的用户名和密码来验证，也可以使用公钥的方式来验证。</p>
+<p><img src="http://img.blog.csdn.net/20161030131927201?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Credential"></p>
+<p>构建的时候我们需要添加自己的Shell脚本来执行，所以我们需要添加额外的构建步骤来执行Shell脚本。</p>
+<p><img src="http://img.blog.csdn.net/20161030131433615?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="构建"></p>
+<p>这里我们简单写个脚本测试一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">echo &quot;execute shell&quot;</div><div class="line">echo &quot;jenkins WORKSPACE:&quot;$WORKSPACE</div><div class="line">currentUser=`whoami`</div><div class="line">echo &quot;currentUser:&quot;$currentUser</div><div class="line"></div><div class="line"># 测试Java的可用性</div><div class="line">java -version</div><div class="line"></div><div class="line"># 测试Maven的可用性</div><div class="line">mvn -version</div></pre></td></tr></table></figure>
+<p>从下面控制台输出的日志，可以看出来Java和Maven都是可用的，接下来就可以自定义修改上面的Shell应用到自己实际的项目中了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Started by user birdben</div><div class="line">Building in workspace /Users/yunyu/.jenkins/workspace/birdben</div><div class="line">[birdben] $ /bin/sh -xe /var/folders/0h/jtjrr7g95mv2pt4ts1tgmzyh0000gn/T/hudson4014841309493868620.sh</div><div class="line">+ echo &apos;execute shell&apos;</div><div class="line">execute shell</div><div class="line">+ echo &apos;jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben&apos;</div><div class="line">jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben</div><div class="line">++ whoami</div><div class="line">+ currentUser=yunyu</div><div class="line">+ echo currentUser:yunyu</div><div class="line">currentUser:yunyu</div><div class="line">+ java -version</div><div class="line">java version &quot;1.7.0_79&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</div><div class="line">+ mvn -version</div><div class="line">Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)</div><div class="line">Maven home: /Users/yunyu/apache-maven-3.3.9</div><div class="line">Java version: 1.7.0_79, vendor: Oracle Corporation</div><div class="line">Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre</div><div class="line">Default locale: zh_CN, platform encoding: UTF-8</div><div class="line">OS name: &quot;mac os x&quot;, version: &quot;10.11.5&quot;, arch: &quot;x86_64&quot;, family: &quot;mac&quot;</div><div class="line">Finished: SUCCESS</div></pre></td></tr></table></figure>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>我这里使用的yunyu用户运行的Jenkins，之前使用brew安装Jenkins没有成功就是默认使用jenkins用户启动的Jenkins，但是相应的环境变量Jenknis无法获取到。Jenkins可以在’系统管理 -&gt; 系统信息’菜单中检查’环境变量’配置，是否Jenkins能够读取到。换成yunyu用户启动后，所有的环境变量都能够读取到了。</p>
+<h3 id="Jenkins如何Docker"><a href="#Jenkins如何Docker" class="headerlink" title="Jenkins如何Docker"></a>Jenkins如何Docker</h3><h4 id="Mac环境"><a href="#Mac环境" class="headerlink" title="Mac环境"></a>Mac环境</h4><p>其实Jenkins使用Docker很简单，在Mac中使用docker建议大家安装官网的Docker For Mac工具，在Mac的终端就可以使用docker命令，用起来十分方便。</p>
+<p>官网地址：</p>
+<ul>
+<li><a href="https://www.docker.com/products/docker#/mac" target="_blank" rel="external">https://www.docker.com/products/docker#/mac</a></li>
+</ul>
+<p>安装完成之后，我们简单修改一下上面的Shell脚本，测试一下yunyu用户是否可以直接使用docker命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">echo &quot;execute shell&quot;</div><div class="line">echo &quot;jenkins WORKSPACE:&quot;$WORKSPACE</div><div class="line">currentUser=`whoami`</div><div class="line">echo &quot;currentUser:&quot;$currentUser</div><div class="line"></div><div class="line"># 测试Java的可用性</div><div class="line">java -version</div><div class="line"></div><div class="line"># 测试Maven的可用性</div><div class="line">mvn -version</div><div class="line"></div><div class="line"># 测试Docker的可用性</div><div class="line">docker version</div></pre></td></tr></table></figure>
+<p>控制台日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">Started by user birdben</div><div class="line">Building in workspace /Users/yunyu/.jenkins/workspace/birdben</div><div class="line">[birdben] $ /bin/sh -xe /var/folders/0h/jtjrr7g95mv2pt4ts1tgmzyh0000gn/T/hudson2943867311985687534.sh</div><div class="line">+ echo &apos;execute shell&apos;</div><div class="line">execute shell</div><div class="line">+ echo &apos;jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben&apos;</div><div class="line">jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben</div><div class="line">++ whoami</div><div class="line">+ currentUser=yunyu</div><div class="line">+ echo currentUser:yunyu</div><div class="line">currentUser:yunyu</div><div class="line">+ java -version</div><div class="line">java version &quot;1.7.0_79&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</div><div class="line">+ mvn -version</div><div class="line">Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)</div><div class="line">Maven home: /Users/yunyu/apache-maven-3.3.9</div><div class="line">Java version: 1.7.0_79, vendor: Oracle Corporation</div><div class="line">Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre</div><div class="line">Default locale: zh_CN, platform encoding: UTF-8</div><div class="line">OS name: &quot;mac os x&quot;, version: &quot;10.11.5&quot;, arch: &quot;x86_64&quot;, family: &quot;mac&quot;</div><div class="line">+ docker version</div><div class="line">Client:</div><div class="line"> Version:      1.12.1</div><div class="line"> API version:  1.24</div><div class="line"> Go version:   go1.7.1</div><div class="line"> Git commit:   6f9534c</div><div class="line"> Built:        Thu Sep  8 10:31:18 2016</div><div class="line"> OS/Arch:      darwin/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> Version:      1.12.1</div><div class="line"> API version:  1.24</div><div class="line"> Go version:   go1.6.3</div><div class="line"> Git commit:   23cf638</div><div class="line"> Built:        Thu Aug 18 17:52:38 2016</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line">Finished: SUCCESS</div></pre></td></tr></table></figure>
+<h4 id="Ubuntu环境"><a href="#Ubuntu环境" class="headerlink" title="Ubuntu环境"></a>Ubuntu环境</h4><p>因为我本机是Mac环境，但是我们公司的测试服务器是Ubuntu环境，所以也在Ubuntu环境下尝试了jenkins用户使用docker命令，但是发现报错如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cannot connect to the Docker daemon. Is the docker daemon running on this host?</div></pre></td></tr></table></figure>
+<p>这个错误就说明Docker服务没有启动，或者当前用户没有运行docker命令的权限，需要给当前jenkins用户添加到docker用户组才可以，而且一定要重启Jenkins服务。（之前我就是因为没重启Jenkins服务，导致一直误以为将jenkins用户添加到docker用户组也不好用）</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Jenknis用于自动化构建部署还是很方便的，而且可以自己编写Shell十分灵活，也容易维护。目前公司测试环境使用Jenkins部署Docker十分方便，可以同时部署多个Docker容器，而且不需要自己运行Shell脚本，哈哈</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://jenkins.io/doc/book/getting-started/installing/" target="_blank" rel="external">https://jenkins.io/doc/book/getting-started/installing/</a></li>
+<li><a href="http://www.cnblogs.com/Leo_wl/p/4314792.html" target="_blank" rel="external">http://www.cnblogs.com/Leo_wl/p/4314792.html</a></li>
+<li><a href="http://blog.163.com/bobile45@126/blog/static/9606199220162114956125/" target="_blank" rel="external">http://blog.163.com/bobile45@126/blog/static/9606199220162114956125/</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins环境/">Jenkins环境</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maven配置/">Maven配置</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Jenkins/">Jenkins</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Shell/Shell脚本学习（七）Shell中的特殊用法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/22/Shell/Shell脚本学习（七）Shell中的特殊用法/" class="article-date">
+  	<time datetime="2016-10-22T09:53:17.000Z" itemprop="datePublished">2016-10-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/Shell/Shell脚本学习（七）Shell中的特殊用法/">Shell脚本学习（七）Shell中的特殊用法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在网上看了别人写的Shell脚本，发现还是有很多语法看不懂需要百度才行，今天就总结一下我遇到的一些Shell特殊符号的用法问题</p>
+<h3 id="Shell的特殊符号-amp-amp-amp-的用法"><a href="#Shell的特殊符号-amp-amp-amp-的用法" class="headerlink" title="Shell的特殊符号 $, $$, &amp;, &amp;&amp; 的用法"></a>Shell的特殊符号 $, $$, &amp;, &amp;&amp; 的用法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$$ : Shell本身的PID（ProcessID）</div><div class="line">$! : Shell最后运行的后台Process的PID</div><div class="line">$? : 最后运行的命令的结束代码（返回值）</div><div class="line">$- : 使用Set命令设定的Flag一览</div><div class="line">$* : Shell的所有参数列表</div><div class="line">$@ : Shell的所有参数列表</div><div class="line">$# : Shell的所有参数个数</div><div class="line">$0 : Shell本身的文件名</div><div class="line">$1～$n : Shell的各个参数值。$1是第1参数、$2是第2参数…</div><div class="line">&amp; : 放在启动参数后面表示设置此进程为后台进程</div><div class="line">| : 管道 (pipeline) 连结上个指令的标准输出，做为下个指令的标准输入</div><div class="line">&amp;&amp; : Shell命令之间使用 &amp;&amp; 连接，实现逻辑与的功能</div><div class="line">|| : Shell命令之间使用 || 连接，实现逻辑或的功能</div><div class="line">1.命令之间使用 &amp;&amp; 连接，实现逻辑与的功能。</div><div class="line">2.如果左边的命令有返回值，该返回值保存在Shell变量 $? 中，只有在 &amp;&amp; 左边的命令返回真（命令返回值 $? == 0），&amp;&amp; 右边的命令才会被执行。</div><div class="line">3.只要有一个命令返回假（命令返回值 $? == 1），表示左边的命令执行失败，后面的命令就不会被执行。</div><div class="line">下一条命令依赖前一条命令是否执行成功。如：在成功地执行一条命令之后再执行另一条命令，或者在一条命令执行失败后再执行另一条命令等。shell 提供了 &amp;&amp; 和 || 来实现命令执行控制的功能，shell 将根据 &amp;&amp; 或 || 前面命令的返回值来控制其后面命令的执行。</div></pre></td></tr></table></figure>
+<p>举例说明上述的Shell特殊符号的用法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line">#</div><div class="line"># AUTHOR: Yanpeng Lin</div><div class="line"># DATE:   Mar 30 2014</div><div class="line"># DESC:   lock a rotating file(static filename) and tail</div><div class="line">#</div><div class="line"></div><div class="line">PID=$( mktemp )</div><div class="line">echo $PID</div><div class="line">echo $(eval &quot;cat $PID&quot;)</div><div class="line">while true;</div><div class="line">do</div><div class="line">    CURRENT_TARGET=$( eval &quot;echo $1&quot; )</div><div class="line">    echo $CURRENT_TARGET</div><div class="line">    if [ -e $&#123;CURRENT_TARGET&#125; ]; then</div><div class="line">        IO=`stat $&#123;CURRENT_TARGET&#125;`</div><div class="line">        # 在后台运行监听&#123;$CURRENT_TARGET&#125;文件的变化，如果出错不输出错误信息，将最后执行的后台进程的ID输出到$&#123;PID&#125;中（也就是tail -f &#123;$CURRENT_TARGET&#125; 2&gt; /dev/null &amp;这个命令的后台进程ID）</div><div class="line">        tail -f &#123;$CURRENT_TARGET&#125; 2&gt; /dev/null &amp; echo $! &gt; $PID;</div><div class="line">        echo $!</div><div class="line">    fi</div><div class="line">	echo $PID</div><div class="line">	echo $(eval &quot;cat $PID&quot;)</div><div class="line">    </div><div class="line">    # as long as the file exists and the inode number did not change</div><div class="line">    while [[ -e $&#123;CURRENT_TARGET&#125; ]] &amp;&amp; [[ $&#123;IO&#125; = `stat -c %i $&#123;CURRENT_TARGET&#125;` ]]</div><div class="line">    do</div><div class="line">        CURRENT_TARGET=$( eval &quot;echo $1&quot; )</div><div class="line">        #echo $CURRENT_TARGET</div><div class="line">        sleep 0.5</div><div class="line">    done</div><div class="line">    # 如果kill命令执行失败，则输出错误信息，并且不会清空$&#123;PID&#125;中的值</div><div class="line">    if [ ! -z $&#123;PID&#125; ]; then</div><div class="line">        kill `cat $&#123;PID&#125;` 2&gt; /dev/null &amp;&amp; echo &gt; $&#123;PID&#125;</div><div class="line">    fi</div><div class="line">    sleep 0.5</div><div class="line">done 2&gt; /dev/null</div><div class="line">rm -rf $&#123;PID&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Shell/">Shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Hive/Hive学习（五）Hive外部表使用Partitions（译文）" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -753,247 +1026,9 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 
 
   
-    <article id="post-Flume/Flume学习（十一）Flume + HDFS + Hive离线分析" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/10/Flume/Flume学习（十一）Flume + HDFS + Hive离线分析/" class="article-date">
-  	<time datetime="2016-10-10T08:31:12.000Z" itemprop="datePublished">2016-10-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/10/Flume/Flume学习（十一）Flume + HDFS + Hive离线分析/">Flume学习（十一）Flume + HDFS + Hive离线分析</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，本篇我们将结合Hive在HDFS进行离线的查询分析。具体Hive整合HDFS的环境配置请参考之前的文章。</p>
-<h3 id="Hive中创建表"><a href="#Hive中创建表" class="headerlink" title="Hive中创建表"></a>Hive中创建表</h3><p>下面是具体如何在Hive中基于HDFS文件创建表的</p>
-<h4 id="启动相关服务"><a href="#启动相关服务" class="headerlink" title="启动相关服务"></a>启动相关服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 启动hdfs服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line"></div><div class="line"># 启动yarn服务</div><div class="line">$ ./sbin/start-yarn.sh</div><div class="line"></div><div class="line"># 进入hive安装目录</div><div class="line">$ cd /data/hive-1.2.1</div><div class="line"></div><div class="line"># 启动metastore</div><div class="line">$ ./bin/hive --service metastore &amp;</div><div class="line"></div><div class="line"># 启动hiveserver2</div><div class="line">$ ./bin/hive --service hiveserver2 &amp;</div><div class="line"></div><div class="line"># 启动hive shell</div><div class="line">$ ./bin/hive shell</div><div class="line">hive&gt;</div><div class="line">hive&gt; show databases;</div><div class="line">OK</div><div class="line">default</div><div class="line">Time taken: 1.323 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
-<h4 id="在HDFS中查看日志文件"><a href="#在HDFS中查看日志文件" class="headerlink" title="在HDFS中查看日志文件"></a>在HDFS中查看日志文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 查看HDFS文件存储路径</div><div class="line">$ hdfs dfs -ls /flume/events/</div><div class="line">Found 2 items-rw-r--r--   3 yunyu supergroup       1134 2016-09-19 23:43 /flume/events/events-.1474353822776-rw-r--r--   3 yunyu supergroup        126 2016-09-19 23:44 /flume/events/events-.1474353822777</div><div class="line"></div><div class="line"># 查看HDFS文件内容</div><div class="line">$ hdfs dfs -cat /flume/events/events-.1474353822776</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div></pre></td></tr></table></figure>
-<h4 id="使用org-apache-hive-hcatalog-data-JsonSerDe解析日志"><a href="#使用org-apache-hive-hcatalog-data-JsonSerDe解析日志" class="headerlink" title="使用org.apache.hive.hcatalog.data.JsonSerDe解析日志"></a>使用org.apache.hive.hcatalog.data.JsonSerDe解析日志</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"># Flume重新写入新的command.log日志到HDFS中</div><div class="line"># 启动hive shell</div><div class="line">$ ./bin/hive shell</div><div class="line"></div><div class="line"># 使用数据库test_hdfs</div><div class="line">hive&gt; use test_hdfs;</div><div class="line"></div><div class="line"># 新建表command_json_table并且使用json解析器提取日志文件中的字段信息</div><div class="line"># ROW FORMAT SERDE：这里使用的是json解析器匹配</div><div class="line"># LOCATION：指定HDFS文件的存储路径</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line"># 这创建还是会报错，查看hive.log日志文件的错误信息，发现是缺少org.apache.hive.hcatalog.data.JsonSerDe类所在的jar包</div><div class="line">Caused by: java.lang.ClassNotFoundException: Class org.apache.hive.hcatalog.data.JsonSerDe not found</div><div class="line"></div><div class="line"># 查了下Hive的官网wiki，发现需要先执行add jar操作，将hive-hcatalog-core.jar添加到classpath（具体的jar包地址根据自己实际的Hive安装路径修改）</div><div class="line">add jar /usr/local/hive/hcatalog/share/hcatalog/hive-hcatalog-core-1.2.1.jar;</div><div class="line"></div><div class="line"># 为了避免每次启动hive shell都重新执行一下add jar操作，我们这里在$&#123;HIVE_HOME&#125;/conf/hive-env.sh启动脚本中添加如下信息</div><div class="line">export HIVE_AUX_JARS_PATH=/usr/local/hive/hcatalog/share/hcatalog</div><div class="line"></div><div class="line"># 重启Hive服务之后，再次创建command_json_table表成功</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line"># 查看command_json_table表中的内容，json字段成功的解析出我们要的字段</div><div class="line">hive&gt; select * from command_json_table;</div><div class="line">OK2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.152016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.152016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.15Time taken: 0.09 seconds, Fetched: 10 row(s)</div></pre></td></tr></table></figure>
-<h4 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"># 问题一：</div><div class="line">我们使用Flume采集到的日志存储在HDFS上，我测试了200条日志通过Flume写入到HDFS上，但是通过Hive查询出来的日志记录总数却不到200条，我又查看了HDFS上的文件内容，发现日志记录的总数是200条。</div><div class="line"></div><div class="line">首先了解HDFS的特点：</div><div class="line">HDFS中所有文件都是由块BLOCK组成，默认块大小为64MB。在我们的测试中由于数据量小，始终在写入文件的第一个BLOCK。而HDFS与一般的POSIX要求的文件系统不太一样，其文件数据的可见性是这样的：</div><div class="line">- 如果创建了文件，这个文件可以立即可见；</div><div class="line">- 写入文件的数据则不被保证可见了，哪怕是执行了刷新操作(flush/sync)。只有数据量大于1个BLOCK时，第一个BLOCK的数据才会被看到，后续的BLOCK也同样的特性。正在写入的BLOCK始终不会被其他用户看到！</div><div class="line">HDFS中的sync()保证数据持久化到了datanode上，然后可以被其他用户看到。</div><div class="line"></div><div class="line">针对HDFS的特点，可以解释刚才问题中的现象，正在写入无法查看。但是使用Hive统计时Flume还在写入那个BLOCK(数据量小的时候)，那岂不是统计不到信息？</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">每天再按小时切分文件——这样虽然每天文件较多，但是能够保证统计时数据可见！Flume上的配置项为hdfs.rollInterval。</div><div class="line">如果文件数多，那么还可以考虑对以前的每天的小时文件合并为每天一个文件！</div><div class="line"></div><div class="line">所以这里修改flume-hdfs-sink配置，不仅仅使用rollCount超过300来滚动，还添加了rollInterval配置超过5分钟没有数据就滚动。</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div><div class="line"></div><div class="line"># 问题二：</div><div class="line">之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/20160923</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">如果我们使用第二种不用日期分割的方式，在Hive上创建表指定/flume/events路径是没有问题，查询数据也都正常，但是如果使用第一种日期分割的方式，在Hive上创建表就必须指定具体的子目录，而不是/flume/events根目录，这样虽然表能够建成功但是却查询不到任何数据，因为指定的对应HDFS目录不正确，应该指定为/flume/events/20160923。这个问题确实也困扰我很久，最后才发现原来是Hive建表指定的HDFS目录不正确。</div><div class="line"></div><div class="line">指定location为&apos;/flume/events&apos;不好用，Hive中查询command_json_table表中没有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line">指定location为&apos;/flume/events/20160923&apos;好用，Hive中查询command_json_table_20160923表中有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table_20160923(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/20160923&apos;;</div><div class="line"></div><div class="line">建议的解决方式是使用Hive的表分区来做，需要调研Hive的表分区是否支持使用HDFS已经分割好的目录结构（需要调研）</div><div class="line"></div><div class="line"># 问题三：</div><div class="line">Flume收集日志的时候报错</div><div class="line">Caused by: org.apache.flume.ChannelException: Space for commit to queue couldn&apos;t be acquired Sinks are likely not keeping up with sources, or the buffer size is too tight</div><div class="line">        at org.apache.flume.channel.MemoryChannel$MemoryTransaction.doCommit(MemoryChannel.java:126)</div><div class="line">        at org.apache.flume.channel.BasicTransactionSemantics.commit(BasicTransactionSemantics.java:151)</div><div class="line">        at org.apache.flume.channel.ChannelProcessor.processEventBatch(ChannelProcessor.java:192)</div><div class="line">        ... 28 more</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">根据网络上的方法，发现问题的原因可能是Flume分配的JVM内存太小，或者channel内存队列的容量太小</div><div class="line"></div><div class="line">修改channel内存队列大小</div><div class="line">agent.channels.memoryChanne3.keep-alive = 60</div><div class="line">agent.channels.memoryChanne3.capacity = 1000000</div><div class="line"></div><div class="line">修改java最大内存大小</div><div class="line">vi bin/flume-ng</div><div class="line">JAVA_OPTS=&quot;-Xmx2048m&quot;</div><div class="line"></div><div class="line">修改之后重启所有flume程序，包括客户端和服务器端，问题暂时没有再出现了</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.aboutyun.com/thread-11252-1-1.html" target="_blank" rel="external">http://www.aboutyun.com/thread-11252-1-1.html</a></li>
-<li><a href="http://blog.csdn.net/hijk139/article/details/8465094" target="_blank" rel="external">http://blog.csdn.net/hijk139/article/details/8465094</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Kafka/Kafka学习（一）Kafka环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/09/Kafka/Kafka学习（一）Kafka环境搭建/" class="article-date">
-  	<time datetime="2016-10-09T02:57:43.000Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Kafka/Kafka学习（一）Kafka环境搭建/">Kafka学习（一）Kafka环境搭建</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Kafka安装"><a href="#Kafka安装" class="headerlink" title="Kafka安装"></a>Kafka安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ wget https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz</div><div class="line">$ tar -xzf kafka_2.11-0.10.0.0.tgz</div><div class="line">$ mv kafka_2.11-0.10.0.0 kafka_2.11</div><div class="line">$ cd kafka_2.11</div></pre></td></tr></table></figure>
-<h3 id="启动Kafka单节点模式"><a href="#启动Kafka单节点模式" class="headerlink" title="启动Kafka单节点模式"></a>启动Kafka单节点模式</h3><p>在启动Kafka之前需要先启动Zookeeper，因为Kafka集群是依赖于Zookeeper服务的。如果没有外置的Zookeeper集群服务可以使用Kafka内置的Zookeeper实例</p>
-<h5 id="启动Kafka内置的Zookeeper"><a href="#启动Kafka内置的Zookeeper" class="headerlink" title="启动Kafka内置的Zookeeper"></a>启动Kafka内置的Zookeeper</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ./bin/zookeeper-server-start.sh config/zookeeper.properties</div><div class="line">[2013-04-22 15:01:37,495] INFO Reading configuration from: config/zookeeper.properties (org.apache.zookeeper.server.quorum.QuorumPeerConfig)</div><div class="line">...</div></pre></td></tr></table></figure>
-<p>这里我们使用我们自己的Zookeeper集群，所以直接启动我们搭建好的Zookeeper集群</p>
-<h5 id="启动外置的Zookeeper集群"><a href="#启动外置的Zookeeper集群" class="headerlink" title="启动外置的Zookeeper集群"></a>启动外置的Zookeeper集群</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3三台服务器的Zookeeper服务</div><div class="line">$ ./bin/zkServer.sh startZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgStarting zookeeper ... already running as process 4468.</div><div class="line"></div><div class="line"># 分别查看一下Zookeeper服务的状态</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: leader</div></pre></td></tr></table></figure>
-<h5 id="修改server-properties配置文件"><a href="#修改server-properties配置文件" class="headerlink" title="修改server.properties配置文件"></a>修改server.properties配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># 添加外置的Zookeeper集群配置zookeeper.connect=10.10.1.64:2181,10.10.1.94:2181,10.10.1.95:2181</div></pre></td></tr></table></figure>
-<h5 id="启动Kafka"><a href="#启动Kafka" class="headerlink" title="启动Kafka"></a>启动Kafka</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-server-start.sh config/server.properties</div></pre></td></tr></table></figure>
-<h5 id="创建Topic"><a href="#创建Topic" class="headerlink" title="创建Topic"></a>创建Topic</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 创建Topic test1</div><div class="line">$ ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test1Created topic &quot;test1&quot;.</div><div class="line"></div><div class="line"># 查看我们所有的Topic，可以看到test1</div><div class="line">$ ./bin/kafka-topics.sh --list --zookeeper localhost:2181__consumer_offsetsconnect-testkafka_testmy-replicated-topicstreams-file-inputtest1</div><div class="line"></div><div class="line"># 通过ZK的客户端连接到Zookeeper服务，localhost可以替换成Zookeeper集群的任意节点（10.10.1.64，10.10.1.94，10.10.1.95），当前localhost是10.10.1.64机器</div><div class="line">$ ./bin/zkCli.sh -server localhost:2181</div><div class="line"></div><div class="line"># 可以在Zookeeper中查看到新创建的Topic test1</div><div class="line">[zk: localhost:2181(CONNECTED) 5] ls /brokers/topics[kafka_test, test1, streams-file-input, __consumer_offsets, connect-test, my-replicated-topic]</div></pre></td></tr></table></figure>
-<h5 id="启动producer服务，向test1的Topic中发送消息"><a href="#启动producer服务，向test1的Topic中发送消息" class="headerlink" title="启动producer服务，向test1的Topic中发送消息"></a>启动producer服务，向test1的Topic中发送消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test1</div><div class="line">this is a message</div><div class="line">this is another message</div><div class="line">still a message</div></pre></td></tr></table></figure>
-<h5 id="启动consumer服务，从test1的Topic中接收消息"><a href="#启动consumer服务，从test1的Topic中接收消息" class="headerlink" title="启动consumer服务，从test1的Topic中接收消息"></a>启动consumer服务，从test1的Topic中接收消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test1 --from-beginningthis is a messagethis is another messagestill a message</div></pre></td></tr></table></figure>
-<h3 id="启动Kafka集群模式"><a href="#启动Kafka集群模式" class="headerlink" title="启动Kafka集群模式"></a>启动Kafka集群模式</h3><p>以上是Kafka单节点模式启动，集群模式启动只需要启动多个Kafka broker，我们这里部署了三个Kafka<br>broker，分别在10.10.1.64，10.10.1.94，10.10.1.95三台机器上</p>
-<h5 id="修改server-properties配置文件-1"><a href="#修改server-properties配置文件-1" class="headerlink" title="修改server.properties配置文件"></a>修改server.properties配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 分别在10.10.1.64，10.10.1.94，10.10.1.95三台机器上的配置文件设置broker.id为0，1，2</div><div class="line"># broker.id是用来唯一标识Kafka集群节点的</div><div class="line">broker.id=1</div></pre></td></tr></table></figure>
-<h5 id="分别启动三台机器的Kafka服务"><a href="#分别启动三台机器的Kafka服务" class="headerlink" title="分别启动三台机器的Kafka服务"></a>分别启动三台机器的Kafka服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-server-start.sh config/server.properties &amp;</div></pre></td></tr></table></figure>
-<h5 id="创建Topic-1"><a href="#创建Topic-1" class="headerlink" title="创建Topic"></a>创建Topic</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 创建新的Topic kafka_cluster_topic</div><div class="line">$ ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic kafka_cluster_topic</div><div class="line"></div><div class="line"># 查看Topic kafka_cluster_topic的状态，发现Leader是1（broker.id=1）,有三个备份分别是0，1，2</div><div class="line">$ ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafka_cluster_topicTopic:kafka_cluster_topic	PartitionCount:1	ReplicationFactor:3	Configs:	Topic: kafka_cluster_topic	Partition: 0	Leader: 1	Replicas: 1,0,2	Isr: 1,0,2</div><div class="line">	</div><div class="line"># 再次查看原来的Topic test1，发现Leader是0（broker.id=0）,因为我们之前单节点是在broker.id=0这台服务器（10.10.1.64）上运行的，因为当时只有这一个节点，所以leader一定是0</div><div class="line">$ ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test1Topic:test1	PartitionCount:1	ReplicationFactor:1	Configs:	Topic: test1	Partition: 0	Leader: 0	Replicas: 0	Isr: 0</div><div class="line">	</div><div class="line"># leader：是随机挑选出来的</div><div class="line"># replicas：是负责同步leader的log的备份节点列表</div><div class="line"># isr：是备份节点列表的子集，表示正在进行同步log的工作状态的节点列表</div></pre></td></tr></table></figure>
-<h5 id="启动producer服务，向kafka-cluster-topic的Topic中发送消息"><a href="#启动producer服务，向kafka-cluster-topic的Topic中发送消息" class="headerlink" title="启动producer服务，向kafka_cluster_topic的Topic中发送消息"></a>启动producer服务，向kafka_cluster_topic的Topic中发送消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic kafka_cluster_topic</div><div class="line">this is a message</div><div class="line">my name is birdben</div></pre></td></tr></table></figure>
-<h5 id="启动consumer服务，从kafka-cluster-topic的Topic中接收消息"><a href="#启动consumer服务，从kafka-cluster-topic的Topic中接收消息" class="headerlink" title="启动consumer服务，从kafka_cluster_topic的Topic中接收消息"></a>启动consumer服务，从kafka_cluster_topic的Topic中接收消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafka_cluster_topic --from-beginningthis is a message</div><div class="line">my name is birdben</div></pre></td></tr></table></figure>
-<h5 id="停止leader-1的Kafka服务（10-10-1-94）"><a href="#停止leader-1的Kafka服务（10-10-1-94）" class="headerlink" title="停止leader=1的Kafka服务（10.10.1.94）"></a>停止leader=1的Kafka服务（10.10.1.94）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 停止leader的Kafka服务之后，再次查看Topic kafka_cluster_topic的状态</div><div class="line"># 这时候会发现Leader已经变成0了，而且Isr列表中已经没有1了，说明1的Kafka的备份服务已经停止不工作了</div><div class="line">$ ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafka_cluster_topicTopic:kafka_cluster_topic	PartitionCount:1	ReplicationFactor:3	Configs:	Topic: kafka_cluster_topic	Partition: 0	Leader: 0	Replicas: 1,0,2	Isr: 0,2</div><div class="line">	</div><div class="line"># 但是此时我们仍然可以在0，2两个Kafka节点接收消息</div><div class="line">$ ./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic kafka_cluster_topic</div><div class="line">this is a messagebirdben</div></pre></td></tr></table></figure>
-<p>刚开始接触Kafka，所以只是按照官网的示例简单安装了环境，后续会随着深入使用更新复杂的配置和用法</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://kafka.apache.org/quickstart" target="_blank" rel="external">http://kafka.apache.org/quickstart</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/MQ/">MQ</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（十）Flume整合HDFS（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/23/Flume/Flume学习（十）Flume整合HDFS（二）/" class="article-date">
-  	<time datetime="2016-09-23T06:09:26.000Z" itemprop="datePublished">2016-09-23</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/23/Flume/Flume学习（十）Flume整合HDFS（二）/">Flume学习（十）Flume整合HDFS（二）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一篇介绍了Flume整合HDFS，但是没有对HDFS Sink进行配置上的优化，本篇重点介绍HDFS Sink的相关配置。</p>
-<p>上一篇中我们用Flume采集的日志直接输出到HDFS文件中，但是文件的输出的文件大小</p>
-<h4 id="优化后的flume-collector-hdfs-conf配置文件"><a href="#优化后的flume-collector-hdfs-conf配置文件" class="headerlink" title="优化后的flume_collector_hdfs.conf配置文件"></a>优化后的flume_collector_hdfs.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-hdfs-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 127.0.0.1</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line"></div><div class="line"># 定义拦截器，为消息添加时间戳和Host地址</div><div class="line">agentX.sources.flume-avro-sink.interceptors = i1 i2</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i1.type = timestamp</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.type = host</div><div class="line"># 如果不指定hostHeader，就是用%&#123;host&#125;。但是指定了hostHeader=hostname，就需要使用%&#123;hostname&#125;</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.hostHeader = hostname</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.preserveExisting = true</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.useIP = true</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-hdfs-sink.type = hdfs</div><div class="line">agentX.sinks.flume-hdfs-sink.channel = chX</div><div class="line"></div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/</div><div class="line"># 使用时间作为分割目录</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%Y%m%d/</div><div class="line"></div><div class="line"># HdfsEventSink中，hdfs.fileType默认为SequenceFile，将其改为DataStream就可以按照采集的文件原样输入到hdfs，加一行agentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStream</div><div class="line"># 设置文件格式， 有3种格式可选择：SequenceFile, DataStream or CompressedStream</div><div class="line"># 当使用DataStream时候，文件不会被压缩，不需要设置hdfs.codeC</div><div class="line"># 当使用CompressedStream时候，必须设置一个正确的hdfs.codeC值</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStream</div><div class="line"></div><div class="line"># 写入hdfs的文件名前缀，可以使用flume提供的日期及%&#123;host&#125;表达式。默认值：FlumeData</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-%&#123;hostname&#125;-</div><div class="line"># 写入hdfs的文件名后缀，比如：.lzo .log等。</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.fileSuffix = .log</div><div class="line"></div><div class="line"># 临时文件的文件名前缀，hdfs sink会先往目标目录中写临时文件，再根据相关规则重命名成最终目标文件</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.inUsePrefix</div><div class="line"># 临时文件的文件名后缀。默认值：.tmp</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.inUseSuffix</div><div class="line"></div><div class="line"># 当目前被打开的临时文件在该参数指定的时间（秒）内，没有任何数据写入，则将该临时文件关闭并重命名成目标文件。默认值是0</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.idleTimeout = 0</div><div class="line"># 文件压缩格式，包括：gzip, bzip2, lzo, lzop, snappy</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.codeC = gzip</div><div class="line"># 每个批次刷新到HDFS上的events数量。默认值：100</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.batchSize = 100</div><div class="line"></div><div class="line"># 不想每次Flume将日志写入到HDFS文件中都分成很多个碎小的文件，这里控制HDFS的滚动</div><div class="line"># 注：滚动（roll）指的是，hdfs sink将临时文件重命名成最终目标文件，并新打开一个临时文件来写入数据；</div><div class="line"># 设置间隔多长将临时文件滚动成最终目标文件。单位是秒，默认30秒。</div><div class="line"># 如果设置为0的话表示不根据时间滚动hdfs文件</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 0</div><div class="line"># 当临时文件达到该大小（单位：bytes）时，滚动成目标文件。默认值1024，单位是字节。</div><div class="line"># 如果设置为0的话表示不基于文件大小滚动hdfs文件</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line"># 设置当events数据达到该数量时候，将临时文件滚动成目标文件。默认值是10个。</div><div class="line"># 如果设置为0的话表示不基于事件个数滚动hdfs文件</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div><div class="line"></div><div class="line"># 是否启用时间上的”舍弃”，这里的”舍弃”，类似于”四舍五入”，后面再介绍。如果启用，则会影响除了%t的其他所有时间表达式</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.round = true</div><div class="line"># 时间上进行“舍弃”的值。默认值：1</div><div class="line"># 举例：当时间为2015-10-16 17:38:59时候，hdfs.path依然会被解析为：/flume/events/20151016/17:30/00</div><div class="line"># 因为设置的是舍弃10分钟内的时间，因此，该目录每10分钟新生成一个。</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.roundValue = 10</div><div class="line"># 时间上进行”舍弃”的单位，包含：second,minute,hour。默认值：seconds</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.roundUnit = minute</div><div class="line"></div><div class="line"># 写入HDFS文件块的最小副本数。默认值：HDFS副本数</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.minBlockReplicas</div><div class="line"># 最大允许打开的HDFS文件数，当打开的文件数达到该值，最早打开的文件将会被关闭。默认值：5000</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.maxOpenFiles</div><div class="line"># 执行HDFS操作的超时时间（单位：毫秒）。默认值：10000</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.callTimeout</div><div class="line"># hdfs sink启动的操作HDFS的线程数。默认值：10</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.threadsPoolSize</div><div class="line"># 时区。默认值：Local Time</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.timeZone</div><div class="line"># 是否使用当地时间。默认值：flase</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.useLocalTimeStamp</div><div class="line"># hdfs sink关闭文件的尝试次数。默认值：0</div><div class="line"># 如果设置为1，当一次关闭文件失败后，hdfs sink将不会再次尝试关闭文件，这个未关闭的文件将会一直留在那，并且是打开状态。</div><div class="line"># 设置为0，当一次关闭失败后，hdfs sink会继续尝试下一次关闭，直到成功。</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.closeTries</div><div class="line"># hdfs sink尝试关闭文件的时间间隔，如果设置为0，表示不尝试，相当于于将hdfs.closeTries设置成1。默认值：180（秒）</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.retryInterval</div><div class="line"># 序列化类型。其他还有：avro_event或者是实现了EventSerializer.Builder的类名。默认值：TEXT</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.serializer</div></pre></td></tr></table></figure>
-<p>注意：hdfs.rollInterval，hdfs.rollSize，hdfs.rollCount这3个参数尤为重要，因为这三个参数是控制HDFS文件滚动的，如果想要按照自己的方式做HDFS文件滚动必须三个参数都需要设置，我这里是按照300个Event来做HDFS文件滚动的，如果仅仅设置hdfs.rollCount一个参数是不起作用的，因为其他两个参数按照默认值还是会生效，如果只希望其中某些参数起作用，最好禁用其他的参数。</p>
-<h4 id="在HDFS中查看"><a href="#在HDFS中查看" class="headerlink" title="在HDFS中查看"></a>在HDFS中查看</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ hdfs dfs -ls /flume/events/</div><div class="line">16/09/23 14:43:04 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</div><div class="line">Found 1 items</div><div class="line">drwxr-xr-x   - yunyu supergroup          0 2016-09-23 14:42 /flume/events/20160923</div><div class="line"></div><div class="line">$ hdfs dfs -ls /flume/events/20160923/</div><div class="line">16/09/23 14:43:15 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</div><div class="line">Found 4 items</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 14:42 /flume/events/20160923/events-.1474612925442</div><div class="line">-rw-r--r--   1 yunyu supergroup       5880 2016-09-23 14:42 /flume/events/20160923/events-.1474612925443.tmp</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 14:42 /flume/events/20160923/events-.1474612930367</div><div class="line">-rw-r--r--   1 yunyu supergroup      19193 2016-09-23 14:42 /flume/events/20160923/events-.1474612930368.tmp</div><div class="line"></div><div class="line"># 使用hostname作为前缀，这里的127.0.0.1应该是从/etc/hosts配置文件中读取的</div><div class="line">$ hdfs dfs -ls /flume/events/20160923</div><div class="line">16/09/23 18:01:10 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</div><div class="line">Found 4 items</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624778493</div><div class="line">-rw-r--r--   1 yunyu supergroup      25083 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624778494.tmp</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624788628</div><div class="line">-rw-r--r--   1 yunyu supergroup       5881 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624788629.tmp</div></pre></td></tr></table></figure>
-<h4 id="遇到的问题和解决方法"><a href="#遇到的问题和解决方法" class="headerlink" title="遇到的问题和解决方法"></a>遇到的问题和解决方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">2016-09-23 14:40:16,810 (SinkRunner-PollingRunner-DefaultSinkProcessor) [ERROR - org.apache.flume.SinkRunner$PollingRunner.run(SinkRunner.java:160)] Unable to deliver event. Exception follows.</div><div class="line">org.apache.flume.EventDeliveryException: java.lang.NullPointerException: Expected timestamp in the Flume event headers, but it was null</div><div class="line">	at org.apache.flume.sink.hdfs.HDFSEventSink.process(HDFSEventSink.java:463)</div><div class="line">	at org.apache.flume.sink.DefaultSinkProcessor.process(DefaultSinkProcessor.java:68)</div><div class="line">	at org.apache.flume.SinkRunner$PollingRunner.run(SinkRunner.java:147)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: java.lang.NullPointerException: Expected timestamp in the Flume event headers, but it was null</div><div class="line">	at com.google.common.base.Preconditions.checkNotNull(Preconditions.java:226)</div><div class="line">	at org.apache.flume.formatter.output.BucketPath.replaceShorthand(BucketPath.java:228)</div><div class="line">	at org.apache.flume.formatter.output.BucketPath.escapeString(BucketPath.java:432)</div><div class="line">	at org.apache.flume.sink.hdfs.HDFSEventSink.process(HDFSEventSink.java:380)</div><div class="line">	... 3 more</div></pre></td></tr></table></figure>
-<p>遇到上面的问题是因为写入到HDFS时，使用到了时间戳来区分目录结构，Flume的消息组件Event在接受到之后在Header中没有发现时间戳参数，导致该错误发生，有三种方法可以解决这个错误；</p>
-<ul>
-<li>在Source中设置拦截器，为每条Event头中加入时间戳（效率会慢一些）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors = i1</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i1.type = timestamp</div></pre></td></tr></table></figure>
-<ul>
-<li>设置使用本地的时间戳（如果客户端和flume集群时间不一致数据时间会不准确）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 为sink指定该参数为true</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.useLocalTimeStamp = true</div></pre></td></tr></table></figure>
-<ul>
-<li>在数据源头解决，在日志Event的Head中添加时间戳再再送到Flume（推荐使用）</li>
-</ul>
-<p>在向Source发送Event时，将时间戳参数添加到Event的Header中即可，Header是一个Map，添加时MapKey为timestamp</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://flume.apache.org/FlumeUserGuide.html#hdfs-sink" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html#hdfs-sink</a></li>
-<li><a href="http://lxw1234.com/archives/2015/10/527.htm" target="_blank" rel="external">http://lxw1234.com/archives/2015/10/527.htm</a></li>
-<li><a href="http://blog.sina.com.cn/s/blog_db77b3c60102vrzt.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_db77b3c60102vrzt.html</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>

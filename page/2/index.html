@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 11.11px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,244 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Flume/Flume学习（十一）Flume + HDFS + Hive离线分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/10/Flume/Flume学习（十一）Flume + HDFS + Hive离线分析/" class="article-date">
+  	<time datetime="2016-10-10T08:31:12.000Z" itemprop="datePublished">2016-10-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/10/Flume/Flume学习（十一）Flume + HDFS + Hive离线分析/">Flume学习（十一）Flume + HDFS + Hive离线分析</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，本篇我们将结合Hive在HDFS进行离线的查询分析。具体Hive整合HDFS的环境配置请参考之前的文章。</p>
+<h3 id="Hive中创建表"><a href="#Hive中创建表" class="headerlink" title="Hive中创建表"></a>Hive中创建表</h3><p>下面是具体如何在Hive中基于HDFS文件创建表的</p>
+<h4 id="启动相关服务"><a href="#启动相关服务" class="headerlink" title="启动相关服务"></a>启动相关服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 启动hdfs服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line"></div><div class="line"># 启动yarn服务</div><div class="line">$ ./sbin/start-yarn.sh</div><div class="line"></div><div class="line"># 进入hive安装目录</div><div class="line">$ cd /data/hive-1.2.1</div><div class="line"></div><div class="line"># 启动metastore</div><div class="line">$ ./bin/hive --service metastore &amp;</div><div class="line"></div><div class="line"># 启动hiveserver2</div><div class="line">$ ./bin/hive --service hiveserver2 &amp;</div><div class="line"></div><div class="line"># 启动hive shell</div><div class="line">$ ./bin/hive shell</div><div class="line">hive&gt;</div><div class="line">hive&gt; show databases;</div><div class="line">OK</div><div class="line">default</div><div class="line">Time taken: 1.323 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
+<h4 id="在HDFS中查看日志文件"><a href="#在HDFS中查看日志文件" class="headerlink" title="在HDFS中查看日志文件"></a>在HDFS中查看日志文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 查看HDFS文件存储路径</div><div class="line">$ hdfs dfs -ls /flume/events/</div><div class="line">Found 2 items-rw-r--r--   3 yunyu supergroup       1134 2016-09-19 23:43 /flume/events/events-.1474353822776-rw-r--r--   3 yunyu supergroup        126 2016-09-19 23:44 /flume/events/events-.1474353822777</div><div class="line"></div><div class="line"># 查看HDFS文件内容</div><div class="line">$ hdfs dfs -cat /flume/events/events-.1474353822776</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  543  &#123;&quot;TIME&quot;:&quot;2016-09-06 15:04:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;806&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ll&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div><div class="line">  565  &#123;&quot;TIME&quot;:&quot;2016-09-06 13:10:43&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;783&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ssh yunyu@10.10.1.15&quot;&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用org-apache-hive-hcatalog-data-JsonSerDe解析日志"><a href="#使用org-apache-hive-hcatalog-data-JsonSerDe解析日志" class="headerlink" title="使用org.apache.hive.hcatalog.data.JsonSerDe解析日志"></a>使用org.apache.hive.hcatalog.data.JsonSerDe解析日志</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"># Flume重新写入新的command.log日志到HDFS中</div><div class="line"># 启动hive shell</div><div class="line">$ ./bin/hive shell</div><div class="line"></div><div class="line"># 使用数据库test_hdfs</div><div class="line">hive&gt; use test_hdfs;</div><div class="line"></div><div class="line"># 新建表command_json_table并且使用json解析器提取日志文件中的字段信息</div><div class="line"># ROW FORMAT SERDE：这里使用的是json解析器匹配</div><div class="line"># LOCATION：指定HDFS文件的存储路径</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line"># 这创建还是会报错，查看hive.log日志文件的错误信息，发现是缺少org.apache.hive.hcatalog.data.JsonSerDe类所在的jar包</div><div class="line">Caused by: java.lang.ClassNotFoundException: Class org.apache.hive.hcatalog.data.JsonSerDe not found</div><div class="line"></div><div class="line"># 查了下Hive的官网wiki，发现需要先执行add jar操作，将hive-hcatalog-core.jar添加到classpath（具体的jar包地址根据自己实际的Hive安装路径修改）</div><div class="line">add jar /usr/local/hive/hcatalog/share/hcatalog/hive-hcatalog-core-1.2.1.jar;</div><div class="line"></div><div class="line"># 为了避免每次启动hive shell都重新执行一下add jar操作，我们这里在$&#123;HIVE_HOME&#125;/conf/hive-env.sh启动脚本中添加如下信息</div><div class="line">export HIVE_AUX_JARS_PATH=/usr/local/hive/hcatalog/share/hcatalog</div><div class="line"></div><div class="line"># 重启Hive服务之后，再次创建command_json_table表成功</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line"># 查看command_json_table表中的内容，json字段成功的解析出我们要的字段</div><div class="line">hive&gt; select * from command_json_table;</div><div class="line">OK2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 15:04:43	localhost	806	yunyu	yunyu	ll2016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.152016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.152016-09-06 13:10:43	localhost	783	yunyu	yunyu	ssh yunyu@10.10.1.15Time taken: 0.09 seconds, Fetched: 10 row(s)</div></pre></td></tr></table></figure>
+<h4 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"># 问题一：</div><div class="line">我们使用Flume采集到的日志存储在HDFS上，我测试了200条日志通过Flume写入到HDFS上，但是通过Hive查询出来的日志记录总数却不到200条，我又查看了HDFS上的文件内容，发现日志记录的总数是200条。</div><div class="line"></div><div class="line">首先了解HDFS的特点：</div><div class="line">HDFS中所有文件都是由块BLOCK组成，默认块大小为64MB。在我们的测试中由于数据量小，始终在写入文件的第一个BLOCK。而HDFS与一般的POSIX要求的文件系统不太一样，其文件数据的可见性是这样的：</div><div class="line">- 如果创建了文件，这个文件可以立即可见；</div><div class="line">- 写入文件的数据则不被保证可见了，哪怕是执行了刷新操作(flush/sync)。只有数据量大于1个BLOCK时，第一个BLOCK的数据才会被看到，后续的BLOCK也同样的特性。正在写入的BLOCK始终不会被其他用户看到！</div><div class="line">HDFS中的sync()保证数据持久化到了datanode上，然后可以被其他用户看到。</div><div class="line"></div><div class="line">针对HDFS的特点，可以解释刚才问题中的现象，正在写入无法查看。但是使用Hive统计时Flume还在写入那个BLOCK(数据量小的时候)，那岂不是统计不到信息？</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">每天再按小时切分文件——这样虽然每天文件较多，但是能够保证统计时数据可见！Flume上的配置项为hdfs.rollInterval。</div><div class="line">如果文件数多，那么还可以考虑对以前的每天的小时文件合并为每天一个文件！</div><div class="line"></div><div class="line">所以这里修改flume-hdfs-sink配置，不仅仅使用rollCount超过300来滚动，还添加了rollInterval配置超过5分钟没有数据就滚动。</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div><div class="line"></div><div class="line"># 问题二：</div><div class="line">之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/20160923</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">如果我们使用第二种不用日期分割的方式，在Hive上创建表指定/flume/events路径是没有问题，查询数据也都正常，但是如果使用第一种日期分割的方式，在Hive上创建表就必须指定具体的子目录，而不是/flume/events根目录，这样虽然表能够建成功但是却查询不到任何数据，因为指定的对应HDFS目录不正确，应该指定为/flume/events/20160923。这个问题确实也困扰我很久，最后才发现原来是Hive建表指定的HDFS目录不正确。</div><div class="line"></div><div class="line">指定location为&apos;/flume/events&apos;不好用，Hive中查询command_json_table表中没有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line">指定location为&apos;/flume/events/20160923&apos;好用，Hive中查询command_json_table_20160923表中有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table_20160923(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/20160923&apos;;</div><div class="line"></div><div class="line">建议的解决方式是使用Hive的表分区来做，需要调研Hive的表分区是否支持使用HDFS已经分割好的目录结构（需要调研）</div><div class="line"></div><div class="line"># 问题三：</div><div class="line">Flume收集日志的时候报错</div><div class="line">Caused by: org.apache.flume.ChannelException: Space for commit to queue couldn&apos;t be acquired Sinks are likely not keeping up with sources, or the buffer size is too tight</div><div class="line">        at org.apache.flume.channel.MemoryChannel$MemoryTransaction.doCommit(MemoryChannel.java:126)</div><div class="line">        at org.apache.flume.channel.BasicTransactionSemantics.commit(BasicTransactionSemantics.java:151)</div><div class="line">        at org.apache.flume.channel.ChannelProcessor.processEventBatch(ChannelProcessor.java:192)</div><div class="line">        ... 28 more</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">根据网络上的方法，发现问题的原因可能是Flume分配的JVM内存太小，或者channel内存队列的容量太小</div><div class="line"></div><div class="line">修改channel内存队列大小</div><div class="line">agent.channels.memoryChanne3.keep-alive = 60</div><div class="line">agent.channels.memoryChanne3.capacity = 1000000</div><div class="line"></div><div class="line">修改java最大内存大小</div><div class="line">vi bin/flume-ng</div><div class="line">JAVA_OPTS=&quot;-Xmx2048m&quot;</div><div class="line"></div><div class="line">修改之后重启所有flume程序，包括客户端和服务器端，问题暂时没有再出现了</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.aboutyun.com/thread-11252-1-1.html" target="_blank" rel="external">http://www.aboutyun.com/thread-11252-1-1.html</a></li>
+<li><a href="http://blog.csdn.net/hijk139/article/details/8465094" target="_blank" rel="external">http://blog.csdn.net/hijk139/article/details/8465094</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Kafka/Kafka学习（一）Kafka环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/09/Kafka/Kafka学习（一）Kafka环境搭建/" class="article-date">
+  	<time datetime="2016-10-09T02:57:43.000Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Kafka/Kafka学习（一）Kafka环境搭建/">Kafka学习（一）Kafka环境搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Kafka安装"><a href="#Kafka安装" class="headerlink" title="Kafka安装"></a>Kafka安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ wget https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz</div><div class="line">$ tar -xzf kafka_2.11-0.10.0.0.tgz</div><div class="line">$ mv kafka_2.11-0.10.0.0 kafka_2.11</div><div class="line">$ cd kafka_2.11</div></pre></td></tr></table></figure>
+<h3 id="启动Kafka单节点模式"><a href="#启动Kafka单节点模式" class="headerlink" title="启动Kafka单节点模式"></a>启动Kafka单节点模式</h3><p>在启动Kafka之前需要先启动Zookeeper，因为Kafka集群是依赖于Zookeeper服务的。如果没有外置的Zookeeper集群服务可以使用Kafka内置的Zookeeper实例</p>
+<h5 id="启动Kafka内置的Zookeeper"><a href="#启动Kafka内置的Zookeeper" class="headerlink" title="启动Kafka内置的Zookeeper"></a>启动Kafka内置的Zookeeper</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ./bin/zookeeper-server-start.sh config/zookeeper.properties</div><div class="line">[2013-04-22 15:01:37,495] INFO Reading configuration from: config/zookeeper.properties (org.apache.zookeeper.server.quorum.QuorumPeerConfig)</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>这里我们使用我们自己的Zookeeper集群，所以直接启动我们搭建好的Zookeeper集群</p>
+<h5 id="启动外置的Zookeeper集群"><a href="#启动外置的Zookeeper集群" class="headerlink" title="启动外置的Zookeeper集群"></a>启动外置的Zookeeper集群</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3三台服务器的Zookeeper服务</div><div class="line">$ ./bin/zkServer.sh startZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgStarting zookeeper ... already running as process 4468.</div><div class="line"></div><div class="line"># 分别查看一下Zookeeper服务的状态</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: leader</div></pre></td></tr></table></figure>
+<h5 id="修改server-properties配置文件"><a href="#修改server-properties配置文件" class="headerlink" title="修改server.properties配置文件"></a>修改server.properties配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># 添加外置的Zookeeper集群配置zookeeper.connect=10.10.1.64:2181,10.10.1.94:2181,10.10.1.95:2181</div></pre></td></tr></table></figure>
+<h5 id="启动Kafka"><a href="#启动Kafka" class="headerlink" title="启动Kafka"></a>启动Kafka</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-server-start.sh config/server.properties</div></pre></td></tr></table></figure>
+<h5 id="创建Topic"><a href="#创建Topic" class="headerlink" title="创建Topic"></a>创建Topic</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 创建Topic test1</div><div class="line">$ ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test1Created topic &quot;test1&quot;.</div><div class="line"></div><div class="line"># 查看我们所有的Topic，可以看到test1</div><div class="line">$ ./bin/kafka-topics.sh --list --zookeeper localhost:2181__consumer_offsetsconnect-testkafka_testmy-replicated-topicstreams-file-inputtest1</div><div class="line"></div><div class="line"># 通过ZK的客户端连接到Zookeeper服务，localhost可以替换成Zookeeper集群的任意节点（10.10.1.64，10.10.1.94，10.10.1.95），当前localhost是10.10.1.64机器</div><div class="line">$ ./bin/zkCli.sh -server localhost:2181</div><div class="line"></div><div class="line"># 可以在Zookeeper中查看到新创建的Topic test1</div><div class="line">[zk: localhost:2181(CONNECTED) 5] ls /brokers/topics[kafka_test, test1, streams-file-input, __consumer_offsets, connect-test, my-replicated-topic]</div></pre></td></tr></table></figure>
+<h5 id="启动producer服务，向test1的Topic中发送消息"><a href="#启动producer服务，向test1的Topic中发送消息" class="headerlink" title="启动producer服务，向test1的Topic中发送消息"></a>启动producer服务，向test1的Topic中发送消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test1</div><div class="line">this is a message</div><div class="line">this is another message</div><div class="line">still a message</div></pre></td></tr></table></figure>
+<h5 id="启动consumer服务，从test1的Topic中接收消息"><a href="#启动consumer服务，从test1的Topic中接收消息" class="headerlink" title="启动consumer服务，从test1的Topic中接收消息"></a>启动consumer服务，从test1的Topic中接收消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test1 --from-beginningthis is a messagethis is another messagestill a message</div></pre></td></tr></table></figure>
+<h3 id="启动Kafka集群模式"><a href="#启动Kafka集群模式" class="headerlink" title="启动Kafka集群模式"></a>启动Kafka集群模式</h3><p>以上是Kafka单节点模式启动，集群模式启动只需要启动多个Kafka broker，我们这里部署了三个Kafka<br>broker，分别在10.10.1.64，10.10.1.94，10.10.1.95三台机器上</p>
+<h5 id="修改server-properties配置文件-1"><a href="#修改server-properties配置文件-1" class="headerlink" title="修改server.properties配置文件"></a>修改server.properties配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 分别在10.10.1.64，10.10.1.94，10.10.1.95三台机器上的配置文件设置broker.id为0，1，2</div><div class="line"># broker.id是用来唯一标识Kafka集群节点的</div><div class="line">broker.id=1</div></pre></td></tr></table></figure>
+<h5 id="分别启动三台机器的Kafka服务"><a href="#分别启动三台机器的Kafka服务" class="headerlink" title="分别启动三台机器的Kafka服务"></a>分别启动三台机器的Kafka服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-server-start.sh config/server.properties &amp;</div></pre></td></tr></table></figure>
+<h5 id="创建Topic-1"><a href="#创建Topic-1" class="headerlink" title="创建Topic"></a>创建Topic</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 创建新的Topic kafka_cluster_topic</div><div class="line">$ ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic kafka_cluster_topic</div><div class="line"></div><div class="line"># 查看Topic kafka_cluster_topic的状态，发现Leader是1（broker.id=1）,有三个备份分别是0，1，2</div><div class="line">$ ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafka_cluster_topicTopic:kafka_cluster_topic	PartitionCount:1	ReplicationFactor:3	Configs:	Topic: kafka_cluster_topic	Partition: 0	Leader: 1	Replicas: 1,0,2	Isr: 1,0,2</div><div class="line">	</div><div class="line"># 再次查看原来的Topic test1，发现Leader是0（broker.id=0）,因为我们之前单节点是在broker.id=0这台服务器（10.10.1.64）上运行的，因为当时只有这一个节点，所以leader一定是0</div><div class="line">$ ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test1Topic:test1	PartitionCount:1	ReplicationFactor:1	Configs:	Topic: test1	Partition: 0	Leader: 0	Replicas: 0	Isr: 0</div><div class="line">	</div><div class="line"># leader：是随机挑选出来的</div><div class="line"># replicas：是负责同步leader的log的备份节点列表</div><div class="line"># isr：是备份节点列表的子集，表示正在进行同步log的工作状态的节点列表</div></pre></td></tr></table></figure>
+<h5 id="启动producer服务，向kafka-cluster-topic的Topic中发送消息"><a href="#启动producer服务，向kafka-cluster-topic的Topic中发送消息" class="headerlink" title="启动producer服务，向kafka_cluster_topic的Topic中发送消息"></a>启动producer服务，向kafka_cluster_topic的Topic中发送消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic kafka_cluster_topic</div><div class="line">this is a message</div><div class="line">my name is birdben</div></pre></td></tr></table></figure>
+<h5 id="启动consumer服务，从kafka-cluster-topic的Topic中接收消息"><a href="#启动consumer服务，从kafka-cluster-topic的Topic中接收消息" class="headerlink" title="启动consumer服务，从kafka_cluster_topic的Topic中接收消息"></a>启动consumer服务，从kafka_cluster_topic的Topic中接收消息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafka_cluster_topic --from-beginningthis is a message</div><div class="line">my name is birdben</div></pre></td></tr></table></figure>
+<h5 id="停止leader-1的Kafka服务（10-10-1-94）"><a href="#停止leader-1的Kafka服务（10-10-1-94）" class="headerlink" title="停止leader=1的Kafka服务（10.10.1.94）"></a>停止leader=1的Kafka服务（10.10.1.94）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 停止leader的Kafka服务之后，再次查看Topic kafka_cluster_topic的状态</div><div class="line"># 这时候会发现Leader已经变成0了，而且Isr列表中已经没有1了，说明1的Kafka的备份服务已经停止不工作了</div><div class="line">$ ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafka_cluster_topicTopic:kafka_cluster_topic	PartitionCount:1	ReplicationFactor:3	Configs:	Topic: kafka_cluster_topic	Partition: 0	Leader: 0	Replicas: 1,0,2	Isr: 0,2</div><div class="line">	</div><div class="line"># 但是此时我们仍然可以在0，2两个Kafka节点接收消息</div><div class="line">$ ./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic kafka_cluster_topic</div><div class="line">this is a messagebirdben</div></pre></td></tr></table></figure>
+<p>刚开始接触Kafka，所以只是按照官网的示例简单安装了环境，后续会随着深入使用更新复杂的配置和用法</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://kafka.apache.org/quickstart" target="_blank" rel="external">http://kafka.apache.org/quickstart</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/MQ/">MQ</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（十）Flume整合HDFS（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/23/Flume/Flume学习（十）Flume整合HDFS（二）/" class="article-date">
+  	<time datetime="2016-09-23T06:09:26.000Z" itemprop="datePublished">2016-09-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/23/Flume/Flume学习（十）Flume整合HDFS（二）/">Flume学习（十）Flume整合HDFS（二）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一篇介绍了Flume整合HDFS，但是没有对HDFS Sink进行配置上的优化，本篇重点介绍HDFS Sink的相关配置。</p>
+<p>上一篇中我们用Flume采集的日志直接输出到HDFS文件中，但是文件的输出的文件大小</p>
+<h4 id="优化后的flume-collector-hdfs-conf配置文件"><a href="#优化后的flume-collector-hdfs-conf配置文件" class="headerlink" title="优化后的flume_collector_hdfs.conf配置文件"></a>优化后的flume_collector_hdfs.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-hdfs-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 127.0.0.1</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line"></div><div class="line"># 定义拦截器，为消息添加时间戳和Host地址</div><div class="line">agentX.sources.flume-avro-sink.interceptors = i1 i2</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i1.type = timestamp</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.type = host</div><div class="line"># 如果不指定hostHeader，就是用%&#123;host&#125;。但是指定了hostHeader=hostname，就需要使用%&#123;hostname&#125;</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.hostHeader = hostname</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.preserveExisting = true</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.useIP = true</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-hdfs-sink.type = hdfs</div><div class="line">agentX.sinks.flume-hdfs-sink.channel = chX</div><div class="line"></div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/</div><div class="line"># 使用时间作为分割目录</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%Y%m%d/</div><div class="line"></div><div class="line"># HdfsEventSink中，hdfs.fileType默认为SequenceFile，将其改为DataStream就可以按照采集的文件原样输入到hdfs，加一行agentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStream</div><div class="line"># 设置文件格式， 有3种格式可选择：SequenceFile, DataStream or CompressedStream</div><div class="line"># 当使用DataStream时候，文件不会被压缩，不需要设置hdfs.codeC</div><div class="line"># 当使用CompressedStream时候，必须设置一个正确的hdfs.codeC值</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStream</div><div class="line"></div><div class="line"># 写入hdfs的文件名前缀，可以使用flume提供的日期及%&#123;host&#125;表达式。默认值：FlumeData</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-%&#123;hostname&#125;-</div><div class="line"># 写入hdfs的文件名后缀，比如：.lzo .log等。</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.fileSuffix = .log</div><div class="line"></div><div class="line"># 临时文件的文件名前缀，hdfs sink会先往目标目录中写临时文件，再根据相关规则重命名成最终目标文件</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.inUsePrefix</div><div class="line"># 临时文件的文件名后缀。默认值：.tmp</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.inUseSuffix</div><div class="line"></div><div class="line"># 当目前被打开的临时文件在该参数指定的时间（秒）内，没有任何数据写入，则将该临时文件关闭并重命名成目标文件。默认值是0</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.idleTimeout = 0</div><div class="line"># 文件压缩格式，包括：gzip, bzip2, lzo, lzop, snappy</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.codeC = gzip</div><div class="line"># 每个批次刷新到HDFS上的events数量。默认值：100</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.batchSize = 100</div><div class="line"></div><div class="line"># 不想每次Flume将日志写入到HDFS文件中都分成很多个碎小的文件，这里控制HDFS的滚动</div><div class="line"># 注：滚动（roll）指的是，hdfs sink将临时文件重命名成最终目标文件，并新打开一个临时文件来写入数据；</div><div class="line"># 设置间隔多长将临时文件滚动成最终目标文件。单位是秒，默认30秒。</div><div class="line"># 如果设置为0的话表示不根据时间滚动hdfs文件</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 0</div><div class="line"># 当临时文件达到该大小（单位：bytes）时，滚动成目标文件。默认值1024，单位是字节。</div><div class="line"># 如果设置为0的话表示不基于文件大小滚动hdfs文件</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line"># 设置当events数据达到该数量时候，将临时文件滚动成目标文件。默认值是10个。</div><div class="line"># 如果设置为0的话表示不基于事件个数滚动hdfs文件</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div><div class="line"></div><div class="line"># 是否启用时间上的”舍弃”，这里的”舍弃”，类似于”四舍五入”，后面再介绍。如果启用，则会影响除了%t的其他所有时间表达式</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.round = true</div><div class="line"># 时间上进行“舍弃”的值。默认值：1</div><div class="line"># 举例：当时间为2015-10-16 17:38:59时候，hdfs.path依然会被解析为：/flume/events/20151016/17:30/00</div><div class="line"># 因为设置的是舍弃10分钟内的时间，因此，该目录每10分钟新生成一个。</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.roundValue = 10</div><div class="line"># 时间上进行”舍弃”的单位，包含：second,minute,hour。默认值：seconds</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.roundUnit = minute</div><div class="line"></div><div class="line"># 写入HDFS文件块的最小副本数。默认值：HDFS副本数</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.minBlockReplicas</div><div class="line"># 最大允许打开的HDFS文件数，当打开的文件数达到该值，最早打开的文件将会被关闭。默认值：5000</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.maxOpenFiles</div><div class="line"># 执行HDFS操作的超时时间（单位：毫秒）。默认值：10000</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.callTimeout</div><div class="line"># hdfs sink启动的操作HDFS的线程数。默认值：10</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.threadsPoolSize</div><div class="line"># 时区。默认值：Local Time</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.timeZone</div><div class="line"># 是否使用当地时间。默认值：flase</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.useLocalTimeStamp</div><div class="line"># hdfs sink关闭文件的尝试次数。默认值：0</div><div class="line"># 如果设置为1，当一次关闭文件失败后，hdfs sink将不会再次尝试关闭文件，这个未关闭的文件将会一直留在那，并且是打开状态。</div><div class="line"># 设置为0，当一次关闭失败后，hdfs sink会继续尝试下一次关闭，直到成功。</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.closeTries</div><div class="line"># hdfs sink尝试关闭文件的时间间隔，如果设置为0，表示不尝试，相当于于将hdfs.closeTries设置成1。默认值：180（秒）</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.retryInterval</div><div class="line"># 序列化类型。其他还有：avro_event或者是实现了EventSerializer.Builder的类名。默认值：TEXT</div><div class="line"># agentX.sinks.flume-hdfs-sink.hdfs.serializer</div></pre></td></tr></table></figure>
+<p>注意：hdfs.rollInterval，hdfs.rollSize，hdfs.rollCount这3个参数尤为重要，因为这三个参数是控制HDFS文件滚动的，如果想要按照自己的方式做HDFS文件滚动必须三个参数都需要设置，我这里是按照300个Event来做HDFS文件滚动的，如果仅仅设置hdfs.rollCount一个参数是不起作用的，因为其他两个参数按照默认值还是会生效，如果只希望其中某些参数起作用，最好禁用其他的参数。</p>
+<h4 id="在HDFS中查看"><a href="#在HDFS中查看" class="headerlink" title="在HDFS中查看"></a>在HDFS中查看</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ hdfs dfs -ls /flume/events/</div><div class="line">16/09/23 14:43:04 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</div><div class="line">Found 1 items</div><div class="line">drwxr-xr-x   - yunyu supergroup          0 2016-09-23 14:42 /flume/events/20160923</div><div class="line"></div><div class="line">$ hdfs dfs -ls /flume/events/20160923/</div><div class="line">16/09/23 14:43:15 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</div><div class="line">Found 4 items</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 14:42 /flume/events/20160923/events-.1474612925442</div><div class="line">-rw-r--r--   1 yunyu supergroup       5880 2016-09-23 14:42 /flume/events/20160923/events-.1474612925443.tmp</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 14:42 /flume/events/20160923/events-.1474612930367</div><div class="line">-rw-r--r--   1 yunyu supergroup      19193 2016-09-23 14:42 /flume/events/20160923/events-.1474612930368.tmp</div><div class="line"></div><div class="line"># 使用hostname作为前缀，这里的127.0.0.1应该是从/etc/hosts配置文件中读取的</div><div class="line">$ hdfs dfs -ls /flume/events/20160923</div><div class="line">16/09/23 18:01:10 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</div><div class="line">Found 4 items</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624778493</div><div class="line">-rw-r--r--   1 yunyu supergroup      25083 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624778494.tmp</div><div class="line">-rw-r--r--   1 yunyu supergroup      92900 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624788628</div><div class="line">-rw-r--r--   1 yunyu supergroup       5881 2016-09-23 18:00 /flume/events/20160923/events-127.0.0.1-.1474624788629.tmp</div></pre></td></tr></table></figure>
+<h4 id="遇到的问题和解决方法"><a href="#遇到的问题和解决方法" class="headerlink" title="遇到的问题和解决方法"></a>遇到的问题和解决方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">2016-09-23 14:40:16,810 (SinkRunner-PollingRunner-DefaultSinkProcessor) [ERROR - org.apache.flume.SinkRunner$PollingRunner.run(SinkRunner.java:160)] Unable to deliver event. Exception follows.</div><div class="line">org.apache.flume.EventDeliveryException: java.lang.NullPointerException: Expected timestamp in the Flume event headers, but it was null</div><div class="line">	at org.apache.flume.sink.hdfs.HDFSEventSink.process(HDFSEventSink.java:463)</div><div class="line">	at org.apache.flume.sink.DefaultSinkProcessor.process(DefaultSinkProcessor.java:68)</div><div class="line">	at org.apache.flume.SinkRunner$PollingRunner.run(SinkRunner.java:147)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: java.lang.NullPointerException: Expected timestamp in the Flume event headers, but it was null</div><div class="line">	at com.google.common.base.Preconditions.checkNotNull(Preconditions.java:226)</div><div class="line">	at org.apache.flume.formatter.output.BucketPath.replaceShorthand(BucketPath.java:228)</div><div class="line">	at org.apache.flume.formatter.output.BucketPath.escapeString(BucketPath.java:432)</div><div class="line">	at org.apache.flume.sink.hdfs.HDFSEventSink.process(HDFSEventSink.java:380)</div><div class="line">	... 3 more</div></pre></td></tr></table></figure>
+<p>遇到上面的问题是因为写入到HDFS时，使用到了时间戳来区分目录结构，Flume的消息组件Event在接受到之后在Header中没有发现时间戳参数，导致该错误发生，有三种方法可以解决这个错误；</p>
+<ul>
+<li>在Source中设置拦截器，为每条Event头中加入时间戳（效率会慢一些）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors = i1</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i1.type = timestamp</div></pre></td></tr></table></figure>
+<ul>
+<li>设置使用本地的时间戳（如果客户端和flume集群时间不一致数据时间会不准确）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 为sink指定该参数为true</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.useLocalTimeStamp = true</div></pre></td></tr></table></figure>
+<ul>
+<li>在数据源头解决，在日志Event的Head中添加时间戳再再送到Flume（推荐使用）</li>
+</ul>
+<p>在向Source发送Event时，将时间戳参数添加到Event的Header中即可，Header是一个Map，添加时MapKey为timestamp</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://flume.apache.org/FlumeUserGuide.html#hdfs-sink" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html#hdfs-sink</a></li>
+<li><a href="http://lxw1234.com/archives/2015/10/527.htm" target="_blank" rel="external">http://lxw1234.com/archives/2015/10/527.htm</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_db77b3c60102vrzt.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_db77b3c60102vrzt.html</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Flume/Flume学习（九）Flume整合HDFS（一）" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -957,247 +1195,9 @@ $ ./bin/hdfs dfs -cat /hive/warehouse/test_hive.db/test_person/test_person.txt
 
 
   
-    <article id="post-Docker/Docker实战（十九）Docker环境安装问题" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/03/Docker/Docker实战（十九）Docker环境安装问题/" class="article-date">
-  	<time datetime="2016-09-03T02:50:49.000Z" itemprop="datePublished">2016-09-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/03/Docker/Docker实战（十九）Docker环境安装问题/">Docker实战（十九）Docker环境安装问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="环境描述"><a href="#环境描述" class="headerlink" title="环境描述"></a>环境描述</h2><h3 id="本地环境"><a href="#本地环境" class="headerlink" title="本地环境"></a>本地环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Ubuntu14.04</div><div class="line"></div><div class="line">Client version: 1.6.2Client API version: 1.18Go version (client): go1.2.1Git commit (client): 7c8fca2OS/Arch (client): linux/amd64</div><div class="line">Server version: 1.6.2Server API version: 1.18Go version (server): go1.2.1Git commit (server): 7c8fca2OS/Arch (server): linux/amd64</div></pre></td></tr></table></figure>
-<h3 id="10-10-1-15测试环境"><a href="#10-10-1-15测试环境" class="headerlink" title="10.10.1.15测试环境"></a>10.10.1.15测试环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Ubuntu15.04</div><div class="line"></div><div class="line">Client:</div><div class="line"> Version:      1.10.3</div><div class="line"> API version:  1.21</div><div class="line"> Go version:   go1.5.3</div><div class="line"> Git commit:   20f81dd</div><div class="line"> Built:        Thu Mar 10 21:49:11 2016</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> Version:      1.9.1</div><div class="line"> API version:  1.21</div><div class="line"> Go version:   go1.4.2</div><div class="line"> Git commit:   a34a1d5</div><div class="line"> Built:        Fri Nov 20 13:16:54 UTC 2015</div><div class="line"> OS/Arch:      linux/amd64</div></pre></td></tr></table></figure>
-<h2 id="Docker的安装和使用"><a href="#Docker的安装和使用" class="headerlink" title="Docker的安装和使用"></a>Docker的安装和使用</h2><h3 id="本地环境安装"><a href="#本地环境安装" class="headerlink" title="本地环境安装"></a>本地环境安装</h3><p>直接使用apt方式安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ apt-get update</div><div class="line">$ apt-get install docker</div><div class="line">$ apt-get install docker.io</div></pre></td></tr></table></figure>
-<h3 id="10-10-1-15测试环境-1"><a href="#10-10-1-15测试环境-1" class="headerlink" title="10.10.1.15测试环境"></a>10.10.1.15测试环境</h3><p>使用apt方式安装报错E: Sub-process /usr/bin/dpkg returned an error code (1)，之后尝试了一些解决方式，但都没有解决成功，最后决定将docker卸载掉重新按照官网的步骤安装成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"># 安装前先查看Linux内核版本，内核版本需要高于3.10</div><div class="line">$ uname -r</div><div class="line">3.19.0-68-generic</div><div class="line"></div><div class="line"># Update your apt sources</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install apt-transport-https ca-certificates</div><div class="line">$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</div><div class="line"></div><div class="line"># 创建并保存docker.list更新源文件</div><div class="line">$ /etc/apt/sources.list.d/docker.list</div><div class="line"></div><div class="line"># 根据自己的系统版本选择不同的数据源</div><div class="line">- On Ubuntu Precise 12.04 (LTS)</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-precise main</div><div class="line">- On Ubuntu Trusty 14.04 (LTS)</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-trusty main</div><div class="line">- Ubuntu Wily 15.10</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-wily main</div><div class="line">- Ubuntu Xenial 16.04 (LTS)</div><div class="line">deb https://apt.dockerproject.org/repo ubuntu-xenial main</div><div class="line"></div><div class="line"># 再次更新源</div><div class="line">$ sudo apt-get update</div><div class="line"># 删除旧的资源文件</div><div class="line">$ sudo apt-get purge lxc-docker</div><div class="line"># 验证apt的更新源是从正确的仓库获取</div><div class="line">$ apt-cache policy docker-engine</div><div class="line"></div><div class="line"># 安装Ubuntu必备的安装包linux-image-extra-*</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual</div><div class="line"></div><div class="line"># 安装Docker</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install docker-engine</div><div class="line"># 启动Docker服务</div><div class="line">$ sudo service docker start</div><div class="line"># 检查Docker版本</div><div class="line">$ sudo docker version</div></pre></td></tr></table></figure>
-<h3 id="遇到的问题和解决方法"><a href="#遇到的问题和解决方法" class="headerlink" title="遇到的问题和解决方法"></a>遇到的问题和解决方法</h3><h4 id="Depends-libdevmapper1-02-1-gt-2-1-02-99-but-2-1-02-90-2ubuntu1-is-to-be-installed"><a href="#Depends-libdevmapper1-02-1-gt-2-1-02-99-but-2-1-02-90-2ubuntu1-is-to-be-installed" class="headerlink" title="Depends: libdevmapper1.02.1 (&gt;= 2:1.02.99) but 2:1.02.90-2ubuntu1 is to be installed"></a>Depends: libdevmapper1.02.1 (&gt;= 2:1.02.99) but 2:1.02.90-2ubuntu1 is to be installed</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">$ sudo apt install docker-engine</div><div class="line">Reading package lists... Done</div><div class="line">Building dependency tree</div><div class="line">Reading state information... Done</div><div class="line">Some packages could not be installed. This may mean that you have</div><div class="line">requested an impossible situation or if you are using the unstable</div><div class="line">distribution that some required packages have not yet been created</div><div class="line">or been moved out of Incoming.</div><div class="line">The following information may help to resolve the situation:</div><div class="line"></div><div class="line">The following packages have unmet dependencies:</div><div class="line"> docker-engine : Depends: libdevmapper1.02.1 (&gt;= 2:1.02.99) but 2:1.02.90-2ubuntu1 is to be installed</div><div class="line">E: Unable to correct problems, you have held broken packages.</div><div class="line"></div><div class="line"># 遇到这个问题是因为更新源不正确的原因，因为我们用的Ubuntu15.04版本，所以上面官网提供的数据源中并不包含我们的版本</div><div class="line">$ sudo lsb_release -a</div><div class="line">No LSB modules are available.</div><div class="line">Distributor ID:	Ubuntu</div><div class="line">Description:	Ubuntu 15.04</div><div class="line">Release:	15.04</div><div class="line">Codename:	vivid</div><div class="line"></div><div class="line"># 这里在github上找到了解决方法，依次执行下面的命令可以修复正确的数据源</div><div class="line">$ sudo sed -i &apos;/wily/d&apos; /etc/apt/sources.list.d/docker.list</div><div class="line">$ sudo sed -i &apos;/trusty/d&apos; /etc/apt/sources.list.d/docker.list</div><div class="line">$ sudo sed -i &apos;/precise/d&apos; /etc/apt/sources.list.d/docker.list</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install docker-engine</div></pre></td></tr></table></figure>
-<h4 id="Error-response-from-daemon-client-is-newer-than-server-client-API-version-1-22-server-API-version-1-21"><a href="#Error-response-from-daemon-client-is-newer-than-server-client-API-version-1-22-server-API-version-1-21" class="headerlink" title="Error response from daemon: client is newer than server (client API version: 1.22, server API version: 1.21)"></a>Error response from daemon: client is newer than server (client API version: 1.22, server API version: 1.21)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ docker version</div><div class="line">Client:</div><div class="line"> Version:      1.10.3</div><div class="line"> API version:  1.22</div><div class="line"> Go version:   go1.5.3</div><div class="line"> Git commit:   20f81dd</div><div class="line"> Built:        Thu Mar 10 21:49:11 2016</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line">Error response from daemon: client is newer than server (client API version: 1.22, server API version: 1.21)</div><div class="line"></div><div class="line"># 遇到这个问题的原因是Docker API version的版本号不一致导致的，这个我们需要添加一个环境变量来指定Docker API version的版本号</div><div class="line"></div><div class="line"># 这里建议更改/etc/profile文件，而不是临时更改环境变量，修改/etc/profile之后需要source /etc/profile，如果要在sudo也生效，需要切换到root账号也source /etc/profile</div><div class="line">$ export DOCKER_API_VERSION=1.21</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://docs.docker.com.s3-website-us-east-1.amazonaws.com/engine/installation/linux/ubuntulinux/" target="_blank" rel="external">http://docs.docker.com.s3-website-us-east-1.amazonaws.com/engine/installation/linux/ubuntulinux/</a></li>
-<li><a href="http://askubuntu.com/questions/686698/docker-installation-error-libdevmapper1-02-1-21-02-99" target="_blank" rel="external">http://askubuntu.com/questions/686698/docker-installation-error-libdevmapper1-02-1-21-02-99</a></li>
-<li><a href="https://github.com/docker/machine/issues/2147">https://github.com/docker/machine/issues/2147</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Zookeeper/Zookeeper学习（二）Zookeeper集群环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/02/Zookeeper/Zookeeper学习（二）Zookeeper集群环境搭建/" class="article-date">
-  	<time datetime="2016-09-02T15:54:31.000Z" itemprop="datePublished">2016-09-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/02/Zookeeper/Zookeeper学习（二）Zookeeper集群环境搭建/">Zookeeper学习（二）Zookeeper集群环境搭建</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="ZooKeeper-Cluster模式"><a href="#ZooKeeper-Cluster模式" class="headerlink" title="ZooKeeper Cluster模式"></a>ZooKeeper Cluster模式</h3><h4 id="etc-hosts文件配置"><a href="#etc-hosts文件配置" class="headerlink" title="/etc/hosts文件配置"></a>/etc/hosts文件配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">172.17.0.51     zoo1</div><div class="line">172.17.0.52     zoo2</div><div class="line">172.17.0.53     zoo3</div></pre></td></tr></table></figure>
-<h4 id="var-zookeeper-myid文件配置"><a href="#var-zookeeper-myid文件配置" class="headerlink" title="/var/zookeeper/myid文件配置"></a>/var/zookeeper/myid文件配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># zoo1的myid配置文件</div><div class="line">1</div><div class="line"></div><div class="line"># zoo2的myid配置文件</div><div class="line">2</div><div class="line"></div><div class="line"># zoo3的myid配置文件</div><div class="line">3</div></pre></td></tr></table></figure>
-<h4 id="Zookeeper配置文件"><a href="#Zookeeper配置文件" class="headerlink" title="Zookeeper配置文件"></a>Zookeeper配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># the basic time unit in milliseconds used by ZooKeeper. It is used to do heartbeats and the minimum session timeout will be twice the tickTime.</div><div class="line"># tickTime 这个时间是作为 Zookeeper 服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个tickTime时间就会发送一个心跳。</div><div class="line">tickTime=2000</div><div class="line"></div><div class="line"># the location to store the in-memory database snapshots and, unless specified otherwise, the transaction log of updates to the database.</div><div class="line"># dataDir 顾名思义就是Zookeeper保存数据的目录,默认情况下Zookeeper将写数据的日志文件也保存在这个目录里。</div><div class="line">dataDir=/var/lib/zookeeper</div><div class="line"></div><div class="line"># the port to listen for client connections</div><div class="line"># clientPort 这个端口就是客户端（应用程序）连接Zookeeper服务器的端口，Zookeeper会监听这个端口接受客户端的访问请求。</div><div class="line">clientPort=2181</div><div class="line"></div><div class="line"># initLimit 这个配置项是用来配置Zookeeper接受客户端（这里所说的客户端不是用户连接Zookeeper 服务器的客户端，而是Zookeeper服务器集群中连接到Leader的Follower服务器）初始化连接时最长能忍受多少个心跳时间间隔数。当已经超过10个心跳的时间（也就是tickTime）长度后Zookeeper服务器还没有收到客户端的返回信息，那么表明这个客户端连接失败。总的时间长度就是 10*2000=20 秒。</div><div class="line">initLimit=10</div><div class="line"></div><div class="line"># syncLimit 这个配置项标识Leader与Follower之间发送消息，请求和应答时间长度，最长不能超过多少个tickTime的时间长度，总的时间长度就是 5*2000=10 秒。</div><div class="line">syncLimit=5</div><div class="line"></div><div class="line"># 第一个port是从机器（follower）连接到主机器（leader）的端口号，第二个port是进行leadership选举的端口号。</div><div class="line"># 值得重点注意的一点是，所有三个机器都应该打开端口 2181、2888 和 3888。在本例中，端口 2181 由 ZooKeeper 客户端使用，用于连接到 ZooKeeper 服务器；端口 2888 由对等 ZooKeeper 服务器使用，用于互相通信；而端口 3888 用于领导者选举。您可以选择自己喜欢的任何端口。通常建议在所有 ZooKeeper 服务器上使用相同的端口。</div><div class="line">server.1=zoo1:2888:3888</div><div class="line">server.2=zoo2:2888:3888</div><div class="line">server.3=zoo3:2888:3888</div></pre></td></tr></table></figure>
-<h4 id="启动Zookeeper服务端"><a href="#启动Zookeeper服务端" class="headerlink" title="启动Zookeeper服务端"></a>启动Zookeeper服务端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3的Zookeeper服务</div><div class="line">$ ./bin/zkServer.sh start</div><div class="line"></div><div class="line">ZooKeeper JMX enabled by defaultUsing config: /software/zookeeper-3.4.8/bin/../conf/zoo.cfgStarting zookeeper ... STARTED</div><div class="line"></div><div class="line"># 检查Hadoop1的Zookeeper服务状态（这里Hadoop1节点的zk是leader，Hadoop2和Hadoop3节点的zk是follower）</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: leader</div><div class="line"></div><div class="line"># 检查Hadoop2的Zookeeper服务状态</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: follower</div><div class="line"></div><div class="line"># 检查Hadoop3的Zookeeper服务状态</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: follower</div></pre></td></tr></table></figure>
-<h4 id="需要注意的地方"><a href="#需要注意的地方" class="headerlink" title="需要注意的地方"></a>需要注意的地方</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JMX enabled by default</div><div class="line">Using config: /root/zookeeper-3.4.6/bin/../conf/zoo.cfg</div><div class="line">Error contacting service. It is probably not running.</div></pre></td></tr></table></figure>
-<p>确认下面两点，应该就能排查出问题，我就遇到过重启Docker容器IP<br>地址变化，导致/etc/hosts中的IP地址配置不正确</p>
-<ul>
-<li>确认/etc/hosts中是否有各个节点域名解析</li>
-<li>是否/var/zookeeper/myid有重复值</li>
-<li>集群模式只启动一台也会遇到该问题，最好等把其他集群的机器启动好在查看状态</li>
-</ul>
-<h4 id="启动Zookeeper-Client端"><a href="#启动Zookeeper-Client端" class="headerlink" title="启动Zookeeper Client端"></a>启动Zookeeper Client端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"># -server：client端连接的IP和端口号</div><div class="line">$ ./bin/zkCli.sh -server 127.0.0.1:2181Connecting to 127.0.0.1:21812016-09-30 01:51:22,268 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT2016-09-30 01:51:22,271 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=hadoop12016-09-30 01:51:22,271 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.7.0_792016-09-30 01:51:22,272 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation2016-09-30 01:51:22,272 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/data/jdk1.7.0_79/jre2016-09-30 01:51:22,272 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/data/zookeeper-3.4.8/bin/../build/classes:/data/zookeeper-3.4.8/bin/../build/lib/*.jar:/data/zookeeper-3.4.8/bin/../lib/slf4j-log4j12-1.6.1.jar:/data/zookeeper-3.4.8/bin/../lib/slf4j-api-1.6.1.jar:/data/zookeeper-3.4.8/bin/../lib/netty-3.7.0.Final.jar:/data/zookeeper-3.4.8/bin/../lib/log4j-1.2.16.jar:/data/zookeeper-3.4.8/bin/../lib/jline-0.9.94.jar:/data/zookeeper-3.4.8/bin/../zookeeper-3.4.8.jar:/data/zookeeper-3.4.8/bin/../src/java/lib/*.jar:/data/zookeeper-3.4.8/bin/../conf:2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd642016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=3.16.0-77-generic2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=yunyu2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/home/yunyu2016-09-30 01:51:22,273 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/data/zookeeper-3.4.82016-09-30 01:51:22,275 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@71adff7cWelcome to ZooKeeper!2016-09-30 01:51:22,299 [myid:] - INFO  [main-SendThread(127.0.0.1:2181):ClientCnxn$SendThread@1032] - Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)2016-09-30 01:51:22,303 [myid:] - INFO  [main-SendThread(127.0.0.1:2181):ClientCnxn$SendThread@876] - Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating sessionJLine support is enabled2016-09-30 01:51:22,337 [myid:] - INFO  [main-SendThread(127.0.0.1:2181):ClientCnxn$SendThread@1299] - Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x1577a41e9b90000, negotiated timeout = 30000WATCHER::WatchedEvent state:SyncConnected type:None path:null[zk: 127.0.0.1:2181(CONNECTED) 0]</div><div class="line"></div><div class="line"></div><div class="line"># zkShell中输入help会提示出所有的命令参数[zk: 127.0.0.1:2181(CONNECTED) 0] help</div><div class="line">ZooKeeper host:port cmd args</div><div class="line">        get path [watch]</div><div class="line">        ls path [watch]</div><div class="line">        set path data [version]</div><div class="line">        delquota [-n|-b] path</div><div class="line">        quit</div><div class="line">        printwatches on|off</div><div class="line">        create path data acl</div><div class="line">        stat path [watch]</div><div class="line">        listquota path</div><div class="line">        history</div><div class="line">        setAcl path acl</div><div class="line">        getAcl path</div><div class="line">        sync path</div><div class="line">        redo cmdno</div><div class="line">        addauth scheme auth</div><div class="line">        delete path [version]</div><div class="line">        deleteall path</div><div class="line">        setquota -n|-b val path</div><div class="line">        </div><div class="line"># 查看znode节点[zk: 127.0.0.1:2181(CONNECTED) 0] ls</div><div class="line">[zookeeper]</div><div class="line"></div><div class="line"># 创建新的znode节点，关联到&quot;my_data&quot;</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 3] create /zk_test my_dataCreated /zk_test[zk: 127.0.0.1:2181(CONNECTED) 4] ls /</div><div class="line">[zookeeper, zk_test]</div><div class="line"></div><div class="line"># 验证/zk_test节点已经关联到&quot;my_data&quot;</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 5] get /zk_testmy_datacZxid = 0x6ctime = Mon Aug 29 20:42:40 PDT 2016mZxid = 0x6mtime = Mon Aug 29 20:42:40 PDT 2016pZxid = 0x6cversion = 0dataVersion = 0aclVersion = 0ephemeralOwner = 0x0dataLength = 7numChildren = 0</div><div class="line"></div><div class="line"># 修改/zk_test节点的数据关联</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 6] set /zk_test junkcZxid = 0x6ctime = Mon Aug 29 20:42:40 PDT 2016mZxid = 0x7mtime = Mon Aug 29 20:47:08 PDT 2016pZxid = 0x6cversion = 0dataVersion = 1aclVersion = 0ephemeralOwner = 0x0dataLength = 4numChildren = 0</div><div class="line"></div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 7] get /zk_testjunkcZxid = 0x6ctime = Mon Aug 29 20:42:40 PDT 2016mZxid = 0x7mtime = Mon Aug 29 20:47:08 PDT 2016pZxid = 0x6cversion = 0dataVersion = 1aclVersion = 0ephemeralOwner = 0x0dataLength = 4numChildren = 0</div><div class="line"></div><div class="line"># 删除/zk_test节点</div><div class="line">[zk: 127.0.0.1:2181(CONNECTED) 8] delete /zk_test[zk: 127.0.0.1:2181(CONNECTED) 9] ls /[zookeeper]</div></pre></td></tr></table></figure>
-<p>OK，Zookeeper的cluster模式的配置就大功告成了 ^_^</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html" target="_blank" rel="external">http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/data/library/bd-zookeeper/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/data/library/bd-zookeeper/</a></li>
-<li><a href="https://segmentfault.com/a/1190000003994382" target="_blank" rel="external">https://segmentfault.com/a/1190000003994382</a></li>
-<li><a href="http://blog.csdn.net/cruise_h/article/details/19046357" target="_blank" rel="external">http://blog.csdn.net/cruise_h/article/details/19046357</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker/Docker实战（十八）Docker安装Zookeeper集群环境" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/02/Docker/Docker实战（十八）Docker安装Zookeeper集群环境/" class="article-date">
-  	<time datetime="2016-09-02T02:50:49.000Z" itemprop="datePublished">2016-09-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/02/Docker/Docker实战（十八）Docker安装Zookeeper集群环境/">Docker实战（十八）Docker安装Zookeeper集群环境</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/zookeeper_cluster:v1</div><div class="line"># desc : 当前版本安装的zookeeper_cluster</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 zookeeper 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV ZOOKEEPER_HOME /software/zookeeper-3.4.8</div><div class="line">ENV PATH $&#123;ZOOKEEPER_HOME&#125;/bin:$PATH</div><div class="line"></div><div class="line"># 复制 zookeeper-3.4.8 文件到镜像中（zookeeper-3.4.8 文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD zookeeper-3.4.8 /software/zookeeper-3.4.8</div><div class="line"></div><div class="line"># 创建myid文件存储路径</div><div class="line">RUN mkdir -p /var/zookeeper/myid</div><div class="line"></div><div class="line"># 授权ZOOKEEPER_HOME路径给admin用户</div><div class="line">RUN sudo chown -R admin /software/zookeeper-3.4.8</div><div class="line"></div><div class="line"># 容器需要开放Zookeeper 2181, 2888, 3888端口</div><div class="line">EXPOSE 2181</div><div class="line">EXPOSE 2888</div><div class="line">EXPOSE 3888</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/zookeeper_cluster/Dockerfile">https://github.com/birdben/birdDocker/blob/master/zookeeper_cluster/Dockerfile</a></p>
-<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:zookeeper]</div><div class="line">command=/bin/bash -c &quot;exec $&#123;ZOOKEEPER_HOME&#125;/bin/zkServer.sh start-foreground&quot;</div></pre></td></tr></table></figure>
-<h5 id="配置ZOOKEEPER-HOME-conf-zoo-cfg并不在conf目录-需要复制zoo-sample-cfg并改名为zoo-cfg"><a href="#配置ZOOKEEPER-HOME-conf-zoo-cfg并不在conf目录-需要复制zoo-sample-cfg并改名为zoo-cfg" class="headerlink" title="配置ZOOKEEPER_HOME/conf/zoo.cfg并不在conf目录, 需要复制zoo_sample.cfg并改名为zoo.cfg"></a>配置ZOOKEEPER_HOME/conf/zoo.cfg并不在conf目录, 需要复制zoo_sample.cfg并改名为zoo.cfg</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"># The number of milliseconds of each tick</div><div class="line">tickTime=2000</div><div class="line"># The number of ticks that the initial </div><div class="line"># synchronization phase can take</div><div class="line">initLimit=10</div><div class="line"># The number of ticks that can pass between </div><div class="line"># sending a request and getting an acknowledgement</div><div class="line">syncLimit=5</div><div class="line"># the directory where the snapshot is stored.</div><div class="line"># do not use /tmp for storage, /tmp here is just </div><div class="line"># example sakes.</div><div class="line">dataDir=/var/zookeeper</div><div class="line"># the port at which the clients will connect</div><div class="line">clientPort=2181</div><div class="line"># the maximum number of client connections.</div><div class="line"># increase this if you need to handle more clients</div><div class="line">#maxClientCnxns=60</div><div class="line">#</div><div class="line"># Be sure to read the maintenance section of the </div><div class="line"># administrator guide before turning on autopurge.</div><div class="line">#</div><div class="line"># http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance</div><div class="line">#</div><div class="line"># The number of snapshots to retain in dataDir</div><div class="line">#autopurge.snapRetainCount=3</div><div class="line"># Purge task interval in hours</div><div class="line"># Set to &quot;0&quot; to disable auto purge feature</div><div class="line">#autopurge.purgeInterval=1</div><div class="line"></div><div class="line"># 第一个port是从机器（follower）连接到主机器（leader）的端口号，第二个port是进行leadership选举的端口号。</div><div class="line">server.1=zoo1:2888:3888</div><div class="line">server.2=zoo2:2888:3888</div><div class="line">server.3=zoo3:2888:3888</div></pre></td></tr></table></figure>
-<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t &quot;birdben/zookeeper_cluster:v1&quot; .</div><div class="line"># 启动Docker容器，这里分别对每个docker容器指定了不同的hostname</div><div class="line"># 需要暴露2181客户端连接端口号，否则Docker容器外无法连接到zookeeper集群</div><div class="line">$ sudo docker run -p 2181:2181 -p 2888:2888 -p 3888:3888 -h zoo1 --name zoo1 -t -i &apos;birdben/zookeeper_cluster:v1&apos;</div><div class="line">$ sudo docker run -p 2181:2181 -p 2888:2888 -p 3888:3888 -h zoo2 --name zoo2 -t -i &apos;birdben/zookeeper_cluster:v1&apos;</div><div class="line">$ sudo docker run -p 2181:2181 -p 2888:2888 -p 3888:3888 -h zoo3 --name zoo3 -t -i &apos;birdben/zookeeper_cluster:v1&apos;</div><div class="line"></div><div class="line"># 查询Docker容器对应的IP地址</div><div class="line">$ sudo docker inspect --format=&apos;&#123;&#123;.NetworkSettings.IPAddress&#125;&#125;&apos; $&#123;CONTAINER_ID&#125;</div><div class="line"></div><div class="line"># 需要exec进入Docker容器配置myid和hosts文件</div><div class="line">$ sudo docker exec -it $&#123;CONTAINER_ID&#125; /bin/bash</div><div class="line"></div><div class="line"># 配置每个Docker容器的myid，对应zoo序号执行</div><div class="line">$ echo 1 &gt; /var/zookeeper/myid</div><div class="line">$ echo 2 &gt; /var/zookeeper/myid</div><div class="line">$ echo 3 &gt; /var/zookeeper/myid</div><div class="line"></div><div class="line"># 配置每个Docker容器的/etc/hosts文件</div><div class="line">172.17.0.51     zoo1</div><div class="line">172.17.0.52     zoo2</div><div class="line">172.17.0.53     zoo3</div><div class="line"></div><div class="line"># 分别启动每个Docker容器中的zookeeper服务</div><div class="line">$ ./&#123;ZOOKEEPER_HOME&#125;/bin/zkServer.sh start</div><div class="line"></div><div class="line"># 查看每个Docker容器的zookeeper运行状态</div><div class="line">$ ./&#123;ZOOKEEPER_HOME&#125;/bin/zkServer.sh status</div><div class="line"></div><div class="line"># 下面是我查看每个zookeeper的状态，zoo2的Docker容器的zk是leader，zoo1和zoo3是follower</div><div class="line">root@zoo1:/software/zookeeper-3.4.8/bin# ./zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /software/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: follower</div><div class="line"></div><div class="line">root@zoo2:/software/zookeeper-3.4.8/bin# ./zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /software/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: leader</div><div class="line"></div><div class="line">root@zoo3:/software/zookeeper-3.4.8/bin# ./zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /software/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: follower</div></pre></td></tr></table></figure>
-<h5 id="使用zkCli-sh连接服务端进行操作"><a href="#使用zkCli-sh连接服务端进行操作" class="headerlink" title="使用zkCli.sh连接服务端进行操作"></a>使用zkCli.sh连接服务端进行操作</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">$ ./zkCli.sh -server 10.10.1.167:2181</div><div class="line">Connecting to 10.10.1.167:2181</div><div class="line">2016-09-02 11:01:56,761 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT</div><div class="line">2016-09-02 11:01:56,764 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=localhost</div><div class="line">2016-09-02 11:01:56,764 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.7.0_79</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/Users/yunyu/dev/zookeeper-3.4.8/bin/../build/classes:/Users/yunyu/dev/zookeeper-3.4.8/bin/../build/lib/*.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../lib/slf4j-log4j12-1.6.1.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../lib/slf4j-api-1.6.1.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../lib/netty-3.7.0.Final.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../lib/log4j-1.2.16.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../lib/jline-0.9.94.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../zookeeper-3.4.8.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../src/java/lib/*.jar:/Users/yunyu/dev/zookeeper-3.4.8/bin/../conf:</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/Users/yunyu/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/var/folders/0h/jtjrr7g95mv2pt4ts1tgmzyh0000gn/T/</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Mac OS X</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=x86_64</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=10.11.5</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=yunyu</div><div class="line">2016-09-02 11:01:56,766 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/Users/yunyu</div><div class="line">2016-09-02 11:01:56,767 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/Users/yunyu/dev/zookeeper-3.4.8/bin</div><div class="line">2016-09-02 11:01:56,767 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=10.10.1.167:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@5be7d8b1</div><div class="line">Welcome to ZooKeeper!</div><div class="line">2016-09-02 11:01:56,791 [myid:] - INFO  [main-SendThread(10.10.1.167:2181):ClientCnxn$SendThread@1032] - Opening socket connection to server 10.10.1.167/10.10.1.167:2181. Will not attempt to authenticate using SASL (unknown error)</div><div class="line">JLine support is enabled</div><div class="line">2016-09-02 11:01:56,798 [myid:] - INFO  [main-SendThread(10.10.1.167:2181):ClientCnxn$SendThread@876] - Socket connection established to 10.10.1.167/10.10.1.167:2181, initiating session</div><div class="line">2016-09-02 11:01:56,821 [myid:] - INFO  [main-SendThread(10.10.1.167:2181):ClientCnxn$SendThread@1299] - Session establishment complete on server 10.10.1.167/10.10.1.167:2181, sessionid = 0x156e8d804300000, negotiated timeout = 30000</div><div class="line"></div><div class="line">WATCHER::</div><div class="line"></div><div class="line">WatchedEvent state:SyncConnected type:None path:null</div><div class="line">[zk: 10.10.1.167:2181(CONNECTED) 0]</div></pre></td></tr></table></figure>
-<h5 id="需要注意的地方"><a href="#需要注意的地方" class="headerlink" title="需要注意的地方"></a>需要注意的地方</h5><ul>
-<li>因为我们zookeeper的启动方式是用的supervisor启动，但是Docker容器启动的时候，我们还不知道Docker容器的IP地址，无法指定hosts文件配置，所以我们要先进入到Docker容器指定好hosts文件配置，然后重新启动zookeeper服务</li>
-<li>myid的配置也是每个Docker容器都不一样，最好跟hosts配置对应</li>
-<li>需要Docker容器外连接zookeeper集群需要在启动Docker容器时，指定一个Docker容器对外开放2181客户端连接端口号，否则Docker容器外无法连接到zookeeper集群</li>
-<li>如果查看zookeeper运行状态提示有问题</li>
-<li>值得重点注意的一点是，所有三个机器都应该打开端口 2181、2888 和 3888。在本例中，端口 2181 由 ZooKeeper 客户端使用，用于连接到 ZooKeeper 服务器；端口 2888 由对等 ZooKeeper 服务器使用，用于互相通信；而端口 3888 用于领导者选举。您可以选择自己喜欢的任何端口。通常建议在所有 ZooKeeper 服务器上使用相同的端口。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JMX enabled by default</div><div class="line">Using config: /root/zookeeper-3.4.6/bin/../conf/zoo.cfg</div><div class="line">Error contacting service. It is probably not running.</div></pre></td></tr></table></figure>
-<p>确认下面两点，应该就能排查出问题，我就遇到过重启Docker容器IP<br>地址变化，导致/etc/hosts中的IP地址配置不正确</p>
-<ul>
-<li>确认/etc/hosts中是否有各个节点域名解析</li>
-<li>是否/var/zookeeper/myid有重复值</li>
-</ul>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://segmentfault.com/a/1190000003994382" target="_blank" rel="external">https://segmentfault.com/a/1190000003994382</a></li>
-<li><a href="http://blog.csdn.net/cruise_h/article/details/19046357" target="_blank" rel="external">http://blog.csdn.net/cruise_h/article/details/19046357</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </div>
