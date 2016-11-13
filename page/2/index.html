@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,332 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Flume/Flume学习（十四）Flume整合Kafka" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/17/Flume/Flume学习（十四）Flume整合Kafka/" class="article-date">
+  	<time datetime="2016-10-17T05:32:03.000Z" itemprop="datePublished">2016-10-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/17/Flume/Flume学习（十四）Flume整合Kafka/">Flume学习（十四）Flume整合Kafka</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
+<li>JDK1.7.0_79</li>
+<li>Flume1.6.0</li>
+<li>kafka_2.11-0.9.0.0</li>
+</ul>
+<h3 id="Flume整合Kafka的相关配置"><a href="#Flume整合Kafka的相关配置" class="headerlink" title="Flume整合Kafka的相关配置"></a>Flume整合Kafka的相关配置</h3><h4 id="flume-agent-file-conf配置文件"><a href="#flume-agent-file-conf配置文件" class="headerlink" title="flume_agent_file.conf配置文件"></a>flume_agent_file.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">agentX.sources = sX</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = sk1 sk2</div><div class="line"></div><div class="line">agentX.sources.sX.channels = chX</div><div class="line">agentX.sources.sX.type = exec</div><div class="line">agentX.sources.sX.command = tail -F -n +0 /Users/yunyu/Downloads/track.log</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line"># Configure sinks</div><div class="line">agentX.sinks.sk1.channel = chX</div><div class="line">agentX.sinks.sk1.type = avro</div><div class="line">agentX.sinks.sk1.hostname = hadoop1</div><div class="line">agentX.sinks.sk1.port = 41414</div><div class="line"></div><div class="line">agentX.sinks.sk2.channel = chX</div><div class="line">agentX.sinks.sk2.type = avro</div><div class="line">agentX.sinks.sk2.hostname = hadoop2</div><div class="line">agentX.sinks.sk2.port = 41414</div><div class="line"></div><div class="line"># Configure loadbalance</div><div class="line">agentX.sinkgroups = g1</div><div class="line">agentX.sinkgroups.g1.sinks = sk1 sk2</div><div class="line">agentX.sinkgroups.g1.processor.type = load_balance</div><div class="line">agentX.sinkgroups.g1.processor.backoff = true</div><div class="line">agentX.sinkgroups.g1.processor.selector = round_robin</div></pre></td></tr></table></figure>
+<h4 id="flume-collector-kafka-conf配置文件"><a href="#flume-collector-kafka-conf配置文件" class="headerlink" title="flume_collector_kafka.conf配置文件"></a>flume_collector_kafka.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sinkagentX.channels = chXagentX.sinks = flume-kafka-sinkagentX.sources.flume-avro-sink.channels = chXagentX.sources.flume-avro-sink.type = avroagentX.sources.flume-avro-sink.bind = hadoop1agentX.sources.flume-avro-sink.port = 41414agentX.sources.flume-avro-sink.threads = 8agentX.channels.chX.type = memoryagentX.channels.chX.capacity = 10000agentX.channels.chX.transactionCapacity = 100agentX.sinks.flume-kafka-sink.type = org.apache.flume.sink.kafka.KafkaSinkagentX.sinks.flume-kafka-sink.topic = kafka_cluster_topicagentX.sinks.flume-kafka-sink.brokerList = hadoop1:9092,hadoop2:9092,hadoop3:9092agentX.sinks.flume-kafka-sink.requiredAcks = 1agentX.sinks.flume-kafka-sink.batchSize = 20agentX.sinks.flume-kafka-sink.channel = chX</div></pre></td></tr></table></figure>
+<h4 id="启动Flume-Agent"><a href="#启动Flume-Agent" class="headerlink" title="启动Flume Agent"></a>启动Flume Agent</h4><p>启动Flume Agent监听track.log日志文件的变化，并且上报的Flume Collector</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_agent_file.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
+<h4 id="启动Flume-Collector"><a href="#启动Flume-Collector" class="headerlink" title="启动Flume Collector"></a>启动Flume Collector</h4><p>启动Flume Collector监听Agent上报的消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_collector_kafka.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
+<h4 id="启动Kafka"><a href="#启动Kafka" class="headerlink" title="启动Kafka"></a>启动Kafka</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 启动Zookeeper服务（我这里是启动的外置Zookeeper集群，不是Kafka内置的Zookeeper）</div><div class="line">$ ./bin zkServer.sh start</div><div class="line"></div><div class="line"># 启动Kafka服务</div><div class="line">$ ./bin/kafka-server-start.sh -daemon config/server.properties</div><div class="line"></div><div class="line"># 如果是第一次启动Kafka，需要创建一个Topic，用于存储Flume收集上来的日志消息</div><div class="line">$ ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic kafka_cluster_topic</div></pre></td></tr></table></figure>
+<h4 id="启动Kafka-Consumer"><a href="#启动Kafka-Consumer" class="headerlink" title="启动Kafka Consumer"></a>启动Kafka Consumer</h4><p>启动Kafka Consumer来消费Kafka中的消息，这时候如果track.log日志文件有新日志写入，通过Flume上传并且写入到Kafka，最终可以在Kafka Consumer消费端看到日志文件中的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafka_cluster_topic --from-beginning</div><div class="line"></div><div class="line">this is a message</div><div class="line">birdben is my name</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://flume.apache.org/FlumeUserGuide.html#kafka-sink" target="_blank" rel="external">https://flume.apache.org/FlumeUserGuide.html#kafka-sink</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/17/Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用/" class="article-date">
+  	<time datetime="2016-10-17T02:32:45.000Z" itemprop="datePublished">2016-10-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/17/Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用/">Kafka学习（二）KafkaOffsetMonitor监控工具使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="启动Zookeeper"><a href="#启动Zookeeper" class="headerlink" title="启动Zookeeper"></a>启动Zookeeper</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3三台服务器的Zookeeper服务</div><div class="line">$ ./bin/zkServer.sh startZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgStarting zookeeper ... already running as process 4468.</div><div class="line"></div><div class="line"># 分别查看一下Zookeeper服务的状态</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: leader</div></pre></td></tr></table></figure>
+<h3 id="启动Kafka"><a href="#启动Kafka" class="headerlink" title="启动Kafka"></a>启动Kafka</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3三台服务器的Kafka服务</div><div class="line">$ ./bin/kafka-server-start.sh config/server.properties &amp;</div></pre></td></tr></table></figure>
+<h3 id="运行KafkaOffsetMonitor监控服务"><a href="#运行KafkaOffsetMonitor监控服务" class="headerlink" title="运行KafkaOffsetMonitor监控服务"></a>运行KafkaOffsetMonitor监控服务</h3><p>下载 <a href="https://github.com/quantifind/KafkaOffsetMonitor/releases/latest">KafkaOffsetMonitor</a> 的jar包，然后执行下面的运行命令，然后我们就能够访问 <a href="http://localhost:9999/" target="_blank" rel="external">http://localhost:9999/</a> 来进入KafkaOffsetMonitor的监控后台。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">java -cp KafkaOffsetMonitor-assembly-0.2.1.jar \</div><div class="line">     com.quantifind.kafka.offsetapp.OffsetGetterWeb \</div><div class="line">     --zk hadoop1,hadoop2,hadoop3 \</div><div class="line">     --port 9999 \</div><div class="line">     --refresh 10.seconds \</div><div class="line">     --retain 2.days</div></pre></td></tr></table></figure>
+<ul>
+<li>offsetStorage : 已取消</li>
+<li>zk : Zookeeper服务器地址</li>
+<li>port : KafkaOffsetMonitor监控服务使用的Web服务器端口</li>
+<li>refresh : 多长时间将app数据刷新一次到DB</li>
+<li>retain : 保存多久的数据到DB</li>
+<li>dbName : 历史数据存储的数据库名(default ‘offsetapp’)</li>
+<li>kafkaOffsetForceFromStart : 已取消</li>
+<li>stormZKOffsetBase : 已取消</li>
+<li>pluginsArgs : 扩展使用</li>
+</ul>
+<p>注意：这里使用的0.2.1版本，0.2.1版本已经没有offsetStorage参数了，所以网上搜索的一些文章中使用的老版本还配置了offsetStorage参数，这里需要注意一下。</p>
+<p><img src="http://img.blog.csdn.net/20161017111332769?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="KafkaOffsetMonitor效果图"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://github.com/quantifind/KafkaOffsetMonitor">https://github.com/quantifind/KafkaOffsetMonitor</a></li>
+<li><a href="https://github.com/quantifind/KafkaOffsetMonitor/issues/86">https://github.com/quantifind/KafkaOffsetMonitor/issues/86</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/MQ/">MQ</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/13/Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）/" class="article-date">
+  	<time datetime="2016-10-13T08:52:54.000Z" itemprop="datePublished">2016-10-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/13/Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）/">Flume学习（十三）Flume + HDFS + Hive离线分析（再续）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在《Flume学习（十一）Flume + HDFS + Hive离线分析》这篇中我们就遇到了Hive分区的问题，这里我们再来回顾一下之前待调研的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 问题二：</div><div class="line">之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/20160923</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">如果我们使用第二种不用日期分割的方式，在Hive上创建表指定/flume/events路径是没有问题，查询数据也都正常，但是如果使用第一种日期分割的方式，在Hive上创建表就必须指定具体的子目录，而不是/flume/events根目录，这样虽然表能够建成功但是却查询不到任何数据，因为指定的对应HDFS目录不正确，应该指定为/flume/events/20160923。这个问题确实也困扰我很久，最后才发现原来是Hive建表指定的HDFS目录不正确。</div><div class="line"></div><div class="line">指定location为&apos;/flume/events&apos;不好用，Hive中查询command_json_table表中没有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line">指定location为&apos;/flume/events/20160923&apos;好用，Hive中查询command_json_table_20160923表中有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table_20160923(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/20160923&apos;;</div><div class="line"></div><div class="line">建议的解决方式是使用Hive的表分区来做，需要调研Hive的表分区是否支持使用HDFS已经分割好的目录结构（需要调研）</div></pre></td></tr></table></figure>
+<p>上面是我们之前的问题原文描述，之前需要调研Hive表分区是否可以使用HDFS已经分割好的目录结构，这里我找到了一篇blog，终于理解了Hive关于External表如何使用partition的，下面给出了原文和译文的链接地址</p>
+<p>原文链接：</p>
+<ul>
+<li><a href="http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/" target="_blank" rel="external">http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/</a></li>
+</ul>
+<p>译文链接：</p>
+<ul>
+<li><p>我们带着上面的问题继续优化，之前的解决办法是按照我们日志中的name属性值存储在HDFS的不同目录中，本篇我们使用Partition来解决数据量增长的情况，我们在之前使用name属性的基础上在新建dt目录（按照月份来分割数据）</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sinkagentX.channels = chXagentX.sinks = flume-hdfs-sinkagentX.sources.flume-avro-sink.channels = chXagentX.sources.flume-avro-sink.type = avroagentX.sources.flume-avro-sink.bind = hadoop1agentX.sources.flume-avro-sink.port = 41414agentX.sources.flume-avro-sink.threads = 8#定义拦截器，为消息添加时间戳和Host地址</div><div class="line">#将日志中的name属性添加到Header中，用来做HDFS存储的目录结构，type_name属性就是从日志文件中解析出来的name属性的值，这里使用%Y%m表达式代表按照年月分区agentX.sources.flume-avro-sink.interceptors = i1 i2agentX.sources.flume-avro-sink.interceptors.i1.type = timestampagentX.sources.flume-avro-sink.interceptors.i2.type = regex_extractoragentX.sources.flume-avro-sink.interceptors.i2.regex = &quot;name&quot;:&quot;(.*?)&quot;agentX.sources.flume-avro-sink.interceptors.i2.serializers = s1agentX.sources.flume-avro-sink.interceptors.i2.serializers.s1.name = type_nameagentX.channels.chX.type = memoryagentX.channels.chX.capacity = 1000agentX.channels.chX.transactionCapacity = 100agentX.sinks.flume-hdfs-sink.type = hdfsagentX.sinks.flume-hdfs-sink.channel = chXagentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%&#123;type_name&#125;/%Y%magentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStreamagentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div></pre></td></tr></table></figure>
+<h5 id="在HDFS中查看文件目录"><a href="#在HDFS中查看文件目录" class="headerlink" title="在HDFS中查看文件目录"></a>在HDFS中查看文件目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 可以看到HDFS文件目录已经按照我们的name属性区分开了</div><div class="line">hdfs dfs -ls /flume/events/drwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:01 /flume/events/birdben.api.calldrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.click_addrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.open_hbdrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.view_ad</div><div class="line"></div><div class="line"># 查看个不同name下的目录是按照年月分割开的</div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_adFound 2 itemsdrwxr-xr-x   - yunyu supergroup          0 2016-10-13 06:18 /flume/events/birdben.ad.click_ad/201610drwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:07 /flume/events/birdben.ad.click_ad/201611</div><div class="line"></div><div class="line"># 数据文件是存储在具体的年月目录下的</div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_ad/201610/Found 1 items-rw-r--r--   2 yunyu supergroup       1596 2016-10-13 06:18 /flume/events/birdben.ad.click_ad/201610/events-.1476364422107</div></pre></td></tr></table></figure>
+<h3 id="Hive按照不同的HDFS目录建表"><a href="#Hive按照不同的HDFS目录建表" class="headerlink" title="Hive按照不同的HDFS目录建表"></a>Hive按照不同的HDFS目录建表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"># 这里我们是需要先理解Hive的内部表和外部表的区别，然后我们在之前的建表语句中加入partition分区，我们这里使用的是dt字段作为partition，dt字段不能够与建表语句中的字段重复，否则建表时会报错。</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_click_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.click_ad&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_open_hb(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.open_hb&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_view_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.view_ad&apos;;</div><div class="line"></div><div class="line"># 这时候我们查询表，表中是没有数据的。我们需要手工添加partition分区之后，才能查到数据。</div><div class="line">hive&gt; select * from birdben_ad_click_ad;</div><div class="line"></div><div class="line"># 建表完成之后，我们需要手工添加partition目录为我们Flume之前划分的好的年月目录</div><div class="line">alter table birdben_ad_click_ad add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben_ad_click_ad/201610&apos;;</div><div class="line">alter table birdben_ad_click_ad add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben_ad_click_ad/201611&apos;;</div><div class="line"></div><div class="line">alter table birdben_ad_open_hb add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben.ad.open_hb/201610&apos;;</div><div class="line">alter table birdben_ad_open_hb add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben.ad.open_hb/201611&apos;;</div><div class="line"></div><div class="line">alter table birdben_ad_view_ad add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben.ad.view_ad/201610&apos;;</div><div class="line">alter table birdben_ad_view_ad add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben.ad.view_ad/201611&apos;;</div><div class="line"></div><div class="line"># 这时候我们查询表，能够查询到全部的数据了（包括201610和201611的数据）</div><div class="line">hive&gt; select * from birdben_ad_click_ad;</div><div class="line">OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201611Time taken: 0.1 seconds, Fetched: 9 row(s)</div><div class="line"></div><div class="line"># 也可以按照分区字段查询数据，这样就能够证明我们可以使用Hive的External表partition对应到我们Flume中创建好的 %Y%m（年月） 目录结构</div><div class="line">hive&gt; select * from birdben_ad_click_ad where dt = &apos;201610&apos;;</div><div class="line">OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610Time taken: 0.099 seconds, Fetched: 6 row(s)</div><div class="line"></div><div class="line">hive&gt; select * from birdben_ad_click_ad where dt = &apos;201611&apos;;</div><div class="line">OK</div><div class="line">[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201611Time taken: 0.11 seconds, Fetched: 3 row(s)</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实我写了这么多篇Flume + HDFS + Hive的文章，就是为了证明Flume可以按照指定的Header的key分别写入不同的HDFS目录，Hive又可以通过External表将Location定位到Flume写入的HDFS目录，而且还可以通过Partition分区定位到Flume设置的Header对应的目录，这样就能够比较优雅的将Flume, HDFS, Hive整合到一起了。但是还是有些需要优化的地方，比如说我们的日志格式不够规范，每种日志都有不同的格式，而且还都写入到同一个track.log日志文件中，只能通过name属性作区分。还有就是Hive的Partition每次需要手工去修改表，否则无法查询到HDFS对应目录下的数据，也有人使用 <a href="https://github.com/don9z/hadoop-tools/blob/master/hive/addpartition.py">script</a> 脚本来做这些事情，待以后有时间继续深入研究。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/" target="_blank" rel="external">http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/12/Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）/" class="article-date">
+  	<time datetime="2016-10-12T05:43:55.000Z" itemprop="datePublished">2016-10-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/12/Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）/">Flume学习（十二）Flume + HDFS + Hive离线分析（续）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，并且结合Hive在HDFS进行离线的查询分析。但是也同样遇到了一些问题，本篇将解决更复杂的日志收集情况，将不同的日志格式写入到同一个日志文件，然后用Flume根据Header来写入到HDFS不同的目录。</p>
+<h3 id="日志结构"><a href="#日志结构" class="headerlink" title="日志结构"></a>日志结构</h3><p>我们会讲所有的日志都写入到track.log文件中，包含API调用的日志以及其他埋点日志，这里是通过name来区分日志类型的，不同的日志类型有着不同的json结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">### API日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;name&quot;:&quot;birdben.api.call&quot;,&quot;request&quot;:&quot;POST /api/message/receive&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;bid&quot;:&quot;59885256139866115&quot;,&quot;uid&quot;:&quot;&quot;,&quot;did&quot;:&quot;1265&quot;,&quot;duid&quot;:&quot;dxf536&quot;,&quot;hb_uid&quot;:&quot;59885256030814209&quot;,&quot;ua&quot;:&quot;Dalvik/1.6.0 (Linux; U; Android 4.4.4; YQ601 Build/KTU84P)&quot;,&quot;device_id&quot;:&quot;fa48a076-f35f-3217-8575-5fc1f02f1ac0&quot;,&quot;ip&quot;:&quot;::ffff:10.10.1.242&quot;,&quot;server_timestamp&quot;:1475912702996&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T07:45:02.996Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;name&quot;:&quot;birdben.api.call&quot;,&quot;request&quot;:&quot;GET /api/message/ad-detail&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;bid&quot;:&quot;59885256139866115&quot;,&quot;uid&quot;:&quot;&quot;,&quot;did&quot;:&quot;1265&quot;,&quot;duid&quot;:&quot;dxf536&quot;,&quot;hb_uid&quot;:&quot;59885256030814209&quot;,&quot;ua&quot;:&quot;Dalvik/1.6.0 (Linux; U; Android 4.4.4; YQ601 Build/KTU84P)&quot;,&quot;device_id&quot;:&quot;fa48a076-f35f-3217-8575-5fc1f02f1ac0&quot;,&quot;ip&quot;:&quot;::ffff:10.10.1.242&quot;,&quot;server_timestamp&quot;:1475912787476&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T07:46:27.476Z&quot;&#125;</div><div class="line"></div><div class="line">### 打开App日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914816071&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.open_hb&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914829286&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:29.286Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914827206&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.open_hb&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914840425&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:40.425Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475915077351&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;name&quot;:&quot;birdben.ad.open_hb&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475915090579&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:24:50.579Z&quot;&#125;</div><div class="line"></div><div class="line">### 加载页面日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914816133&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.view_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914829332&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:29.332Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914827284&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.view_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914840498&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:40.499Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475915077585&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;name&quot;:&quot;birdben.ad.view_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475915090789&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:24:50.789Z&quot;&#125;</div><div class="line"></div><div class="line">### 点击链接日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475912701768&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475912715001&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T07:45:15.001Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475913832349&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475913845544&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:04:05.544Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475915080561&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475915093792&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:24:53.792Z&quot;&#125;</div></pre></td></tr></table></figure>
+<h3 id="如何解析track-log日志文件中的日志"><a href="#如何解析track-log日志文件中的日志" class="headerlink" title="如何解析track.log日志文件中的日志"></a>如何解析track.log日志文件中的日志</h3><p>按照我们之前的做法，我们会使用Flume都讲日志的内容收集到HDFS上存储，但是这里的track.log日志文件中包含多种不同结构的json日志，而且这里的json数据结构是嵌套复杂对象的，我们不好在Hive上创建相应结构的表，只能创建一个大表要包含所有的日志字段，无法做到对某种日志的分析，如果像之前的做法可能无法满足我们的需求。</p>
+<ul>
+<li>问题一：如何Hive解析这种嵌套复杂对象的json数据结构</li>
+<li><p>问题二：如何将多种不同的日志在HDFS按类型分开存储</p>
+</li>
+<li><p>问题一解决办法：<br>在网上找到第三方的插件能够解析嵌套复杂对象的json数据结构，主要是替换Hive自己内嵌的Serde解析器（org.apache.hive.hcatalog.data.JsonSerDe），Github地址：<a href="https://github.com/rcongiu/Hive-JSON-Serde">https://github.com/rcongiu/Hive-JSON-Serde</a></p>
+</li>
+<li><p>问题二解决办法：<br>这里我有个想法是按照日志类型，我们可以区分我们的日志结构，根据name属性分为API日志，打开APP日志，加载页面日志，点击链接日志。但是要如何在Flume根据name属性区分开不同的日志内容，并且写入到HDFS的不同目录呢？答案就是使用Flume的Interceptor</p>
+</li>
+</ul>
+<h3 id="Hive安装Hive-JSON-Serde插件"><a href="#Hive安装Hive-JSON-Serde插件" class="headerlink" title="Hive安装Hive-JSON-Serde插件"></a>Hive安装Hive-JSON-Serde插件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 从GitHub下载Hive-JSON-Serde</div><div class="line">$ git clone https://github.com/rcongiu/Hive-JSON-Serde</div><div class="line"></div><div class="line"># 编译打包Hive-JSON-Serde，打包成功之后会在json-serde/target目录生成相应的jar包</div><div class="line">$ cd Hive-JSON-Serde</div><div class="line">$ mvn package</div><div class="line"></div><div class="line"># 复制打包好的jar到Hive的HIVE_AUX_JARS_PATH目录下，需要重启Hive服务，这样就不需要每次在Hive Shell中都进行add jar操作了</div><div class="line">$ cp json-serde/target/json-serde-1.3.8-SNAPSHOT-jar-with-dependencies.jar /usr/local/hive/hcatalog/share/hcatalog/</div><div class="line"></div><div class="line"># HIVE_AUX_JARS_PATH是在$&#123;HIVE_HOME&#125;/conf/hive-env.sh配置文件中设置的</div><div class="line">export HIVE_AUX_JARS_PATH=/usr/local/hive/hcatalog/share/hcatalog</div><div class="line"></div><div class="line"># Hive Shell中创建表，如下</div><div class="line"># 这里使用了我们刚刚引用的&apos;org.openx.data.jsonserde.JsonSerDe&apos;解析器</div><div class="line"># 这样所有的日志都可以通过birdben_log_table表来查询，但是部分字段属性可能没有建表中包含进来，这样可能查出来的属性值是NULL</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_log_table(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div></pre></td></tr></table></figure>
+<h3 id="Flume的Interceptor"><a href="#Flume的Interceptor" class="headerlink" title="Flume的Interceptor"></a>Flume的Interceptor</h3><p>先回想一下我们是如何将日期作为参数写入到HDFS不同目录的，我们是在Flume中使用了Interceptor来将我们的name属性加入到Event的Header中，然后在Sink中通过获取Header中的name属性的值来写入到HDFS中的不同目录。</p>
+<h5 id="Flume的配置文件"><a href="#Flume的配置文件" class="headerlink" title="Flume的配置文件"></a>Flume的配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-hdfs-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 10.10.1.64</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line"></div><div class="line"></div><div class="line">#定义拦截器，为消息添加时间戳和Host地址</div><div class="line">#将日志中的name属性添加到Header中，用来做HDFS存储的目录结构，type_name属性就是从日志文件中解析出来的name属性的值</div><div class="line">agentX.sources.flume-avro-sink.interceptors = i1 i2</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i1.type = timestamp</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.regex = &quot;name&quot;:&quot;(.*?)&quot;</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.serializers = s1</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.serializers.s1.name = type_name</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-hdfs-sink.type = hdfs</div><div class="line">agentX.sinks.flume-hdfs-sink.channel = chX</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%&#123;type_name&#125;</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStream</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div></pre></td></tr></table></figure>
+<h5 id="在HDFS中查看文件目录"><a href="#在HDFS中查看文件目录" class="headerlink" title="在HDFS中查看文件目录"></a>在HDFS中查看文件目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 可以看到HDFS文件目录已经按照我们的name属性区分开了</div><div class="line">$ hdfs dfs -ls /flume/eventsdrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.api.calldrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.ad.click_addrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.ad.open_hbdrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.ad.view_ad</div><div class="line"></div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_adFound 1 items-rwxr-xr-x   2 yunyu supergroup        798 2016-10-11 03:58 /flume/events/birdben.ad.click_ad/events-.1476183217539</div></pre></td></tr></table></figure>
+<h3 id="Hive按照不同的HDFS目录建表"><a href="#Hive按照不同的HDFS目录建表" class="headerlink" title="Hive按照不同的HDFS目录建表"></a>Hive按照不同的HDFS目录建表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># Hive中我们重新建表，这次我们按照HDFS已经分好的目录建表</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_click_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.click_ad&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_open_hb(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.open_hb&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_view_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.view_ad&apos;;</div><div class="line"></div><div class="line"># 在Hive中查询birdben_ad_click_ad表中的数据</div><div class="line">hive&gt; select * from birdben_ad_click_ad;OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULLTime taken: 0.519 seconds, Fetched: 3 row(s)</div><div class="line"></div><div class="line"># 在Hive中查询birdben_ad_click_ad表中的数据总数</div><div class="line">hive&gt; select count(*) from birdben_ad_click_ad;Query ID = yunyu_20161011234624_fbd62672-91ee-4497-8ea1-f5a1e765a147Total jobs = 1Launching Job 1 out of 1Number of reduce tasks determined at compile time: 1In order to change the average load for a reducer (in bytes):  set hive.exec.reducers.bytes.per.reducer=&lt;number&gt;In order to limit the maximum number of reducers:  set hive.exec.reducers.max=&lt;number&gt;In order to set a constant number of reducers:  set mapreduce.job.reduces=&lt;number&gt;Starting Job = job_1476004456759_0008, Tracking URL = http://hadoop1:8088/proxy/application_1476004456759_0008/Kill Command = /data/hadoop-2.7.1/bin/hadoop job  -kill job_1476004456759_0008Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 12016-10-11 23:46:33,190 Stage-1 map = 0%,  reduce = 0%2016-10-11 23:46:39,554 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 0.95 sec2016-10-11 23:46:48,909 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.56 secMapReduce Total cumulative CPU time: 2 seconds 560 msecEnded Job = job_1476004456759_0008MapReduce Jobs Launched: Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 2.56 sec   HDFS Read: 8849 HDFS Write: 2 SUCCESSTotal MapReduce CPU Time Spent: 2 seconds 560 msecOK3Time taken: 25.73 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
+<p>到此为止，我们上面说的两个问题都得到了解决，后续还会继续调优。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/ahjzgyxy/article/details/44423025" target="_blank" rel="external">http://blog.csdn.net/ahjzgyxy/article/details/44423025</a></li>
+<li><a href="http://blog.csdn.net/xiao_jun_0820/article/details/38333171" target="_blank" rel="external">http://blog.csdn.net/xiao_jun_0820/article/details/38333171</a></li>
+<li><a href="http://lxw1234.com/archives/2015/11/543.htm" target="_blank" rel="external">http://lxw1234.com/archives/2015/11/543.htm</a></li>
+<li><a href="http://lxw1234.com/archives/2015/11/545.htm" target="_blank" rel="external">http://lxw1234.com/archives/2015/11/545.htm</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Flume/Flume学习（十一）Flume + HDFS + Hive离线分析" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -828,353 +1154,6 @@ $ ./bin/hdfs dfs -cat /hive/warehouse/test_hive.db/test_person/test_person.txt
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Git/Git的SSH-Key用法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/11/Git/Git的SSH-Key用法/" class="article-date">
-  	<time datetime="2016-09-11T08:51:32.000Z" itemprop="datePublished">2016-09-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/11/Git/Git的SSH-Key用法/">Git的SSH-Key用法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前GitHub提交代码的时候总是不知道该使用SSH方式还是Https方式，后来看了GitHub官网上建议使用Https方式，但Https方式有些麻烦，因为每次使用Https方式提交代码的时候都需要输入用户名和密码，而用SSH方式就有免密码登录的方式，只是需要在GitHub服务器添加我们本地的公钥就可以了。但是之前有一点令我一直都不解，虽然我用Https方式提交代码但是并没有让我输入用户名密码，后来找了好久原因才发现是因为我用的Mac笔记本，Mac系统有个钥匙串记录的功能，会将GitHub的用户名密码保存下来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 首先在本地生成公钥/私钥的键值对</div><div class="line">$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</div><div class="line"># 输入公钥/私钥的文件路径</div><div class="line">Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</div><div class="line">Enter passphrase (empty for no passphrase): [Type a passphrase]</div><div class="line">Enter same passphrase again: [Type passphrase again]</div><div class="line"># 复制公钥文件中的内容，并且添加到GitHub上即可</div><div class="line">$ cat ~/.ssh/id_dsa.pub</div></pre></td></tr></table></figure>
-<p>同样的道理，如果我们想在本地免密码登录测试服务器，那么我们也可以用这样的方式来设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 首先在本地生成公钥/私钥的键值对</div><div class="line">$ ssh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</div><div class="line">$ cat ~/.ssh/id_dsa.pub</div><div class="line"></div><div class="line"># 将本地的公钥上传到测试服务器</div><div class="line">$ scp root@LocalServer:~/.ssh/id_dsa.pub  ~/.ssh/master_dsa.pub</div><div class="line"># 将上传的本地公钥添加到authorized_keys中</div><div class="line">$ cat ~/.ssh/master_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://help.github.com/articles/which-remote-url-should-i-use/" target="_blank" rel="external">https://help.github.com/articles/which-remote-url-should-i-use/</a></li>
-<li><a href="http://www.jianshu.com/p/1ac06bcd8ab5" target="_blank" rel="external">http://www.jianshu.com/p/1ac06bcd8ab5</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git命令/">Git命令</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Git/">Git</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Hadoop/Hadoop学习（一）Hadoop完全分布式环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/10/Hadoop/Hadoop学习（一）Hadoop完全分布式环境搭建/" class="article-date">
-  	<time datetime="2016-09-10T08:09:30.000Z" itemprop="datePublished">2016-09-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/10/Hadoop/Hadoop学习（一）Hadoop完全分布式环境搭建/">Hadoop学习（一）Hadoop完全分布式环境搭建</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天学习的信息量有点大收获不少，一时之间不知道从哪里开始写，希望尽量把我今天学习到的东西记录下来，因为内容太多可能会分几篇记录。其实之前有写过一篇用Docker搭建Hadoop环境的文章，当时其实搭建的是单机伪分布式的环境，今天这里搭建的是Hadoop完全分布式环境。今天又看了许多文章，对于Hadoop的体系架构又有了一定新的理解，包括1.x版本和2.x版本的不同。</p>
-<h3 id="Hadoop集群环境"><a href="#Hadoop集群环境" class="headerlink" title="Hadoop集群环境"></a>Hadoop集群环境</h3><p>我这里使用的三台虚拟机，每台虚拟机有自己的独立IP</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">192.168.1.119   hadoop1192.168.1.150   hadoop2192.168.1.149   hadoop3</div></pre></td></tr></table></figure>
-<p>相关环境信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">操作系统: Ubuntu 14.04.5 LTS</div><div class="line">JDK版本: 1.7.0_79</div><div class="line">Hadoop版本: 2.7.1</div></pre></td></tr></table></figure>
-<h3 id="JDK安装"><a href="#JDK安装" class="headerlink" title="JDK安装"></a>JDK安装</h3><p>省略</p>
-<h3 id="Hadoop安装"><a href="#Hadoop安装" class="headerlink" title="Hadoop安装"></a>Hadoop安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载Hadoop安装包</div><div class="line">$ curl -O http://mirrors.cnnic.cn/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz</div><div class="line"></div><div class="line"># 解压Hadoop压缩包</div><div class="line">$ tar -zxvf hadoop-2.7.1.tar.gz</div></pre></td></tr></table></figure>
-<h3 id="Hadoop集群配置"><a href="#Hadoop集群配置" class="headerlink" title="Hadoop集群配置"></a>Hadoop集群配置</h3><p>注意：以下配置请根据自己的实际环境修改</p>
-<h5 id="配置环境变量-etc-profile"><a href="#配置环境变量-etc-profile" class="headerlink" title="配置环境变量/etc/profile"></a>配置环境变量/etc/profile</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME=/usr/local/javaexport JAVA_HOMEHADOOP_HOME=/usr/local/hadoopexport HADOOP_HOMEPATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATHexport PATH</div></pre></td></tr></table></figure>
-<h5 id="配置HADOOP-HOME-etc-hadoop-hadoop-env-sh，添加以下内容"><a href="#配置HADOOP-HOME-etc-hadoop-hadoop-env-sh，添加以下内容" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/hadoop-env.sh，添加以下内容"></a>配置HADOOP_HOME/etc/hadoop/hadoop-env.sh，添加以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/local/java</div><div class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</div></pre></td></tr></table></figure>
-<h5 id="配置HADOOP-HOME-etc-hadoop-yarn-env-sh，添加以下内容"><a href="#配置HADOOP-HOME-etc-hadoop-yarn-env-sh，添加以下内容" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/yarn-env.sh，添加以下内容"></a>配置HADOOP_HOME/etc/hadoop/yarn-env.sh，添加以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/local/java</div></pre></td></tr></table></figure>
-<h5 id="配置HADOOP-HOME-etc-hadoop-core-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-core-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/core-site.xml"></a>配置HADOOP_HOME/etc/hadoop/core-site.xml</h5><p>这里我使用Hadoop1这台虚拟机作为NameNode节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">    &lt;value&gt;hdfs://Hadoop1:9000&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<h5 id="配置HADOOP-HOME-etc-hadoop-hdfs-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-hdfs-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/hdfs-site.xml"></a>配置HADOOP_HOME/etc/hadoop/hdfs-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;!-- 分布式文件系统数据块复制数，我们这里是Hadoop2和Hadoop3两个节点 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.replication&lt;/name&gt;    &lt;value&gt;2&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- DFS namenode存放name table的目录 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;    &lt;value&gt;file:/data/hdfs/name&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- DFS datanode存放数据block的目录 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;    &lt;value&gt;file:/data/hdfs/data&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- SecondaryNameNode的端口号，默认端口号是50090 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;    &lt;value&gt;hadoop1:50090&lt;/value&gt;  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<h5 id="配置HADOOP-HOME-etc-hadoop-mapred-site-xml-默认不存在，需要自建"><a href="#配置HADOOP-HOME-etc-hadoop-mapred-site-xml-默认不存在，需要自建" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/mapred-site.xml,默认不存在，需要自建"></a>配置HADOOP_HOME/etc/hadoop/mapred-site.xml,默认不存在，需要自建</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;!-- 第三方MapReduce框架，我们这里使用的yarn --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">    &lt;value&gt;yarn&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce JobHistory Server的IPC通信地址，默认端口号是10020 --&gt;</div><div class="line">  &lt;property&gt;     &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;     &lt;value&gt;hadoop1:10020&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce JobHistory Server的Web服务器访问地址，默认端口号是19888 --&gt;  &lt;property&gt;     &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;     &lt;value&gt;hadoop1:19888&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce已完成作业信息 --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobhistory.done-dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/data/history/done&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce正在运行作业信息 --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobhistory.intermediate-done-dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/data/history/done_intermediate&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<h5 id="配置HADOOP-HOME-etc-hadoop-yarn-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-yarn-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/yarn-site.xml"></a>配置HADOOP_HOME/etc/hadoop/yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;!-- 为MapReduce设置洗牌服务 --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;    &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;    &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- NodeManager与ResourceManager通信的接口地址，默认端口是8032 --&gt;</div><div class="line">  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;    &lt;value&gt;hadoop1:8032&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- NodeManger需要知道ResourceManager主机的scheduler调度服务接口地址，默认端口是8030 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;    &lt;value&gt;hadoop1:8030&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- NodeManager需要向ResourceManager报告任务运行状态供Resouce跟踪，因此NodeManager节点主机需要知道ResourceManager主机的tracker接口地址，默认端口是8031 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;    &lt;value&gt;hadoop1:8031&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- resourcemanager.admin，默认端口是8033 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;    &lt;value&gt;hadoop1:8033&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- 各个task的资源调度及运行状况通过通过该web界面访问，默认端口是8088 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;    &lt;value&gt;hadoop1:8088&lt;/value&gt;  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<h5 id="配置slaves节点，修改HADOOP-HOME-etc-hadoop-slaves"><a href="#配置slaves节点，修改HADOOP-HOME-etc-hadoop-slaves" class="headerlink" title="配置slaves节点，修改HADOOP_HOME/etc/hadoop/slaves"></a>配置slaves节点，修改HADOOP_HOME/etc/hadoop/slaves</h5><p>如果slaves配置中也添加Hadoop1节点，那么Hadoop1节点就既是namenode，又是datanode，这里没有这么配置，所以Hadoop1节点只是namenode，所以下面启动Hadoop1的服务之后，jps查看只有namenode服务器而没有datanode服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Hadoop2</div><div class="line">Hadoop3</div></pre></td></tr></table></figure>
-<h5 id="配置-etc-hostname"><a href="#配置-etc-hostname" class="headerlink" title="配置/etc/hostname"></a>配置/etc/hostname</h5><p>Hadoop1,2,3分别修改自己的/etc/hostname文件，如果这里不修改的话，后面使用Hive做离线查询会遇到问题，具体问题请参考《Hive学习（二）使用Hive进行离线分析日志》</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hadoop1</div></pre></td></tr></table></figure>
-<h5 id="配置主机名-etc-hosts"><a href="#配置主机名-etc-hosts" class="headerlink" title="配置主机名/etc/hosts"></a>配置主机名/etc/hosts</h5><p>这里Hadoop1是namenode，Hadoop2和Hadoop3是datanode</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">192.168.1.119   hadoop1192.168.1.150   hadoop2192.168.1.149   hadoop3</div></pre></td></tr></table></figure>
-<h5 id="配置SSH免密码登录"><a href="#配置SSH免密码登录" class="headerlink" title="配置SSH免密码登录"></a>配置SSH免密码登录</h5><p>在Hadoop1节点中生成新的SSH Key，并且将新生成的SSH Key添加到Hadoop1，2，3的authorized_keys免密码访问的配置中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># 创建authorized_keys文件</div><div class="line">$ vi ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># 注意：这里authorized_keys文件的权限设置为600。（这点很重要，网没有设置600权限会导致登录失败）因为我这里用的root账户没有这个问题，但是如果用自己创建的其他hadoop账户，不设置600权限就会导致登录失败</div><div class="line"></div><div class="line"># Hadoop1中执行</div><div class="line">$ ssh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</div><div class="line"># 将Hadoop1中的公钥复制进去</div><div class="line">$ cat ~/.ssh/id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># Hadoop2，3中执行</div><div class="line">$ scp root@Hadoop1:~/.ssh/id_dsa.pub  ~/.ssh/master_dsa.pub</div><div class="line"># 将Hadoop2，3中的公钥复制进去</div><div class="line">$ cat ~/.ssh/master_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># 在Hadoop1中测试是否可以免密码登录Hadoop1，2，3（第一次应该只需要输入yes）</div><div class="line">$ ssh root@Hadoop1</div><div class="line">$ ssh root@Hadoop2</div><div class="line">$ ssh root@Hadoop3</div></pre></td></tr></table></figure>
-<h5 id="配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3"><a href="#配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3" class="headerlink" title="配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3"></a>配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在Hadoop1中执行</div><div class="line">$ scp -r /data/hadoop-2.7.1 root@Hadoop2:/data/</div><div class="line">$ scp -r /data/hadoop-2.7.1 root@Hadoop3:/data/</div></pre></td></tr></table></figure>
-<h5 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 初始化namenode</div><div class="line">$ ./bin/hdfs namenode -format</div><div class="line"></div><div class="line"># 初始化好namenode后，hadoop会自动建好对应hdfs-site.xml的namenode配置的文件路径</div><div class="line">$ ll /data/hdfs/name/current/total 24drwxrwxr-x 2 yunyu yunyu 4096 Sep 10 18:07 ./drwxrwxr-x 3 yunyu yunyu 4096 Sep 10 18:07 ../-rw-rw-r-- 1 yunyu yunyu  352 Sep 10 18:07 fsimage_0000000000000000000-rw-rw-r-- 1 yunyu yunyu   62 Sep 10 18:07 fsimage_0000000000000000000.md5-rw-rw-r-- 1 yunyu yunyu    2 Sep 10 18:07 seen_txid-rw-rw-r-- 1 yunyu yunyu  202 Sep 10 18:07 VERSION</div><div class="line"></div><div class="line"># 启动hdfs服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line">Starting namenodes on [hadoop1]hadoop1: starting namenode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-namenode-ubuntu.outhadoop2: starting datanode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-datanode-ubuntu.outhadoop3: starting datanode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-datanode-ubuntu.outStarting secondary namenodes [hadoop1]hadoop1: starting secondarynamenode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-secondarynamenode-ubuntu.out</div><div class="line"></div><div class="line"># 使用jps检查启动的服务，可以看到NameNode和SecondaryNameNode已经启动</div><div class="line">$ jps20379 SecondaryNameNode20570 Jps20106 NameNode</div><div class="line"></div><div class="line"># 这时候在Hadoop2和Hadoop3节点上使用jps查看，DataNode已经启动</div><div class="line">$ jps16392 Jps16024 DataNode</div><div class="line"></div><div class="line"># 在Hadoop2和Hadoop3节点上，也会自动建好对应hdfs-site.xml的datanode配置的文件路径</div><div class="line">$ ll /data/hdfs/data/current/total 16drwxrwxr-x 3 yunyu yunyu 4096 Sep 10 18:10 ./drwx------ 3 yunyu yunyu 4096 Sep 10 18:10 ../drwx------ 4 yunyu yunyu 4096 Sep 10 18:10 BP-1965589257-127.0.1.1-1473502067891/-rw-rw-r-- 1 yunyu yunyu  229 Sep 10 18:10 VERSION</div><div class="line"></div><div class="line"># 启动yarn服务</div><div class="line">$ ./sbin/start-yarn.sh</div><div class="line">starting yarn daemonsstarting resourcemanager, logging to /data/hadoop-2.7.1/logs/yarn-yunyu-resourcemanager-ubuntu.outhadoop3: starting nodemanager, logging to /data/hadoop-2.7.1/logs/yarn-yunyu-nodemanager-ubuntu.outhadoop2: starting nodemanager, logging to /data/hadoop-2.7.1/logs/yarn-yunyu-nodemanager-ubuntu.out</div><div class="line"></div><div class="line"># 使用jps检查启动的服务，可以看到ResourceManager已经启动</div><div class="line">$ jps21653 Jps20379 SecondaryNameNode20106 NameNode21310 ResourceManager</div><div class="line"></div><div class="line"># 这时候在Hadoop2和Hadoop3节点上使用jps查看，NodeManager已经启动</div><div class="line">$ jps16946 NodeManager17235 Jps16024 DataNode</div><div class="line"></div><div class="line"># 启动jobhistory服务，默认jobhistory在使用start-all.sh是不启动的，所以即使使用start-all.sh也要手动启动jobhistory服务</div><div class="line">$ ./sbin/mr-jobhistory-daemon.sh start historyserver</div><div class="line">starting historyserver, logging to /data/hadoop-2.7.1/logs/mapred-yunyu-historyserver-ubuntu.out</div><div class="line"></div><div class="line"># 使用jps检查启动的服务，可以看到JobHistoryServer已经启动</div><div class="line">$ jps21937 Jps20379 SecondaryNameNode20106 NameNode21863 JobHistoryServer21310 ResourceManager</div></pre></td></tr></table></figure>
-<p>注意：使用start-all.sh启动已经不再被推荐使用，所以这里使用的是Hadoop推荐的分开启动，分别启动start-dfs.sh和start-yarn.sh，所以看一些比较就的Hadoop版本安装的文章可能会用start-all.sh启动</p>
-<h5 id="停止服务"><a href="#停止服务" class="headerlink" title="停止服务"></a>停止服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 停止hdfs服务</div><div class="line">$ ./sbin/stop-dfs.sh</div><div class="line"></div><div class="line"># 停止yarn服务</div><div class="line">$ ./sbin/stop-yarn.sh</div><div class="line"></div><div class="line"># 停止jobhistory服务</div><div class="line">$ ./sbin/mr-jobhistory-daemon.sh stop historyserver</div></pre></td></tr></table></figure>
-<h5 id="验证Hadoop集群的Web服务"><a href="#验证Hadoop集群的Web服务" class="headerlink" title="验证Hadoop集群的Web服务"></a>验证Hadoop集群的Web服务</h5><ul>
-<li><p>验证NameNode的Web服务能访问，浏览器访问<a href="http://192.168.1.119:50070" target="_blank" rel="external">http://192.168.1.119:50070</a><br><img src="http://img.blog.csdn.net/20160910184234348?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-</li>
-<li><p>验证ResourceManager的Web服务能访问，浏览器访问<a href="http://192.168.1.119:8088" target="_blank" rel="external">http://192.168.1.119:8088</a><br><img src="http://img.blog.csdn.net/20160910184156566?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-</li>
-<li><p>验证MapReduce JobHistory Server的Web服务能访问，浏览器访问<a href="http://192.168.1.119:19888" target="_blank" rel="external">http://192.168.1.119:19888</a><br><img src="http://img.blog.csdn.net/20160910184251708?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-</li>
-</ul>
-<h5 id="验证HDFS文件系统"><a href="#验证HDFS文件系统" class="headerlink" title="验证HDFS文件系统"></a>验证HDFS文件系统</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 查看根目录下的文件</div><div class="line">$ hdfs dfs -ls /Found 1 itemsdrwxrwx---   - yunyu supergroup          0 2016-09-10 03:15 /data</div><div class="line"></div><div class="line"># 创建temp目录</div><div class="line">$ hdfs dfs -mkdir /temp</div><div class="line"></div><div class="line"># 再次查看根目录下的文件，可以看到temp目录</div><div class="line">$ hdfs dfs -ls /Found 2 itemsdrwxrwx---   - yunyu supergroup          0 2016-09-10 03:15 /datadrwxr-xr-x   - yunyu supergroup          0 2016-09-10 03:45 /temp</div><div class="line"></div><div class="line"># 可以查看之前mapred-site.xml中配置的mapreduce作业执行中的目录和作业已完成的目录</div><div class="line">$ hdfs dfs -ls /data/history/Found 2 itemsdrwxrwx---   - yunyu supergroup          0 2016-09-10 03:15 /data/history/donedrwxrwxrwt   - yunyu supergroup          0 2016-09-10 03:15 /data/history/done_intermediate</div></pre></td></tr></table></figure>
-<h3 id="需要注意的地方"><a href="#需要注意的地方" class="headerlink" title="需要注意的地方"></a>需要注意的地方</h3><p>网上一些Hadoop集群安装相关文章中，有一部分还是Hadoop老版本的配置，所以有些迷惑，像JobTracker，TaskTracker这些概念是Hadoop老版本才有的，新版本中使用ResourceManager和NodeManager替代了他们。后续的章节会详细的介绍Hadoop的相关原理以及新老版本的区别。</p>
-<h3 id="使用HDFS默认端口号8020配置"><a href="#使用HDFS默认端口号8020配置" class="headerlink" title="使用HDFS默认端口号8020配置"></a>使用HDFS默认端口号8020配置</h3><p>修改core-site.xml配置文件如下（即把端口号去掉）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;  &lt;property&gt;    &lt;name&gt;fs.defaultFS&lt;/name&gt;    &lt;value&gt;hdfs://hadoop1&lt;/value&gt;  &lt;/property&gt;&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>启动HDFS服务之后，分别在Hadoop1，2，3三台服务器上查看8020端口，发现HDFS默认使用的是8020端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 启动HDFS服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line"></div><div class="line"># Hadoop1中查看8020端口</div><div class="line">$ lsof -i:8020COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAMEjava    5112 yunyu  197u  IPv4  26041      0t0  TCP hadoop1:8020 (LISTEN)java    5112 yunyu  207u  IPv4  27568      0t0  TCP hadoop1:8020-&gt;hadoop2:34867 (ESTABLISHED)java    5112 yunyu  208u  IPv4  26096      0t0  TCP hadoop1:8020-&gt;hadoop3:59852 (ESTABLISHED)java    5112 yunyu  209u  IPv4  29792      0t0  TCP hadoop1:8020-&gt;hadoop1:45542 (ESTABLISHED)java    5383 yunyu  196u  IPv4  28826      0t0  TCP hadoop1:45542-&gt;hadoop1:8020 (ESTABLISHED)</div><div class="line"></div><div class="line"># Hadoop2中查看8020端口</div><div class="line">$ lsof -i:8020COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAMEjava    4609 yunyu  234u  IPv4  24013      0t0  TCP hadoop2:34867-&gt;hadoop1:8020 (ESTABLISHED)</div><div class="line"></div><div class="line"># Hadoop3中查看8020端口</div><div class="line">$ lsof -i:8020COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAMEjava    4452 yunyu  234u  IPv4  23413      0t0  TCP hadoop3:59852-&gt;hadoop1:8020 (ESTABLISHED)</div></pre></td></tr></table></figure>
-<p>访问HDFS集群的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 访问本机的HDFS集群</div><div class="line">hdfs dfs -ls /</div><div class="line"></div><div class="line"># 可以指定host和port访问远程的HDFS集群（这里使用hostname和port访问本地集群）</div><div class="line">hdfs dfs -ls hdfs://Hadoop1:8020/</div><div class="line"></div><div class="line"># 如果使用的默认端口号8020，也可以不指定端口号访问</div><div class="line">hdfs dfs -ls hdfs://Hadoop1/</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/ClusterSetup.html" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/ClusterSetup.html</a></li>
-<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/core-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/core-default.xml</a></li>
-<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml</a></li>
-<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml</a></li>
-<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml</a></li>
-<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#secondarynamenode" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#secondarynamenode</a></li>
-<li><a href="http://www.cnblogs.com/luogankun/p/4019303.html" target="_blank" rel="external">http://www.cnblogs.com/luogankun/p/4019303.html</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-yarn/#_3.1_hadoop_0.23.0" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-yarn/#_3.1_hadoop_0.23.0</a></li>
-<li><a href="http://blog.chinaunix.net/uid-25266990-id-3900239.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-25266990-id-3900239.html</a></li>
-<li><a href="http://blog.csdn.net/jxnu_xiaobing/article/details/46931693" target="_blank" rel="external">http://blog.csdn.net/jxnu_xiaobing/article/details/46931693</a></li>
-<li><a href="http://www.cnblogs.com/liuling/archive/2013/06/16/2013-6-16-01.html" target="_blank" rel="external">http://www.cnblogs.com/liuling/archive/2013/06/16/2013-6-16-01.html</a></li>
-<li><a href="http://www.cnblogs.com/luogankun/p/4019303.html" target="_blank" rel="external">http://www.cnblogs.com/luogankun/p/4019303.html</a></li>
-<li><a href="http://jacoxu.com/?p=961" target="_blank" rel="external">http://jacoxu.com/?p=961</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop原理架构体系/">Hadoop原理架构体系</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker/Docker实战（二十）Docker镜像的导入导出" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/04/Docker/Docker实战（二十）Docker镜像的导入导出/" class="article-date">
-  	<time datetime="2016-09-04T03:30:19.000Z" itemprop="datePublished">2016-09-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/04/Docker/Docker实战（二十）Docker镜像的导入导出/">Docker实战（二十）Docker镜像的导入导出</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Docker镜像导入导出方式"><a href="#Docker镜像导入导出方式" class="headerlink" title="Docker镜像导入导出方式"></a>Docker镜像导入导出方式</h2><p>最近公司需要做Docker私有化部署，需要将本地安装好的Docker容器部署到客户的环境，这里遇到了一些问题客户的服务器不能连接外网，无法在线做Docker镜像的构建，所以需要只能通过导入导出镜像的方式来做。下面是我总结的Docker镜像导入导出方式。</p>
-<p>Docker提供了两种方式的导入导出：</p>
-<ul>
-<li>load/save方式导入导出镜像<ul>
-<li>docker save：来导出本地镜像库中指定的镜像存储成文件</li>
-<li>docker load：来导入镜像存储文件到本地镜像库</li>
-</ul>
-</li>
-<li>import/export方式导入导出容器<ul>
-<li>docker export：来导出一个容器快照到本地文件</li>
-<li>docker import：来导入一个容器快照文件到本地镜像库</li>
-</ul>
-</li>
-<li>区别：容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积也要大。此外，从容器快照文件导入时可以重新指定标签等元数据信息。我个人比较推荐用load/save方式，这样所有之前的镜像都会存在，只是比较占用空间。</li>
-</ul>
-<h3 id="Docker镜像save-load方式"><a href="#Docker镜像save-load方式" class="headerlink" title="Docker镜像save/load方式"></a>Docker镜像save/load方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$ sudo docker imagesREPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1                  20e4011b9286        2 minutes ago       1.658 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line"># 导出birdben/zookeeper:v1镜像到zookeeper_image.tar文件</div><div class="line">$ sudo docker save birdben/zookeeper:v1 &gt; zookeeper_image.tar</div><div class="line"></div><div class="line"># 删除之前的birdben/zookeeper:v1镜像</div><div class="line">$ sudo docker rmi &quot;birdben/zookeeper:v1&quot;</div><div class="line"></div><div class="line"># 导入zookeeper_image.tar镜像文件</div><div class="line">$ sudo docker load &lt; zookeeper_image.tar</div><div class="line"></div><div class="line"># 再次查看所有的镜像，可以看到birdben/zookeeper:v1又回来了</div><div class="line"># 注意：这里import回来的ImageID也和原来是一样的</div><div class="line">$ sudo docker imagesREPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1                  20e4011b9286        6 minutes ago       1.658 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line"># 这时候在查看birdben/zookeeper:v1镜像的tree结构，发现之前所有的镜像历史都在</div><div class="line">$ sudo docker images --tree</div><div class="line">├─3690474eb5b4 Virtual Size: 0 B│ └─b200b2d33d98 Virtual Size: 196.7 MB│   └─3fbd5972aaac Virtual Size: 196.7 MB│     └─d83a55af4e75 Virtual Size: 196.7 MB Tags: centos:7, centos:latest│       └─1df8e9ff4de7 Virtual Size: 196.7 MB│         └─b37af9ce019a Virtual Size: 196.7 MB│           └─7858b8d134c6 Virtual Size: 403.3 MB│             └─c872974343d2 Virtual Size: 403.3 MB│               └─d4c0e59dc712 Virtual Size: 403.3 MB│                 └─30c3076be68f Virtual Size: 556.8 MB│                   └─0e66c066e1de Virtual Size: 571 MB│                     └─69f8ec0b7932 Virtual Size: 889.1 MB│                       └─7cfcd6d4c6e7 Virtual Size: 911.4 MB│                         └─c2bc26e11781 Virtual Size: 911.4 MB│                           └─31d728531f9a Virtual Size: 911.4 MB│                             └─6434457046ec Virtual Size: 911.4 MB│                               └─651290e3ddef Virtual Size: 911.4 MB│                                 └─d99d028fca92 Virtual Size: 911.6 MB│                                   └─5d4d89731a7d Virtual Size: 911.6 MB│                                     └─a530df3b220c Virtual Size: 925.6 MB│                                       └─39381e27bf53 Virtual Size: 1.232 GB│                                         └─cda80cbe8e7f Virtual Size: 1.276 GB│                                           └─287a8cf1090c Virtual Size: 1.289 GB│                                             └─d5672fcec9a4 Virtual Size: 1.289 GB│                                               └─e63cb61422e1 Virtual Size: 1.289 GB│                                                 └─aa8f6ecc78ca Virtual Size: 1.303 GB│                                                   └─b44f1969877f Virtual Size: 1.303 GB│                                                     └─d17184db904f Virtual Size: 1.303 GB│                                                       └─7df628e7fd36 Virtual Size: 1.303 GB│                                                         └─dfe01b409095 Virtual Size: 1.303 GB│                                                           └─238718f45aa6 Virtual Size: 1.303 GB│                                                             └─a678149d4c34 Virtual Size: 1.303 GB│                                                               └─d3f7fb8e3bc2 Virtual Size: 1.658 GB│                                                                 └─ff152402a43c Virtual Size: 1.658 GB│                                                                   └─fdf82aa49b89 Virtual Size: 1.658 GB│                                                                     └─0dbfccd66315 Virtual Size: 1.658 GB│                                                                       └─4cae49ef2ecb Virtual Size: 1.658 GB Tags: birdben/zookeeper:v1</div></pre></td></tr></table></figure>
-<h3 id="Docker镜像import-export方式"><a href="#Docker镜像import-export方式" class="headerlink" title="Docker镜像import/export方式"></a>Docker镜像import/export方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ sudo docker images</div><div class="line">REPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1       	        20e4011b9286        11 seconds ago      1.658 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line">$ sudo docker ps -aCONTAINER ID        IMAGE                 COMMAND             CREATED             STATUS              PORTS                                            NAMESf99771de17b0        20e4011b9286:latest   &quot;/bin/bash&quot;         6 seconds ago       Up 5 seconds        0.0.0.0:3306-&gt;3306/tcp, 0.0.0.0:8080-&gt;8080/tcp   birdben/zookeeper:v1</div><div class="line"></div><div class="line"># 导出容器ID为f99771de17b0的Docker容器</div><div class="line">$ sudo docker export f99771de17b0 &gt; container.tar.gz</div><div class="line"></div><div class="line"># 删除之前的镜像birdben/zookeeper:v1</div><div class="line">$ sudo docker rmi &quot;birdben/zookeeper:v1&quot;</div><div class="line"></div><div class="line"># 导入容器文件container.tar.gz</div><div class="line">$ cat container.tar.gz | sudo docker import - birdben/zookeeper:v1</div><div class="line"></div><div class="line"># 注意：这里import回来的ImageID也和原来不一样了</div><div class="line">$ sudo docker imagesREPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1                  e80c1046dc12        9 minutes ago       1.119 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line"># 这时候在查看birdben/zookeeper:v1镜像的tree结构，发现只有最有的镜像，没有以前的历史镜像</div><div class="line">$ sudo docker images --treeWarning: &apos;--tree&apos; is deprecated, it will be removed soon. See usage.├─e80c1046dc12 Virtual Size: 1.119 GB Tags: birdben/zookeeper:v1├─f1b49dd0c243 Virtual Size: 126.6 MB│ └─008ecf8686ec Virtual Size: 126.6 MB│   └─fd74137ff5ae Virtual Size: 126.6 MB│     └─35371c8124e2 Virtual Size: 126.6 MB│       └─99dc4d8f603d Virtual Size: 126.6 MB│         └─37b164bb431e Virtual Size: 126.6 MB Tags: ubuntu:latest</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://segmentfault.com/a/1190000000586840" target="_blank" rel="external">https://segmentfault.com/a/1190000000586840</a></li>
-<li><a href="http://www.sxt.cn/u/756/blog/5339" target="_blank" rel="external">http://www.sxt.cn/u/756/blog/5339</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（八）Flume解析自定义日志" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/" class="article-date">
-  	<time datetime="2016-09-03T08:11:01.000Z" itemprop="datePublished">2016-09-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/">Flume学习（八）Flume解析自定义日志</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
-<li>JDK1.7.0_79</li>
-<li>Flume1.6.0</li>
-<li>Elasticsearch2.0.0</li>
-</ul>
-<p>这里是基于上一篇《Flume学习（七）Flume整合Elasticsearch2.x》解析自定义的日志格式</p>
-<h3 id="解析的日志格式"><a href="#解析的日志格式" class="headerlink" title="解析的日志格式"></a>解析的日志格式</h3><p>这里由于篇幅原因，我简单列举了两条典型的日志格式</p>
-<h4 id="日志文件格式"><a href="#日志文件格式" class="headerlink" title="日志文件格式"></a>日志文件格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/settings&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;65768768252343&quot;,&quot;ip&quot;:&quot;10.190.1.67&quot;,&quot;server_timestamp&quot;:1463713488740&#125;]</div><div class="line">[&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/search&quot;,&quot;errorStatus&quot;:200,&quot;errorCode&quot;:&quot;0000&quot;,&quot;errorMsg&quot;:&quot;操作成功&quot;,&quot;status&quot;:&quot;failed&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app002&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;4543657687878989&quot;,&quot;ip&quot;:&quot;10.190.1.66&quot;,&quot;server_timestamp&quot;:1463650301701&#125;]</div></pre></td></tr></table></figure>
-<p>上一篇已经讲过了Flume解析日志格式主要使用interceptors，interceptors本身又支持多种type，这里我们主要介绍regex_extractor，即正则表达式匹配方式。下面的正则表达式可以匹配上面的两种格式的日志，上面两种日志格式的主要区别就是errorStatus，errorCode，errorMsg这三个字段有可能不存在，当没有报错的时候，这三个字段是不需要的。</p>
-<h4 id="日志解析正则表达式"><a href="#日志解析正则表达式" class="headerlink" title="日志解析正则表达式"></a>日志解析正则表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;name&quot;:(.*),&quot;request&quot;:(.*),(&quot;errorStatus&quot;:(.*),)?(&quot;errorCode&quot;:(.*),)?(&quot;errorMsg&quot;:(.*),)?&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div></pre></td></tr></table></figure>
-<p>但是在Flume的interceptors的regex表达式中配置上面的正则表达式会报错，我自己分析的原因是Flume的interceptor.serializers需要指定正则表达式拆分后的对应的字段和值，没有办法做到根据正则表达式动态处理。（这里我的分析可能不一定对，如果有疑问我们可以私下交流）</p>
-<p>下面是我的解决办法，我根据上面两种日志格式写了两个interceptor，分别是es_interceptor和es_error_interceptor，每个interceptor对应不同的正则表达式，分别用来处理上面两种不同的日志格式。这样interceptor.serializers就能根据对应的正则表达式格式解析出来日志中对应的字段和值，再插入到ES索引中。</p>
-<h4 id="flume-conf配置文件"><a href="#flume-conf配置文件" class="headerlink" title="flume.conf配置文件"></a>flume.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 原始的正则表达式：&quot;name&quot;:(.*),&quot;request&quot;:(.*),(&quot;errorStatus&quot;:(.*),)?(&quot;errorCode&quot;:(.*),)?(&quot;errorMsg&quot;:(.*),)?&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor es_error_interceptor</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;name&quot;:(.*),&quot;request&quot;:(.*),&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6 s7 s8 s9 s10</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = name</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = request</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = status</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = uid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = did</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = duid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s7.name = ua</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s8.name = device_id</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s9.name = ip</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s10.name = server_timestamp</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.regex = &quot;name&quot;:(.*),&quot;request&quot;:(.*),&quot;errorStatus&quot;:(.*),&quot;errorCode&quot;:(.*),&quot;errorMsg&quot;:(.*),&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers = s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s1.name = name</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s2.name = request</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s3.name = errorStatus</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s4.name = errorCode</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s5.name = errorMsg</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s6.name = status</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s7.name = uid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s8.name = did</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s9.name = duid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s10.name = ua</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s11.name = device_id</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s12.name = ip</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s13.name = server_timestamp</div></pre></td></tr></table></figure>
-<h4 id="ES的mapping如下"><a href="#ES的mapping如下" class="headerlink" title="ES的mapping如下"></a>ES的mapping如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;hb&quot;: &#123;</div><div class="line">      &quot;properties&quot;: &#123;</div><div class="line">        &quot;@fields&quot;: &#123;</div><div class="line">          &quot;properties&quot;: &#123;</div><div class="line">            &quot;uid&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;duid&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;status&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;request&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;name&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorCode&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;ua&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;did&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorMsg&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;device_id&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;server_timestamp&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;ip&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorStatus&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">        &quot;@message&quot;: &#123;</div><div class="line">          &quot;type&quot;: &quot;string&quot;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="ES索引中的日志信息"><a href="#ES索引中的日志信息" class="headerlink" title="ES索引中的日志信息"></a>ES索引中的日志信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;test_log_index-2016-09-03&quot;,</div><div class="line">	&quot;_type&quot;: &quot;test&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AVbvrWIPe8IcP1cQoXS2&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;@message&quot;: &quot;[</div><div class="line">			&#123;&quot;name&quot;:&quot;1&quot;,&quot;request&quot;:&quot;GET /api/test/settings&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:,&quot;ip&quot;:&quot;10.190.1.67&quot;,&quot;server_timestamp&quot;:1463713488740&#125;</div><div class="line">		]&quot;,</div><div class="line">		&quot;@fields&quot;: &#123;</div><div class="line">			&quot;uid&quot;: &quot;889&quot;,</div><div class="line">			&quot;duid&quot;: &quot;&quot;app001&quot;&quot;,</div><div class="line">			&quot;status&quot;: &quot;&quot;succeeded&quot;&quot;,</div><div class="line">			&quot;name&quot;: &quot;&quot;1&quot;&quot;,</div><div class="line">			&quot;request&quot;: &quot;&quot;GET /api/test/settings&quot;&quot;,</div><div class="line">			&quot;did&quot;: &quot;13&quot;,</div><div class="line">			&quot;ua&quot;: &quot;&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;&quot;,</div><div class="line">			&quot;device_id&quot;: &quot;&quot;,</div><div class="line">			&quot;server_timestamp&quot;: &quot;1463713488740&quot;,</div><div class="line">			&quot;ip&quot;: &quot;&quot;10.190.1.67&quot;&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;test_log_index-2016-09-03&quot;,</div><div class="line">	&quot;_type&quot;: &quot;test&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AVbvrWIPe8IcP1cQoXS3&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;@message&quot;: &quot;[</div><div class="line">			&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/search&quot;,&quot;errorStatus&quot;:200,&quot;errorCode&quot;:&quot;0000&quot;,&quot;errorMsg&quot;:&quot;操作成功&quot;,&quot;status&quot;:&quot;failed&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;4543657687878989&quot;,&quot;ip&quot;:&quot;10.190.1.66&quot;,&quot;server_timestamp&quot;:1463650301701&#125;</div><div class="line">		]&quot;,</div><div class="line">		&quot;@fields&quot;: &#123;</div><div class="line">			&quot;uid&quot;: &quot;889&quot;,</div><div class="line">			&quot;status&quot;: &quot;&quot;failed&quot;&quot;,</div><div class="line">			&quot;did&quot;: &quot;13&quot;,</div><div class="line">			&quot;device_id&quot;: &quot;&quot;4543657687878989&quot;&quot;,</div><div class="line">			&quot;errorMsg&quot;: &quot;&quot;操作成功&quot;&quot;,</div><div class="line">			&quot;errorStatus&quot;: &quot;200&quot;,</div><div class="line">			&quot;ip&quot;: &quot;&quot;10.190.1.66&quot;&quot;,</div><div class="line">			&quot;duid&quot;: &quot;&quot;app001&quot;&quot;,</div><div class="line">			&quot;request&quot;: &quot;&quot;GET /api/test/search&quot;&quot;,</div><div class="line">			&quot;name&quot;: &quot;&quot;rp.api.call&quot;&quot;,</div><div class="line">			&quot;errorCode&quot;: &quot;&quot;0000&quot;&quot;,</div><div class="line">			&quot;ua&quot;: &quot;&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;&quot;,</div><div class="line">			&quot;server_timestamp&quot;: &quot;1463650301701&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>个人觉得这样的做法并不理想，因为日志格式肯定会多种多样，如果每种日志格式都需要不同的正则表达式来处理，显得太过笨重和冗余，因为刚接触Flume暂时没有发现有更好的做法，日后发现有更好的处理方式会重新更新上来。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
 	</div>
 
 

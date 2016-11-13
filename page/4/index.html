@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,416 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Flume/Flume学习（七）Flume整合Elasticsearch2.x" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/27/Flume/Flume学习（七）Flume整合Elasticsearch2.x/" class="article-date">
+  	<time datetime="2016-08-27T08:17:39.000Z" itemprop="datePublished">2016-08-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/27/Flume/Flume学习（七）Flume整合Elasticsearch2.x/">Flume学习（七）Flume整合Elasticsearch2.x</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
+<li>JDK1.7.0_79</li>
+<li>Flume1.6.0</li>
+<li>Elasticsearch2.0.0</li>
+</ul>
+<h3 id="Flume不支持Elasticsearch2-x版本"><a href="#Flume不支持Elasticsearch2-x版本" class="headerlink" title="Flume不支持Elasticsearch2.x版本"></a>Flume不支持Elasticsearch2.x版本</h3><p>目前官方Flume最新的版本是1.6.0，该版本只支持Elasticsearch1.7.x的版本，暂时不支持Elasticsearch2.x版本，因为Elasticsearch2.x版本做了比较大的改动，很多API都已经废弃不用了，具体可以参考下面的连接</p>
+<ul>
+<li><a href="https://github.com/elastic/elasticsearch/issues/14187">https://github.com/elastic/elasticsearch/issues/14187</a></li>
+</ul>
+<h3 id="第三方ElasticsearchSink2支持2-x版本"><a href="#第三方ElasticsearchSink2支持2-x版本" class="headerlink" title="第三方ElasticsearchSink2支持2.x版本"></a>第三方ElasticsearchSink2支持2.x版本</h3><p>这里我找到了一个第三方开源的FlumeSink插件来支持Elasticsearch2.x版本</p>
+<ul>
+<li><a href="https://github.com/lucidfrontier45/ElasticsearchSink2">https://github.com/lucidfrontier45/ElasticsearchSink2</a></li>
+</ul>
+<p>但是这个项目是使用Gradle编译打包的，所以下面先简单介绍下Gradle的安装和使用</p>
+<p>我这里使用的Mac，所以安装Gradle很简单。但是Gradle是依赖于JVM的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ brew install gradle</div><div class="line">$ gradle -v</div></pre></td></tr></table></figure>
+<p>然后从github下载ElasticsearchSink2的源代码，并且导入到idea中，然后执行下面gradle命令构建项目（下面这两个脚本是ElasticsearchSink2项目自带的），会在ElasticsearchSink2/build/libs/目录下生成对应的jar包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 构建标准的jar包</div><div class="line">$ ./gradlew build</div><div class="line"></div><div class="line"># 构建包含Elasticsearch依赖的jar包</div><div class="line">$ ./gradlew assembly</div></pre></td></tr></table></figure>
+<p>添加刚才构建好的elasticsearch-sink2-1.0.jar到Flume的classpath或者是Flume的lib目录，删除Flume的lib目录下的guava-<em>.jar，jackson-core-</em>.jar。</p>
+<h3 id="具体的配置文件"><a href="#具体的配置文件" class="headerlink" title="具体的配置文件"></a>具体的配置文件</h3><h4 id="Flume-Collector端的flume-collector-es2-conf配置"><a href="#Flume-Collector端的flume-collector-es2-conf配置" class="headerlink" title="Flume Collector端的flume_collector_es2.conf配置"></a>Flume Collector端的flume_collector_es2.conf配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 127.0.0.1</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;([^,^\&quot;]+)\&quot;:\&quot;([^:^\&quot;]+)\&quot;)|(\&quot;([^,^\&quot;]+)\&quot;:([\\d]+))</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\\d):(\\d):(\\d):(\\d):(\\d):(\\d)</div><div class="line"></div><div class="line"># mapping不正确没有匹配成功</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div><div class="line"># mapping正确，数据匹配不正确包含了多余的字段名</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div><div class="line"># mapping正确，数据也正确（&#123;&#125;需要转义，转义符是\\）</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = aaa</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = bbb</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = s3</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = s4</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = s5</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = s6</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = com.frontier45.flume.sink.elasticsearch2.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 127.0.0.1:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = ben-es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = com.frontier45.flume.sink.elasticsearch2.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
+<h4 id="flume-collector-es2-conf这里的配置需要修改"><a href="#flume-collector-es2-conf这里的配置需要修改" class="headerlink" title="flume_collector_es2.conf这里的配置需要修改"></a>flume_collector_es2.conf这里的配置需要修改</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sink.type = com.frontier45.flume.sink.elasticsearch2.ElasticSearchSink</div><div class="line">sink.serializer = com.frontier45.flume.sink.elasticsearch2.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
+<h4 id="Flume-Agent端的flume-agent-file-conf配置"><a href="#Flume-Agent端的flume-agent-file-conf配置" class="headerlink" title="Flume Agent端的flume_agent_file.conf配置"></a>Flume Agent端的flume_agent_file.conf配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">agent3.sources = command-logfile-source</div><div class="line">agent3.channels = ch3</div><div class="line">agent3.sinks = flume-avro-sink</div><div class="line"></div><div class="line">agent3.sources.command-logfile-source.channels = ch3</div><div class="line">agent3.sources.command-logfile-source.type = exec</div><div class="line">agent3.sources.command-logfile-source.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agent3.channels.ch3.type = memory</div><div class="line">agent3.channels.ch3.capacity = 1000</div><div class="line">agent3.channels.ch3.transactionCapacity = 100</div><div class="line"></div><div class="line">agent3.sinks.flume-avro-sink.channel = ch3</div><div class="line">agent3.sinks.flume-avro-sink.type = avro</div><div class="line">agent3.sinks.flume-avro-sink.hostname = 127.0.0.1</div><div class="line">agent3.sinks.flume-avro-sink.port = 41414</div></pre></td></tr></table></figure>
+<h4 id="启动ES服务"><a href="#启动ES服务" class="headerlink" title="启动ES服务"></a>启动ES服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/elasticseach -d</div></pre></td></tr></table></figure>
+<h4 id="启动Flume-Collector端"><a href="#启动Flume-Collector端" class="headerlink" title="启动Flume Collector端"></a>启动Flume Collector端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_collector_es2.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
+<h4 id="启动Flume-Agent端"><a href="#启动Flume-Agent端" class="headerlink" title="启动Flume Agent端"></a>启动Flume Agent端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_agent_file.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
+<p>启动Flume Agent可能会遇到如下的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2016-08-27 14:25:58,045 (lifecycleSupervisor-1-1) [ERROR - org.apache.flume.lifecycle.LifecycleSupervisor$MonitorRunnable.run(LifecycleSupervisor.java:253)] Unable to start SinkRunner: &#123; policy:org.apache.flume.sink.DefaultSinkProcessor@76d45adb counterGroup:&#123; name:null counters:&#123;&#125; &#125; &#125; - Exception follows.</div><div class="line">java.lang.NoSuchFieldError: LUCENE_5_3_1</div><div class="line">	at org.elasticsearch.Version.&lt;clinit&gt;(Version.java:279)</div><div class="line">	at org.elasticsearch.client.transport.TransportClient$Builder.build(TransportClient.java:131)</div><div class="line">	at com.frontier45.flume.sink.elasticsearch2.client.ElasticSearchTransportClient.openClient(ElasticSearchTransportClient.java:198)</div></pre></td></tr></table></figure>
+<p>出现上面的错误是因为lucene的版本不对，这里我开始尝试安装的是下面的几个版本：</p>
+<ul>
+<li>Elasticsearch-2.2.2：没有选择Elasticsearch-2.2.2版本是因为ik分词插件没有对应的版本</li>
+<li>Elasticsearch-2.2.1：没有选择Elasticsearch-2.2.1版本是因为报错没有找到LUCENE_5_3_1对应的Lucene-5.3.1版本，但是这里下载Elasticsearch-2.2.1版本中的jar包依赖的是Lucene-5.4.1版本，所以找不到Lucene-5.3.1版本。这里可能是因为ElasticsearchSink2的问题，暂时先换成ElasticsearchSink2使用的2.0.0版本，后续在尝试单独升级Lucene-5.4.1试试。</li>
+<li>Elasticsearch-2.0.0：ElasticsearchSink2使用的此版本</li>
+</ul>
+<p>检查一下ES源码的pom文件就可以知道ES和Lucene的版本对应关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>ES版本</th>
+<th>Lucene版本</th>
+<th>ik插件版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elasticsearch-2.2.2</td>
+<td>Lucene-5.4.1</td>
+<td>无</td>
+</tr>
+<tr>
+<td>Elasticsearch-2.2.1</td>
+<td>Lucene-5.4.1</td>
+<td>1.8.1</td>
+</tr>
+<tr>
+<td>Elasticsearch-2.0.0</td>
+<td>Lucene-5.2.1</td>
+<td>1.5.0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="检查ES的索引数据"><a href="#检查ES的索引数据" class="headerlink" title="检查ES的索引数据"></a>检查ES的索引数据</h4><p>如下图所示，ES的mapping和索引数据都正确，说明我们使用ElasticsearchSink2的方式成功将Flume1.6.0采集的command.log日志数据写入到Elasticsearch2.0.0版本里</p>
+<p><img src="http://img.blog.csdn.net/20160827161437043?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
+<p><img src="http://img.blog.csdn.net/20160827161523009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://github.com/lucidfrontier45/ElasticsearchSink2">https://github.com/lucidfrontier45/ElasticsearchSink2</a></li>
+<li><a href="https://github.com/elastic/elasticsearch/issues/14187">https://github.com/elastic/elasticsearch/issues/14187</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（六）Flume整合Elasticsearch1.x" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/26/Flume/Flume学习（六）Flume整合Elasticsearch1.x/" class="article-date">
+  	<time datetime="2016-08-26T15:11:56.000Z" itemprop="datePublished">2016-08-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/26/Flume/Flume学习（六）Flume整合Elasticsearch1.x/">Flume学习（六）Flume整合Elasticsearch1.x</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
+<li>JDK1.7.0_79</li>
+<li>Flume1.6.0</li>
+<li>Elasticsearch1.7.3</li>
+</ul>
+<h3 id="ES的安装和配置"><a href="#ES的安装和配置" class="headerlink" title="ES的安装和配置"></a>ES的安装和配置</h3><p>这里不做重点介绍，请参考之前关于ES的文章</p>
+<h3 id="Flume整合ES的相关配置"><a href="#Flume整合ES的相关配置" class="headerlink" title="Flume整合ES的相关配置"></a>Flume整合ES的相关配置</h3><h4 id="flume-collector-es1-conf配置文件"><a href="#flume-collector-es1-conf配置文件" class="headerlink" title="flume_collector_es1.conf配置文件"></a>flume_collector_es1.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 10.10.1.23</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = org.apache.flume.sink.elasticsearch.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 10.10.1.23:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = org.apache.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
+<p>然后我们先启动ES，然后再启动Flume来收集command.log日志并且写入到ES。</p>
+<h4 id="Flume启动报错"><a href="#Flume启动报错" class="headerlink" title="Flume启动报错"></a>Flume启动报错</h4><p>如果启动Flume的时候，报如下的错误，说明缺少ES相关依赖的jar包。需要将${ES_HOME}/lib/lucene-core-4.10.4.jar，${ES_HOME}/lib/elasticsearch-1.7.3.jar这两个包复制到${FLUME_HOME}/lib/下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">2016-08-25 10:37:50,303 (conf-file-poller-0) [ERROR - org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:145)] Failed to start agent because dependencies were not found in classpath. Error follows.</div><div class="line">java.lang.NoClassDefFoundError: org/elasticsearch/common/io/BytesStream</div><div class="line">	at java.lang.Class.forName0(Native Method)</div><div class="line">	at java.lang.Class.forName(Class.java:191)</div><div class="line">	at org.apache.flume.sink.elasticsearch.ElasticSearchSink.configure(ElasticSearchSink.java:286)</div><div class="line">	at org.apache.flume.conf.Configurables.configure(Configurables.java:41)</div><div class="line">	at org.apache.flume.node.AbstractConfigurationProvider.loadSinks(AbstractConfigurationProvider.java:413)</div><div class="line">	at org.apache.flume.node.AbstractConfigurationProvider.getConfiguration(AbstractConfigurationProvider.java:98)</div><div class="line">	at org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:140)</div><div class="line">	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)</div><div class="line">	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:304)</div><div class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:178)</div><div class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)</div><div class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</div><div class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: java.lang.ClassNotFoundException: org.elasticsearch.common.io.BytesStream</div><div class="line">	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)</div><div class="line">	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)</div><div class="line">	at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)</div><div class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)</div><div class="line">	... 14 more</div></pre></td></tr></table></figure>
+<h4 id="日志解析问题"><a href="#日志解析问题" class="headerlink" title="日志解析问题"></a>日志解析问题</h4><p>当command.log有日志不断输出时，我们会看到Flume控制台会不断收集到ES，但是在ES端查询command_index的mapping却和我们想象的mapping不太一样，这里我们需要解析command.log日志中的日志格式，将具体的日志字段解析出来并且对应ES mapping中的字段。我之前有用过ELK的方式来做command.log日志的收集，Logstash通过filter的grok表达式的方式来解析日志格式很简单，并且可以对收集的日志字段进行一些特殊处理（如：类型转换，删除字段，重命名字段等等）。在Flume里是通过Interceptors来实现Logstash的filter grok表达式功能的。</p>
+<p><img src="http://img.blog.csdn.net/20160825104414733?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="ES_Mapping"></p>
+<h4 id="Flume的Interceptors配置"><a href="#Flume的Interceptors配置" class="headerlink" title="Flume的Interceptors配置"></a>Flume的Interceptors配置</h4><p>下面是我们command.log的日志文件截取，可以看出我们command.log日志的格式比较简单。修改我们的flume_es.conf配置文件，添加interceptors的配置，指定正则表达式解析我们的日志格式。</p>
+<h5 id="command-log日志文件"><a href="#command-log日志文件" class="headerlink" title="command.log日志文件"></a>command.log日志文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">598  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:07:49&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;java -version&quot;&#125;</div><div class="line">598  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:07:49&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;java -version&quot;&#125;</div><div class="line">599  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:15:19&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;cd ~/dev/elasticsearch-1.7.3/config/&quot;&#125;</div><div class="line">600  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:15:21&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;sublime elasticsearch.yml &quot;&#125;</div><div class="line">515  &#123;&quot;TIME&quot;:&quot;2016-08-25 10:00:07&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;6601&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ls&quot;&#125;</div><div class="line">515  &#123;&quot;TIME&quot;:&quot;2016-08-25 10:00:07&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;6601&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ls&quot;&#125;</div></pre></td></tr></table></figure>
+<p>我擦，我被Flume的interceptors配置给坑了，官网给了一个interceptors的例子非常的简单，根本就不知道怎么支持我上面的日志格式（主要是我正则表达式学的太烂了）。感觉Flume对于日志的处理方面没有Logstash灵活易用。</p>
+<p>先来看一下官网给的interceptors例子吧</p>
+<p>If the Flume event body contained 1:2:3.4foobar5 and the following configuration was used</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># ()号中的是从日志记录中提取出来的value，这个value会对应serializers中定义的field名称</div><div class="line">a1.sources.r1.interceptors.i1.regex = (\\d):(\\d):(\\d)</div><div class="line">a1.sources.r1.interceptors.i1.serializers = s1 s2 s3</div><div class="line">a1.sources.r1.interceptors.i1.serializers.s1.name = one</div><div class="line">a1.sources.r1.interceptors.i1.serializers.s2.name = two</div><div class="line">a1.sources.r1.interceptors.i1.serializers.s3.name = three</div></pre></td></tr></table></figure>
+<p>The extracted event will contain the same body but the following headers will have been added one=&gt;1, two=&gt;2, three=&gt;3</p>
+<p>上面官网的例子就是从日志1:2:3.4foobar5中按照我们的格式用”:”号分割并且提取后面的1位数字，并且按照提取出来的值顺序对应字段名称为：one，two，three，最后转换出来的结果就是one=&gt;1, two=&gt;2, three=&gt;3</p>
+<p>但是我们上面的日志文件格式要稍微复杂一点，我们的日志一个json格式的字符串，所以第一次用Flume提取日志记录中的值还有点费事，我也是一边修改正则表达式，一边测试结果。</p>
+<h5 id="mapping不正确没有匹配成功"><a href="#mapping不正确没有匹配成功" class="headerlink" title="mapping不正确没有匹配成功"></a>mapping不正确没有匹配成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160825172129720?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
+<p><img src="http://img.blog.csdn.net/20160825172217307?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
+<h5 id="mapping正确，数据匹配不正确包含了多余的字段名"><a href="#mapping正确，数据匹配不正确包含了多余的字段名" class="headerlink" title="mapping正确，数据匹配不正确包含了多余的字段名"></a>mapping正确，数据匹配不正确包含了多余的字段名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160825172611373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
+<p><img src="http://img.blog.csdn.net/20160825172633442?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
+<h5 id="mapping正确，数据也正确（特殊字符需要转义，转义符是-）"><a href="#mapping正确，数据也正确（特殊字符需要转义，转义符是-）" class="headerlink" title="mapping正确，数据也正确（特殊字符需要转义，转义符是\）"></a>mapping正确，数据也正确（特殊字符需要转义，转义符是\）</h5><p>最后终于调试正确了，是因为我修改Flume的正则表达式改错了，发现es.log中的错误信息提示的bulk参数，我发现bulk的参数居然解析了两次时间字段{“TIME”:”2016-08-25 16:09:10”}，我们定义的aaa字段包含了TIME字段名还有value，但是bbb字段却只有TIME字段的value，而不是预想中第二个字段的值。所以这里我发现了一个很重要的规则，就是正则表达式中”()号”中的是从日志记录中提取出来的value，这个value会对应serializers中定义的field名称，我上一个表达式之所以会解析两边TIME字段就是因为正则表达式中带了两个”()号”，如：(TIME:(.*?))，这样就会把TIME的value提取出来一次，再把TIME:value这样的字符串当成值提取出来一次，所以就会出现上面的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">failed to execute bulk item (index) index &#123;[command_index-2016-08-25][logs][AVbAvyBwi0A7kguFbmpj], source[&#123;&quot;@message&quot;:537,&quot;@fields&quot;:&#123;&quot;aaa&quot;:&#123;&quot;TIME&quot;:&quot;2016-08-25 16:09:10&quot;&#125;,&quot;aaa&quot;:&quot;&#123;\&quot;TIME\&quot;:\&quot;2016-08-25 16:09:10\&quot;&quot;,&quot;s5&quot;:&quot;\&quot;LI\&quot;:\&quot;5573\&quot;&quot;,&quot;s6&quot;:&quot;\&quot;5573\&quot;&quot;,&quot;bbb&quot;:&quot;\&quot;2016-08-25 16:09:10\&quot;&quot;,&quot;s3&quot;:&quot;\&quot;HOSTNAME\&quot;:\&quot;localhost\&quot;&quot;,&quot;s4&quot;:&quot;\&quot;localhost\&quot;&quot;&#125;&#125;]&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160825164926247?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
+<p><img src="http://img.blog.csdn.net/20160825164958191?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
+<h5 id="flume-collector-es1-conf配置文件-1"><a href="#flume-collector-es1-conf配置文件-1" class="headerlink" title="flume_collector_es1.conf配置文件"></a>flume_collector_es1.conf配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 10.10.1.23</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;([^,^\&quot;]+)\&quot;:\&quot;([^:^\&quot;]+)\&quot;)|(\&quot;([^,^\&quot;]+)\&quot;:([\\d]+))</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\\d):(\\d):(\\d):(\\d):(\\d):(\\d)</div><div class="line"></div><div class="line"># mapping不正确没有匹配成功</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div><div class="line"># mapping正确，数据匹配不正确包含了多余的字段名</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div><div class="line"># mapping正确，数据也正确（&#123;&#125;需要转义，转义符是\\）</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = aaa</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = bbb</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = s3</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = s4</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = s5</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = s6</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = org.apache.flume.sink.elasticsearch.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 10.10.1.23:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = org.apache.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/yangruihong/article/details/17245359" target="_blank" rel="external">http://blog.csdn.net/yangruihong/article/details/17245359</a></li>
+<li><a href="http://flume.apache.org/FlumeUserGuide.html#zookeeper-based-configuration" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html#zookeeper-based-configuration</a></li>
+<li><a href="http://blog.csdn.net/xiao_jun_0820/article/details/38333171" target="_blank" rel="external">http://blog.csdn.net/xiao_jun_0820/article/details/38333171</a></li>
+<li><a href="http://www.voidcn.com/blog/lanmo555/article/p-4974586.html" target="_blank" rel="external">http://www.voidcn.com/blog/lanmo555/article/p-4974586.html</a></li>
+<li><a href="http://blog.csdn.net/sunflower_cao/article/details/39929931" target="_blank" rel="external">http://blog.csdn.net/sunflower_cao/article/details/39929931</a></li>
+<li><a href="http://blog.csdn.net/u010022051/article/details/50515725" target="_blank" rel="external">http://blog.csdn.net/u010022051/article/details/50515725</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（五）Flume编译安装" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/26/Flume/Flume学习（五）Flume编译安装/" class="article-date">
+  	<time datetime="2016-08-26T05:07:11.000Z" itemprop="datePublished">2016-08-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/26/Flume/Flume学习（五）Flume编译安装/">Flume学习（五）Flume编译安装</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="下载Flume源码"><a href="#下载Flume源码" class="headerlink" title="下载Flume源码"></a>下载Flume源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ curl -o apache-flume-1.6.0-src.tar.gz http://mirrors.hust.edu.cn/apache/flume/1.6.0/apache-flume-1.6.0-src.tar.gz</div><div class="line">$ tar -zxvf apache-flume-1.6.0-src.tar.gz</div><div class="line">$ cd apache-flume-1.6.0-src</div></pre></td></tr></table></figure>
+<h3 id="使用Maven编辑打包"><a href="#使用Maven编辑打包" class="headerlink" title="使用Maven编辑打包"></a>使用Maven编辑打包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mvn clean</div><div class="line">$ mvn install -DskipTests -Dtar</div></pre></td></tr></table></figure>
+<p>编译过程中，下载ua-parser-1.3.0.pom可能会失败，出现类似下面的错误，无法连接到<a href="http://maven.twttr.com:80，会重复尝试几次连接不上就build" target="_blank" rel="external">http://maven.twttr.com:80，会重复尝试几次连接不上就build</a> failed了。这个可能是因为<a href="http://maven.twttr.com:80地址被墙了" target="_blank" rel="external">http://maven.twttr.com:80地址被墙了</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Building Flume NG Morphline Solr Sink 1.6.0</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">Downloading: http://10.10.1.10:8082/content/groups/public/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: https://repository.cloudera.com/artifactory/cloudera-repos/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: http://repo1.maven.org/maven2/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: http://repository.jboss.org/nexus/content/groups/public/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: https://repo.maven.apache.org/maven2/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: http://maven.twttr.com/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">八月 26, 2016 12:11:25 下午 org.apache.maven.wagon.providers.http.httpclient.impl.execchain.RetryExec execute</div><div class="line">信息: I/O exception (java.net.NoRouteToHostException) caught when processing request to &#123;&#125;-&gt;http://maven.twttr.com:80: No route to host</div><div class="line">八月 26, 2016 12:11:25 下午 org.apache.maven.wagon.providers.http.httpclient.impl.execchain.RetryExec execute</div><div class="line">信息: Retrying request to &#123;&#125;-&gt;http://maven.twttr.com:80</div></pre></td></tr></table></figure>
+<p>我把网上解决无法连接<a href="http://maven.twttr.com的办法汇总了一下，需要在Flume的pom文件中最上面添加下面这些repository地址，来下载ua-parser-1.3.0.pom" target="_blank" rel="external">http://maven.twttr.com的办法汇总了一下，需要在Flume的pom文件中最上面添加下面这些repository地址，来下载ua-parser-1.3.0.pom</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;repositories&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">	  &lt;id&gt;maven.tempo-db.com&lt;/id&gt;</div><div class="line">	  &lt;url&gt;http://maven.oschina.net/service/local/repositories/sonatype-public-grid/content/&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">	  &lt;id&gt;p2.jfrog.org&lt;/id&gt;</div><div class="line">	  &lt;url&gt;http://p2.jfrog.org/libs-releases&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">	  &lt;id&gt;nexus.axiomalaska.com&lt;/id&gt;</div><div class="line">	  &lt;url&gt;http://nexus.axiomalaska.com/nexus/content/repositories/public&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">&lt;/repositories&gt;</div></pre></td></tr></table></figure>
+<p>添加后如下图所示</p>
+<p><img src="http://img.blog.csdn.net/20160826121945067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Maven"></p>
+<p>再次编译打包后，就成功了。可以在apache-flume-1.6.0-src/flume-ng-dist/target/路径下找到我们打包好的apache-flume-1.6.0-bin.tar.gz，这样我们就可以在flume的源代码上进行自己的修改并且可以打包应用了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Reactor Summary:</div><div class="line">[INFO]</div><div class="line">[INFO] Apache Flume ....................................... SUCCESS [  0.928 s]</div><div class="line">[INFO] Flume NG SDK ....................................... SUCCESS [  3.490 s]</div><div class="line">[INFO] Flume NG Configuration ............................. SUCCESS [  1.329 s]</div><div class="line">[INFO] Flume Auth ......................................... SUCCESS [  4.949 s]</div><div class="line">[INFO] Flume NG Core ...................................... SUCCESS [  8.924 s]</div><div class="line">[INFO] Flume NG Sinks ..................................... SUCCESS [  0.050 s]</div><div class="line">[INFO] Flume NG HDFS Sink ................................. SUCCESS [  2.947 s]</div><div class="line">[INFO] Flume NG IRC Sink .................................. SUCCESS [  1.002 s]</div><div class="line">[INFO] Flume NG Channels .................................. SUCCESS [  0.041 s]</div><div class="line">[INFO] Flume NG JDBC channel .............................. SUCCESS [  1.691 s]</div><div class="line">[INFO] Flume NG file-based channel ........................ SUCCESS [  6.320 s]</div><div class="line">[INFO] Flume NG Spillable Memory channel .................. SUCCESS [  1.323 s]</div><div class="line">[INFO] Flume NG Node ...................................... SUCCESS [  2.382 s]</div><div class="line">[INFO] Flume NG Embedded Agent ............................ SUCCESS [  1.458 s]</div><div class="line">[INFO] Flume NG HBase Sink ................................ SUCCESS [  3.763 s]</div><div class="line">[INFO] Flume NG ElasticSearch Sink ........................ SUCCESS [  1.914 s]</div><div class="line">[INFO] Flume NG Morphline Solr Sink ....................... SUCCESS [02:41 min]</div><div class="line">[INFO] Flume Kafka Sink ................................... SUCCESS [  1.194 s]</div><div class="line">[INFO] Flume NG Kite Dataset Sink ......................... SUCCESS [  2.804 s]</div><div class="line">[INFO] Flume NG Hive Sink ................................. SUCCESS [  2.462 s]</div><div class="line">[INFO] Flume Sources ...................................... SUCCESS [  0.030 s]</div><div class="line">[INFO] Flume Scribe Source ................................ SUCCESS [  1.081 s]</div><div class="line">[INFO] Flume JMS Source ................................... SUCCESS [  1.362 s]</div><div class="line">[INFO] Flume Twitter Source ............................... SUCCESS [  0.895 s]</div><div class="line">[INFO] Flume Kafka Source ................................. SUCCESS [  1.066 s]</div><div class="line">[INFO] flume-kafka-channel ................................ SUCCESS [  1.093 s]</div><div class="line">[INFO] Flume legacy Sources ............................... SUCCESS [  0.028 s]</div><div class="line">[INFO] Flume legacy Avro source ........................... SUCCESS [  0.998 s]</div><div class="line">[INFO] Flume legacy Thrift Source ......................... SUCCESS [  1.248 s]</div><div class="line">[INFO] Flume NG Clients ................................... SUCCESS [  0.026 s]</div><div class="line">[INFO] Flume NG Log4j Appender ............................ SUCCESS [  3.208 s]</div><div class="line">[INFO] Flume NG Tools ..................................... SUCCESS [  0.902 s]</div><div class="line">[INFO] Flume NG distribution .............................. SUCCESS [ 12.454 s]</div><div class="line">[INFO] Flume NG Integration Tests ......................... SUCCESS [  1.278 s]</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] BUILD SUCCESS</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Total time: 03:57 min</div><div class="line">[INFO] Finished at: 2016-08-26T12:24:44+08:00</div><div class="line">[INFO] Final Memory: 411M/868M</div><div class="line">[INFO] ------------------------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/yydcj/article/details/38824823" target="_blank" rel="external">http://blog.csdn.net/yydcj/article/details/38824823</a></li>
+<li><a href="https://www.iteblog.com/archives/1043" target="_blank" rel="external">https://www.iteblog.com/archives/1043</a></li>
+<li><a href="http://blog.csdn.net/qianshangding0708/article/details/48087911" target="_blank" rel="external">http://blog.csdn.net/qianshangding0708/article/details/48087911</a></li>
+<li><a href="http://blog.csdn.net/yeruby/article/details/50751927" target="_blank" rel="external">http://blog.csdn.net/yeruby/article/details/50751927</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（四）Failover和LoadBalance模式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/25/Flume/Flume学习（四）Failover和LoadBalance模式/" class="article-date">
+  	<time datetime="2016-08-25T05:18:47.000Z" itemprop="datePublished">2016-08-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/25/Flume/Flume学习（四）Failover和LoadBalance模式/">Flume学习（四）Failover和LoadBalance模式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://img.blog.csdn.net/20160824170052276?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Failover"></p>
+<p>Flume内置支持Failover和LoadBalance两种模式，这两种模式都支持Sink配置一个Group，Failover的Group具有故障转移的功能，LoadBalance的Group具有负载均衡的功能</p>
+<ul>
+<li>Failover支持故障转移</li>
+<li>LoadBalance支持负载均衡</li>
+</ul>
+<h3 id="Failover模式"><a href="#Failover模式" class="headerlink" title="Failover模式"></a>Failover模式</h3><p>我这里是用本机模拟此架构，Agent是采集端，分别写入Sink1和Sink2，Collector1和Collector2是Collect端。此架构允许Collector1和Collector2部分停机，需要在采集层（Agent）每一个Sink同时指向Collect层的2个相同的Flume Agent（Collector1和Collector2）。所以使用failover架构就是为了防止Collect层Flume Agent（Collector1和Collector2）因为故障或例行停机维护。</p>
+<h5 id="Agent节点的flume-failover-agent-conf配置"><a href="#Agent节点的flume-failover-agent-conf配置" class="headerlink" title="Agent节点的flume_failover_agent.conf配置"></a>Agent节点的flume_failover_agent.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">agentX.sources = sX</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = sk1 sk2</div><div class="line"></div><div class="line">agentX.sources.sX.channels = chX</div><div class="line">agentX.sources.sX.type = exec</div><div class="line">agentX.sources.sX.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line"># 配置sinks，这里我们指定了2个相同的Agent（即Collector1和Collector2，这里我们使用本机测试，所以是两个相同的Agent进程，hostname都是本机IP，只是port不同用于区分）</div><div class="line">agentX.sinks.sk1.channel = chX</div><div class="line">agentX.sinks.sk1.type = avro</div><div class="line">agentX.sinks.sk1.hostname = 10.10.1.23</div><div class="line">agentX.sinks.sk1.port = 44441</div><div class="line"></div><div class="line">agentX.sinks.sk2.channel = chX</div><div class="line">agentX.sinks.sk2.type = avro</div><div class="line">agentX.sinks.sk2.hostname = 10.10.1.23</div><div class="line">agentX.sinks.sk2.port = 44442</div><div class="line"></div><div class="line"># 配置failover组信息，把上面的两个sink配置成一个group，并且指定类型为failover</div><div class="line">agentX.sinkgroups = g1</div><div class="line">agentX.sinkgroups.g1.sinks = sk1 sk2</div><div class="line">agentX.sinkgroups.g1.processor.type = failover</div><div class="line"># 此处建议设置priority优先级，数值越大优先级越高，优先级低的作为容灾使用，sk1正常情况，sk2是不消费的</div><div class="line">agentX.sinkgroups.g1.processor.priority.sk1 = 9</div><div class="line">agentX.sinkgroups.g1.processor.priority.sk2 = 7</div><div class="line">agentX.sinkgroups.g1.processor.maxpenalty = 10000</div></pre></td></tr></table></figure>
+<h5 id="Collector1节点的flume-failover-collector1-conf配置"><a href="#Collector1节点的flume-failover-collector1-conf配置" class="headerlink" title="Collector1节点的flume_failover_collector1.conf配置"></a>Collector1节点的flume_failover_collector1.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent1.sources = s1</div><div class="line">agent1.channels = ch1</div><div class="line">agent1.sinks = sk1</div><div class="line"></div><div class="line">agent1.sources.s1.channels = ch1</div><div class="line">agent1.sources.s1.type = avro</div><div class="line">agent1.sources.s1.bind = 10.10.1.23</div><div class="line">agent1.sources.s1.port = 44441</div><div class="line"></div><div class="line">agent1.channels.ch1.type = memory</div><div class="line">agent1.channels.ch1.capacity = 1000</div><div class="line">agent1.channels.ch1.transactionCapacity = 100</div><div class="line"></div><div class="line">agent1.sinks.sk1.channel = ch1</div><div class="line">agent1.sinks.sk1.type = logger</div></pre></td></tr></table></figure>
+<h5 id="Collector2节点的flume-failover-collector2-conf配置"><a href="#Collector2节点的flume-failover-collector2-conf配置" class="headerlink" title="Collector2节点的flume_failover_collector2.conf配置"></a>Collector2节点的flume_failover_collector2.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent2.sources = s2</div><div class="line">agent2.channels = ch2</div><div class="line">agent2.sinks = sk2</div><div class="line"></div><div class="line">agent2.sources.s2.channels = ch2</div><div class="line">agent2.sources.s2.type = avro</div><div class="line">agent2.sources.s2.bind = 10.10.1.23</div><div class="line">agent2.sources.s2.port = 44442</div><div class="line"></div><div class="line">agent2.channels.ch2.type = memory</div><div class="line">agent2.channels.ch2.capacity = 1000</div><div class="line">agent2.channels.ch2.transactionCapacity = 100</div><div class="line"></div><div class="line">agent2.sinks.sk2.channel = ch2</div><div class="line">agent2.sinks.sk2.type = logger</div></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>如果是多台机器实验，Collector1和Collector2的flume.conf配置其实可以是一样的，只是我这里使用的本机测试，所以需要指定不同的port来模拟2台不同的机器，flume.conf配置文件也分开了。</li>
+</ul>
+<h5 id="启动Flume"><a href="#启动Flume" class="headerlink" title="启动Flume"></a>启动Flume</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 启动采集端，AgentX</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_failover_agent.conf -Dflume.root.logger=DEBUG,console -n agentX</div><div class="line"></div><div class="line"># 启动2个Collect端，Collector1和Collector2</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_failover_collector1.conf -Dflume.root.logger=DEBUG,console -n agent1</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_failover_collector2.conf -Dflume.root.logger=DEBUG,console -n agent2</div></pre></td></tr></table></figure>
+<p>这时候我们发现采集的日志都在Agent1中的控制台输出，Agent2并没有日志输出。但是我们查看44441和44442端口号发现AgentX和Agent1，Agent2都保持TCP连接的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$ ps -ef | grep flume</div><div class="line">  501  8446  6602   0  5:45PM ttys000    0:01.02 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0_agent_2/conf:/Users/yunyu/dev/flume-1.6.0_agent_2/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_collector2.conf -n agent2</div><div class="line">  501  8455  4754   0  5:45PM ttys001    0:01.21 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_agent.conf -n agentX</div><div class="line">  501  8436  5574   0  5:45PM ttys003    0:01.28 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0_agent_1/conf:/Users/yunyu/dev/flume-1.6.0_agent_1/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_collector1.conf -n agent1</div><div class="line">  501  8466  5608   0  5:45PM ttys005    0:00.00 grep flume</div><div class="line"></div><div class="line">$ lsof -i:44441</div><div class="line">COMMAND  PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</div><div class="line">java    8436 yunyu  156u  IPv6 0xd0e0ada8bdad6435      0t0  TCP localhost:44441 (LISTEN)</div><div class="line">java    8436 yunyu  161u  IPv6 0xd0e0ada8c2f7d3d5      0t0  TCP localhost:44441-&gt;localhost:52471 (ESTABLISHED)</div><div class="line">java    8455 yunyu  210u  IPv6 0xd0e0ada8c3175955      0t0  TCP localhost:52471-&gt;localhost:44441 (ESTABLISHED)</div><div class="line"></div><div class="line">$ lsof -i:44442</div><div class="line">COMMAND  PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</div><div class="line">java    8446 yunyu  156u  IPv6 0xd0e0ada8e3f0b3f5      0t0  TCP localhost:44442 (LISTEN)</div><div class="line">java    8446 yunyu  161u  IPv6 0xd0e0ada8bdad43f5      0t0  TCP localhost:44442-&gt;localhost:52470 (ESTABLISHED)</div><div class="line">java    8455 yunyu  156u  IPv6 0xd0e0ada8c3152955      0t0  TCP localhost:52470-&gt;localhost:44442 (ESTABLISHED)</div></pre></td></tr></table></figure>
+<p>此时我们杀掉Agent1的进程，我们会看到AgentX的控制台会报错提示：Connection Refused无法连接到Agent1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># flume Collector1的进程已经没有了</div><div class="line">$ ps -ef | grep flume</div><div class="line">  501  8446  6602   0  5:45PM ttys000    0:05.13 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0_agent_2/conf:/Users/yunyu/dev/flume-1.6.0_agent_2/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_collector2.conf -n agent2</div><div class="line">  501  8455  4754   0  5:45PM ttys001    0:07.85 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_agent.conf -n agentX</div><div class="line">  501  8732  5608   0  6:08PM ttys005    0:00.00 grep flume</div><div class="line"></div><div class="line"># 再次查看44441端口发现TCP连接已经断开了</div><div class="line">$ lsof -i:44441</div></pre></td></tr></table></figure>
+<p>这个时候我们再有日志采集会发现日志都输出到Collector2的控制台了，说明我们的failover机制生效了。</p>
+<h3 id="LoadBalance模式"><a href="#LoadBalance模式" class="headerlink" title="LoadBalance模式"></a>LoadBalance模式</h3><p>同Failover一样，AgentX是采集端，分别写入Sink1和Sink2，Collector1和Collector2是Collect端。此架构支持负载均衡分发处理，需要在采集层（AgentX）每一个Sink同时指向Collect层的2个相同的Flume Agent（Collector1和Collector2）。所以使用loadBalance架构就是为了流量分发，防止流量过于集中到其中某些机器导致服务器负载不均衡或者过载。</p>
+<h5 id="Agent节点的flume-loadbalance-agent-conf配置"><a href="#Agent节点的flume-loadbalance-agent-conf配置" class="headerlink" title="Agent节点的flume_loadbalance_agent.conf配置"></a>Agent节点的flume_loadbalance_agent.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">agentX.sources = sX</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = sk1 sk2</div><div class="line"></div><div class="line">agentX.sources.sX.channels = chX</div><div class="line">agentX.sources.sX.type = exec</div><div class="line">agentX.sources.sX.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line"># Configure sinks</div><div class="line">agentX.sinks.sk1.channel = chX</div><div class="line">agentX.sinks.sk1.type = avro</div><div class="line">agentX.sinks.sk1.hostname = 10.10.1.46</div><div class="line">agentX.sinks.sk1.port = 44441</div><div class="line"></div><div class="line">agentX.sinks.sk2.channel = chX</div><div class="line">agentX.sinks.sk2.type = avro</div><div class="line">agentX.sinks.sk2.hostname = 10.10.1.46</div><div class="line">agentX.sinks.sk2.port = 44442</div><div class="line"></div><div class="line"># Configure loadbalance</div><div class="line">agentX.sinkgroups = g1</div><div class="line">agentX.sinkgroups.g1.sinks = sk1 sk2</div><div class="line">agentX.sinkgroups.g1.processor.type = load_balance</div><div class="line">agentX.sinkgroups.g1.processor.backoff=true</div><div class="line">agentX.sinkgroups.g1.processor.selector=round_robin</div></pre></td></tr></table></figure>
+<h5 id="Collector1节点的flume-loadbalance-collector1-conf配置"><a href="#Collector1节点的flume-loadbalance-collector1-conf配置" class="headerlink" title="Collector1节点的flume_loadbalance_collector1.conf配置"></a>Collector1节点的flume_loadbalance_collector1.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent1.sources = s1</div><div class="line">agent1.channels = ch1</div><div class="line">agent1.sinks = sk1</div><div class="line"></div><div class="line">agent1.sources.s1.channels = ch1</div><div class="line">agent1.sources.s1.type = avro</div><div class="line">agent1.sources.s1.bind = 10.10.1.46</div><div class="line">agent1.sources.s1.port = 44441</div><div class="line"></div><div class="line">agent1.channels.ch1.type = memory</div><div class="line">agent1.channels.ch1.capacity = 1000</div><div class="line">agent1.channels.ch1.transactionCapacity = 100</div><div class="line"></div><div class="line">agent1.sinks.sk1.channel = ch1</div><div class="line">agent1.sinks.sk1.type = logger</div></pre></td></tr></table></figure>
+<h5 id="Collector2节点的flume-loadbalance-collector2-conf配置"><a href="#Collector2节点的flume-loadbalance-collector2-conf配置" class="headerlink" title="Collector2节点的flume_loadbalance_collector2.conf配置"></a>Collector2节点的flume_loadbalance_collector2.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent2.sources = s2</div><div class="line">agent2.channels = ch2</div><div class="line">agent2.sinks = sk2</div><div class="line"></div><div class="line">agent2.sources.s2.channels = ch2</div><div class="line">agent2.sources.s2.type = avro</div><div class="line">agent2.sources.s2.bind = 10.10.1.23</div><div class="line">agent2.sources.s2.port = 44442</div><div class="line"></div><div class="line">agent2.channels.ch2.type = memory</div><div class="line">agent2.channels.ch2.capacity = 1000</div><div class="line">agent2.channels.ch2.transactionCapacity = 100</div><div class="line"></div><div class="line">agent2.sinks.sk2.channel = ch2</div><div class="line">agent2.sinks.sk2.type = logger</div></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>如果是多台机器实验，Collector1和Collector2的flume.conf配置其实可以是一样的，只是我这里使用的本机测试，所以需要指定不同的port来模拟2台不同的机器，flume.conf配置文件也分开了。</li>
+</ul>
+<h5 id="启动Flume-1"><a href="#启动Flume-1" class="headerlink" title="启动Flume"></a>启动Flume</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 启动采集端，AgentX</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_loadbalance_agent.conf -Dflume.root.logger=DEBUG,console -n agentX</div><div class="line"></div><div class="line"># 启动2个Collect端，Collector1和Collector2</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_loadbalance_collector1.conf -Dflume.root.logger=DEBUG,console -n agent1</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_loadbalance_collector2.conf -Dflume.root.logger=DEBUG,console -n agent2</div></pre></td></tr></table></figure>
+<p>这个时候只要我们不断有日志采集会发现日志会分别输出到Collector1和Collector2的控制台了，说明我们的loadbalance机制生效了。</p>
+<p>最后给出别人博客总结的三种模式的对比图，看完就非常清晰明了了</p>
+<p><img src="http://img.blog.csdn.net/20160923160614674?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Default"></p>
+<p><img src="http://img.blog.csdn.net/20160923160704878?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Failover"></p>
+<p><img src="http://img.blog.csdn.net/20160923160718087?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="LoadBalance"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://shiyanjun.cn/archives/1497.html" target="_blank" rel="external">http://shiyanjun.cn/archives/1497.html</a></li>
+<li><a href="http://tech.meituan.com/mt-log-system-arch.html" target="_blank" rel="external">http://tech.meituan.com/mt-log-system-arch.html</a></li>
+<li><a href="http://www.cnblogs.com/lishouguang/p/4558790.html" target="_blank" rel="external">http://www.cnblogs.com/lishouguang/p/4558790.html</a></li>
+<li><a href="http://blog.csdn.net/qianshangding0708/article/details/49300427" target="_blank" rel="external">http://blog.csdn.net/qianshangding0708/article/details/49300427</a></li>
+<li><a href="http://www.aboutyun.com/blog-70-465.html" target="_blank" rel="external">http://www.aboutyun.com/blog-70-465.html</a></li>
+<li><a href="http://jinnianshilongnian.iteye.com/blog/2261225" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/2261225</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Flume/Flume学习（三）Flume多个Agent架构" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -698,354 +1108,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 <li>将原本应该由屏幕输出的错误数据输出到 2&gt; 的右边去</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 正确的ls命令</div><div class="line">$ ls -al</div><div class="line"># 将显示的数据，不论正确或错误均输出到success.log（注意：2&gt;&amp;1中间不能有空格）</div><div class="line">$ ls -al 1&gt; success.log 2&gt;&amp;1</div><div class="line"># 将显示的数据，正确的输出到success.log，错误的输出则予以丢弃，这里故意将ls命令的参数丢掉，让命令出错！</div><div class="line">$ ls - 1&gt; success.log 2&gt; /dev/null</div><div class="line"># 将显示的数据，正确的输出到success.log，错误的输出到error.log，这里故意将ls命令的参数丢掉，让命令出错！</div><div class="line">$ ls - 1&gt; success.log 2&gt; error.log</div></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Shell/">Shell</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Kibana/Kibana学习（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/17/Kibana/Kibana学习（二）/" class="article-date">
-  	<time datetime="2016-08-16T17:35:19.000Z" itemprop="datePublished">2016-08-17</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/17/Kibana/Kibana学习（二）/">Kibana学习（二）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Kibana已经给我们提供了多种不同的报表形式，如下图所示</p>
-<p><img src="http://img.blog.csdn.net/20160815175622375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Kibana_Visualization"></p>
-<table>
-<thead>
-<tr>
-<th>图表名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Area chart</td>
-<td>区域图</td>
-<td></td>
-</tr>
-<tr>
-<td>Data table</td>
-<td>表格</td>
-<td></td>
-</tr>
-<tr>
-<td>Line chart</td>
-<td>线性图</td>
-<td></td>
-</tr>
-<tr>
-<td>Markdown widget</td>
-<td>Markdown</td>
-<td></td>
-</tr>
-<tr>
-<td>Metric</td>
-<td>统计计数</td>
-<td></td>
-</tr>
-<tr>
-<td>Pie chart</td>
-<td>饼图</td>
-<td></td>
-</tr>
-<tr>
-<td>Tile map</td>
-<td>地图分布</td>
-<td></td>
-</tr>
-<tr>
-<td>Vertical bar chart</td>
-<td>柱状图</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>metrics（度量）：具体考察的数量值，例如：数量，金额等等（这里就类似OLAP中的度量的概念），可以选择多个metrics度量来考察数量值。</li>
-<li>buckets（维度）：观察数据的角度，从多个角度作为标准衡量数据，例如：时间，地点，类型等等（这里就类似OLAP中的维度的概念），可以选择多个buckets维度来观察数据。</li>
-</ul>
-<p>下面我们用以前做的command命令行日志收集来创建不同的Kibana图表</p>
-<h3 id="Area-chart区域图，Line-chart线性图，Vertical-bar-chart柱状图"><a href="#Area-chart区域图，Line-chart线性图，Vertical-bar-chart柱状图" class="headerlink" title="Area chart区域图，Line chart线性图，Vertical bar chart柱状图"></a>Area chart区域图，Line chart线性图，Vertical bar chart柱状图</h3><p>因为Area chart，Line chart，Vertical bar chart是X-Y轴的图结构，所以一般情况是Y轴是统计的数据的值（也就是度量），X轴可以选择我们的索引字段作为观察数据的角度（也就是维度）</p>
-<h4 id="metrics"><a href="#metrics" class="headerlink" title="metrics"></a>metrics</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># Y-Axis:设置Y轴的度量是Count</div><div class="line">&#123;</div><div class="line">	Aggregation:		Count</div><div class="line">&#125;</div><div class="line"></div><div class="line"># Y-Axis:设置Y轴的度量是Unique Count</div><div class="line">&#123;</div><div class="line">	Aggregation:		Unique Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="buckets"><a href="#buckets" class="headerlink" title="buckets"></a>buckets</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># X-Axis:设置X轴的维度是@timestamp字段</div><div class="line">&#123;</div><div class="line">	Aggregation:	Date Histogram,</div><div class="line">	Field:			@timestamp,</div><div class="line">	Interval:		Daily</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># Split Area:设置可以按照CMD字段在同一个Area chart中区分统计不同的Count值</div><div class="line"># Split Line:设置可以按照CMD字段在同一个Line chart中区分统计不同的Count值</div><div class="line"># Split Bars:设置可以按照CMD字段在同一个Bars chart中区分统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Sub Aggregation:	Terms,</div><div class="line">	Field:				CMD,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Split Chart:设置可以按照host字段拆分出多个chart统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Sub Aggregation:	Terms,</div><div class="line">	Field:				host,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Pie-chart饼状图"><a href="#Pie-chart饼状图" class="headerlink" title="Pie chart饼状图"></a>Pie chart饼状图</h3><p>因为Pie chart是没有X-Y轴的图结构，所以一般情况是slice切片是统计的数据的值（也就是度量），Split Slices可以选择我们的索引字段用来切分数据（也就是维度）</p>
-<h4 id="metrics-1"><a href="#metrics-1" class="headerlink" title="metrics"></a>metrics</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Slice Size:设置slice切片统计的度量是Count</div><div class="line">&#123;</div><div class="line">	Aggregation:		Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="buckets-1"><a href="#buckets-1" class="headerlink" title="buckets"></a>buckets</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Split Slices:设置可以按照CMD字段在同一个Pie chart中区分统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Aggregation:		Terms,</div><div class="line">	Field:				host,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Split Chart:设置可以按照host字段拆分出多个chart统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Sub Aggregation:	Terms,</div><div class="line">	Field:				host,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Kibana/Kibana学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/16/Kibana/Kibana学习（一）/" class="article-date">
-  	<time datetime="2016-08-16T15:55:39.000Z" itemprop="datePublished">2016-08-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/16/Kibana/Kibana学习（一）/">Kibana学习（一）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前在搭建ELK环境的过程中遇到了一些问题，在此进行总结，以后会不断更新的。</p>
-<h4 id="Kibana的默认索引-kibana无法在ES创建"><a href="#Kibana的默认索引-kibana无法在ES创建" class="headerlink" title="Kibana的默认索引.kibana无法在ES创建"></a>Kibana的默认索引.kibana无法在ES创建</h4><p>这个问题是因为我在ES中安装了ik插件，修改了elasticsearch.yml的配置文件，但是没有在ES的lib包目录中引入ik的jar包，所以在Kibana访问ES的时候ES报错了，检查ES的log文件发现了是elasticsearch.yml的ik插件配置没有找到ik的jar包</p>
-<ul>
-<li>所以Kibana报错最好的找错方式就是看ES的log</li>
-</ul>
-<h4 id="ES创建了User的index之后，在Kibana配置该索引时’Time-field-name’为空，没有-Timestamp选项"><a href="#ES创建了User的index之后，在Kibana配置该索引时’Time-field-name’为空，没有-Timestamp选项" class="headerlink" title="ES创建了User的index之后，在Kibana配置该索引时’Time-field name’为空，没有@Timestamp选项"></a>ES创建了User的index之后，在Kibana配置该索引时’Time-field name’为空，没有@Timestamp选项</h4><p>这个问题是因为ES创建的User的mapping中没有个一个字段是date类型，所以就没有@Timestamp字段，修改User的mapping重新索引数据后@Timestamp字段就出现了，如果需要手动添加Timestamp字段可以参考如下步骤。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. Go to Settings → Advanced.</div><div class="line">2. Edit the metaFields and add &quot;_timestamp&quot;. Hit save.</div><div class="line">3. Now go back to Settings → Indices and _timestamp will be available in the drop-down list for &quot;Time-field name&quot;.</div></pre></td></tr></table></figure>
-<p><img src="http://i.stack.imgur.com/ngaPk.png" alt="metaFields"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/29429201/timestamp-not-appearing-in-kibana" target="_blank" rel="external">http://stackoverflow.com/questions/29429201/timestamp-not-appearing-in-kibana</a></li>
-</ul>
-<h4 id="Kibana创建图表的时候，选择的Aggregation-Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation-Terms使用"><a href="#Kibana创建图表的时候，选择的Aggregation-Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation-Terms使用" class="headerlink" title="Kibana创建图表的时候，选择的Aggregation Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation Terms使用"></a>Kibana创建图表的时候，选择的Aggregation Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation Terms使用</h4><p>问题是因为我自己创建的索引command_index的mapping，所有的String字段都没有指定分词情况，所以ES默认都是Analyzed分词。所以这里只需要将mapping修改一下，将所有的String类型字段都指定分词方式(“index”:”not_analyzed”)，这样指定的字段就不会分词了，就可以使用Aggregation Terms方式创建图表了。（注意：一定要删除原来的mapping，重新索引数据才可以）</p>
-<h4 id="Kibana使用Pie-Charts错误：”Pie-chart-response-converter-Splitting-charts-without-splitting-sliced-is-not-supported-Pretend-that-we-are-just-splitting-slices”"><a href="#Kibana使用Pie-Charts错误：”Pie-chart-response-converter-Splitting-charts-without-splitting-sliced-is-not-supported-Pretend-that-we-are-just-splitting-slices”" class="headerlink" title="Kibana使用Pie Charts错误：”Pie chart response converter:Splitting charts without splitting sliced is not supported.Pretend that we are just splitting slices”"></a>Kibana使用Pie Charts错误：”Pie chart response converter:Splitting charts without splitting sliced is not supported.Pretend that we are just splitting slices”</h4><p>其实这个错误是因为在创建图表的时候选择了错误的类型，本来只是想创建一个单个的饼图（用线来切分的），所以应该使用Split Slice类型（从字面上应该也能理解），但是却选择了Split Chart类型了，所以就会出现上面的错误。</p>
-<p><img src="http://img.blog.csdn.net/20160812170725251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<p>下面是来自stackoverflow的解释，还清晰的给出了这两个类型的例子，很直观的区别开了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">If you want to do a &quot;split slice &quot; operation on a pie chart,first you need to create a pie chart with slices.Here from what I understand,you tried to give the option &quot;split chart&quot; first,which actually is to make differrent pie charts,in the same row or column,which needs more than one pie-chart. This also requires pie-charts (with slices) to be created first. So you need to create pie-charts and then only you can use &quot;split chart&quot;. i In the figures below,the first one shows an ordinary pie-chart created by &quot;split-slice&quot; and the second one shows five pie charts stacked horizontally using the &quot;split chart&quot; method.</div></pre></td></tr></table></figure>
-<p><img src="http://i.stack.imgur.com/fHvO0.png" alt="Split Slice"><br><img src="http://i.stack.imgur.com/4P7OK.png" alt="Split Chart"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/28691889/kibana-4-making-pie-chart-error-message" target="_blank" rel="external">http://stackoverflow.com/questions/28691889/kibana-4-making-pie-chart-error-message</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Shell/Shell脚本学习（四）EOF的用法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/15/Shell/Shell脚本学习（四）EOF的用法/" class="article-date">
-  	<time datetime="2016-08-14T16:15:18.000Z" itemprop="datePublished">2016-08-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/Shell/Shell脚本学习（四）EOF的用法/">Shell脚本学习（四）EOF的用法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Shell脚本的EOF"><a href="#Shell脚本的EOF" class="headerlink" title="Shell脚本的EOF"></a>Shell脚本的EOF</h4><p>EOF通常与&lt;&lt;结合使用，&lt;&lt;EOF表示后续的输入作为子命令或子shell的输入参数，直到遇到EOF，再次返回到主shell中。EOF可将其理解为分界符（delimiter），它的作用就是将两个 delimiter 之间的内容传递给交互式程序(cmd命令)作为输入参数。</p>
-<p>其使用形式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">交互式程序(cmd命令)&lt;&lt;EOF</div><div class="line">command1</div><div class="line">command2</div><div class="line">...</div><div class="line">EOF</div></pre></td></tr></table></figure>
-<ul>
-<li>注意，最后的EOF必须单独占一行。</li>
-</ul>
-<p>EOF一般常和cat命令连用。一般有以下两种形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.将内容直接输出到标准输出（屏幕）</div><div class="line">cat &lt;&lt;EOF</div><div class="line"></div><div class="line">2.将标准输出进行重定向，将本应输出到屏幕的内容重定向到文件</div><div class="line">cat &lt;&lt;EOF &gt; filename或者cat &lt;&lt;EOF &gt;&gt; filename</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 将下面的脚本内容输出到helloworld.sh文件中</div><div class="line">$ cat &lt;&lt; EOF &gt; helloworld.sh</div><div class="line">&gt; echo &quot;hello&quot;</div><div class="line">&gt; echo &quot;world&quot;</div><div class="line">&gt; EOF</div><div class="line"></div><div class="line">$ sh helloworld.sh</div></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Shell/">Shell</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Shell/Shell脚本学习（三）注释的用法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/11/Shell/Shell脚本学习（三）注释的用法/" class="article-date">
-  	<time datetime="2016-08-11T05:06:18.000Z" itemprop="datePublished">2016-08-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/11/Shell/Shell脚本学习（三）注释的用法/">Shell脚本学习（三）注释的用法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Shell脚本的注释"><a href="#Shell脚本的注释" class="headerlink" title="Shell脚本的注释"></a>Shell脚本的注释</h4><p>Shell脚本单行注释用#，这个我想大家应该都知道。如果要把一段代码全部注释掉，可以用如下方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line"></div><div class="line">echo &quot;我不是单行注释&quot;</div><div class="line"># echo &quot;我是单行注释，你看不到我&quot;</div><div class="line"></div><div class="line">echo &quot;我不是多行注释&quot;</div><div class="line">:&lt;&lt;COMMENT</div><div class="line">echo &quot;我是多行注释1，你看不到我&quot;</div><div class="line">echo &quot;我是多行注释2，你看不到我&quot;</div><div class="line">COMMENT</div><div class="line">echo &quot;我没有看到多行注释1和多行注释2&quot;</div></pre></td></tr></table></figure>
-<p>其实COMMENT可以随意命名，只要别跟中间的注释内容相同即可。当Shell脚本执行遇到:&lt;&lt;COMMENT，就不执行脚本了，一直到再碰到COMMENT后才重新开始执行脚本。如果忘记写COMMENT或者写错(由于已经不执行脚本了，所以即使写错也不会报错)，则:&lt;&lt;COMMENT之后的脚步将都不会执行。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/xyqzki/article/details/8762035" target="_blank" rel="external">http://blog.csdn.net/xyqzki/article/details/8762035</a></li>
-</ul>
-<h4 id="Shell脚本的文件注释模板"><a href="#Shell脚本的文件注释模板" class="headerlink" title="Shell脚本的文件注释模板"></a>Shell脚本的文件注释模板</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line"># ----------------------------------------------------------------------</div><div class="line"># name:			login.sh</div><div class="line"># version:		1.0</div><div class="line"># createTime:	2016-06-22</div><div class="line"># description:	shell脚本的功能描述</div><div class="line"># author:		birdben</div><div class="line"># email:		191654006@163.com</div><div class="line"># github:		https://github.com/birdben</div><div class="line"># ----------------------------------------------------------------------</div></pre></td></tr></table></figure>
-<p>这里推荐一个比较好的Shell代码规范</p>
-<ul>
-<li><a href="http://blog.csdn.net/wirelessqa/article/details/18863403" target="_blank" rel="external">http://blog.csdn.net/wirelessqa/article/details/18863403</a></li>
-</ul>
-
       
     </div>
     

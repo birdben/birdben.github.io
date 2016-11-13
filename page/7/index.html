@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,554 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Docker/Docker实战（七）Docker安装MongoDB" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/02/Docker/Docker实战（七）Docker安装MongoDB/" class="article-date">
+  	<time datetime="2016-01-02T09:39:56.000Z" itemprop="datePublished">2016-01-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/02/Docker/Docker实战（七）Docker安装MongoDB/">Docker实战（七）Docker安装MongoDB</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="大概步骤："><a href="#大概步骤：" class="headerlink" title="大概步骤："></a>大概步骤：</h5><ol>
+<li>上传Mongo到宿主机，或者在宿主机中下载</li>
+<li>编写Dockerfile构建镜像 </li>
+<li>编写supervisor配置文件</li>
+<li>build和run</li>
+</ol>
+<h5 id="MongoDB安装"><a href="#MongoDB安装" class="headerlink" title="MongoDB安装"></a>MongoDB安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># 下载Mongo</div><div class="line">$ curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1404-3.0.7.tgz</div><div class="line"></div><div class="line"># 解压Mongo压缩包</div><div class="line">$ tar -zxvf mongodb-linux-x86_64-ubuntu1404-3.0.7.tgz</div><div class="line"></div><div class="line"># 重命名一下Mongo的安装目录</div><div class="line">$ mv mongodb-linux-x86_64-ubuntu1404-3.0.7/ mongodb-3.0.7</div><div class="line"></div><div class="line"># （不推荐下面的路径直接建立在Docker虚拟机上，推荐使用volume挂载方式）</div><div class="line"># 在宿主机上创建一个数据库目录存储Mongo的数据文件</div><div class="line">$ sudo mkdir -p /docker/mongo/data</div><div class="line"></div><div class="line"># 在宿主机上创建一个日志目录存储Mongo的Log文件</div><div class="line">$ sudo mkdir -p /docker/mongo/log</div><div class="line"></div><div class="line"># 在&#123;MONGO_HOME&#125;下创建一个Mongo启动的配置文件</div><div class="line">$ sudo touch mongodb.conf</div><div class="line"></div><div class="line">############# mongodb.conf ################</div><div class="line">port=30000</div><div class="line">dbpath=/mongo/data</div><div class="line">logpath=/mongo/log/mongodb.log</div><div class="line">logappend=true</div><div class="line">############# mongodb.conf ################</div><div class="line"></div><div class="line"># 启动mongo时，指定config配置文件</div><div class="line">$ sudo ./mongod -f ../mongodb.conf</div><div class="line"></div><div class="line"># 参考：</div><div class="line">https://docs.mongodb.org/master/tutorial/install-mongodb-on-linux/</div><div class="line">http://my.oschina.net/aarongo/blog/349061</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/mongodb:v1</div><div class="line"># desc : 当前版本安装的mongodb</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 tools 镜像</div><div class="line">FROM birdben/tools:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 mongo 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV MONGO_HOME /software/mongodb-3.0.7</div><div class="line">ENV LC_ALL C</div><div class="line"></div><div class="line"># 复制 mongodb-3.0.7 文件到镜像中（mongodb-3.0.7 文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD mongodb-3.0.7 /software/mongodb-3.0.7</div><div class="line"></div><div class="line"># VOLUME 选项是将本地的目录挂在到容器中　此处要注意：当你运行-v　＜hostdir&gt;:&lt;Containerdir&gt; 时要确保目录内容相同否则会出现数据丢失</div><div class="line"># 对应关系如下</div><div class="line"># mongo:/docker/mongodb</div><div class="line">VOLUME [&quot;/mongodb&quot;]</div><div class="line"></div><div class="line"># 容器需要开放Mongo 30000端口</div><div class="line">EXPOSE 30000</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/mongo/Dockerfile">https://github.com/birdben/birdDocker/blob/master/mongo/Dockerfile</a></p>
+<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:mongo]</div><div class="line"># 注意这里指定的mongodb.conf文件路径，必须是绝对路径</div><div class="line">command=/software/mongodb-3.0.7/bin/mongod -f /mongodb/mongodb.conf</div></pre></td></tr></table></figure>
+<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/mongodb:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">$ docker run -p 9999:22 -p 30000:30000 -t -i -v /docker/mongodb:/mongodb &quot;birdben/mongodb:v1&quot;</div><div class="line"></div><div class="line"></div><div class="line"># 可以ssh远程登录，然后查看mongo的log是否有变化，然后就大功告成了</div><div class="line">$ ssh root@10.211.55.4 -p 9999</div><div class="line">$ cd /mongo/log</div><div class="line">$ tailf mongodb.log</div></pre></td></tr></table></figure>
+<h5 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 如果遇到mongo启动问题Failed global initialization: BadValue Invalid or no user locale set. Please ensure LANG and/or LC_* environment variables are set correctly.</div><div class="line"># 需要配置如下的环境变量</div><div class="line"></div><div class="line">export LC_ALL=C</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://my.oschina.net/aarongo/blog/349061" target="_blank" rel="external">http://my.oschina.net/aarongo/blog/349061</a></li>
+<li><a href="http://dockone.io/article/128" target="_blank" rel="external">http://dockone.io/article/128</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker/Docker实战（九）Docker安装ELK环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/24/Docker/Docker实战（九）Docker安装ELK环境/" class="article-date">
+  	<time datetime="2015-12-23T20:19:47.000Z" itemprop="datePublished">2015-12-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/24/Docker/Docker实战（九）Docker安装ELK环境/">Docker实战（九）Docker安装ELK环境</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ELK实际上就是ElasticSearch，Logstash，Kibana的缩写，是日志收集分析的一种解决方案。</p>
+<ul>
+<li>Elasticsearch一个开源的搜索引擎框架（支持群集架构方式）</li>
+<li>Logstash集成各种收集日志插件，还是一个比较优秀的正则切割日志工具</li>
+<li>Kibana一个免费的web应用，支持在web端查看ES的搜索结果</li>
+</ul>
+<p>elk是目前比较新也发展比较快的一套数据分析套件，其中Elasticsearch是用来作为存储和查询引擎的，kibana则是位于其之上的一个UI（更偏向于聚合汇总分析），而logstash则是属于ETL工具（数据的提取转换插入）。<br>在具体的使用过程中，目前觉得logstash算是比较鸡肋的，因为适用的场景有限，而且要扩展必须自己实现。个人建议，如果对es比较熟悉的，完全可以不需要用这个。自己用es加个river插件，那个效果也不错。</p>
+<p>ELK简单架构<br><img src="http://img.blog.csdn.net/20151224033735994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="ELK_Simple"></p>
+<p>日志收集系统架构整体架构<br><img src="http://img.blog.csdn.net/20160103152529612?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="日志收集系统架构"></p>
+<p>简单来讲他具体的工作流程就是Logstash agent监控并过滤日志，将过滤后的日志内容发给redis(这里的redis只处理队列不做存储)，Logstash index将日志收集在一起交给全文搜索服务ElasticSearch，可以用ElasticSearch进行自定义搜索，通过Kibana来结合 自定义搜索进行页面展示</p>
+<p>此外 logstash 的收集方式分为 standalone 和 centralized。<br>standalone 是所有功能都在一个服务器上面，自发自收，centralized 就是集中收集，一台服务器接收所有shipper(个人理解就是logstash agent)的日志。<br>其实 logstash本身不分 什么 shipper 和 collector ，只不过就是配置文件不同而已，我们这次按照集中的方式来测试</p>
+<p>这里的Logstash分为index和agent两种角色，也可以说是收集方式分为standalone和centralized两种。standalone是所有功能都在一个服务器上面，自发自收，centralized就是集中收集，一台服务器接收所有shipper(个人理解就是logstash agent)的日志。（其实logstash本身不分什么shipper和collector ，只不过就是配置文件不同而已）。Logstash的agent和indexer分开部署，多台agent负责监控、过滤日志，index负责收集日志并将日志交给ElasticSearch做搜索，通过Kibana来结合自定义搜索进行页面展示。Redis实际上是起到了缓冲消峰的作用，否则并发访问量大的时候ES会被拖垮的。使用redis的push和pop做队列，然后有个logstash_indexer来从队列中pop数据分析插入elasticsearch。这样做的好处是可扩展，logstash_agent只需要收集log进入队列即可，比较可能会有瓶颈的log分析使用logstash_indexer来做，而这个logstash_indexer又是可以水平扩展的，我可以在单独的机器上跑多个indexer来进行日志分析存储。</p>
+<p>192.168.0.1 logstash index，ElasticSearch，kibana，JDK<br>192.168.0.2 logstash agent，JDK<br>192.168.0.3 redis</p>
+<p>因为上一篇文章已经写过Docker如何安装ES环境了，这里我们直接继承上一次安装好的Docker镜像，所以重点只介绍Logstash和Kibana的安装，本文只是简单的单机ELK环境，后续会逐步完善ELK+Redis的环境，甚至会把ELK单独拆开三个Docker镜像使用</p>
+<h5 id="安装Logstash（本文使用的是logstash的1-5-4版本）"><a href="#安装Logstash（本文使用的是logstash的1-5-4版本）" class="headerlink" title="安装Logstash（本文使用的是logstash的1.5.4版本）"></a>安装Logstash（本文使用的是logstash的1.5.4版本）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 下载Logstash</div><div class="line">$ curl -O https://download.elastic.co/logstash/logstash/logstash-1.5.4.tar.gz</div><div class="line"></div><div class="line"># 解压ES压缩包</div><div class="line">$ tar -zxvf logstash-1.5.4.tar.gz</div><div class="line"></div><div class="line"># 在&#123;LOGSTASH_HOME&#125;下新建一个conf目录，在里面新建一个配置文件logstash.conf </div><div class="line">$ cd logstash-1.5.4</div><div class="line">$ mkdir conf</div><div class="line">$ cd conf</div><div class="line"></div><div class="line"># 编辑logstash.conf如下面的配置</div><div class="line">$ vi logstash.conf</div><div class="line"></div><div class="line"># 启动logstash</div><div class="line">$ cd &#123;LOGSTASH_HOME&#125;/bin/</div><div class="line">$ ./logstash -f ../conf/logstash.conf</div></pre></td></tr></table></figure>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>因为java的默认heap size,回收机制等原因,logstash从1.4.0开始不再使用jar运行方式.</p>
+<ul>
+<li>以前方式:<br>java -jar logstash-1.3.3-flatjar.jar agent -f logstash.conf</li>
+<li>现在方式:<br>bin/logstash -f logstash.conf</li>
+</ul>
+<h5 id="logstash-conf配置文件"><a href="#logstash-conf配置文件" class="headerlink" title="logstash.conf配置文件"></a>logstash.conf配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">	# 来自控制台	stdin &#123;       type =&gt; &quot;web&quot;			# ES索引的type		codec =&gt; &quot;json&quot;			# 输入格式是json	&#125;</div><div class="line">	# 来自文件	file &#123;</div><div class="line">		# 文件所在的绝对路径		path =&gt; &quot;/software/logstash-1.5.4/test.log&quot;</div><div class="line">		# ES索引的type		type =&gt; &quot;system&quot;</div><div class="line">		# 文件格式是json		codec =&gt; &quot;json&quot;</div><div class="line">		# 从文件的什么位置开始采集       start_position =&gt; &quot;beginning&quot;	&#125;&#125;output &#123;</div><div class="line">	# 输出到控制台	stdout &#123;		codec =&gt; rubydebug	&#125;</div><div class="line">	# 输出到ES	elasticsearch &#123;</div><div class="line">		# 不使用logstash内嵌的ES		embedded =&gt; false		codec =&gt; &quot;json&quot;		protocol =&gt; &quot;http&quot;		host =&gt; &quot;10.211.55.4&quot;		port =&gt; 9200</div><div class="line">		# 指定创建的索引名称		index =&gt; &quot;birdlogstash&quot;	&#125;&#125;</div></pre></td></tr></table></figure>
+<h5 id="test-log文件内容，放在-LOGSTASH-HOME-目录下"><a href="#test-log文件内容，放在-LOGSTASH-HOME-目录下" class="headerlink" title="test.log文件内容，放在{LOGSTASH_HOME}目录下"></a>test.log文件内容，放在{LOGSTASH_HOME}目录下</h5><pre><code>bird hello
+bird test
+bird bye
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 安装Kibana（本文使用的是kibana的4.1.2版本）</div></pre></td></tr></table></figure>
+
+# 下载Kibana
+$ curl -O https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz
+
+# 解压ES压缩包
+$ tar -zxvf kibana-4.1.2-linux-x64.tar.gz
+
+# 重命名一下
+$ mv kibana-4.1.2-linux-x64 kibana-4.1.2
+
+# 启动Kibana
+$ cd {KIBANA_HOME}/bin
+$ ./kibana
+
+# 访问http://192.168.1.120:5601/ 配置一个ElasticSearch索引 
+# 在logstach里面添加数据 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 注意</div></pre></td></tr></table></figure>
+
+如果Kibana和ES不在同一台机器上，需要在kibana.yml文件中指定ES集群的地址
+# The Elasticsearch instance to use for all your queries.
+elasticsearch_url: &quot;http://10.211.55.4:9200&quot;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### Dockerfile文件</div></pre></td></tr></table></figure>
+
+############################################
+# version : birdben/elk:v1
+# desc : 当前版本安装的elk
+############################################
+# 设置继承自我们创建的 elasticsearch 镜像
+FROM birdben/elasticsearch:v1
+
+# 下面是一些创建者的基本信息
+MAINTAINER birdben (191654006@163.com)
+
+# 设置环境变量，所有操作都是非交互式的
+ENV DEBIAN_FRONTEND noninteractive
+
+# 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN echo &quot;export LC_ALL=C&quot;
+
+# 设置 ES 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。
+ENV LOGSTASH_HOME /software/logstash-1.5.4
+ENV KIBANA_HOME /software/kibana-4.1.2
+
+# 复制 logstash-1.5.4, kibana-4.1.2 文件到镜像中（logstash-1.5.4, kibana-4.1.2文件夹要和Dockerfile文件在同一路径）
+ADD logstash-1.5.4 /software/logstash-1.5.4
+ADD kibana-4.1.2 /software/kibana-4.1.2
+
+# 解决环境问题，否则logstash无法从log文件中采集日志。具体环境： Logstash 1.5, Ubuntu 14.04, Oracle JDK7
+RUN ln -s /lib/x86_64-linux-gnu/libcrypt.so.1 /usr/lib/x86_64-linux-gnu/libcrypt.so
+
+# 挂载/logstash目录
+VOLUME [&quot;/logstash&quot;]
+
+# 容器需要开放Kibana的5601端口
+EXPOSE 5601
+
+# 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。
+CMD [&quot;/usr/bin/supervisord&quot;]
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### Dockerfile源文件链接：</div><div class="line">https://github.com/birdben/birdDocker/blob/master/elk/Dockerfile</div><div class="line"></div><div class="line">##### supervisor配置文件内容</div></pre></td></tr></table></figure>
+
+# 配置文件包含目录和进程
+# 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。
+# 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。
+
+[supervisord]
+nodaemon=true
+
+[program:sshd]
+command=/usr/sbin/sshd -D
+
+[program:elasticsearch]
+command=/bin/bash -c &quot;exec ${ES_HOME}/bin/elasticsearch -DFOREGROUND&quot;
+
+[program:logstash]
+# 指定配置文件时，一定要使用绝对路径，相对路径是不好用的，这个坑已经踩过两次了。。
+command=/software/logstash-1.5.4/bin/logstash -f /logstash/logstash.conf
+
+[program:kibana]
+command=/software/kibana-4.1.2/bin/kibana
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 注意</div></pre></td></tr></table></figure>
+
+# 之前一直在supervisor使用如下配置来启动logstash，但是发现logstash刚启动起来自己就挂了，然后不断的在尝试重启。后来发现是配置文件没有找到，因为使用supervisor来配置服务的命令时，指定配置文件时，一定要使用绝对路径，相对路径是不好用的，这个坑已经踩过两次了。。这里再次鄙视一下自己。。
+
+INFO success: logstash entered RUNNING state, process has stayed up for &gt; than 1 seconds (startsecs)
+INFO exited: logstash (exit status 1; not expected)
+INFO spawned: &apos;logstash&apos; with pid 12
+INFO exited: logstash (exit status 1; not expected)
+INFO spawned: &apos;logstash&apos; with pid 13
+INFO exited: logstash (exit status 1; not expected)
+INFO gave up: logstash entered FATAL state, too many start retries too quickly
+
+# 这里使用supervisorctl status查看supervisor监控的所有服务，就会发现ES没有处于被监控状态
+$ supervisorctl status
+logstash                           FATAL      Exited too quickly (process log may have details)
+sshd                             RUNNING    pid 6, uptime 0:01:49
+elasticsearch                    RUNNING    pid 8, uptime 0:01:49
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##### 控制台终端</div></pre></td></tr></table></figure>
+
+# 构建镜像
+$ docker build -t=&quot;birdben/elk:v1&quot; .
+# 执行已经构件好的镜像
+$ docker run -p 9999:22 -p 9200:9200 -p 9300:9300 -p 5601:5601 -t -i -v /docker/logstash:/logstash &quot;birdben/elk:v1&quot;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 测试Logstash</div></pre></td></tr></table></figure>
+
+# 这里我们要测试几种方式的logstash输入和输出
+logstash启动的参数
+-e：代表控制台以字符串的方式输入conf配置
+-f：代表指定文件的方式conf配置
+
+############## logstash从控制台读取 ##############
+
+# 只在CMD启动的进程export设置变量，而不是将变量赋值命令写入/etc/profile等脚本里，因此通过ssh方式登录容器获得的shell是没有这个变量的，所以ssh登录要提前设置JAVA_HOME环境变量
+$ export JAVA_HOME=/software/jdk7
+
+# 测试运行前端输出
+$ {LOGSTASH_HOME}/bin/logstash -e &apos;input { stdin { } } output { stdout {} }&apos;
+Logstash startup completed
+hello
+2015-12-20T08:17:06.312Z c7f05b587d11 hello
+
+# 也可以使用rubydebug的形式输出到控制台
+$ {LOGSTASH_HOME}/bin/logstash -e &apos;input { stdin { } } output { stdout {codec=&gt;rubydebug} }&apos;
+Logstash startup completed
+hello
+{
+       &quot;message&quot; =&gt; &quot;hello&quot;,
+      &quot;@version&quot; =&gt; &quot;1&quot;,
+    &quot;@timestamp&quot; =&gt; &quot;2015-12-20T13:35:38.996Z&quot;,
+          &quot;host&quot; =&gt; &quot;40421a32fbc5&quot;
+}
+
+# 还可以将控制台的输入，输出到ES并且创建对应的索引
+$ {LOGSTASH_HOME}/bin/logstash -e &apos;input { stdin { type =&gt; &quot;web&quot; codec =&gt; &quot;json&quot; } } output { stdout { codec =&gt; rubydebug } elasticsearch { embedded =&gt; false codec =&gt; &quot;json&quot; protocol =&gt; &quot;http&quot; host =&gt; &quot;10.211.55.4&quot; port =&gt; 9200 } }&apos;
+Logstash startup completed
+{&quot;name&quot;:&quot;bird&quot;}
+{
+          &quot;name&quot; =&gt; &quot;bird&quot;,
+      &quot;@version&quot; =&gt; &quot;1&quot;,
+    &quot;@timestamp&quot; =&gt; &quot;2015-12-20T13:35:38.996Z&quot;,
+          &quot;type&quot; =&gt; &quot;web&quot;,
+          &quot;host&quot; =&gt; &quot;40421a32fbc5&quot;
+}
+
+# 执行之后，可以查询ES的索引，会自动创建一个logstash的索引，并且会有一个对应的属性name，它的值是bird
+$ curl -XPOST &apos;http://10.211.55.4:9200/_search?pretty&apos; -d &apos;{&quot;query&quot;:{&quot;match_all&quot;:{}}}&apos;
+
+############## logstash从文件中读取 ##############
+
+$ {LOGSTASH_HOME}/bin/logstash -f /logstash/logstash.conf
+
+# 从文件中读取日志，可能会遇到下面的问题
+NotImplementedError: block device detection unsupported or native support failed to load
+    from org/jruby/RubyFileTest.java:67:in `blockdev?&apos;
+    from (irb):1:in `evaluate&apos;
+    from org/jruby/RubyKernel.java:1107:in `eval&apos;
+    from org/jruby/RubyKernel.java:1507:in `loop&apos;
+    from org/jruby/RubyKernel.java:1270:in `catch&apos;
+    from org/jruby/RubyKernel.java:1270:in `catch&apos;
+    from /home/ubuntu/logstash-1.5.0-rc3/lib/logstash/runner.rb:77:in `run&apos;
+    from org/jruby/RubyProc.java:271:in `call&apos;
+    from /home/ubuntu/logstash-1.5.0-rc3/lib/logstash/runner.rb:131:in `run&apos;
+    from org/jruby/RubyProc.java:271:in `call&apos;
+    from /home/ubuntu/logstash-1.5.0-rc3/vendor/bundle/jruby/1.9/gems/stud-0.0.19/lib/stud/task.rb:12:in `initialize&apos;
+
+# 上面的问题原因是环境问题，解决方案是先执行下面的语句，然后在运行logstash
+ln -s /lib/x86_64-linux-gnu/libcrypt.so.1 /usr/lib/x86_64-linux-gnu/libcrypt.so
+
+# 参考文章：
+https://github.com/elastic/logstash/issues/3127#issuecomment-101068714
+
+# 改好上面的问题之后logstash就会将文件的内容读取并输出到ES，使用下面的语句进行查询，就可以看到之前test.log中的3行记录，被ES创建了3条索引记录
+$ curl -XPOST &apos;http://10.211.55.4:9200/_search?pretty&apos; -d &apos;{&quot;query&quot;:{&quot;match_all&quot;:{}}}&apos;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 测试Kibana</div></pre></td></tr></table></figure>
+
+# 浏览器直接访问
+http://10.211.55.4:5601
+
+# 如果ES还没有索引，你需要告诉它你打算探索哪个 Elasticsearch 索引。第一次访问 Kibana 的时候，你会被要求定义一个 index pattern 用来匹配一个或者多个索引名。好了。这就是你需要做的全部工作。以后你还可以随时从 Settings 标签页添加更多的 index pattern。
+
+# 因为我们在Logstash配置了从log文件中读取数据并且输出到ES的索引上，配置文件中已经指定了索引的名称&quot;birdlogstash&quot;，这样我们在Kibana只要指定这个索引名称就可以了，同理我们也可以在Logstash中改成按照日期分割的方式，Kibana也可以按照这种方式来配置。
+
+# 指定创建的索引名称
+index =&gt; &quot;birdlogstash&quot;
+
+# 指定创建的索引名称（按照索引类型和日期分割）
+index =&gt; &quot;logstash-%{type}-%{+YYYY.MM.dd}&quot;
+
+# 默认情况下，Kibana 会连接运行在 localhost 的 Elasticsearch。要连接其他 Elasticsearch 实例，修改 kibana.yml 里的 Elasticsearch URL，然后重启 Kibana。如何在生产环境下使用 Kibana，阅读生产环境部署章节。
+http://kibana.logstash.es/content/kibana/v4/production.html
+</code></pre><p>参考文章：</p>
+<ul>
+<li><a href="http://www.iyunv.com/thread-73371-1-1.html" target="_blank" rel="external">http://www.iyunv.com/thread-73371-1-1.html</a></li>
+<li><a href="http://kibana.logstash.es/content/logstash/plugins/output/elasticsearch.html" target="_blank" rel="external">http://kibana.logstash.es/content/logstash/plugins/output/elasticsearch.html</a></li>
+<li><a href="http://langke.name/2014/12/18/elk-2.html" target="_blank" rel="external">http://langke.name/2014/12/18/elk-2.html</a></li>
+<li><a href="http://blog.chinaunix.net/uid-532511-id-4836683.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-532511-id-4836683.html</a></li>
+<li><a href="http://www.wklken.me/posts/2015/04/26/elk-for-nginx-log.html#3-supervisor" target="_blank" rel="external">http://www.wklken.me/posts/2015/04/26/elk-for-nginx-log.html#3-supervisor</a></li>
+<li><a href="http://ju.outofmemory.cn/entry/108925" target="_blank" rel="external">http://ju.outofmemory.cn/entry/108925</a></li>
+<li><a href="http://article.yeeyan.org/view/536432/459461" target="_blank" rel="external">http://article.yeeyan.org/view/536432/459461</a></li>
+<li><a href="http://qindongliang.iteye.com/blog/2250776www" target="_blank" rel="external">http://qindongliang.iteye.com/blog/2250776www</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ELK/">ELK</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker/Docker实战（八）Docker安装ElasticSearch环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/20/Docker/Docker实战（八）Docker安装ElasticSearch环境/" class="article-date">
+  	<time datetime="2015-12-19T16:56:34.000Z" itemprop="datePublished">2015-12-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/20/Docker/Docker实战（八）Docker安装ElasticSearch环境/">Docker实战（八）Docker安装ElasticSearch环境</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>基本步骤和之前几篇文章一样，请参考前面的相关文章</p>
+<h5 id="ElasticSearch安装"><a href="#ElasticSearch安装" class="headerlink" title="ElasticSearch安装"></a>ElasticSearch安装</h5><ul>
+<li>1.安装ES</li>
+<li>2.安装head,bigdesk插件</li>
+<li>3.安装ik插件</li>
+<li>4.配置ES集群</li>
+</ul>
+<h5 id="安装ES（本文使用的是elasticsearch的1-7-2版本）"><a href="#安装ES（本文使用的是elasticsearch的1-7-2版本）" class="headerlink" title="安装ES（本文使用的是elasticsearch的1.7.2版本）"></a>安装ES（本文使用的是elasticsearch的1.7.2版本）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 下载ES</div><div class="line">$ curl -O https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.tar.gz</div><div class="line"></div><div class="line"># 解压ES压缩包</div><div class="line">$ tar -zxvf elasticsearch-1.7.2.tar.gz</div><div class="line"></div><div class="line"># 启动ES</div><div class="line">$ sudo ./elasticsearch -d</div></pre></td></tr></table></figure>
+<h5 id="安装head-bigdesk-HQ-kopf插件（可选择安装，建议安装head和bigdesk）"><a href="#安装head-bigdesk-HQ-kopf插件（可选择安装，建议安装head和bigdesk）" class="headerlink" title="安装head,bigdesk,HQ,kopf插件（可选择安装，建议安装head和bigdesk）"></a>安装head,bigdesk,HQ,kopf插件（可选择安装，建议安装head和bigdesk）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ $&#123;ES_HOME&#125;/bin/plugin --install mobz/elasticsearch-head</div><div class="line"># 安装完成访问：http://localhost:9200/_plugin/head/</div><div class="line"></div><div class="line">$ $&#123;ES_HOME&#125;/bin/plugin --install lukas-vlcek/bigdesk</div><div class="line"># 安装完成访问：http://localhost:9200/_plugin/bigdesk/#nodes</div><div class="line"></div><div class="line">$ $&#123;ES_HOME&#125;/bin/plugin -install royrusso/elasticsearch-HQ</div><div class="line"># 安装完成访问：http://localhost:9200/_plugin/HQ/</div><div class="line"></div><div class="line">$ $&#123;ES_HOME&#125;/bin/plugin -install lmenezes/elasticsearch-kopf</div><div class="line"># 安装完成访问：http://localhost:9200/_plugin/kopf/#!/cluster</div></pre></td></tr></table></figure>
+<h5 id="安装ik插件"><a href="#安装ik插件" class="headerlink" title="安装ik插件"></a>安装ik插件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 因为我使用的是老版本的ES，所以ik插件也使用的是对应老版本的</div><div class="line">$ git clone https://github.com/medcl/elasticsearch-analysis-ik</div><div class="line">$ cd elasticsearch-analysis-ik</div><div class="line">$ mvn clean</div><div class="line">$ mvn compile</div><div class="line">$ mvn package</div><div class="line">$ cd target</div><div class="line">$ cp elasticsearch-analysis-ik-xxx.jar $&#123;ES_HOME&#125;/plugins/ik/</div><div class="line"></div><div class="line">$ cd elasticsearch-analysis-ik</div><div class="line">$ cp config/ik $&#123;ES_HOME&#125;/config/</div></pre></td></tr></table></figure>
+<h5 id="配置elasticsearch-yml文件，在文件的最后添加下面的配置"><a href="#配置elasticsearch-yml文件，在文件的最后添加下面的配置" class="headerlink" title="配置elasticsearch.yml文件，在文件的最后添加下面的配置"></a>配置elasticsearch.yml文件，在文件的最后添加下面的配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">index:</div><div class="line">  analysis:</div><div class="line">    analyzer:</div><div class="line">      ik:</div><div class="line">          alias: [ik_analyzer]</div><div class="line">          type: org.elasticsearch.index.analysis.IkAnalyzerProvider</div><div class="line">      ik_max_word:</div><div class="line">          type: ik</div><div class="line">          use_smart: false</div><div class="line">      ik_smart:</div><div class="line">          type: ik</div><div class="line">          use_smart: true</div><div class="line"></div><div class="line">index.analysis.analyzer.default.type: ik</div><div class="line">index.store.type: niofs</div></pre></td></tr></table></figure>
+<h5 id="设置ES的内存大小"><a href="#设置ES的内存大小" class="headerlink" title="设置ES的内存大小"></a>设置ES的内存大小</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ &#123;ES_HOME&#125;/bin</div><div class="line">$ vi elasticsearch</div><div class="line"></div><div class="line"># 设置ES的最大内存，最小内存</div><div class="line">ES_MIN_MEM=4g</div><div class="line">ES_MAX_MEM=4g</div></pre></td></tr></table></figure>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>如果这里不设置ES的内存大小，后面整合ELK环境的时候，Logstash会无法批量在ES创建索引而报错，具体错误信息如下。所以在ES启动时设置ES的内存大小，建议是实际内存的一半</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Got error to send bulk of actions: Connection reset &#123;:level=&gt;:error&#125;</div></pre></td></tr></table></figure>
+<p>这个内存配置不能随便设置，必须根据实际情况进行设置，否则设置之后ES就启动不起来了，报内存溢出的错误，建议尽量不要随意修改此配置</p>
+<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/elasticsearch:v1</div><div class="line"># desc : 当前版本安装的elasticsearch</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line">RUN echo &quot;export LC_ALL=C&quot;</div><div class="line"></div><div class="line"># 设置 ES 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV ES_HOME /software/elasticsearch-1.7.2</div><div class="line"></div><div class="line"># 复制 elasticsearch-1.7.2 文件到镜像中（elasticsearch-1.7.2文件夹要和Dockerfile文件在同一路径）</div><div class="line">ADD elasticsearch-1.7.2 /software/elasticsearch-1.7.2</div><div class="line"></div><div class="line"># 容器需要开放ES的9200和9300端口</div><div class="line">EXPOSE 9200</div><div class="line">EXPOSE 9300</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
+<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/elasticsearch/Dockerfile">https://github.com/birdben/birdDocker/blob/master/elasticsearch/Dockerfile</a></p>
+<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line"># 修改supervisor配置方式如下，修改为不自动重启ES，并且改成非daemon，DFOREGROUND的方式运行，supervisor就可以监控到了</div><div class="line">[program:elasticsearch]</div><div class="line">command=/bin/bash -c &quot;exec $&#123;ES_HOME&#125;/bin/elasticsearch -DFOREGROUND&quot;</div></pre></td></tr></table></figure>
+<h5 id="注意supervisor配置"><a href="#注意supervisor配置" class="headerlink" title="注意supervisor配置"></a>注意supervisor配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 之前一直在supervisor使用如下配置来启动ES，但是仔细观察Docker的控制台输出会发现如下的错误</div><div class="line">[program:elasticsearch]</div><div class="line">command=/&#123;ES_HOME&#125;/bin/elasticsearch -d</div><div class="line"></div><div class="line">INFO success: elasticsearch entered RUNNING state, process has stayed up for &gt; than 1 seconds (startsecs)</div><div class="line">INFO exited: elasticsearch (exit status 1; not expected)</div><div class="line">INFO spawned: &apos;elasticsearch&apos; with pid 12</div><div class="line">INFO exited: elasticsearch (exit status 1; not expected)</div><div class="line">INFO spawned: &apos;elasticsearch&apos; with pid 13</div><div class="line">INFO exited: elasticsearch (exit status 1; not expected)</div><div class="line">INFO gave up: elasticsearch entered FATAL state, too many start retries too quickly</div><div class="line"></div><div class="line"># 这里使用supervisorctl status查看supervisor监控的所有服务，就会发现ES没有处于被监控状态</div><div class="line">$ supervisorctl status</div><div class="line">elasticsearch                    FATAL      Exited too quickly (process log may have details)</div><div class="line">sshd                             RUNNING    pid 6, uptime 0:01:49</div><div class="line">tomcat                           RUNNING    pid 8, uptime 0:01:49</div><div class="line"></div><div class="line"># 所以这里修改supervisor配置方式如下，修改为不自动重启ES，并且改成非daemon，DFOREGROUND的方式运行，supervisor就可以监控到了</div><div class="line">[program:elasticsearch]startsecs = 0autorestart = falsecommand=/bin/bash -c &quot;exec $&#123;ES_HOME&#125;/bin/elasticsearch -DFOREGROUND&quot;</div><div class="line"></div><div class="line"># 这里说明一下supervisor启动多个服务，要求所有启动的服务都是非daemon的方式启动，否则就会遇到如上的问题，autorestart设置为false只是为了让supervisor启动报错的时候不会重复启动，只要改成非daemon的方式启动ES，可以设置autorestart为true</div></pre></td></tr></table></figure>
+<p>参考文章</p>
+<ul>
+<li><a href="http://www.dedoimedo.com/computers/docker-supervisord.html" target="_blank" rel="external">http://www.dedoimedo.com/computers/docker-supervisord.html</a></li>
+<li><a href="http://dockerpool.com/static/books/docker_practice/cases/supervisor.html" target="_blank" rel="external">http://dockerpool.com/static/books/docker_practice/cases/supervisor.html</a></li>
+<li><a href="http://charlesleifer.com/blog/setting-up-elasticsearch-with-basic-auth-and-ssl-for-use-with-python/" target="_blank" rel="external">http://charlesleifer.com/blog/setting-up-elasticsearch-with-basic-auth-and-ssl-for-use-with-python/</a></li>
+</ul>
+<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/elasticsearch:v1&quot; .</div><div class="line"># 执行已经构件好的镜像</div><div class="line">$ docker run -p 9999:22 -p 9200:9200 -p 9300:9300 -t -i &apos;birdben/elasticsearch:v1&apos;</div></pre></td></tr></table></figure>
+<h5 id="访问ElasticSearch的插件测试"><a href="#访问ElasticSearch的插件测试" class="headerlink" title="访问ElasticSearch的插件测试"></a>访问ElasticSearch的插件测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://10.211.55.4:9200/_plugin/head/</div><div class="line">http://10.211.55.4:9200/_plugin/bigdesk/#nodes</div></pre></td></tr></table></figure>
+<h5 id="User索引的mapping"><a href="#User索引的mapping" class="headerlink" title="User索引的mapping"></a>User索引的mapping</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;user&quot;: &#123;</div><div class="line">    &quot;dynamic&quot; : &quot;strict&quot;,</div><div class="line">    &quot;properties&quot;: &#123;</div><div class="line">      &quot;id&quot;: &#123;</div><div class="line">        &quot;type&quot;: &quot;string&quot;,</div><div class="line">        &quot;index&quot;: &quot;not_analyzed&quot;</div><div class="line">      &#125;,</div><div class="line">      &quot;name&quot;: &#123;</div><div class="line">        &quot;type&quot;: &quot;string&quot;,</div><div class="line">        &quot;index_analyzer&quot;: &quot;ik&quot;,</div><div class="line">        &quot;search_analyzer&quot;: &quot;ik_smart&quot;</div><div class="line">      &#125;,</div><div class="line">      &quot;age&quot;: &#123;</div><div class="line">        &quot;type&quot;: &quot;integer&quot;</div><div class="line">      &#125;,</div><div class="line">      &quot;job&quot;: &#123;</div><div class="line">        &quot;type&quot;: &quot;string&quot;,</div><div class="line">        &quot;index_analyzer&quot;: &quot;ik&quot;,</div><div class="line">        &quot;search_analyzer&quot;: &quot;ik_smart&quot;</div><div class="line">      &#125;,</div><div class="line">      &quot;createTime&quot;: &#123;</div><div class="line">        &quot;type&quot;: &quot;long&quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="新建索引测试ik分词"><a href="#新建索引测试ik分词" class="headerlink" title="新建索引测试ik分词"></a>新建索引测试ik分词</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 尝试创建user索引</div><div class="line">$ curl -XPOST &apos;http://10.211.55.4:9200/user?pretty&apos; -d &apos;@user.json&apos;</div><div class="line"></div><div class="line"># 如果遇到下面的错误，原因是$&#123;ES_HOME&#125;/lib/下需要引入httpclient-4.5.jar, httpcore-4.4.1.jar</div><div class="line">&#123;</div><div class="line">  &quot;error&quot; : &quot;IndexCreationException[[user] failed to create index]; nested: NoClassDefFoundError[org/apache/http/client/ClientProtocolException]; nested: ClassNotFoundException[org.apache.http.client.ClientProtocolException]; &quot;,</div><div class="line">  &quot;status&quot; : 500</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 创建索引成功后，查看索引信息</div><div class="line">$ curl -XGET &apos;http://10.211.55.4:9200/_cat/indices?pretty&apos;</div><div class="line">green open user 5 1 0 0 970b 575b</div><div class="line"></div><div class="line"># 测试ik分词效果</div><div class="line">$ curl -XGET &apos;http://10.211.55.4:9200/goods/_analyze?analyzer=ik&amp;pretty=true&apos; -d &apos;&#123;&quot;text&quot;:&quot;世界如此之大&quot;&#125;&apos;</div><div class="line"></div><div class="line"># 测试ik_smart分词效果</div><div class="line">$ curl -XGET &apos;http://10.211.55.4:9200/user/_analyze?analyzer=ik_smart&amp;pretty=true&apos; -d &apos;&#123;&quot;text&quot;:&quot;世界如此之大&quot;&#125;&apos;</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://github.com/medcl/elasticsearch-analysis-ik">https://github.com/medcl/elasticsearch-analysis-ik</a></li>
+<li><a href="http://my.oschina.net/xiaohui249/blog/232784" target="_blank" rel="external">http://my.oschina.net/xiaohui249/blog/232784</a></li>
+<li><a href="http://my.oschina.net/xiaohui249/blog/228748" target="_blank" rel="external">http://my.oschina.net/xiaohui249/blog/228748</a></li>
+<li><a href="http://www.mamicode.com/info-detail-943587.html" target="_blank" rel="external">http://www.mamicode.com/info-detail-943587.html</a></li>
+<li><a href="http://ask.csdn.net/questions/154112" target="_blank" rel="external">http://ask.csdn.net/questions/154112</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux/Linux常用命令（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/09/Linux/Linux常用命令（一）/" class="article-date">
+  	<time datetime="2015-12-09T13:32:01.000Z" itemprop="datePublished">2015-12-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/09/Linux/Linux常用命令（一）/">Linux常用命令（一）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="netstat查看端口"><a href="#netstat查看端口" class="headerlink" title="netstat查看端口"></a>netstat查看端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 参数</div><div class="line">-a (all)显示所有选项，默认不显示LISTEN相关</div><div class="line">-t (tcp)仅显示tcp相关选项</div><div class="line">-u (udp)仅显示udp相关选项</div><div class="line">-n 拒绝显示别名，能显示数字的全部转化成数字。将应用程序转为端口显示，即数字格式的地址，如：nfs-&gt;2049，ftp-&gt;21，因此可以开启两个终端，一一对应一下程序所对应的端口号）</div><div class="line">-l 仅列出有在 Listen (监听) 的服務状态</div><div class="line"></div><div class="line">-p 显示建立相关链接的程序名</div><div class="line">-r 显示路由信息，路由表</div><div class="line">-e 显示扩展信息，例如uid等</div><div class="line">-s 按各个协议进行统计</div><div class="line">-c 每隔一个固定时间，执行该netstat命令。</div><div class="line"></div><div class="line">提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</div><div class="line"></div><div class="line"># 查看Linux端口号</div><div class="line">$ netstat -anp | grep 80</div><div class="line"></div><div class="line"># 查看服务对应端口</div><div class="line">$ netstat -nlp</div></pre></td></tr></table></figure>
+<h3 id="netstat查看并发连接数"><a href="#netstat查看并发连接数" class="headerlink" title="netstat查看并发连接数"></a>netstat查看并发连接数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">netstat -n | awk &apos;/^tcp/ &#123;++S[$NF]&#125; END &#123;for(a in S) print a, S[a]&#125;&apos;</div><div class="line">返回结果示例：</div><div class="line">　　LAST_ACK 5</div><div class="line">　　SYN_RECV 30</div><div class="line">　　ESTABLISHED 1597</div><div class="line">　　FIN_WAIT1 51</div><div class="line">　　FIN_WAIT2 504</div><div class="line">　　TIME_WAIT 1057</div><div class="line"></div><div class="line">状态：描述</div><div class="line">　　CLOSED：无连接是活动的或正在进行</div><div class="line">　　LISTEN：服务器在等待进入呼叫</div><div class="line">　　SYN_RECV：一个连接请求已经到达，等待确认；正在等待处理的请求数</div><div class="line">　　SYN_SENT：应用已经开始，打开一个连接</div><div class="line">　　ESTABLISHED：正常数据传输状态</div><div class="line">　　FIN_WAIT1：应用说它已经完成</div><div class="line">　　FIN_WAIT2：另一边已同意释放</div><div class="line">　　ITMED_WAIT：等待所有分组死掉</div><div class="line">　　CLOSING：两边同时尝试关闭</div><div class="line">　　TIME_WAIT：另一边已初始化一个释放；表示处理完毕，等待超时结束的请求数。</div><div class="line">　　LAST_ACK：等待所有分组死掉</div></pre></td></tr></table></figure>
+<h3 id="lsof查看端口"><a href="#lsof查看端口" class="headerlink" title="lsof查看端口"></a>lsof查看端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 查看8080端口号对应的进程</div><div class="line">$ lsof -i:8080</div><div class="line"></div><div class="line"># 找到被删除的却还被进程占用的文件</div><div class="line">$ lsof | grep deleted</div></pre></td></tr></table></figure>
+<h3 id="ps查看进程"><a href="#ps查看进程" class="headerlink" title="ps查看进程"></a>ps查看进程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"># 查看Linux端口号</div><div class="line"># ps 命令用于查看当前正在运行的进程</div><div class="line"># grep 是搜索</div><div class="line">$ ps -ef | grep 80</div><div class="line"></div><div class="line"># 根据进程ID查看进程</div><div class="line">$ pe -eLf | grep PID</div><div class="line"></div><div class="line"># 查看Linux进程</div><div class="line">$ ps -ef | grep tomcat</div><div class="line"></div><div class="line"># -aux 显示所有状态</div><div class="line">$ ps -aux | grep tomcat</div><div class="line"></div><div class="line"># 查看服务进程</div><div class="line">$ ps -aux</div><div class="line"></div><div class="line">ps [选项]</div><div class="line">-e 显示所有进程,环境变量</div><div class="line">-f 全格式</div><div class="line">-h 不显示标题</div><div class="line">-l 长格式</div><div class="line">-w 宽输出</div><div class="line">-a 显示终端上地所有进程,包括其他用户地进程</div><div class="line">-r 只显示正在运行地进程</div><div class="line">-x 显示没有控制终端地进程</div></pre></td></tr></table></figure>
+<h3 id="Linux性能监控"><a href="#Linux性能监控" class="headerlink" title="Linux性能监控"></a>Linux性能监控</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 查看服务cpu利用</div><div class="line">$ top</div><div class="line"></div><div class="line">s - 改变画面更新频率</div><div class="line">l - 关闭或开启第一部分第一行 top 信息的表示</div><div class="line">t - 关闭或开启第一部分第二行 Tasks 和第三行 Cpus 信息的表示</div><div class="line">m - 关闭或开启第一部分第四行 Mem 和 第五行 Swap 信息的表示</div><div class="line">N - 以 PID 的大小的顺序排列表示进程列表（第三部分后述）</div><div class="line">P - 以 CPU 占用率大小的顺序排列进程列表 （第三部分后述）</div><div class="line">M - 以内存占用率大小的顺序排列进程列表 （第三部分后述）</div><div class="line">h - 显示帮助</div><div class="line">n - 设置在进程列表所显示进程的数量</div><div class="line">q - 退出 top</div><div class="line"></div><div class="line"># 查看内存使用情况</div><div class="line">$ free</div><div class="line"></div><div class="line">下面是对这些数值的解释：</div><div class="line">total:总计物理内存的大小。</div><div class="line">used:已使用多大。</div><div class="line">free:可用有多少。</div><div class="line">Shared:多个进程共享的内存总额。</div><div class="line">Buffers/cached:磁盘缓存的大小。</div><div class="line"></div><div class="line">第三行(-/+ buffers/cached):</div><div class="line">used:已使用多大。</div><div class="line">free:可用有多少。</div><div class="line"></div><div class="line">空闲内存 = free + buffers + cached = total - used</div><div class="line"></div><div class="line"># 显示目前所有文件系统的可用空间及使用情形</div><div class="line">$ df -h</div><div class="line"></div><div class="line"># 显示当前目录下所有文件和文件夹的大小</div><div class="line">$ ls -lh</div></pre></td></tr></table></figure>
+<h3 id="tcpdump数据包抓取"><a href="#tcpdump数据包抓取" class="headerlink" title="tcpdump数据包抓取"></a>tcpdump数据包抓取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"># tcpdump命令格式</div><div class="line">$ tcpdump [-nn] [-i接口] [-w 存储档名] [-c 次数] [-Ae] [-qX] [-r 档案] [所要截取的数据内容]</div><div class="line"></div><div class="line">参数：</div><div class="line">-nn：直接以IP及port number显示</div><div class="line">-v：输出一个稍微详细的信息，例如在ip包中可以包括ttl和服务类型的信息</div><div class="line">-i：后接要监听的网络接口如eth0，wlan0，lo，ppp0</div><div class="line">-w：如果你要讲监听所得的封包数据存下来，就用这个参数，后接存档名</div><div class="line">-c：监听包个数，若不接会一直监听</div><div class="line">-A：封包内容以ASCII码显示，常用语截取www</div><div class="line">-q：列出较为尖端的封包信息，每行内容比较精简</div><div class="line">-X：可以列出十六进制以及ASCII的封包内容，对于监听封包内容很有用</div><div class="line">-r：从后面接的档案封包数据读出来，那个【档案】是已经存在的档案，且这【档案】也是由-w制作出来的</div><div class="line"></div><div class="line"></div><div class="line"># 抓取包含192.168.1.3的数据包</div><div class="line">$ tcpdump -i eth0 -vnn host 192.168.1.3</div><div class="line"></div><div class="line"># 抓取包含192.168.1.3/10网段的数据包</div><div class="line">$ tcpdump -i eth0 -vnn net 192.168.1.3/10</div><div class="line"></div><div class="line"># 抓取包含端口22的数据包</div><div class="line">$ tcpdump -i eth0 -vnn port 22</div><div class="line"></div><div class="line"># 抓取udp协议的数据包</div><div class="line">$ tcpdump -i eth0 -vnn udp</div><div class="line"></div><div class="line"># 抓取ip协议的数据包</div><div class="line">$ tcpdump -i eth0 -vnn ip</div><div class="line"></div><div class="line"># 抓取源ip是192.168.1.3数据包</div><div class="line">$ tcpdump -i eth0 -vnn src host 192.168.1.3</div><div class="line"></div><div class="line"># 抓取目的ip是211.94.114.21数据包</div><div class="line">$ tcpdump -i eth0 -vnn dst host 211.94.114.21</div><div class="line"></div><div class="line"># 抓取源端口是22的数据包</div><div class="line">$ tcpdump -i eth0 -vnn src port 22</div><div class="line"></div><div class="line"># 抓取源ip是192.168.1.3且目的端口是22的数据包</div><div class="line">$ tcpdump -i eth0 -vnn src host 192.168.1.3 and dst port 22</div><div class="line"></div><div class="line"># 抓取源ip是192.168.1.3或者包含端口是22的数据包</div><div class="line">$ tcpdump -i eth0 -vnn src host 192.168.1.3 or port 22</div><div class="line"></div><div class="line"># 抓取源ip是192.168.1.3且端口不是22的数据包</div><div class="line">$ tcpdump -i eth0 -vnn src host 192.168.1.3 and not port 22</div><div class="line"></div><div class="line"># 抓取源ip是192.168.1.3且目的端口是22，或源ip是192.168.1.3且目的端口是80的数据包</div><div class="line">$ tcpdump -i eth0 -vnn src host 192.168.1.3 and dst port 22 or src host 192.168.1.3 and dst port 80</div><div class="line"></div><div class="line"># 把抓取ip是192.168.1.3的数据包记录存到/Users/ben/Downloads/tcpdump.cap文件中，当抓取100个数据包后就退出程序</div><div class="line">$ tcpdump -i eth0 -vnn -w /Users/ben/Downloads/tcpdump.cap -c 100 host 192.168.1.3</div><div class="line"></div><div class="line"># 从/Users/ben/Downloads/tcpdump.cap记录中读取tcp协议的数据包</div><div class="line">$ tcpdump -i eth0 -vnn -r /Users/ben/Downloads/tcpdump.cap tcp</div><div class="line"></div><div class="line"># 从/Users/ben/Downloads/tcpdump.cap记录中读取包含192.168.1.3的数据包</div><div class="line">$ tcpdump -i eth0 -vnn -r /Users/ben/Downloads/tcpdump.cap host 192.168.1.3</div><div class="line"></div><div class="line"># 抓包结果</div><div class="line">00:36:48.658266 IP (tos 0x0, ttl 64, id 15221, offset 0, flags [DF], proto TCP (6), length 40)    10.211.55.4.32903 &gt; 61.135.169.125.443: Flags [.], cksum 0xe7a0 (correct), ack 4785, win 343, length 0</div><div class="line"></div><div class="line"># 抓包结果解释</div><div class="line">00:36:48.658266    抓包时间</div><div class="line">10.211.55.4.32903  发送端IP以及端口32903</div><div class="line">61.135.169.125.443 接收端IP以及端口443</div></pre></td></tr></table></figure>
+<h3 id="find文件查找相关"><a href="#find文件查找相关" class="headerlink" title="find文件查找相关"></a>find文件查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># find &lt;指定目录&gt; &lt;指定条件&gt; &lt;指定动作&gt;</div><div class="line">　　- &lt;指定目录&gt;： 所要搜索的目录及其所有子目录。默认为当前目录。</div><div class="line">　　- &lt;指定条件&gt;： 所要搜索的文件的特征。</div><div class="line">　　- &lt;指定动作&gt;： 对搜索结果进行特定的处理。</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件 -name（文件名需要带后缀）</div><div class="line">$ find . -name &apos;my*&apos;</div><div class="line"></div><div class="line"># 搜索当前目录中，所有文件名以my开头的文件，并显示它们的详细信息。</div><div class="line">$ find . -name &apos;my*&apos; -ls</div><div class="line"></div><div class="line"># 以文件大小来查找 -size n</div><div class="line">$ find . -size +1000000c（在当前目录下查找文件长度大于1 M字节的文件 ）</div><div class="line"></div><div class="line"># 在当前目录及所有子目录中查找filename(忽略大小写)</div><div class="line">$ find . -iname &quot;Hessian.properties&quot;</div></pre></td></tr></table></figure>
+<h3 id="grep文件内容查找相关"><a href="#grep文件内容查找相关" class="headerlink" title="grep文件内容查找相关"></a>grep文件内容查找相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">$ grep [options]</div><div class="line"></div><div class="line">[options]主要参数：</div><div class="line">－c：只输出匹配行的计数。</div><div class="line">－I：不区分大小写(只适用于单字符)。</div><div class="line">－h：查询多文件时不显示文件名。</div><div class="line">－l：查询多文件时只输出包含匹配字符的文件名。</div><div class="line">－n：显示匹配行及行号。</div><div class="line">－s：不显示不存在或无匹配文本的错误信息。</div><div class="line">－v：显示不包含匹配文本的所有行。</div><div class="line"></div><div class="line"># 读出logcat.log文件的内容，通过管道转发给grep作为输入内容,过滤包含&quot;Displayed&quot;的行，将输出内容再作为输入能过管道转发给下一个grep</div><div class="line">$ cat logcat.log | grep -n &apos;Displayed&apos; | grep ms</div><div class="line"></div><div class="line"># 匹配testgrep文件所有wirelessqa的行</div><div class="line">$ grep -e wirelessqa testgrep</div><div class="line"></div><div class="line"># &apos;^wirelessqa&apos;匹配testgrep文件所有以wirelessqa开头的行</div><div class="line">$ grep -e ^[wirelessqa] testgrep</div><div class="line"></div><div class="line"># &apos;wirelessqa$&apos;匹配所有以wirelessqa结尾的行</div><div class="line">$ grep -e [wirelessqa]$ testgrep</div><div class="line"></div><div class="line"># .*一起用代表任意字符，&apos;.*qa&apos;匹配任何词以qa结尾的行</div><div class="line">$ grep -e .*qa testgrep</div><div class="line"></div><div class="line"># &apos;\&lt;wire&apos;匹配包含以wire开头的单词的行</div><div class="line">$ grep -e &apos;\&lt;wire&apos; testgrep</div><div class="line"></div><div class="line"># &apos;blog\&gt;&apos;匹配包含以blog结尾的单词的行</div><div class="line">$ grep -e &apos;blog\&gt;&apos; testgrep</div><div class="line"></div><div class="line"># 匹配aaa文件中&apos;blog.csdn.net&apos;的行的上下5行内容</div><div class="line">$ grep -5 -e blog.csdn.net aaa</div><div class="line"></div><div class="line"># 显示/Users/ben目录下的文件(不含子目录)包含blog的行</div><div class="line">$ grep blog /Users/ben</div><div class="line"></div><div class="line"># 显示/Users/ben目录下的文件(包含子目录)包含blog的行</div><div class="line">$ grep -r blog /Users/ben</div></pre></td></tr></table></figure>
+<h3 id="sed结合grep命令批量替换文件内容"><a href="#sed结合grep命令批量替换文件内容" class="headerlink" title="sed结合grep命令批量替换文件内容"></a>sed结合grep命令批量替换文件内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 将当前目录(包括子目录)中所有以test开头的txt文件中的zzzz字符串替换为oooo字符串</div><div class="line">sed -i &apos;s/zzzz/oooo/g&apos; `grep zzzz -rl --include=&quot;test_*.txt&quot; ./`</div><div class="line"></div><div class="line"># sed参数</div><div class="line">-i : 表示操作的是文件，``括起来的grep命令，表示将grep命令的的结果作为操作文件</div><div class="line">s/zzzz/oooo/ : 表示查找zzzz并替换为oooo</div><div class="line">g : 表示一行中有多个zzzz的时候，都替换，而不是仅替换第一个</div><div class="line"></div><div class="line"># grep参数</div><div class="line">-r : 表示查找所有子目录</div><div class="line">-l : 表示仅列出符合条件的文件名，用来传给sed命令做操作</div><div class="line">--include=&quot;test_*.txt&quot; : 表示仅查找test开头的txt文件</div><div class="line">./ : 表示要查找的根目录为当前目录</div></pre></td></tr></table></figure>
+<h3 id="du定位大文件"><a href="#du定位大文件" class="headerlink" title="du定位大文件"></a>du定位大文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"># 查看当前目录下的所有文件大小（不包括下级目录，x参数会去除掉mount上去的目录）</div><div class="line"># 如果有子文件夹，那就进去继续执行&apos;du -shx *&apos;一级一级地找</div><div class="line">$ du -shx *</div><div class="line"></div><div class="line"># 如果有文件被删除，却被某进程占用，并且还在写</div><div class="line"># 找到被删除的却还被进程占用的文件，进程也被列出，把相关的进程重启一遍，空间就被释放了。</div><div class="line">$ lsof | grep deleted</div><div class="line"></div><div class="line"># 参数</div><div class="line"># -b : 以Byte单位输出</div><div class="line"># -k : 以KB为单位输出</div><div class="line"># -m : 以MB为单位输出</div><div class="line"># -h : 以K，M，G为单位显示</div><div class="line"># -s : 仅显示总计，只列出最后加总的值</div><div class="line"></div><div class="line"># 找出大于2000m的文件夹</div><div class="line">$ du -m ~/Downloads | awk &apos;$1 &gt; 2000&apos;</div><div class="line">3048	/Users/yunyu/Downloads/develop</div><div class="line">7966	/Users/yunyu/Downloads/install</div><div class="line">17671	/Users/yunyu/Downloads/yunyu</div><div class="line">31673	/Users/yunyu/Downloads</div><div class="line"></div><div class="line"># 以可阅读的单位显示某文件夹的大小</div><div class="line">$ du -sh ~/Downloads</div><div class="line">31G		/Users/yunyu/Downloads</div><div class="line"></div><div class="line"># 以可阅读的单位显示某文件的大小</div><div class="line">$ du -h command.log</div><div class="line">52K		command.log</div><div class="line"></div><div class="line"># 统计多个文件的大小总和</div><div class="line">$ du -ch command.log command_1.log</div><div class="line">52K		command.log</div><div class="line">4.0K	command_1.log</div><div class="line">56K		total</div><div class="line"></div><div class="line"># 找出大于2000m的文件夹，并且按照文件大小排序</div><div class="line">du -m ~/Downloads | awk &apos;$1 &gt; 2000&apos; | sort -nr | more</div><div class="line">31673   /Users/yunyu/Downloads</div><div class="line">17671   /Users/yunyu/Downloads/yunyu</div><div class="line">7966    /Users/yunyu/Downloads/install</div><div class="line">3048    /Users/yunyu/Downloads/develop</div></pre></td></tr></table></figure>
+<h3 id="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"><a href="#chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）" class="headerlink" title="chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）"></a>chown、useradd、groupadd、userdel、usermod、passwd、groupdel（新建用户、用户组，给用户分配权限）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"># 添加新的账号</div><div class="line">$ useradd 选项 用户名</div><div class="line"></div><div class="line"># 删除账号</div><div class="line">$ userdel 选项 用户名</div><div class="line"></div><div class="line"># 修改帐号</div><div class="line">$ usermod 选项 用户名</div><div class="line"></div><div class="line"># 用户密码的管理</div><div class="line">$ passwd 选项 用户名</div><div class="line">Old password：******</div><div class="line">New password：*******</div><div class="line">Re-enter new password：*******</div><div class="line"></div><div class="line"># 设置密码为空</div><div class="line">$ passwd -d 用户名</div><div class="line"></div><div class="line"># 添加新的组</div><div class="line">$ groupadd 选项 用户组</div><div class="line"></div><div class="line"># 删除组</div><div class="line">$ groupdel 用户组</div><div class="line"></div><div class="line"># 修改组</div><div class="line">$ groupmod 选项 用户组</div><div class="line"></div><div class="line"># 修改用户所在组（把某个用户改为新的用户组，这样会离开其他用户组）</div><div class="line">$ usermod -g 用户组 用户名</div><div class="line"></div><div class="line"># 修改用户所在组（-a代表append，给某个用户添加一个新的组，而不必离开 其他用户组）</div><div class="line">$ usermod -a -G 用户组 用户名</div><div class="line"></div><div class="line"># 分配权限(修改某个目录的所属用户和用户组)</div><div class="line">$ chown -R hadoop:hadoop /usr/hadoop/</div><div class="line"></div><div class="line"># Linux中查看所有系统用户命令</div><div class="line">$ cat /etc/passwd</div><div class="line"></div><div class="line"># Linux中查看所有组用户</div><div class="line">$ cat /etc/group</div><div class="line"></div><div class="line"># 查看当前用户所属组</div><div class="line">$ groups</div><div class="line"></div><div class="line"># 查看root用户所属组</div><div class="line">$ groups root</div><div class="line"></div><div class="line"># 查看当前用户</div><div class="line">$ whoami</div><div class="line"></div><div class="line"># 添加用户到用户组</div><div class="line">$ gpasswd -a 用户名 用户组</div><div class="line"></div><div class="line"># 从用户组中删除用户</div><div class="line">$ gpasswd -d 用户名 用户组</div></pre></td></tr></table></figure>
+<h3 id="查看用户登录信息"><a href="#查看用户登录信息" class="headerlink" title="查看用户登录信息"></a>查看用户登录信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">$ w</div><div class="line">$ w username</div><div class="line"></div><div class="line">18:40  up 11 days, 21:35, 5 users, load averages: 3.35 2.94 2.92</div><div class="line">USER     TTY      FROM              LOGIN@  IDLE WHAT</div><div class="line">ben      console  -                16 816  11days -</div><div class="line">ben      s000     -                16 816      - w</div><div class="line">ben      s001     -                14:10      12 -bash</div><div class="line">ben      s003     -                21 816     13 -bash</div><div class="line">ben      s004     -                16:28       2 -bash</div><div class="line"></div><div class="line"># 输出内容</div><div class="line">USER :登陆的用户名；</div><div class="line">TTY :登陆终端；</div><div class="line">FROM :从哪个IP地址登录；</div><div class="line">LOGIN@ :登陆时间；</div><div class="line">IDLE :用户闲置时间；</div><div class="line">JCPU :指的是和该终端连接的所有进程占用的时间。这个时间里并不包括过去的后台作业时间，但却包括当前正在运行的后台作业所占用的时间；</div><div class="line">PCPU :是指当前进程所占用的时间；</div><div class="line">WHAT :当前正在运行的命令；</div><div class="line"></div><div class="line">$ who</div><div class="line"></div><div class="line">ben      console  Aug 16 21:05</div><div class="line">ben      ttys000  Aug 16 23:26</div><div class="line">ben      ttys001  Aug 28 14:10</div><div class="line">ben      ttys003  Aug 21 13:25</div><div class="line">ben      ttys004  Aug 28 16:28</div><div class="line"></div><div class="line"># 输出内容</div><div class="line">- 用户名</div><div class="line">- 登录终端</div><div class="line">- 登录时间（登录来源IP地址）</div><div class="line"></div><div class="line"># 查看当前登录和过去登录的用户信息</div><div class="line"># 注释：last命令默认读取/var/log/wtmp文件数据</div><div class="line">$ last</div><div class="line"></div><div class="line">ben       ttys005                   Sun Aug 28 17:34 - 17:53  (00:19)</div><div class="line">ben       ttys005                   Sun Aug 28 17:21 - 17:29  (00:07)</div><div class="line">ben       ttys004                   Sun Aug 28 16:28   still logged in</div><div class="line">ben       ttys001                   Sun Aug 28 14:10   still logged in</div><div class="line">ben       ttys002                   Wed Aug 24 23:54 - 18:25 (3+18:31)</div><div class="line"></div><div class="line"># 输出内容</div><div class="line">- 用户名</div><div class="line">- 登录终端</div><div class="line">- 登录IP</div><div class="line">- 登录时间</div><div class="line">- 退出时间（在线时间）</div><div class="line"></div><div class="line"># 查看所有用户最后一次登录时间（Ubuntu好用，Mac不好用，Mac下没有/var/log/lastlog文件）</div><div class="line"># 注释：lastlog命令默认读取/var/log/lastlog文件内容</div><div class="line">$ lastlog</div><div class="line"></div><div class="line"># 输出内容</div><div class="line">- 用户名</div><div class="line">- 登录终端</div><div class="line">- 登录IP</div><div class="line">- 最后一次登录时间</div></pre></td></tr></table></figure>
+<h3 id="alias别名（很有用，便于记录常用命令）"><a href="#alias别名（很有用，便于记录常用命令）" class="headerlink" title="alias别名（很有用，便于记录常用命令）"></a>alias别名（很有用，便于记录常用命令）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看当前设置了多少别名，直接输入alias</div><div class="line">$ alias</div><div class="line"></div><div class="line"># 添加别名，直接输入alias &apos;别名&apos;=&apos;命令&apos;（注意等号之间不能有空格）</div><div class="line">$ alias cdmanage=&apos;cd /Users/ben/workspace/manage/target&apos;</div><div class="line"></div><div class="line"># 删除一个别名</div><div class="line">$ unalias cdmanage</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 永久保存alias的方式（本人是Mac操作系统）</div><div class="line"># 进入用户根目录</div><div class="line">$ cd /Users/ben</div><div class="line">$ vi .bash_profile</div><div class="line"></div><div class="line"># 编辑文件如下并保存</div><div class="line">alias cdben=&quot;cd /Users/ben&quot;</div><div class="line">alias cdcore=&quot;cd /Users/ben/workspace/core&quot;</div><div class="line">alias cdmanage=&quot;cd /Users/ben/workspace/manage&quot;</div><div class="line">alias cdservice=&quot;cd /Users/ben/workspace/service&quot;</div><div class="line"></div><div class="line">alias cdmongo2=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-2.6.9&quot;</div><div class="line">alias cdmongo3=&quot;cd /Users/ben/dev/mongodb-osx-x86_64-3.0.2&quot;</div><div class="line">alias cdredis=&quot;cd /Users/ben/dev/redis-3.0.0&quot;</div><div class="line">alias cdsearch01=&quot;cd /Users/ben/dev/search01&quot;</div><div class="line"></div><div class="line"># 使上面的别名立即生效</div><div class="line">$ source .bash_profile</div></pre></td></tr></table></figure>
+<h3 id="Linux中修改IP地址"><a href="#Linux中修改IP地址" class="headerlink" title="Linux中修改IP地址"></a>Linux中修改IP地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line"># 修改/etc/sysconfig/network-scripts/ifcfg-eth0配置文件 </div><div class="line">IPADDR=192.168.0.248 </div><div class="line">GATEWAY=192.168.0.1 </div><div class="line">DNS1=192.168.0.1 </div><div class="line">第二步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">192.168.0.248        hostname</div></pre></td></tr></table></figure>
+<h3 id="Linux中修改主机名"><a href="#Linux中修改主机名" class="headerlink" title="Linux中修改主机名"></a>Linux中修改主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">第一步：</div><div class="line">$ hostname oratest  </div><div class="line">第二步：</div><div class="line"># 修改/etc/sysconfig/network中的hostname  </div><div class="line">第三步：</div><div class="line"># 修改/etc/hosts文件 </div><div class="line">记得重启!!!</div></pre></td></tr></table></figure>
+<h3 id="tar压缩-解压缩"><a href="#tar压缩-解压缩" class="headerlink" title="tar压缩/解压缩"></a>tar压缩/解压缩</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"># tar命令详解</div><div class="line">-c: 建立压缩档案</div><div class="line">-x：解压</div><div class="line">-t：查看内容</div><div class="line">-r：向压缩归档文件末尾追加文件</div><div class="line">-u：更新原压缩包中的文件</div><div class="line"># 这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。</div><div class="line"></div><div class="line"># 下面的参数是根据需要在压缩或解压档案时可选的。</div><div class="line">-z：有gzip属性的</div><div class="line">-j：有bz2属性的</div><div class="line">-Z：有compress属性的</div><div class="line">-v：显示所有过程</div><div class="line">-O：将文件解开到标准输出</div><div class="line">参数-f是必须的</div><div class="line">-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。</div><div class="line"></div><div class="line"># 压缩</div><div class="line"># 这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包，-f指定包的文件名。</div><div class="line">$ tar -cf all.tar *.jpg</div><div class="line"># 将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩，生成一个gzip压缩过的包，命名为jpg.tar.gz</div><div class="line">$ tar –czf jpg.tar.gz *.jpg</div><div class="line"># 这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的意思。 </div><div class="line">$ tar -rf all.tar *.gif</div><div class="line"># 这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。</div><div class="line">$ tar -uf all.tar logo.gif</div><div class="line"></div><div class="line"># 查看</div><div class="line"># 这条命令是在不解压的情况下查看all.tar包中所有文件，-t是列出文件的意思 </div><div class="line">$ tar -tf all.tar</div><div class="line"></div><div class="line"># 解压</div><div class="line"># 这条命令是解出all.tar包中所有文件，-x是解开的意思</div><div class="line">$ tar -xf all.tar</div><div class="line"># 解压tar包</div><div class="line">$ tar –xvf file.tar</div><div class="line"># 解压tar.gz</div><div class="line">$ tar -xzvf file.tar.gz</div><div class="line"># 解压 tar.bz2</div><div class="line">$ tar -xjvf file.tar.bz2</div><div class="line"># 解压tar.Z</div><div class="line">$ tar –xZvf file.tar.Z</div><div class="line"></div><div class="line"># 解压到指定的目录，如果目录不存在就创建</div><div class="line"># 将text.tar.gz 解压到 /home/app/test/ （绝对路径）下</div><div class="line">$ tar -zxvf ./text.tar.gz -C /home/app/test/</div><div class="line"></div><div class="line"># 解压rar</div><div class="line">$ unrar e file.rar</div><div class="line"></div><div class="line"># 压缩zip</div><div class="line">$ zip aa.zip aa.sh</div><div class="line"></div><div class="line"># 将某一个目录下的文件压缩成一个zip包</div><div class="line">$ zip folder.zip folder/*</div><div class="line"></div><div class="line"># 解压zip</div><div class="line">$ unzip file.zip</div><div class="line"></div><div class="line"># 解压zip到指定目录</div><div class="line"># -n : 如果已有相同的文件存在，要求unzip命令不覆盖原先的文件</div><div class="line"># -o : 如果已有相同的文件存在，要求unzip命令覆盖原先的文</div><div class="line">$ unzip -n test.zip -d /tmp</div><div class="line">$ unzip -o test.zip -d /tmp</div><div class="line"></div><div class="line"># 总结 </div><div class="line">1、*.tar 用 tar –xvf 解压 </div><div class="line">2、*.gz 用 gzip -d或者gunzip 解压 </div><div class="line">3、*.tar.gz和*.tgz 用 tar –xzf 解压 </div><div class="line">4、*.bz2 用 bzip2 -d或者用bunzip2 解压 </div><div class="line">5、*.tar.bz2用tar –xjf 解压 </div><div class="line">6、*.Z 用 uncompress 解压 </div><div class="line">7、*.tar.Z 用tar –xZf 解压 </div><div class="line">8、*.rar 用 unrar e解压 </div><div class="line">9、*.zip 用 unzip 解压</div></pre></td></tr></table></figure>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 创建软链接</div><div class="line"># ln -s a b 中的 a 就是源文件，b是链接文件名，其作用是当进入b目录，实际上是链接进入了a目录</div><div class="line"># 值得注意的是执行命令的时候，应该是a目录已经建立，目录b没有建立。我最开始操作的是也把b目录给建立了，结果就不对了</div><div class="line"># 如下面的示例，当我们执行命令cd /usr/local/java/的时候，实际上是进入了/software/java/</div><div class="line">$ ln -s /software/java /usr/local/java</div><div class="line"></div><div class="line"># 删除软链接（注意不是rm -rf b/）</div><div class="line">rm -rf b</div></pre></td></tr></table></figure>
+<h3 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 创建文件夹命令</div><div class="line">mkdir test</div><div class="line"></div><div class="line"># 创建多级目录的命令</div><div class="line">mkdir -p /software/temp/nginx</div><div class="line"></div><div class="line"># 删除文件夹命令</div><div class="line">rm -rf test </div><div class="line"></div><div class="line"># 复制文件夹命令</div><div class="line">cp -rf /home/root/Downloads/* /home/root/tools</div></pre></td></tr></table></figure>
+<h3 id="MySQL数据库的备份与还原"><a href="#MySQL数据库的备份与还原" class="headerlink" title="MySQL数据库的备份与还原"></a>MySQL数据库的备份与还原</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 备份</div><div class="line"># root为用户名，user为要备份的数据库，自动会备份到/home/ben/文件目录下</div><div class="line">$ mysqldump -u root -p user &gt; /home/ben/user20160101.sql</div><div class="line"></div><div class="line"># 压缩备份</div><div class="line">$ mysqldump -u root -p user | gzip &gt; user20160101.sql.gz </div><div class="line"></div><div class="line"># 还原</div><div class="line">$ mysql -u root -p user &lt; /home/ben/user20160101.sql</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2" target="_blank" rel="external">http://blog.csdn.net/column/details/linuxcommad.html?&amp;page=2</a></li>
+<li><a href="http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html" target="_blank" rel="external">http://jingyan.baidu.com/article/d45ad148e801c769552b800c.html</a></li>
+<li><a href="http://www.php-note.com/article/detail/831" target="_blank" rel="external">http://www.php-note.com/article/detail/831</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Linux/">Linux</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Docker/Docker实战（六）Docker安装Redis" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -626,385 +1174,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Others/移动端请求URL的加密:解密" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/13/Others/移动端请求URL的加密:解密/" class="article-date">
-  	<time datetime="2015-11-12T16:35:34.000Z" itemprop="datePublished">2015-11-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/13/Others/移动端请求URL的加密:解密/">移动端请求URL的加密/解密</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="移动端请求URL的加密方式"><a href="#移动端请求URL的加密方式" class="headerlink" title="移动端请求URL的加密方式"></a>移动端请求URL的加密方式</h3><p>最近一直在研究如何爬取手机客户端请求的数据信息，发现很多手机客户端在请求服务端数据的时候，对请求的URL都做了一些加密处理，所以自己就私下里研究了一下URL的一些加密算法</p>
-<p>下面是一个比较基本的URL加密处理方式：</p>
-<ul>
-<li>1.服务端和客户端约定好一个公约KEY</li>
-<li>2.选择一种加密方式MD5，SHA等等（这里重点介绍Mac算法）</li>
-<li>3.选择要做加密处理的参数（一般是静态参数 + 动态参数的方式，比如：loginToken登录秘钥 + timestamp时间戳）</li>
-<li>4.客户端根据公约KEY使用Mac算法，对指定的参数（loginToken + timestamp）进行加密处理生成秘钥secret，把secret当做参数传递给服务端</li>
-<li>5.服务端会也会根据公约KEY使用Mac算法，对指定的参数做同样的加密处理，并且把结果和secret参数进行比较，来判断这个请求是否是正确的</li>
-</ul>
-<p>参数：</p>
-<blockquote>
-<p>loginToken : 8d940b09872346a<em>**</em>0f9844c70d51</p>
-<p>timestamp : 1447327804725</p>
-</blockquote>
-<p>客户端加密处理的秘钥：</p>
-<blockquote>
-<p>secret : 8d940b098773464796b<em>**</em>844c70d516447327804725</p>
-</blockquote>
-<h3 id="MAC算法（这里的MAC可不是苹果笔记本。。）"><a href="#MAC算法（这里的MAC可不是苹果笔记本。。）" class="headerlink" title="MAC算法（这里的MAC可不是苹果笔记本。。）"></a>MAC算法（这里的MAC可不是苹果笔记本。。）</h3><p>MAC算法结合了MD5和SHA算法的优势，并加入密钥的支持，是一种更为安全的消息摘要算法。</p>
-<p>MAC（Message Authentication Code，消息认证码算法）是含有密钥的散列函数算法，兼容了MD和SHA算法的特性，并在此基础上加入了密钥。</p>
-<p>MAC算法主要集合了MD和SHA两大系列消息摘要算法。MD系列的算法有HmacMD2、HmacMD4、HmacMD5三种算法；SHA系列的算法有HmacSHA1、HmacSHA224、HmacSHA256、HmacSHA384.HmacSHA512五种算法。</p>
-<p>经过MAC算法得到的摘要值也可以使用十六进制编码表示，其摘要值长度与参与实现的摘要值长度相同。例如，HmacSHA1算法得到的摘要长度就是SHA1算法得到的摘要长度，都是160位二进制，换算成十六进制编码为40位。</p>
-<h4 id="模型分析"><a href="#模型分析" class="headerlink" title="模型分析"></a>模型分析</h4><p>甲乙双方进行数据交换可以采取如下流程完成</p>
-<ul>
-<li><ol>
-<li>甲方向乙方公布摘要算法（就是指定要使用的摘要算法名）</li>
-</ol>
-</li>
-<li><ol>
-<li>甲乙双方按照约定构造密钥，双方拥有相同的密钥（一般是一方构造密钥后通知另外一方，此过程不需要通过程序实现，就是双方约定个字符串，但是这个字符串可不是随便设定的，也是通过相关算法获取的）</li>
-</ol>
-</li>
-<li><ol>
-<li>甲方使用密钥对消息做摘要处理，然后将消息和生成的摘要消息一同发送给乙方</li>
-</ol>
-</li>
-<li><ol>
-<li>乙方收到消息后，使用甲方已经公布的摘要算法+约定好的密钥 对收到的消息进行摘要处理。然后比对自己的摘要消息和甲方发过来的摘要消息。甄别消息是否是甲方发送过来的</li>
-</ol>
-</li>
-</ul>
-<h4 id="MAC用于消息认证"><a href="#MAC用于消息认证" class="headerlink" title="MAC用于消息认证"></a>MAC用于消息认证</h4><p><img src="http://static.oschina.net/uploads/space/2014/0714/165313_7RfC_1469576.png" alt=""></p>
-<h4 id="消息认证码"><a href="#消息认证码" class="headerlink" title="消息认证码"></a>消息认证码</h4><p>密码学中，通信实体双方使用的一种验证机制，保证消息数据完整性的一种工具。</p>
-<p>安全性依赖于Hash函数，故也称带密钥的Hash函数。</p>
-<p>消息认证码是基于密钥和消息摘要【hash】所获得的一个值，目的是用于验证消息的完整性，确认数据在传送和存储过程中未受到主动攻击</p>
-<p><img src="http://static.oschina.net/uploads/img/201407/14165727_ohv6.png" alt=""></p>
-<p>下面是使用HmacSHA1进行加密的具体代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 初始化HmacSHA1密钥</div><div class="line"> *</div><div class="line"> * @return byte[] 密钥</div><div class="line"> * @throws Exception</div><div class="line"> */</div><div class="line">public static byte[] initHmacSHAKey() throws Exception &#123;</div><div class="line">    // 初始化KeyGenerator</div><div class="line">    KeyGenerator keyGenerator = KeyGenerator.getInstance(&quot;HmacSHA1&quot;);</div><div class="line">    // 产生密钥</div><div class="line">    SecretKey secretKey = keyGenerator.generateKey();</div><div class="line">    // 获得密钥</div><div class="line">    return secretKey.getEncoded();</div><div class="line">&#125;</div><div class="line"> </div><div class="line">/**</div><div class="line"> * HmacSHA1消息摘要</div><div class="line"> *</div><div class="line"> * @param data 待做摘要处理的数据</div><div class="line"> * @param key  密钥</div><div class="line"> * @return byte[] 消息摘要</div><div class="line"> * @throws Exception</div><div class="line"> */</div><div class="line">public static byte[] encodeHmacSHA(byte[] data, byte[] key)</div><div class="line">        throws Exception &#123;</div><div class="line">    // 还原密钥</div><div class="line">    SecretKey secretKey = new SecretKeySpec(key, &quot;HmacSHA1&quot;);</div><div class="line">    // 实例化Mac</div><div class="line">    Mac mac = Mac.getInstance(secretKey.getAlgorithm());</div><div class="line">    // 初始化Mac</div><div class="line">    mac.init(secretKey);</div><div class="line">    // 执行消息摘要</div><div class="line">    return mac.doFinal(data);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://my.oschina.net/xinxingegeya/blog/290594" target="_blank" rel="external">http://my.oschina.net/xinxingegeya/blog/290594</a></li>
-<li><a href="http://blog.csdn.net/kongqz/article/details/6281710" target="_blank" rel="external">http://blog.csdn.net/kongqz/article/details/6281710</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/其他/">其他</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Others/Akka Helloworld" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/12/Others/Akka Helloworld/" class="article-date">
-  	<time datetime="2015-11-12T03:51:43.000Z" itemprop="datePublished">2015-11-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/Others/Akka Helloworld/">Akka Helloworld</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>功能描述：<br>实现通过一个actior发送消息到另一个actor然后将处理结果返回，感觉很简单类似两个类的方法调用，但是这里实际上的处理时异步的并非同步的调用处理，这里神奇的地方就在于AKKA的内部机制了后续再做深入研究。</p>
-<p>HelloWorld.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">package com.birdben.akka.helloworld;</div><div class="line"></div><div class="line">import akka.actor.ActorRef;</div><div class="line">import akka.actor.Props;</div><div class="line">import akka.actor.UntypedActor;</div><div class="line"></div><div class="line">public class HelloWorld extends UntypedActor &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void preStart() &#123;</div><div class="line">        // create the greeter actor</div><div class="line">        final ActorRef greeter =</div><div class="line">                getContext().actorOf(Props.create(Greeter.class), &quot;greeter&quot;);//创建greeter actor实例</div><div class="line">        // tell it to perform the greeting</div><div class="line">        greeter.tell(Greeter.Msg.GREET, getSelf());//通过tell方法给greeter actor 发送一条消息</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onReceive(Object msg) &#123;</div><div class="line">        if (msg == Greeter.Msg.DONE) &#123;</div><div class="line">            // when the greeter is done, stop this actor and with it the application</div><div class="line">            getContext().stop(getSelf());</div><div class="line">        &#125; else unhandled(msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Greeter.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package com.birdben.akka.helloworld;</div><div class="line"></div><div class="line">import akka.actor.UntypedActor;</div><div class="line"></div><div class="line">public class Greeter extends UntypedActor &#123;</div><div class="line"></div><div class="line">    public static enum Msg &#123;</div><div class="line">        GREET, DONE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onReceive(Object msg) &#123;</div><div class="line">        if (msg == Msg.GREET) &#123;</div><div class="line">            System.out.println(&quot;Hello World!&quot;);</div><div class="line">            getSender().tell(Msg.DONE, getSelf());</div><div class="line">        &#125; else unhandled(msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行HelloWorld类，akka提供了一个主actor类，可以通过这个类直接执行以上的方法，在IDEA中点击Edit Configurations（配置tomcat的按钮），新建一个Application，在Main.class 选项中选择akka.Main，然后在program arguments 中输入 com.birdben.akka.helloworld.HelloWorld，点击 apply 然后运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">com.birdben.akka.helloworld.HelloWorld</div><div class="line">Connected to the target VM, address: &apos;127.0.0.1:50084&apos;, transport: &apos;socket&apos;</div><div class="line">Hello World!</div><div class="line">[INFO] [11/11/2015 01:40:59.782] [Main-akka.actor.default-dispatcher-3] [akka://Main/user/app-terminator] application supervisor has terminated, shutting down</div><div class="line">Disconnected from the target VM, address: &apos;127.0.0.1:50084&apos;, transport: &apos;socket&apos;</div><div class="line"></div><div class="line">Process finished with exit code 0</div></pre></td></tr></table></figure>
-<p>从运行结果可以看出，HelloWorld actor正确的调用了 Greeter actor 因为输出了 Hello World！从Infor日志可以看出 HelloWorld actor 正常接收到了 Greeter actor 的返回停止了当前actor。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.blogbus.com/dreamhead-logs/235916459.html" target="_blank" rel="external">http://www.blogbus.com/dreamhead-logs/235916459.html</a></li>
-<li><a href="http://verran.iteye.com/blog/1942393" target="_blank" rel="external">http://verran.iteye.com/blog/1942393</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Akka/">Akka</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Akka/">Akka</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Others/Akka工作原理" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/12/Others/Akka工作原理/" class="article-date">
-  	<time datetime="2015-11-12T03:50:53.000Z" itemprop="datePublished">2015-11-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/Others/Akka工作原理/">Akka工作原理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://raw.githubusercontent.com/arunma/blogimages/master/Akka1/TeacherRequestFlowSimulatedApp.png" alt="Akka"></p>
-<h3 id="Akka中的角色"><a href="#Akka中的角色" class="headerlink" title="Akka中的角色"></a>Akka中的角色</h3><ul>
-<li>ProducerActor(StudentActor)</li>
-<li>ConsumerActor(TeacherActor，onReceive方法接收消息)</li>
-<li>ActorRef(tell方法，发送消息给MessageDispatcher消息派发器)</li>
-<li>ActorSystem(actorOf方法，创建ActorRef，ActorRef就是ConsumerActor的Proxy)</li>
-<li>MailBox</li>
-<li>Dispatcher</li>
-<li>Message</li>
-</ul>
-<h3 id="Akka工作流程"><a href="#Akka工作流程" class="headerlink" title="Akka工作流程"></a>Akka工作流程</h3><ol>
-<li>ProducerActor(StudentActor)创建了一个叫ActorSystem的东西。</li>
-<li>他通过ActorSystem来创建了一个叫ActorRef的对象。QuoteRequest消息就是发送给ActorRef的（它是TeacherActor的一个代理）</li>
-<li>ActorRef将消息发送给Dispatcher</li>
-<li>Dispatcher将消息投递到目标Actor的邮箱中。</li>
-<li>随后Dispatcher将Mailbox扔给一个线程去执行（这点下节会重点讲到）</li>
-<li>MailBox将消息出队并最终将其委托给真实的Teacher Actor的接收方法去处理。</li>
-</ol>
-<h4 id="创建ActorSystem"><a href="#创建ActorSystem" class="headerlink" title="创建ActorSystem"></a>创建ActorSystem</h4><p>ActorSystem是进入到Actor的世界的一扇大门。通过它你可以创建或中止Actor。甚至还可以把整个Actor环境给关闭掉。</p>
-<p>另一方面来说，Actor是一个分层的结构，ActorSystem之于Actor有点类似于java.lang.Object或者scala.Any的角色——也就是说，它是所有Actor的根对象。当你通过ActorSystem的actorOf方法创建了一个Actor时，你其实创建的是ActorSystem下面的一个Actor。</p>
-<p><img src="https://raw.githubusercontent.com/arunma/blogimages/master/Akka1/ActorSystemActorCreation.png" alt="ActorSystem"></p>
-<h4 id="创建ActorRef-ConsumerActor（TeacherActor）的Proxy"><a href="#创建ActorRef-ConsumerActor（TeacherActor）的Proxy" class="headerlink" title="创建ActorRef(ConsumerActor（TeacherActor）的Proxy)"></a>创建ActorRef(ConsumerActor（TeacherActor）的Proxy)</h4><p>ActorRef myActor = system.actorOf(Props.create(MyUntypedActor.class), “myactor”);</p>
-<p>actorOf是ActorSystem中创建Actor的方法。但是正如你所看到的，它并不会返回我们所需要的TeacherActor。它返回的是一个ActorRef。</p>
-<p>这个ActorRef扮演了真实的Actor的一个代理的角色。客户端并不会直接和Actor通信。这也正是Actor模型中避免直接访问TeacherActor中任何的自定义/私有方法或者变量的一种方式。</p>
-<p>再重复一遍，消息只会发送给ActorRef，最终才会到达真正的Actor。你是绝对无法直接和Actor进行通信的。如果你真的找到了什么拙劣的方式来直接通信，大家会恨你入骨的。</p>
-<h4 id="将消息发送给代理"><a href="#将消息发送给代理" class="headerlink" title="将消息发送给代理"></a>将消息发送给代理</h4><p>还是只有一行代码。你只需告诉说把QuoteRequest消息发送到ActorRef就好了。Actor中的这个告诉的方式就是一个!号。（ActorRef中确实也有一个tell方法，不过它只是把这个调用委托给了！号）</p>
-<h4 id="分发器及邮箱"><a href="#分发器及邮箱" class="headerlink" title="分发器及邮箱"></a>分发器及邮箱</h4><p>ActorRef把消息处理功能委托给了Dispatcher。实际上，当我们创建ActorSystem和ActorRef的时候，就已经创建了一个Dispatcher和MailBox了。我们来看下它们是干什么的。</p>
-<h4 id="邮箱"><a href="#邮箱" class="headerlink" title="邮箱"></a>邮箱</h4><p>每个Actor都有一个MailBox（后面会介绍一种特殊的情况）。在我们这个比喻当中，每个老师也有一个邮箱。老师得去检查邮箱并处理消息。在Actor的世界中，则是另一种形式——邮箱一有机会就会要求Actor去完成自己的任务。</p>
-<p>同样的，邮箱里也有一个队列来以FIFO的方式来存储并处理消息——它和实际的邮箱还有点不同，真实的邮箱新的信总是在最上面的。</p>
-<h4 id="分发器"><a href="#分发器" class="headerlink" title="分发器"></a>分发器</h4><p>Dispatcher会完成一些很酷的事。从它的角度来看，它只是从ActorRef中取出一条消息然后将它传给了MailBox。但是，在这后面发生了一件不可意义的事情：</p>
-<p>Dispatcher会封装一个ExecutorService(ForkJoinPoll或者ThreadPoolExecutor)。它把MailBox扔到ExecutorService中去运行。</p>
-<p>是的。我们看到MailBox中包含了队列里面的消息。由于Executor得去执行MailBox，所以它得是一个Thread类型。是的没错。MailBox的声明及构造器就是这样的。</p>
-<h4 id="ConsumerActor-TeacherActor"><a href="#ConsumerActor-TeacherActor" class="headerlink" title="ConsumerActor(TeacherActor)"></a>ConsumerActor(TeacherActor)</h4><p>当MailBox的run方法运行的时候，它会从队列中取出一条消息，然后将它传给Actor去处理。</p>
-<p>当你把消息传给ActorRef的时候，最终调用的实际是目标Actor里面的一个receive方法。</p>
-<p>TeacherActor只是一个很简单的类，它有一个名言的列表，而receive方法很明显就是用来处理消息的。</p>
-<p>TeacherActor的receive方法的模式匹配只会匹配一种消息——QuoteRequest （事实上，模式匹配中最好匹配下默认的情况，不过这个就说来话长了）</p>
-<p>receive方法做的就是</p>
-<ol>
-<li>匹配QuoteRequest的模式</li>
-<li>从名言列表中随机选取一条</li>
-<li>构造出一个QuoteResponse</li>
-<li>将QuoteResponse打印到控制台上</li>
-</ol>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://ifeve.com/introducing-actors-akka-notes-part-1/" target="_blank" rel="external">http://ifeve.com/introducing-actors-akka-notes-part-1/</a></li>
-<li><a href="http://ifeve.com/akka-notes-actor-messaging-1/" target="_blank" rel="external">http://ifeve.com/akka-notes-actor-messaging-1/</a></li>
-<li><a href="http://ifeve.com/akka-notes-logging-and-testing/" target="_blank" rel="external">http://ifeve.com/akka-notes-logging-and-testing/</a></li>
-<li><a href="http://ifeve.com/akka-notes-actor-messaging-request-and-response-3/" target="_blank" rel="external">http://ifeve.com/akka-notes-actor-messaging-request-and-response-3/</a></li>
-<li><a href="http://rerun.me/2014/09/11/introducing-actors-akka-notes-part-1/" target="_blank" rel="external">http://rerun.me/2014/09/11/introducing-actors-akka-notes-part-1/</a></li>
-<li><a href="http://rerun.me/2014/09/19/akka-notes-actor-messaging-1/" target="_blank" rel="external">http://rerun.me/2014/09/19/akka-notes-actor-messaging-1/</a></li>
-<li><a href="http://rerun.me/2014/09/29/akka-notes-logging-and-testing/" target="_blank" rel="external">http://rerun.me/2014/09/29/akka-notes-logging-and-testing/</a></li>
-<li><a href="http://rerun.me/2014/10/06/akka-notes-actor-messaging-request-and-response-3/" target="_blank" rel="external">http://rerun.me/2014/10/06/akka-notes-actor-messaging-request-and-response-3/</a></li>
-<li><a href="http://www.oschina.net/p/akka" target="_blank" rel="external">http://www.oschina.net/p/akka</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Akka/">Akka</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Akka/">Akka</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Others/Mongo整合SpringTemplate用法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/12/Others/Mongo整合SpringTemplate用法/" class="article-date">
-  	<time datetime="2015-11-12T03:18:34.000Z" itemprop="datePublished">2015-11-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/Others/Mongo整合SpringTemplate用法/">Mongo整合SpringTemplate用法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="使用Spring的MongoTemplate如何执行自定义的mongo语句"><a href="#使用Spring的MongoTemplate如何执行自定义的mongo语句" class="headerlink" title="使用Spring的MongoTemplate如何执行自定义的mongo语句"></a>使用Spring的MongoTemplate如何执行自定义的mongo语句</h4><p>基础的SpringMongoTemplate用法可以参考:</p>
-<ul>
-<li><a href="http://blog.csdn.net/cuiran/article/details/8287204" target="_blank" rel="external">http://blog.csdn.net/cuiran/article/details/8287204</a></li>
-<li><a href="http://blog.csdn.net/xiaohulunb/article/details/27828381" target="_blank" rel="external">http://blog.csdn.net/xiaohulunb/article/details/27828381</a></li>
-</ul>
-<p>对GoodsInfo Collection按照name进行distinct查询</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">String jsonSql = &quot;&#123;distinct:&apos;GoodsInfo&apos;, key:&apos;name&apos;&#125;&quot;;</div><div class="line">CommandResult  commandResult = mongoTemplate.executeCommand(jsonSql);</div><div class="line">System.out.println();</div><div class="line">BasicDBList list = (BasicDBList)commandResult.get(&quot;values&quot;); </div><div class="line">for (int i = 0; i &lt; list.size(); i ++) &#123; </div><div class="line">	System.out.println(list.get(i)); </div><div class="line">&#125; </div><div class="line">System.out.println();</div></pre></td></tr></table></figure>
-<p>查询统计某一个时间段每个片区下的总用户数，新用户数，旧用户数，异常数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public Map&lt;String, LandPushTypeCount&gt; findTodayCountByAreaIds(Collection&lt;String&gt; areaIds) throws Exception &#123;</div><div class="line">		Map&lt;String, LandPushTypeCount&gt; result = new HashMap&lt;String, LandPushTypeCount&gt;();</div><div class="line"></div><div class="line">		Criteria criteria = Criteria.where(&quot;todayDate&quot;).is(DateUtil.parseDate2YMD(new Date())).andOperator(Criteria.where(&quot;areaId&quot;).in(areaIds));</div><div class="line">		String initDocument = &quot;&#123;codeCount:0, newCount:0, oldCount:0, errorCount:0&#125;&quot;;</div><div class="line">		String reduceFunction = &quot;function (doc, prev) &#123; prev.codeCount += doc.codeCount; prev.newCount += doc.newCount; prev.oldCount += doc.oldCount; prev.errorCount += doc.errorCount; &#125;&quot;;</div><div class="line">		GroupBy groupBy = GroupBy.key(&quot;areaId&quot;).initialDocument(initDocument).reduceFunction(reduceFunction);</div><div class="line"></div><div class="line">		GroupByResults&lt;LandPushTypeCount&gt; groupByResult = landPushTypeCountDao.getMongoTemplate().group(criteria, &quot;LandPushTypeCount&quot;, groupBy, LandPushTypeCount.class);</div><div class="line"></div><div class="line">		BasicDBList list = (BasicDBList) groupByResult.getRawResults().get(&quot;retval&quot;);</div><div class="line">		for (int i = 0; i &lt; list.size(); i ++) &#123;</div><div class="line">			LandPushTypeCount landPushTypeCountBean = new LandPushTypeCount();</div><div class="line">			BasicDBObject obj = (BasicDBObject)list.get(i);</div><div class="line">			System.out.println(&quot;片区：&quot; + obj.get(&quot;areaId&quot;)</div><div class="line">							+ &quot;总数量：&quot; + obj.get(&quot;codeCount&quot;)</div><div class="line">							+ &quot;新用户数量：&quot; + obj.get(&quot;newCount&quot;)</div><div class="line">							+ &quot;旧用户数量：&quot; + obj.get(&quot;oldCount&quot;)</div><div class="line">							+ &quot;异常数量：&quot; + obj.get(&quot;errorCount&quot;)</div><div class="line">			);</div><div class="line">			landPushTypeCountBean.setCodeCount(((Double) obj.get(&quot;codeCount&quot;)).intValue());</div><div class="line">			landPushTypeCountBean.setNewCount(((Double) obj.get(&quot;newCount&quot;)).intValue());</div><div class="line">			landPushTypeCountBean.setOldCount(((Double) obj.get(&quot;oldCount&quot;)).intValue());</div><div class="line">			landPushTypeCountBean.setErrorCount(((Double) obj.get(&quot;errorCount&quot;)).intValue());</div><div class="line">			result.put((String) obj.get(&quot;areaId&quot;), landPushTypeCountBean);</div><div class="line">		&#125;</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">// 相当于mongo语句如下</div><div class="line">db.runCommand(</div><div class="line">&#123;</div><div class="line">　　&quot;group&quot;:</div><div class="line">　　&#123;</div><div class="line">　　　　&quot;ns&quot;:&quot;LandPushTypeCount&quot;,</div><div class="line">　　　　&quot;key&quot;:&#123;&quot;areaId&quot;:true&#125;,</div><div class="line">　　　　&quot;initial&quot;:&#123;codeCount:0, newCount:0, oldCount:0, errorCount:0&#125;,</div><div class="line">　　　　&quot;$reduce&quot;:function(doc,prev)</div><div class="line">　　　　&#123;</div><div class="line">　　　　　 prev.codeCount += doc.codeCount;</div><div class="line">          prev.newCount += doc.newCount;</div><div class="line">          prev.oldCount += doc.oldCount;</div><div class="line">          prev.errorCount += doc.errorCount;</div><div class="line">　　　　&#125;,</div><div class="line">　　　　&quot;condition&quot;:&#123;&quot;todayDate&quot;:&quot;2015-10-29&quot;, &quot;areaId&quot;:&#123;$in:[&quot;&quot;, &quot;330100&quot;, &quot;110000&quot;]&#125;&#125;</div><div class="line">　　&#125;</div><div class="line">&#125;</div><div class="line">);</div></pre></td></tr></table></figure>
-<p>查询top100回复数的帖子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">public void top100Postinfo() &#123;</div><div class="line">        long start = System.nanoTime();</div><div class="line">        try &#123;</div><div class="line">            final long startTime = 1443628800000L;</div><div class="line">            final long endTime = 1446436799000L;</div><div class="line"></div><div class="line">            Query query = new Query();</div><div class="line">            query.addCriteria(Criteria.where(&quot;createTS&quot;).gte(startTime).lte(endTime));</div><div class="line">            query.addCriteria(Criteria.where(&quot;srcPostId&quot;).exists(true));</div><div class="line">            query.addCriteria(Criteria.where(&quot;referInfo&quot;).exists(false));</div><div class="line">            query.addCriteria(Criteria.where(&quot;dr&quot;).is(0));</div><div class="line">            long count = postinfoDAO.getCount(query);</div><div class="line">            System.out.println(&quot;count:&quot; + count);</div><div class="line"></div><div class="line">            final int filterCount = 100;</div><div class="line"></div><div class="line">            DBObject result1 = postinfoDAO.getMongoTemplate().execute(Postinfo.class, new CollectionCallback&lt;DBObject&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public DBObject doInCollection(DBCollection collection) throws MongoException, DataAccessException &#123;</div><div class="line"></div><div class="line">                    // match匹配条件</div><div class="line">                    Map matchMap = new HashMap();</div><div class="line">                    matchMap.put(&quot;createTS&quot;, new BasicDBObject(&quot;$gt&quot;, startTime).append(&quot;$lt&quot;, endTime));</div><div class="line">                    matchMap.put(&quot;referInfo&quot;, new BasicDBObject(&quot;$exists&quot;, false));</div><div class="line">                    matchMap.put(&quot;srcPostId&quot;, new BasicDBObject(&quot;$exists&quot;, true));</div><div class="line">                    matchMap.put(&quot;dr&quot;, 0);</div><div class="line">                    DBObject matchOption = new BasicDBObject(&quot;$match&quot;, matchMap);</div><div class="line"></div><div class="line">                    // group条件</div><div class="line">                    Map groupMap = new HashMap();</div><div class="line">                    groupMap.put(&quot;_id&quot;, &quot;$srcPostId&quot;);</div><div class="line">                    groupMap.put(&quot;total&quot;, new BasicDBObject(&quot;$sum&quot;, 1));</div><div class="line">                    BasicDBObject groupOption = new BasicDBObject(&quot;$group&quot;, groupMap);</div><div class="line"></div><div class="line">                    // sort条件</div><div class="line">                    Map sortMap = new HashMap();</div><div class="line">                    sortMap.put(&quot;total&quot;, -1);</div><div class="line">                    BasicDBObject sortOption = new BasicDBObject(&quot;$sort&quot;, sortMap);</div><div class="line"></div><div class="line">                    // limit条件</div><div class="line">                    BasicDBObject limitOption = new BasicDBObject(&quot;$limit&quot;, filterCount);</div><div class="line"></div><div class="line">                    // 获取结果集</div><div class="line">                    AggregationOutput output = collection.aggregate(matchOption, groupOption, sortOption, limitOption);</div><div class="line">                    Iterator&lt;DBObject&gt; iterator = output.results().iterator();</div><div class="line">                    DBObject result = null;</div><div class="line">                    List&lt;Map&lt;String, String&gt;&gt; resultList = new ArrayList&lt;Map&lt;String, String&gt;&gt;();</div><div class="line">                    while (iterator.hasNext()) &#123;</div><div class="line">                        result = iterator.next();</div><div class="line">                        String id = (String) result.get(&quot;_id&quot;);</div><div class="line">                        Integer total = (Integer) result.get(&quot;total&quot;);</div><div class="line">                        System.out.println(&quot;id:&quot; + id);</div><div class="line">                        System.out.println(&quot;total:&quot; + total);</div><div class="line"></div><div class="line">                        Map&lt;String, String&gt; resultMap = new HashMap&lt;&gt;();</div><div class="line">                        resultMap.put(&quot;id&quot;, id);</div><div class="line">                        resultMap.put(&quot;total&quot;, String.valueOf(total));</div><div class="line">                        resultList.add(resultMap);</div><div class="line">                    &#125;</div><div class="line">                    exportExcel(resultList);</div><div class="line">                    return result;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        long finish = System.nanoTime();</div><div class="line">        System.out.println(TimeUnit.NANOSECONDS.toSeconds(finish - start) + &quot;:秒&quot;);</div><div class="line">        System.out.println(&quot;top20PercentPostinfo 执行完毕&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">// 相当于mongo语句如下</div><div class="line">db.Postinfo.aggregate([</div><div class="line">	&#123; $match: &#123; &quot;createTS&quot;:&#123;&quot;$gt&quot;:1443628800000, &quot;$lt&quot;:1446436799000&#125;, &quot;srcPostId&quot;:&#123;$exists:true&#125;, &quot;referInfo&quot;:&#123;$exists:false&#125;, &quot;dr&quot;:0 &#125; &#125;,</div><div class="line">	&#123; $limit: 1 &#125;,</div><div class="line">	&#123; $group: &#123; _id: &quot;$srcPostId&quot;, total: &#123; $sum: 1 &#125; &#125; &#125;,</div><div class="line">	&#123; $sort: &#123; total: -1 &#125; &#125;</div><div class="line">]);</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/ruishenh/article/details/12842331" target="_blank" rel="external">http://blog.csdn.net/ruishenh/article/details/12842331</a></li>
-<li><a href="http://www.360doc.com/content/13/0524/18/12127276_287814300.shtml" target="_blank" rel="external">http://www.360doc.com/content/13/0524/18/12127276_287814300.shtml</a></li>
-<li><a href="http://ask.csdn.net/questions/167950" target="_blank" rel="external">http://ask.csdn.net/questions/167950</a></li>
-<li><a href="http://147175882.iteye.com/blog/1565378" target="_blank" rel="external">http://147175882.iteye.com/blog/1565378</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/MongoDB/">MongoDB</a>
 	</div>
 
 

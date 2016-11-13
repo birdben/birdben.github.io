@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,353 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Git/Git的SSH-Key用法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/11/Git/Git的SSH-Key用法/" class="article-date">
+  	<time datetime="2016-09-11T08:51:32.000Z" itemprop="datePublished">2016-09-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/11/Git/Git的SSH-Key用法/">Git的SSH-Key用法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前GitHub提交代码的时候总是不知道该使用SSH方式还是Https方式，后来看了GitHub官网上建议使用Https方式，但Https方式有些麻烦，因为每次使用Https方式提交代码的时候都需要输入用户名和密码，而用SSH方式就有免密码登录的方式，只是需要在GitHub服务器添加我们本地的公钥就可以了。但是之前有一点令我一直都不解，虽然我用Https方式提交代码但是并没有让我输入用户名密码，后来找了好久原因才发现是因为我用的Mac笔记本，Mac系统有个钥匙串记录的功能，会将GitHub的用户名密码保存下来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 首先在本地生成公钥/私钥的键值对</div><div class="line">$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</div><div class="line"># 输入公钥/私钥的文件路径</div><div class="line">Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</div><div class="line">Enter passphrase (empty for no passphrase): [Type a passphrase]</div><div class="line">Enter same passphrase again: [Type passphrase again]</div><div class="line"># 复制公钥文件中的内容，并且添加到GitHub上即可</div><div class="line">$ cat ~/.ssh/id_dsa.pub</div></pre></td></tr></table></figure>
+<p>同样的道理，如果我们想在本地免密码登录测试服务器，那么我们也可以用这样的方式来设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 首先在本地生成公钥/私钥的键值对</div><div class="line">$ ssh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</div><div class="line">$ cat ~/.ssh/id_dsa.pub</div><div class="line"></div><div class="line"># 将本地的公钥上传到测试服务器</div><div class="line">$ scp root@LocalServer:~/.ssh/id_dsa.pub  ~/.ssh/master_dsa.pub</div><div class="line"># 将上传的本地公钥添加到authorized_keys中</div><div class="line">$ cat ~/.ssh/master_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://help.github.com/articles/which-remote-url-should-i-use/" target="_blank" rel="external">https://help.github.com/articles/which-remote-url-should-i-use/</a></li>
+<li><a href="http://www.jianshu.com/p/1ac06bcd8ab5" target="_blank" rel="external">http://www.jianshu.com/p/1ac06bcd8ab5</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git命令/">Git命令</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Git/">Git</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Hadoop/Hadoop学习（一）Hadoop完全分布式环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/10/Hadoop/Hadoop学习（一）Hadoop完全分布式环境搭建/" class="article-date">
+  	<time datetime="2016-09-10T08:09:30.000Z" itemprop="datePublished">2016-09-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/10/Hadoop/Hadoop学习（一）Hadoop完全分布式环境搭建/">Hadoop学习（一）Hadoop完全分布式环境搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天学习的信息量有点大收获不少，一时之间不知道从哪里开始写，希望尽量把我今天学习到的东西记录下来，因为内容太多可能会分几篇记录。其实之前有写过一篇用Docker搭建Hadoop环境的文章，当时其实搭建的是单机伪分布式的环境，今天这里搭建的是Hadoop完全分布式环境。今天又看了许多文章，对于Hadoop的体系架构又有了一定新的理解，包括1.x版本和2.x版本的不同。</p>
+<h3 id="Hadoop集群环境"><a href="#Hadoop集群环境" class="headerlink" title="Hadoop集群环境"></a>Hadoop集群环境</h3><p>我这里使用的三台虚拟机，每台虚拟机有自己的独立IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">192.168.1.119   hadoop1192.168.1.150   hadoop2192.168.1.149   hadoop3</div></pre></td></tr></table></figure>
+<p>相关环境信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">操作系统: Ubuntu 14.04.5 LTS</div><div class="line">JDK版本: 1.7.0_79</div><div class="line">Hadoop版本: 2.7.1</div></pre></td></tr></table></figure>
+<h3 id="JDK安装"><a href="#JDK安装" class="headerlink" title="JDK安装"></a>JDK安装</h3><p>省略</p>
+<h3 id="Hadoop安装"><a href="#Hadoop安装" class="headerlink" title="Hadoop安装"></a>Hadoop安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载Hadoop安装包</div><div class="line">$ curl -O http://mirrors.cnnic.cn/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz</div><div class="line"></div><div class="line"># 解压Hadoop压缩包</div><div class="line">$ tar -zxvf hadoop-2.7.1.tar.gz</div></pre></td></tr></table></figure>
+<h3 id="Hadoop集群配置"><a href="#Hadoop集群配置" class="headerlink" title="Hadoop集群配置"></a>Hadoop集群配置</h3><p>注意：以下配置请根据自己的实际环境修改</p>
+<h5 id="配置环境变量-etc-profile"><a href="#配置环境变量-etc-profile" class="headerlink" title="配置环境变量/etc/profile"></a>配置环境变量/etc/profile</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME=/usr/local/javaexport JAVA_HOMEHADOOP_HOME=/usr/local/hadoopexport HADOOP_HOMEPATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATHexport PATH</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-hadoop-env-sh，添加以下内容"><a href="#配置HADOOP-HOME-etc-hadoop-hadoop-env-sh，添加以下内容" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/hadoop-env.sh，添加以下内容"></a>配置HADOOP_HOME/etc/hadoop/hadoop-env.sh，添加以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/local/java</div><div class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-yarn-env-sh，添加以下内容"><a href="#配置HADOOP-HOME-etc-hadoop-yarn-env-sh，添加以下内容" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/yarn-env.sh，添加以下内容"></a>配置HADOOP_HOME/etc/hadoop/yarn-env.sh，添加以下内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/local/java</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-core-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-core-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/core-site.xml"></a>配置HADOOP_HOME/etc/hadoop/core-site.xml</h5><p>这里我使用Hadoop1这台虚拟机作为NameNode节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">    &lt;value&gt;hdfs://Hadoop1:9000&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-hdfs-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-hdfs-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/hdfs-site.xml"></a>配置HADOOP_HOME/etc/hadoop/hdfs-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;!-- 分布式文件系统数据块复制数，我们这里是Hadoop2和Hadoop3两个节点 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.replication&lt;/name&gt;    &lt;value&gt;2&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- DFS namenode存放name table的目录 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;    &lt;value&gt;file:/data/hdfs/name&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- DFS datanode存放数据block的目录 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;    &lt;value&gt;file:/data/hdfs/data&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- SecondaryNameNode的端口号，默认端口号是50090 --&gt;  &lt;property&gt;    &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;    &lt;value&gt;hadoop1:50090&lt;/value&gt;  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-mapred-site-xml-默认不存在，需要自建"><a href="#配置HADOOP-HOME-etc-hadoop-mapred-site-xml-默认不存在，需要自建" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/mapred-site.xml,默认不存在，需要自建"></a>配置HADOOP_HOME/etc/hadoop/mapred-site.xml,默认不存在，需要自建</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;!-- 第三方MapReduce框架，我们这里使用的yarn --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">    &lt;value&gt;yarn&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce JobHistory Server的IPC通信地址，默认端口号是10020 --&gt;</div><div class="line">  &lt;property&gt;     &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;     &lt;value&gt;hadoop1:10020&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce JobHistory Server的Web服务器访问地址，默认端口号是19888 --&gt;  &lt;property&gt;     &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;     &lt;value&gt;hadoop1:19888&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce已完成作业信息 --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobhistory.done-dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/data/history/done&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;!-- MapReduce正在运行作业信息 --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobhistory.intermediate-done-dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/data/history/done_intermediate&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置HADOOP-HOME-etc-hadoop-yarn-site-xml"><a href="#配置HADOOP-HOME-etc-hadoop-yarn-site-xml" class="headerlink" title="配置HADOOP_HOME/etc/hadoop/yarn-site.xml"></a>配置HADOOP_HOME/etc/hadoop/yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;!-- 为MapReduce设置洗牌服务 --&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;    &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;    &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- NodeManager与ResourceManager通信的接口地址，默认端口是8032 --&gt;</div><div class="line">  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;    &lt;value&gt;hadoop1:8032&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- NodeManger需要知道ResourceManager主机的scheduler调度服务接口地址，默认端口是8030 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;    &lt;value&gt;hadoop1:8030&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- NodeManager需要向ResourceManager报告任务运行状态供Resouce跟踪，因此NodeManager节点主机需要知道ResourceManager主机的tracker接口地址，默认端口是8031 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;    &lt;value&gt;hadoop1:8031&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- resourcemanager.admin，默认端口是8033 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;    &lt;value&gt;hadoop1:8033&lt;/value&gt;  &lt;/property&gt;</div><div class="line">  &lt;!-- 各个task的资源调度及运行状况通过通过该web界面访问，默认端口是8088 --&gt;  &lt;property&gt;    &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;    &lt;value&gt;hadoop1:8088&lt;/value&gt;  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h5 id="配置slaves节点，修改HADOOP-HOME-etc-hadoop-slaves"><a href="#配置slaves节点，修改HADOOP-HOME-etc-hadoop-slaves" class="headerlink" title="配置slaves节点，修改HADOOP_HOME/etc/hadoop/slaves"></a>配置slaves节点，修改HADOOP_HOME/etc/hadoop/slaves</h5><p>如果slaves配置中也添加Hadoop1节点，那么Hadoop1节点就既是namenode，又是datanode，这里没有这么配置，所以Hadoop1节点只是namenode，所以下面启动Hadoop1的服务之后，jps查看只有namenode服务器而没有datanode服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Hadoop2</div><div class="line">Hadoop3</div></pre></td></tr></table></figure>
+<h5 id="配置-etc-hostname"><a href="#配置-etc-hostname" class="headerlink" title="配置/etc/hostname"></a>配置/etc/hostname</h5><p>Hadoop1,2,3分别修改自己的/etc/hostname文件，如果这里不修改的话，后面使用Hive做离线查询会遇到问题，具体问题请参考《Hive学习（二）使用Hive进行离线分析日志》</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hadoop1</div></pre></td></tr></table></figure>
+<h5 id="配置主机名-etc-hosts"><a href="#配置主机名-etc-hosts" class="headerlink" title="配置主机名/etc/hosts"></a>配置主机名/etc/hosts</h5><p>这里Hadoop1是namenode，Hadoop2和Hadoop3是datanode</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">192.168.1.119   hadoop1192.168.1.150   hadoop2192.168.1.149   hadoop3</div></pre></td></tr></table></figure>
+<h5 id="配置SSH免密码登录"><a href="#配置SSH免密码登录" class="headerlink" title="配置SSH免密码登录"></a>配置SSH免密码登录</h5><p>在Hadoop1节点中生成新的SSH Key，并且将新生成的SSH Key添加到Hadoop1，2，3的authorized_keys免密码访问的配置中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># 创建authorized_keys文件</div><div class="line">$ vi ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># 注意：这里authorized_keys文件的权限设置为600。（这点很重要，网没有设置600权限会导致登录失败）因为我这里用的root账户没有这个问题，但是如果用自己创建的其他hadoop账户，不设置600权限就会导致登录失败</div><div class="line"></div><div class="line"># Hadoop1中执行</div><div class="line">$ ssh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</div><div class="line"># 将Hadoop1中的公钥复制进去</div><div class="line">$ cat ~/.ssh/id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># Hadoop2，3中执行</div><div class="line">$ scp root@Hadoop1:~/.ssh/id_dsa.pub  ~/.ssh/master_dsa.pub</div><div class="line"># 将Hadoop2，3中的公钥复制进去</div><div class="line">$ cat ~/.ssh/master_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"></div><div class="line"># 在Hadoop1中测试是否可以免密码登录Hadoop1，2，3（第一次应该只需要输入yes）</div><div class="line">$ ssh root@Hadoop1</div><div class="line">$ ssh root@Hadoop2</div><div class="line">$ ssh root@Hadoop3</div></pre></td></tr></table></figure>
+<h5 id="配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3"><a href="#配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3" class="headerlink" title="配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3"></a>配置好Hadoop1之后，将Hadoop1的配置copy到Hadoop2和Hadoop3</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在Hadoop1中执行</div><div class="line">$ scp -r /data/hadoop-2.7.1 root@Hadoop2:/data/</div><div class="line">$ scp -r /data/hadoop-2.7.1 root@Hadoop3:/data/</div></pre></td></tr></table></figure>
+<h5 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 初始化namenode</div><div class="line">$ ./bin/hdfs namenode -format</div><div class="line"></div><div class="line"># 初始化好namenode后，hadoop会自动建好对应hdfs-site.xml的namenode配置的文件路径</div><div class="line">$ ll /data/hdfs/name/current/total 24drwxrwxr-x 2 yunyu yunyu 4096 Sep 10 18:07 ./drwxrwxr-x 3 yunyu yunyu 4096 Sep 10 18:07 ../-rw-rw-r-- 1 yunyu yunyu  352 Sep 10 18:07 fsimage_0000000000000000000-rw-rw-r-- 1 yunyu yunyu   62 Sep 10 18:07 fsimage_0000000000000000000.md5-rw-rw-r-- 1 yunyu yunyu    2 Sep 10 18:07 seen_txid-rw-rw-r-- 1 yunyu yunyu  202 Sep 10 18:07 VERSION</div><div class="line"></div><div class="line"># 启动hdfs服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line">Starting namenodes on [hadoop1]hadoop1: starting namenode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-namenode-ubuntu.outhadoop2: starting datanode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-datanode-ubuntu.outhadoop3: starting datanode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-datanode-ubuntu.outStarting secondary namenodes [hadoop1]hadoop1: starting secondarynamenode, logging to /data/hadoop-2.7.1/logs/hadoop-yunyu-secondarynamenode-ubuntu.out</div><div class="line"></div><div class="line"># 使用jps检查启动的服务，可以看到NameNode和SecondaryNameNode已经启动</div><div class="line">$ jps20379 SecondaryNameNode20570 Jps20106 NameNode</div><div class="line"></div><div class="line"># 这时候在Hadoop2和Hadoop3节点上使用jps查看，DataNode已经启动</div><div class="line">$ jps16392 Jps16024 DataNode</div><div class="line"></div><div class="line"># 在Hadoop2和Hadoop3节点上，也会自动建好对应hdfs-site.xml的datanode配置的文件路径</div><div class="line">$ ll /data/hdfs/data/current/total 16drwxrwxr-x 3 yunyu yunyu 4096 Sep 10 18:10 ./drwx------ 3 yunyu yunyu 4096 Sep 10 18:10 ../drwx------ 4 yunyu yunyu 4096 Sep 10 18:10 BP-1965589257-127.0.1.1-1473502067891/-rw-rw-r-- 1 yunyu yunyu  229 Sep 10 18:10 VERSION</div><div class="line"></div><div class="line"># 启动yarn服务</div><div class="line">$ ./sbin/start-yarn.sh</div><div class="line">starting yarn daemonsstarting resourcemanager, logging to /data/hadoop-2.7.1/logs/yarn-yunyu-resourcemanager-ubuntu.outhadoop3: starting nodemanager, logging to /data/hadoop-2.7.1/logs/yarn-yunyu-nodemanager-ubuntu.outhadoop2: starting nodemanager, logging to /data/hadoop-2.7.1/logs/yarn-yunyu-nodemanager-ubuntu.out</div><div class="line"></div><div class="line"># 使用jps检查启动的服务，可以看到ResourceManager已经启动</div><div class="line">$ jps21653 Jps20379 SecondaryNameNode20106 NameNode21310 ResourceManager</div><div class="line"></div><div class="line"># 这时候在Hadoop2和Hadoop3节点上使用jps查看，NodeManager已经启动</div><div class="line">$ jps16946 NodeManager17235 Jps16024 DataNode</div><div class="line"></div><div class="line"># 启动jobhistory服务，默认jobhistory在使用start-all.sh是不启动的，所以即使使用start-all.sh也要手动启动jobhistory服务</div><div class="line">$ ./sbin/mr-jobhistory-daemon.sh start historyserver</div><div class="line">starting historyserver, logging to /data/hadoop-2.7.1/logs/mapred-yunyu-historyserver-ubuntu.out</div><div class="line"></div><div class="line"># 使用jps检查启动的服务，可以看到JobHistoryServer已经启动</div><div class="line">$ jps21937 Jps20379 SecondaryNameNode20106 NameNode21863 JobHistoryServer21310 ResourceManager</div></pre></td></tr></table></figure>
+<p>注意：使用start-all.sh启动已经不再被推荐使用，所以这里使用的是Hadoop推荐的分开启动，分别启动start-dfs.sh和start-yarn.sh，所以看一些比较就的Hadoop版本安装的文章可能会用start-all.sh启动</p>
+<h5 id="停止服务"><a href="#停止服务" class="headerlink" title="停止服务"></a>停止服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 停止hdfs服务</div><div class="line">$ ./sbin/stop-dfs.sh</div><div class="line"></div><div class="line"># 停止yarn服务</div><div class="line">$ ./sbin/stop-yarn.sh</div><div class="line"></div><div class="line"># 停止jobhistory服务</div><div class="line">$ ./sbin/mr-jobhistory-daemon.sh stop historyserver</div></pre></td></tr></table></figure>
+<h5 id="验证Hadoop集群的Web服务"><a href="#验证Hadoop集群的Web服务" class="headerlink" title="验证Hadoop集群的Web服务"></a>验证Hadoop集群的Web服务</h5><ul>
+<li><p>验证NameNode的Web服务能访问，浏览器访问<a href="http://192.168.1.119:50070" target="_blank" rel="external">http://192.168.1.119:50070</a><br><img src="http://img.blog.csdn.net/20160910184234348?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+</li>
+<li><p>验证ResourceManager的Web服务能访问，浏览器访问<a href="http://192.168.1.119:8088" target="_blank" rel="external">http://192.168.1.119:8088</a><br><img src="http://img.blog.csdn.net/20160910184156566?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+</li>
+<li><p>验证MapReduce JobHistory Server的Web服务能访问，浏览器访问<a href="http://192.168.1.119:19888" target="_blank" rel="external">http://192.168.1.119:19888</a><br><img src="http://img.blog.csdn.net/20160910184251708?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+</li>
+</ul>
+<h5 id="验证HDFS文件系统"><a href="#验证HDFS文件系统" class="headerlink" title="验证HDFS文件系统"></a>验证HDFS文件系统</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 查看根目录下的文件</div><div class="line">$ hdfs dfs -ls /Found 1 itemsdrwxrwx---   - yunyu supergroup          0 2016-09-10 03:15 /data</div><div class="line"></div><div class="line"># 创建temp目录</div><div class="line">$ hdfs dfs -mkdir /temp</div><div class="line"></div><div class="line"># 再次查看根目录下的文件，可以看到temp目录</div><div class="line">$ hdfs dfs -ls /Found 2 itemsdrwxrwx---   - yunyu supergroup          0 2016-09-10 03:15 /datadrwxr-xr-x   - yunyu supergroup          0 2016-09-10 03:45 /temp</div><div class="line"></div><div class="line"># 可以查看之前mapred-site.xml中配置的mapreduce作业执行中的目录和作业已完成的目录</div><div class="line">$ hdfs dfs -ls /data/history/Found 2 itemsdrwxrwx---   - yunyu supergroup          0 2016-09-10 03:15 /data/history/donedrwxrwxrwt   - yunyu supergroup          0 2016-09-10 03:15 /data/history/done_intermediate</div></pre></td></tr></table></figure>
+<h3 id="需要注意的地方"><a href="#需要注意的地方" class="headerlink" title="需要注意的地方"></a>需要注意的地方</h3><p>网上一些Hadoop集群安装相关文章中，有一部分还是Hadoop老版本的配置，所以有些迷惑，像JobTracker，TaskTracker这些概念是Hadoop老版本才有的，新版本中使用ResourceManager和NodeManager替代了他们。后续的章节会详细的介绍Hadoop的相关原理以及新老版本的区别。</p>
+<h3 id="使用HDFS默认端口号8020配置"><a href="#使用HDFS默认端口号8020配置" class="headerlink" title="使用HDFS默认端口号8020配置"></a>使用HDFS默认端口号8020配置</h3><p>修改core-site.xml配置文件如下（即把端口号去掉）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;  &lt;property&gt;    &lt;name&gt;fs.defaultFS&lt;/name&gt;    &lt;value&gt;hdfs://hadoop1&lt;/value&gt;  &lt;/property&gt;&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<p>启动HDFS服务之后，分别在Hadoop1，2，3三台服务器上查看8020端口，发现HDFS默认使用的是8020端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 启动HDFS服务</div><div class="line">$ ./sbin/start-dfs.sh</div><div class="line"></div><div class="line"># Hadoop1中查看8020端口</div><div class="line">$ lsof -i:8020COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAMEjava    5112 yunyu  197u  IPv4  26041      0t0  TCP hadoop1:8020 (LISTEN)java    5112 yunyu  207u  IPv4  27568      0t0  TCP hadoop1:8020-&gt;hadoop2:34867 (ESTABLISHED)java    5112 yunyu  208u  IPv4  26096      0t0  TCP hadoop1:8020-&gt;hadoop3:59852 (ESTABLISHED)java    5112 yunyu  209u  IPv4  29792      0t0  TCP hadoop1:8020-&gt;hadoop1:45542 (ESTABLISHED)java    5383 yunyu  196u  IPv4  28826      0t0  TCP hadoop1:45542-&gt;hadoop1:8020 (ESTABLISHED)</div><div class="line"></div><div class="line"># Hadoop2中查看8020端口</div><div class="line">$ lsof -i:8020COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAMEjava    4609 yunyu  234u  IPv4  24013      0t0  TCP hadoop2:34867-&gt;hadoop1:8020 (ESTABLISHED)</div><div class="line"></div><div class="line"># Hadoop3中查看8020端口</div><div class="line">$ lsof -i:8020COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAMEjava    4452 yunyu  234u  IPv4  23413      0t0  TCP hadoop3:59852-&gt;hadoop1:8020 (ESTABLISHED)</div></pre></td></tr></table></figure>
+<p>访问HDFS集群的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 访问本机的HDFS集群</div><div class="line">hdfs dfs -ls /</div><div class="line"></div><div class="line"># 可以指定host和port访问远程的HDFS集群（这里使用hostname和port访问本地集群）</div><div class="line">hdfs dfs -ls hdfs://Hadoop1:8020/</div><div class="line"></div><div class="line"># 如果使用的默认端口号8020，也可以不指定端口号访问</div><div class="line">hdfs dfs -ls hdfs://Hadoop1/</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/ClusterSetup.html" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/ClusterSetup.html</a></li>
+<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/core-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-common/core-default.xml</a></li>
+<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml</a></li>
+<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml</a></li>
+<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml</a></li>
+<li><a href="http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#secondarynamenode" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.1/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#secondarynamenode</a></li>
+<li><a href="http://www.cnblogs.com/luogankun/p/4019303.html" target="_blank" rel="external">http://www.cnblogs.com/luogankun/p/4019303.html</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-yarn/#_3.1_hadoop_0.23.0" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-yarn/#_3.1_hadoop_0.23.0</a></li>
+<li><a href="http://blog.chinaunix.net/uid-25266990-id-3900239.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-25266990-id-3900239.html</a></li>
+<li><a href="http://blog.csdn.net/jxnu_xiaobing/article/details/46931693" target="_blank" rel="external">http://blog.csdn.net/jxnu_xiaobing/article/details/46931693</a></li>
+<li><a href="http://www.cnblogs.com/liuling/archive/2013/06/16/2013-6-16-01.html" target="_blank" rel="external">http://www.cnblogs.com/liuling/archive/2013/06/16/2013-6-16-01.html</a></li>
+<li><a href="http://www.cnblogs.com/luogankun/p/4019303.html" target="_blank" rel="external">http://www.cnblogs.com/luogankun/p/4019303.html</a></li>
+<li><a href="http://jacoxu.com/?p=961" target="_blank" rel="external">http://jacoxu.com/?p=961</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop原理架构体系/">Hadoop原理架构体系</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker/Docker实战（二十）Docker镜像的导入导出" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/04/Docker/Docker实战（二十）Docker镜像的导入导出/" class="article-date">
+  	<time datetime="2016-09-04T03:30:19.000Z" itemprop="datePublished">2016-09-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/04/Docker/Docker实战（二十）Docker镜像的导入导出/">Docker实战（二十）Docker镜像的导入导出</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Docker镜像导入导出方式"><a href="#Docker镜像导入导出方式" class="headerlink" title="Docker镜像导入导出方式"></a>Docker镜像导入导出方式</h2><p>最近公司需要做Docker私有化部署，需要将本地安装好的Docker容器部署到客户的环境，这里遇到了一些问题客户的服务器不能连接外网，无法在线做Docker镜像的构建，所以需要只能通过导入导出镜像的方式来做。下面是我总结的Docker镜像导入导出方式。</p>
+<p>Docker提供了两种方式的导入导出：</p>
+<ul>
+<li>load/save方式导入导出镜像<ul>
+<li>docker save：来导出本地镜像库中指定的镜像存储成文件</li>
+<li>docker load：来导入镜像存储文件到本地镜像库</li>
+</ul>
+</li>
+<li>import/export方式导入导出容器<ul>
+<li>docker export：来导出一个容器快照到本地文件</li>
+<li>docker import：来导入一个容器快照文件到本地镜像库</li>
+</ul>
+</li>
+<li>区别：容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积也要大。此外，从容器快照文件导入时可以重新指定标签等元数据信息。我个人比较推荐用load/save方式，这样所有之前的镜像都会存在，只是比较占用空间。</li>
+</ul>
+<h3 id="Docker镜像save-load方式"><a href="#Docker镜像save-load方式" class="headerlink" title="Docker镜像save/load方式"></a>Docker镜像save/load方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$ sudo docker imagesREPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1                  20e4011b9286        2 minutes ago       1.658 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line"># 导出birdben/zookeeper:v1镜像到zookeeper_image.tar文件</div><div class="line">$ sudo docker save birdben/zookeeper:v1 &gt; zookeeper_image.tar</div><div class="line"></div><div class="line"># 删除之前的birdben/zookeeper:v1镜像</div><div class="line">$ sudo docker rmi &quot;birdben/zookeeper:v1&quot;</div><div class="line"></div><div class="line"># 导入zookeeper_image.tar镜像文件</div><div class="line">$ sudo docker load &lt; zookeeper_image.tar</div><div class="line"></div><div class="line"># 再次查看所有的镜像，可以看到birdben/zookeeper:v1又回来了</div><div class="line"># 注意：这里import回来的ImageID也和原来是一样的</div><div class="line">$ sudo docker imagesREPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1                  20e4011b9286        6 minutes ago       1.658 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line"># 这时候在查看birdben/zookeeper:v1镜像的tree结构，发现之前所有的镜像历史都在</div><div class="line">$ sudo docker images --tree</div><div class="line">├─3690474eb5b4 Virtual Size: 0 B│ └─b200b2d33d98 Virtual Size: 196.7 MB│   └─3fbd5972aaac Virtual Size: 196.7 MB│     └─d83a55af4e75 Virtual Size: 196.7 MB Tags: centos:7, centos:latest│       └─1df8e9ff4de7 Virtual Size: 196.7 MB│         └─b37af9ce019a Virtual Size: 196.7 MB│           └─7858b8d134c6 Virtual Size: 403.3 MB│             └─c872974343d2 Virtual Size: 403.3 MB│               └─d4c0e59dc712 Virtual Size: 403.3 MB│                 └─30c3076be68f Virtual Size: 556.8 MB│                   └─0e66c066e1de Virtual Size: 571 MB│                     └─69f8ec0b7932 Virtual Size: 889.1 MB│                       └─7cfcd6d4c6e7 Virtual Size: 911.4 MB│                         └─c2bc26e11781 Virtual Size: 911.4 MB│                           └─31d728531f9a Virtual Size: 911.4 MB│                             └─6434457046ec Virtual Size: 911.4 MB│                               └─651290e3ddef Virtual Size: 911.4 MB│                                 └─d99d028fca92 Virtual Size: 911.6 MB│                                   └─5d4d89731a7d Virtual Size: 911.6 MB│                                     └─a530df3b220c Virtual Size: 925.6 MB│                                       └─39381e27bf53 Virtual Size: 1.232 GB│                                         └─cda80cbe8e7f Virtual Size: 1.276 GB│                                           └─287a8cf1090c Virtual Size: 1.289 GB│                                             └─d5672fcec9a4 Virtual Size: 1.289 GB│                                               └─e63cb61422e1 Virtual Size: 1.289 GB│                                                 └─aa8f6ecc78ca Virtual Size: 1.303 GB│                                                   └─b44f1969877f Virtual Size: 1.303 GB│                                                     └─d17184db904f Virtual Size: 1.303 GB│                                                       └─7df628e7fd36 Virtual Size: 1.303 GB│                                                         └─dfe01b409095 Virtual Size: 1.303 GB│                                                           └─238718f45aa6 Virtual Size: 1.303 GB│                                                             └─a678149d4c34 Virtual Size: 1.303 GB│                                                               └─d3f7fb8e3bc2 Virtual Size: 1.658 GB│                                                                 └─ff152402a43c Virtual Size: 1.658 GB│                                                                   └─fdf82aa49b89 Virtual Size: 1.658 GB│                                                                     └─0dbfccd66315 Virtual Size: 1.658 GB│                                                                       └─4cae49ef2ecb Virtual Size: 1.658 GB Tags: birdben/zookeeper:v1</div></pre></td></tr></table></figure>
+<h3 id="Docker镜像import-export方式"><a href="#Docker镜像import-export方式" class="headerlink" title="Docker镜像import/export方式"></a>Docker镜像import/export方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ sudo docker images</div><div class="line">REPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1       	        20e4011b9286        11 seconds ago      1.658 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line">$ sudo docker ps -aCONTAINER ID        IMAGE                 COMMAND             CREATED             STATUS              PORTS                                            NAMESf99771de17b0        20e4011b9286:latest   &quot;/bin/bash&quot;         6 seconds ago       Up 5 seconds        0.0.0.0:3306-&gt;3306/tcp, 0.0.0.0:8080-&gt;8080/tcp   birdben/zookeeper:v1</div><div class="line"></div><div class="line"># 导出容器ID为f99771de17b0的Docker容器</div><div class="line">$ sudo docker export f99771de17b0 &gt; container.tar.gz</div><div class="line"></div><div class="line"># 删除之前的镜像birdben/zookeeper:v1</div><div class="line">$ sudo docker rmi &quot;birdben/zookeeper:v1&quot;</div><div class="line"></div><div class="line"># 导入容器文件container.tar.gz</div><div class="line">$ cat container.tar.gz | sudo docker import - birdben/zookeeper:v1</div><div class="line"></div><div class="line"># 注意：这里import回来的ImageID也和原来不一样了</div><div class="line">$ sudo docker imagesREPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZEbirdben/zookeeper           v1                  e80c1046dc12        9 minutes ago       1.119 GBubuntu                      latest              37b164bb431e        7 days ago          126.6 MBcentos                      7                   d83a55af4e75        5 weeks ago         196.7 MBcentos                      latest              d83a55af4e75        5 weeks ago         196.7 MBbirdben/jdk7                v1                  25c2f0e69206        8 months ago        583.4 MB</div><div class="line"></div><div class="line"># 这时候在查看birdben/zookeeper:v1镜像的tree结构，发现只有最有的镜像，没有以前的历史镜像</div><div class="line">$ sudo docker images --treeWarning: &apos;--tree&apos; is deprecated, it will be removed soon. See usage.├─e80c1046dc12 Virtual Size: 1.119 GB Tags: birdben/zookeeper:v1├─f1b49dd0c243 Virtual Size: 126.6 MB│ └─008ecf8686ec Virtual Size: 126.6 MB│   └─fd74137ff5ae Virtual Size: 126.6 MB│     └─35371c8124e2 Virtual Size: 126.6 MB│       └─99dc4d8f603d Virtual Size: 126.6 MB│         └─37b164bb431e Virtual Size: 126.6 MB Tags: ubuntu:latest</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000000586840" target="_blank" rel="external">https://segmentfault.com/a/1190000000586840</a></li>
+<li><a href="http://www.sxt.cn/u/756/blog/5339" target="_blank" rel="external">http://www.sxt.cn/u/756/blog/5339</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Flume/Flume学习（八）Flume解析自定义日志" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/" class="article-date">
+  	<time datetime="2016-09-03T08:11:01.000Z" itemprop="datePublished">2016-09-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/03/Flume/Flume学习（八）Flume解析自定义日志/">Flume学习（八）Flume解析自定义日志</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
+<li>JDK1.7.0_79</li>
+<li>Flume1.6.0</li>
+<li>Elasticsearch2.0.0</li>
+</ul>
+<p>这里是基于上一篇《Flume学习（七）Flume整合Elasticsearch2.x》解析自定义的日志格式</p>
+<h3 id="解析的日志格式"><a href="#解析的日志格式" class="headerlink" title="解析的日志格式"></a>解析的日志格式</h3><p>这里由于篇幅原因，我简单列举了两条典型的日志格式</p>
+<h4 id="日志文件格式"><a href="#日志文件格式" class="headerlink" title="日志文件格式"></a>日志文件格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/settings&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;65768768252343&quot;,&quot;ip&quot;:&quot;10.190.1.67&quot;,&quot;server_timestamp&quot;:1463713488740&#125;]</div><div class="line">[&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/search&quot;,&quot;errorStatus&quot;:200,&quot;errorCode&quot;:&quot;0000&quot;,&quot;errorMsg&quot;:&quot;操作成功&quot;,&quot;status&quot;:&quot;failed&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app002&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;4543657687878989&quot;,&quot;ip&quot;:&quot;10.190.1.66&quot;,&quot;server_timestamp&quot;:1463650301701&#125;]</div></pre></td></tr></table></figure>
+<p>上一篇已经讲过了Flume解析日志格式主要使用interceptors，interceptors本身又支持多种type，这里我们主要介绍regex_extractor，即正则表达式匹配方式。下面的正则表达式可以匹配上面的两种格式的日志，上面两种日志格式的主要区别就是errorStatus，errorCode，errorMsg这三个字段有可能不存在，当没有报错的时候，这三个字段是不需要的。</p>
+<h4 id="日志解析正则表达式"><a href="#日志解析正则表达式" class="headerlink" title="日志解析正则表达式"></a>日志解析正则表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;name&quot;:(.*),&quot;request&quot;:(.*),(&quot;errorStatus&quot;:(.*),)?(&quot;errorCode&quot;:(.*),)?(&quot;errorMsg&quot;:(.*),)?&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div></pre></td></tr></table></figure>
+<p>但是在Flume的interceptors的regex表达式中配置上面的正则表达式会报错，我自己分析的原因是Flume的interceptor.serializers需要指定正则表达式拆分后的对应的字段和值，没有办法做到根据正则表达式动态处理。（这里我的分析可能不一定对，如果有疑问我们可以私下交流）</p>
+<p>下面是我的解决办法，我根据上面两种日志格式写了两个interceptor，分别是es_interceptor和es_error_interceptor，每个interceptor对应不同的正则表达式，分别用来处理上面两种不同的日志格式。这样interceptor.serializers就能根据对应的正则表达式格式解析出来日志中对应的字段和值，再插入到ES索引中。</p>
+<h4 id="flume-conf配置文件"><a href="#flume-conf配置文件" class="headerlink" title="flume.conf配置文件"></a>flume.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># 原始的正则表达式：&quot;name&quot;:(.*),&quot;request&quot;:(.*),(&quot;errorStatus&quot;:(.*),)?(&quot;errorCode&quot;:(.*),)?(&quot;errorMsg&quot;:(.*),)?&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor es_error_interceptor</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;name&quot;:(.*),&quot;request&quot;:(.*),&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6 s7 s8 s9 s10</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = name</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = request</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = status</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = uid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = did</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = duid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s7.name = ua</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s8.name = device_id</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s9.name = ip</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s10.name = server_timestamp</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.regex = &quot;name&quot;:(.*),&quot;request&quot;:(.*),&quot;errorStatus&quot;:(.*),&quot;errorCode&quot;:(.*),&quot;errorMsg&quot;:(.*),&quot;status&quot;:(.*),&quot;uid&quot;:(.*),&quot;did&quot;:(.*),&quot;duid&quot;:(.*),&quot;ua&quot;:(.*),&quot;device_id&quot;:(.*),&quot;ip&quot;:(.*),&quot;server_timestamp&quot;:([0-9]*)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers = s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s1.name = name</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s2.name = request</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s3.name = errorStatus</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s4.name = errorCode</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s5.name = errorMsg</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s6.name = status</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s7.name = uid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s8.name = did</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s9.name = duid</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s10.name = ua</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s11.name = device_id</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s12.name = ip</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_error_interceptor.serializers.s13.name = server_timestamp</div></pre></td></tr></table></figure>
+<h4 id="ES的mapping如下"><a href="#ES的mapping如下" class="headerlink" title="ES的mapping如下"></a>ES的mapping如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;hb&quot;: &#123;</div><div class="line">      &quot;properties&quot;: &#123;</div><div class="line">        &quot;@fields&quot;: &#123;</div><div class="line">          &quot;properties&quot;: &#123;</div><div class="line">            &quot;uid&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;duid&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;status&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;request&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;name&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorCode&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;ua&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;did&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorMsg&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;device_id&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;server_timestamp&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;ip&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;errorStatus&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">        &quot;@message&quot;: &#123;</div><div class="line">          &quot;type&quot;: &quot;string&quot;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="ES索引中的日志信息"><a href="#ES索引中的日志信息" class="headerlink" title="ES索引中的日志信息"></a>ES索引中的日志信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;test_log_index-2016-09-03&quot;,</div><div class="line">	&quot;_type&quot;: &quot;test&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AVbvrWIPe8IcP1cQoXS2&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;@message&quot;: &quot;[</div><div class="line">			&#123;&quot;name&quot;:&quot;1&quot;,&quot;request&quot;:&quot;GET /api/test/settings&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:,&quot;ip&quot;:&quot;10.190.1.67&quot;,&quot;server_timestamp&quot;:1463713488740&#125;</div><div class="line">		]&quot;,</div><div class="line">		&quot;@fields&quot;: &#123;</div><div class="line">			&quot;uid&quot;: &quot;889&quot;,</div><div class="line">			&quot;duid&quot;: &quot;&quot;app001&quot;&quot;,</div><div class="line">			&quot;status&quot;: &quot;&quot;succeeded&quot;&quot;,</div><div class="line">			&quot;name&quot;: &quot;&quot;1&quot;&quot;,</div><div class="line">			&quot;request&quot;: &quot;&quot;GET /api/test/settings&quot;&quot;,</div><div class="line">			&quot;did&quot;: &quot;13&quot;,</div><div class="line">			&quot;ua&quot;: &quot;&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;&quot;,</div><div class="line">			&quot;device_id&quot;: &quot;&quot;,</div><div class="line">			&quot;server_timestamp&quot;: &quot;1463713488740&quot;,</div><div class="line">			&quot;ip&quot;: &quot;&quot;10.190.1.67&quot;&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;test_log_index-2016-09-03&quot;,</div><div class="line">	&quot;_type&quot;: &quot;test&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AVbvrWIPe8IcP1cQoXS3&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;@message&quot;: &quot;[</div><div class="line">			&#123;&quot;name&quot;:&quot;rp.api.call&quot;,&quot;request&quot;:&quot;GET /api/test/search&quot;,&quot;errorStatus&quot;:200,&quot;errorCode&quot;:&quot;0000&quot;,&quot;errorMsg&quot;:&quot;操作成功&quot;,&quot;status&quot;:&quot;failed&quot;,&quot;uid&quot;:889,&quot;did&quot;:13,&quot;duid&quot;:&quot;app001&quot;,&quot;ua&quot;:&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;,&quot;device_id&quot;:&quot;4543657687878989&quot;,&quot;ip&quot;:&quot;10.190.1.66&quot;,&quot;server_timestamp&quot;:1463650301701&#125;</div><div class="line">		]&quot;,</div><div class="line">		&quot;@fields&quot;: &#123;</div><div class="line">			&quot;uid&quot;: &quot;889&quot;,</div><div class="line">			&quot;status&quot;: &quot;&quot;failed&quot;&quot;,</div><div class="line">			&quot;did&quot;: &quot;13&quot;,</div><div class="line">			&quot;device_id&quot;: &quot;&quot;4543657687878989&quot;&quot;,</div><div class="line">			&quot;errorMsg&quot;: &quot;&quot;操作成功&quot;&quot;,</div><div class="line">			&quot;errorStatus&quot;: &quot;200&quot;,</div><div class="line">			&quot;ip&quot;: &quot;&quot;10.190.1.66&quot;&quot;,</div><div class="line">			&quot;duid&quot;: &quot;&quot;app001&quot;&quot;,</div><div class="line">			&quot;request&quot;: &quot;&quot;GET /api/test/search&quot;&quot;,</div><div class="line">			&quot;name&quot;: &quot;&quot;rp.api.call&quot;&quot;,</div><div class="line">			&quot;errorCode&quot;: &quot;&quot;0000&quot;&quot;,</div><div class="line">			&quot;ua&quot;: &quot;&quot;Dalvik/2.1.0 (Linux; U; Android 6.0.1; MI NOTE LTE MIUI/6.5.12)&quot;&quot;,</div><div class="line">			&quot;server_timestamp&quot;: &quot;1463650301701&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>个人觉得这样的做法并不理想，因为日志格式肯定会多种多样，如果每种日志格式都需要不同的正则表达式来处理，显得太过笨重和冗余，因为刚接触Flume暂时没有发现有更好的做法，日后发现有更好的处理方式会重新更新上来。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Docker/Docker实战（十九）Docker环境安装问题" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -600,416 +947,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Linux/">Linux</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（七）Flume整合Elasticsearch2.x" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/27/Flume/Flume学习（七）Flume整合Elasticsearch2.x/" class="article-date">
-  	<time datetime="2016-08-27T08:17:39.000Z" itemprop="datePublished">2016-08-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/27/Flume/Flume学习（七）Flume整合Elasticsearch2.x/">Flume学习（七）Flume整合Elasticsearch2.x</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
-<li>JDK1.7.0_79</li>
-<li>Flume1.6.0</li>
-<li>Elasticsearch2.0.0</li>
-</ul>
-<h3 id="Flume不支持Elasticsearch2-x版本"><a href="#Flume不支持Elasticsearch2-x版本" class="headerlink" title="Flume不支持Elasticsearch2.x版本"></a>Flume不支持Elasticsearch2.x版本</h3><p>目前官方Flume最新的版本是1.6.0，该版本只支持Elasticsearch1.7.x的版本，暂时不支持Elasticsearch2.x版本，因为Elasticsearch2.x版本做了比较大的改动，很多API都已经废弃不用了，具体可以参考下面的连接</p>
-<ul>
-<li><a href="https://github.com/elastic/elasticsearch/issues/14187">https://github.com/elastic/elasticsearch/issues/14187</a></li>
-</ul>
-<h3 id="第三方ElasticsearchSink2支持2-x版本"><a href="#第三方ElasticsearchSink2支持2-x版本" class="headerlink" title="第三方ElasticsearchSink2支持2.x版本"></a>第三方ElasticsearchSink2支持2.x版本</h3><p>这里我找到了一个第三方开源的FlumeSink插件来支持Elasticsearch2.x版本</p>
-<ul>
-<li><a href="https://github.com/lucidfrontier45/ElasticsearchSink2">https://github.com/lucidfrontier45/ElasticsearchSink2</a></li>
-</ul>
-<p>但是这个项目是使用Gradle编译打包的，所以下面先简单介绍下Gradle的安装和使用</p>
-<p>我这里使用的Mac，所以安装Gradle很简单。但是Gradle是依赖于JVM的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ brew install gradle</div><div class="line">$ gradle -v</div></pre></td></tr></table></figure>
-<p>然后从github下载ElasticsearchSink2的源代码，并且导入到idea中，然后执行下面gradle命令构建项目（下面这两个脚本是ElasticsearchSink2项目自带的），会在ElasticsearchSink2/build/libs/目录下生成对应的jar包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 构建标准的jar包</div><div class="line">$ ./gradlew build</div><div class="line"></div><div class="line"># 构建包含Elasticsearch依赖的jar包</div><div class="line">$ ./gradlew assembly</div></pre></td></tr></table></figure>
-<p>添加刚才构建好的elasticsearch-sink2-1.0.jar到Flume的classpath或者是Flume的lib目录，删除Flume的lib目录下的guava-<em>.jar，jackson-core-</em>.jar。</p>
-<h3 id="具体的配置文件"><a href="#具体的配置文件" class="headerlink" title="具体的配置文件"></a>具体的配置文件</h3><h4 id="Flume-Collector端的flume-collector-es2-conf配置"><a href="#Flume-Collector端的flume-collector-es2-conf配置" class="headerlink" title="Flume Collector端的flume_collector_es2.conf配置"></a>Flume Collector端的flume_collector_es2.conf配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 127.0.0.1</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;([^,^\&quot;]+)\&quot;:\&quot;([^:^\&quot;]+)\&quot;)|(\&quot;([^,^\&quot;]+)\&quot;:([\\d]+))</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\\d):(\\d):(\\d):(\\d):(\\d):(\\d)</div><div class="line"></div><div class="line"># mapping不正确没有匹配成功</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div><div class="line"># mapping正确，数据匹配不正确包含了多余的字段名</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div><div class="line"># mapping正确，数据也正确（&#123;&#125;需要转义，转义符是\\）</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = aaa</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = bbb</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = s3</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = s4</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = s5</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = s6</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = com.frontier45.flume.sink.elasticsearch2.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 127.0.0.1:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = ben-es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = com.frontier45.flume.sink.elasticsearch2.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
-<h4 id="flume-collector-es2-conf这里的配置需要修改"><a href="#flume-collector-es2-conf这里的配置需要修改" class="headerlink" title="flume_collector_es2.conf这里的配置需要修改"></a>flume_collector_es2.conf这里的配置需要修改</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sink.type = com.frontier45.flume.sink.elasticsearch2.ElasticSearchSink</div><div class="line">sink.serializer = com.frontier45.flume.sink.elasticsearch2.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
-<h4 id="Flume-Agent端的flume-agent-file-conf配置"><a href="#Flume-Agent端的flume-agent-file-conf配置" class="headerlink" title="Flume Agent端的flume_agent_file.conf配置"></a>Flume Agent端的flume_agent_file.conf配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">agent3.sources = command-logfile-source</div><div class="line">agent3.channels = ch3</div><div class="line">agent3.sinks = flume-avro-sink</div><div class="line"></div><div class="line">agent3.sources.command-logfile-source.channels = ch3</div><div class="line">agent3.sources.command-logfile-source.type = exec</div><div class="line">agent3.sources.command-logfile-source.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agent3.channels.ch3.type = memory</div><div class="line">agent3.channels.ch3.capacity = 1000</div><div class="line">agent3.channels.ch3.transactionCapacity = 100</div><div class="line"></div><div class="line">agent3.sinks.flume-avro-sink.channel = ch3</div><div class="line">agent3.sinks.flume-avro-sink.type = avro</div><div class="line">agent3.sinks.flume-avro-sink.hostname = 127.0.0.1</div><div class="line">agent3.sinks.flume-avro-sink.port = 41414</div></pre></td></tr></table></figure>
-<h4 id="启动ES服务"><a href="#启动ES服务" class="headerlink" title="启动ES服务"></a>启动ES服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/elasticseach -d</div></pre></td></tr></table></figure>
-<h4 id="启动Flume-Collector端"><a href="#启动Flume-Collector端" class="headerlink" title="启动Flume Collector端"></a>启动Flume Collector端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_collector_es2.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
-<h4 id="启动Flume-Agent端"><a href="#启动Flume-Agent端" class="headerlink" title="启动Flume Agent端"></a>启动Flume Agent端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_agent_file.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
-<p>启动Flume Agent可能会遇到如下的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2016-08-27 14:25:58,045 (lifecycleSupervisor-1-1) [ERROR - org.apache.flume.lifecycle.LifecycleSupervisor$MonitorRunnable.run(LifecycleSupervisor.java:253)] Unable to start SinkRunner: &#123; policy:org.apache.flume.sink.DefaultSinkProcessor@76d45adb counterGroup:&#123; name:null counters:&#123;&#125; &#125; &#125; - Exception follows.</div><div class="line">java.lang.NoSuchFieldError: LUCENE_5_3_1</div><div class="line">	at org.elasticsearch.Version.&lt;clinit&gt;(Version.java:279)</div><div class="line">	at org.elasticsearch.client.transport.TransportClient$Builder.build(TransportClient.java:131)</div><div class="line">	at com.frontier45.flume.sink.elasticsearch2.client.ElasticSearchTransportClient.openClient(ElasticSearchTransportClient.java:198)</div></pre></td></tr></table></figure>
-<p>出现上面的错误是因为lucene的版本不对，这里我开始尝试安装的是下面的几个版本：</p>
-<ul>
-<li>Elasticsearch-2.2.2：没有选择Elasticsearch-2.2.2版本是因为ik分词插件没有对应的版本</li>
-<li>Elasticsearch-2.2.1：没有选择Elasticsearch-2.2.1版本是因为报错没有找到LUCENE_5_3_1对应的Lucene-5.3.1版本，但是这里下载Elasticsearch-2.2.1版本中的jar包依赖的是Lucene-5.4.1版本，所以找不到Lucene-5.3.1版本。这里可能是因为ElasticsearchSink2的问题，暂时先换成ElasticsearchSink2使用的2.0.0版本，后续在尝试单独升级Lucene-5.4.1试试。</li>
-<li>Elasticsearch-2.0.0：ElasticsearchSink2使用的此版本</li>
-</ul>
-<p>检查一下ES源码的pom文件就可以知道ES和Lucene的版本对应关系如下：</p>
-<table>
-<thead>
-<tr>
-<th>ES版本</th>
-<th>Lucene版本</th>
-<th>ik插件版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Elasticsearch-2.2.2</td>
-<td>Lucene-5.4.1</td>
-<td>无</td>
-</tr>
-<tr>
-<td>Elasticsearch-2.2.1</td>
-<td>Lucene-5.4.1</td>
-<td>1.8.1</td>
-</tr>
-<tr>
-<td>Elasticsearch-2.0.0</td>
-<td>Lucene-5.2.1</td>
-<td>1.5.0</td>
-</tr>
-</tbody>
-</table>
-<h4 id="检查ES的索引数据"><a href="#检查ES的索引数据" class="headerlink" title="检查ES的索引数据"></a>检查ES的索引数据</h4><p>如下图所示，ES的mapping和索引数据都正确，说明我们使用ElasticsearchSink2的方式成功将Flume1.6.0采集的command.log日志数据写入到Elasticsearch2.0.0版本里</p>
-<p><img src="http://img.blog.csdn.net/20160827161437043?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
-<p><img src="http://img.blog.csdn.net/20160827161523009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://github.com/lucidfrontier45/ElasticsearchSink2">https://github.com/lucidfrontier45/ElasticsearchSink2</a></li>
-<li><a href="https://github.com/elastic/elasticsearch/issues/14187">https://github.com/elastic/elasticsearch/issues/14187</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（六）Flume整合Elasticsearch1.x" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/26/Flume/Flume学习（六）Flume整合Elasticsearch1.x/" class="article-date">
-  	<time datetime="2016-08-26T15:11:56.000Z" itemprop="datePublished">2016-08-26</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/26/Flume/Flume学习（六）Flume整合Elasticsearch1.x/">Flume学习（六）Flume整合Elasticsearch1.x</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
-<li>JDK1.7.0_79</li>
-<li>Flume1.6.0</li>
-<li>Elasticsearch1.7.3</li>
-</ul>
-<h3 id="ES的安装和配置"><a href="#ES的安装和配置" class="headerlink" title="ES的安装和配置"></a>ES的安装和配置</h3><p>这里不做重点介绍，请参考之前关于ES的文章</p>
-<h3 id="Flume整合ES的相关配置"><a href="#Flume整合ES的相关配置" class="headerlink" title="Flume整合ES的相关配置"></a>Flume整合ES的相关配置</h3><h4 id="flume-collector-es1-conf配置文件"><a href="#flume-collector-es1-conf配置文件" class="headerlink" title="flume_collector_es1.conf配置文件"></a>flume_collector_es1.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 10.10.1.23</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = org.apache.flume.sink.elasticsearch.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 10.10.1.23:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = org.apache.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
-<p>然后我们先启动ES，然后再启动Flume来收集command.log日志并且写入到ES。</p>
-<h4 id="Flume启动报错"><a href="#Flume启动报错" class="headerlink" title="Flume启动报错"></a>Flume启动报错</h4><p>如果启动Flume的时候，报如下的错误，说明缺少ES相关依赖的jar包。需要将${ES_HOME}/lib/lucene-core-4.10.4.jar，${ES_HOME}/lib/elasticsearch-1.7.3.jar这两个包复制到${FLUME_HOME}/lib/下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">2016-08-25 10:37:50,303 (conf-file-poller-0) [ERROR - org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:145)] Failed to start agent because dependencies were not found in classpath. Error follows.</div><div class="line">java.lang.NoClassDefFoundError: org/elasticsearch/common/io/BytesStream</div><div class="line">	at java.lang.Class.forName0(Native Method)</div><div class="line">	at java.lang.Class.forName(Class.java:191)</div><div class="line">	at org.apache.flume.sink.elasticsearch.ElasticSearchSink.configure(ElasticSearchSink.java:286)</div><div class="line">	at org.apache.flume.conf.Configurables.configure(Configurables.java:41)</div><div class="line">	at org.apache.flume.node.AbstractConfigurationProvider.loadSinks(AbstractConfigurationProvider.java:413)</div><div class="line">	at org.apache.flume.node.AbstractConfigurationProvider.getConfiguration(AbstractConfigurationProvider.java:98)</div><div class="line">	at org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:140)</div><div class="line">	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)</div><div class="line">	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:304)</div><div class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:178)</div><div class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)</div><div class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</div><div class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: java.lang.ClassNotFoundException: org.elasticsearch.common.io.BytesStream</div><div class="line">	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)</div><div class="line">	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)</div><div class="line">	at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)</div><div class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)</div><div class="line">	... 14 more</div></pre></td></tr></table></figure>
-<h4 id="日志解析问题"><a href="#日志解析问题" class="headerlink" title="日志解析问题"></a>日志解析问题</h4><p>当command.log有日志不断输出时，我们会看到Flume控制台会不断收集到ES，但是在ES端查询command_index的mapping却和我们想象的mapping不太一样，这里我们需要解析command.log日志中的日志格式，将具体的日志字段解析出来并且对应ES mapping中的字段。我之前有用过ELK的方式来做command.log日志的收集，Logstash通过filter的grok表达式的方式来解析日志格式很简单，并且可以对收集的日志字段进行一些特殊处理（如：类型转换，删除字段，重命名字段等等）。在Flume里是通过Interceptors来实现Logstash的filter grok表达式功能的。</p>
-<p><img src="http://img.blog.csdn.net/20160825104414733?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="ES_Mapping"></p>
-<h4 id="Flume的Interceptors配置"><a href="#Flume的Interceptors配置" class="headerlink" title="Flume的Interceptors配置"></a>Flume的Interceptors配置</h4><p>下面是我们command.log的日志文件截取，可以看出我们command.log日志的格式比较简单。修改我们的flume_es.conf配置文件，添加interceptors的配置，指定正则表达式解析我们的日志格式。</p>
-<h5 id="command-log日志文件"><a href="#command-log日志文件" class="headerlink" title="command.log日志文件"></a>command.log日志文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">598  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:07:49&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;java -version&quot;&#125;</div><div class="line">598  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:07:49&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;java -version&quot;&#125;</div><div class="line">599  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:15:19&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;cd ~/dev/elasticsearch-1.7.3/config/&quot;&#125;</div><div class="line">600  &#123;&quot;TIME&quot;:&quot;2016-08-24 19:15:21&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;8844&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;sublime elasticsearch.yml &quot;&#125;</div><div class="line">515  &#123;&quot;TIME&quot;:&quot;2016-08-25 10:00:07&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;6601&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ls&quot;&#125;</div><div class="line">515  &#123;&quot;TIME&quot;:&quot;2016-08-25 10:00:07&quot;,&quot;HOSTNAME&quot;:&quot;localhost&quot;,&quot;LI&quot;:&quot;6601&quot;,&quot;LU&quot;:&quot;yunyu&quot;,&quot;NU&quot;:&quot;yunyu&quot;,&quot;CMD&quot;:&quot;ls&quot;&#125;</div></pre></td></tr></table></figure>
-<p>我擦，我被Flume的interceptors配置给坑了，官网给了一个interceptors的例子非常的简单，根本就不知道怎么支持我上面的日志格式（主要是我正则表达式学的太烂了）。感觉Flume对于日志的处理方面没有Logstash灵活易用。</p>
-<p>先来看一下官网给的interceptors例子吧</p>
-<p>If the Flume event body contained 1:2:3.4foobar5 and the following configuration was used</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># ()号中的是从日志记录中提取出来的value，这个value会对应serializers中定义的field名称</div><div class="line">a1.sources.r1.interceptors.i1.regex = (\\d):(\\d):(\\d)</div><div class="line">a1.sources.r1.interceptors.i1.serializers = s1 s2 s3</div><div class="line">a1.sources.r1.interceptors.i1.serializers.s1.name = one</div><div class="line">a1.sources.r1.interceptors.i1.serializers.s2.name = two</div><div class="line">a1.sources.r1.interceptors.i1.serializers.s3.name = three</div></pre></td></tr></table></figure>
-<p>The extracted event will contain the same body but the following headers will have been added one=&gt;1, two=&gt;2, three=&gt;3</p>
-<p>上面官网的例子就是从日志1:2:3.4foobar5中按照我们的格式用”:”号分割并且提取后面的1位数字，并且按照提取出来的值顺序对应字段名称为：one，two，three，最后转换出来的结果就是one=&gt;1, two=&gt;2, three=&gt;3</p>
-<p>但是我们上面的日志文件格式要稍微复杂一点，我们的日志一个json格式的字符串，所以第一次用Flume提取日志记录中的值还有点费事，我也是一边修改正则表达式，一边测试结果。</p>
-<h5 id="mapping不正确没有匹配成功"><a href="#mapping不正确没有匹配成功" class="headerlink" title="mapping不正确没有匹配成功"></a>mapping不正确没有匹配成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160825172129720?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
-<p><img src="http://img.blog.csdn.net/20160825172217307?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
-<h5 id="mapping正确，数据匹配不正确包含了多余的字段名"><a href="#mapping正确，数据匹配不正确包含了多余的字段名" class="headerlink" title="mapping正确，数据匹配不正确包含了多余的字段名"></a>mapping正确，数据匹配不正确包含了多余的字段名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160825172611373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
-<p><img src="http://img.blog.csdn.net/20160825172633442?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
-<h5 id="mapping正确，数据也正确（特殊字符需要转义，转义符是-）"><a href="#mapping正确，数据也正确（特殊字符需要转义，转义符是-）" class="headerlink" title="mapping正确，数据也正确（特殊字符需要转义，转义符是\）"></a>mapping正确，数据也正确（特殊字符需要转义，转义符是\）</h5><p>最后终于调试正确了，是因为我修改Flume的正则表达式改错了，发现es.log中的错误信息提示的bulk参数，我发现bulk的参数居然解析了两次时间字段{“TIME”:”2016-08-25 16:09:10”}，我们定义的aaa字段包含了TIME字段名还有value，但是bbb字段却只有TIME字段的value，而不是预想中第二个字段的值。所以这里我发现了一个很重要的规则，就是正则表达式中”()号”中的是从日志记录中提取出来的value，这个value会对应serializers中定义的field名称，我上一个表达式之所以会解析两边TIME字段就是因为正则表达式中带了两个”()号”，如：(TIME:(.*?))，这样就会把TIME的value提取出来一次，再把TIME:value这样的字符串当成值提取出来一次，所以就会出现上面的情况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">failed to execute bulk item (index) index &#123;[command_index-2016-08-25][logs][AVbAvyBwi0A7kguFbmpj], source[&#123;&quot;@message&quot;:537,&quot;@fields&quot;:&#123;&quot;aaa&quot;:&#123;&quot;TIME&quot;:&quot;2016-08-25 16:09:10&quot;&#125;,&quot;aaa&quot;:&quot;&#123;\&quot;TIME\&quot;:\&quot;2016-08-25 16:09:10\&quot;&quot;,&quot;s5&quot;:&quot;\&quot;LI\&quot;:\&quot;5573\&quot;&quot;,&quot;s6&quot;:&quot;\&quot;5573\&quot;&quot;,&quot;bbb&quot;:&quot;\&quot;2016-08-25 16:09:10\&quot;&quot;,&quot;s3&quot;:&quot;\&quot;HOSTNAME\&quot;:\&quot;localhost\&quot;&quot;,&quot;s4&quot;:&quot;\&quot;localhost\&quot;&quot;&#125;&#125;]&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160825164926247?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
-<p><img src="http://img.blog.csdn.net/20160825164958191?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
-<h5 id="flume-collector-es1-conf配置文件-1"><a href="#flume-collector-es1-conf配置文件-1" class="headerlink" title="flume_collector_es1.conf配置文件"></a>flume_collector_es1.conf配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 10.10.1.23</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;([^,^\&quot;]+)\&quot;:\&quot;([^:^\&quot;]+)\&quot;)|(\&quot;([^,^\&quot;]+)\&quot;:([\\d]+))</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\\d):(\\d):(\\d):(\\d):(\\d):(\\d)</div><div class="line"></div><div class="line"># mapping不正确没有匹配成功</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div><div class="line"># mapping正确，数据匹配不正确包含了多余的字段名</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div><div class="line"># mapping正确，数据也正确（&#123;&#125;需要转义，转义符是\\）</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = aaa</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = bbb</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = s3</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = s4</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = s5</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = s6</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = org.apache.flume.sink.elasticsearch.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 10.10.1.23:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = org.apache.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/yangruihong/article/details/17245359" target="_blank" rel="external">http://blog.csdn.net/yangruihong/article/details/17245359</a></li>
-<li><a href="http://flume.apache.org/FlumeUserGuide.html#zookeeper-based-configuration" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html#zookeeper-based-configuration</a></li>
-<li><a href="http://blog.csdn.net/xiao_jun_0820/article/details/38333171" target="_blank" rel="external">http://blog.csdn.net/xiao_jun_0820/article/details/38333171</a></li>
-<li><a href="http://www.voidcn.com/blog/lanmo555/article/p-4974586.html" target="_blank" rel="external">http://www.voidcn.com/blog/lanmo555/article/p-4974586.html</a></li>
-<li><a href="http://blog.csdn.net/sunflower_cao/article/details/39929931" target="_blank" rel="external">http://blog.csdn.net/sunflower_cao/article/details/39929931</a></li>
-<li><a href="http://blog.csdn.net/u010022051/article/details/50515725" target="_blank" rel="external">http://blog.csdn.net/u010022051/article/details/50515725</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（五）Flume编译安装" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/26/Flume/Flume学习（五）Flume编译安装/" class="article-date">
-  	<time datetime="2016-08-26T05:07:11.000Z" itemprop="datePublished">2016-08-26</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/26/Flume/Flume学习（五）Flume编译安装/">Flume学习（五）Flume编译安装</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="下载Flume源码"><a href="#下载Flume源码" class="headerlink" title="下载Flume源码"></a>下载Flume源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ curl -o apache-flume-1.6.0-src.tar.gz http://mirrors.hust.edu.cn/apache/flume/1.6.0/apache-flume-1.6.0-src.tar.gz</div><div class="line">$ tar -zxvf apache-flume-1.6.0-src.tar.gz</div><div class="line">$ cd apache-flume-1.6.0-src</div></pre></td></tr></table></figure>
-<h3 id="使用Maven编辑打包"><a href="#使用Maven编辑打包" class="headerlink" title="使用Maven编辑打包"></a>使用Maven编辑打包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mvn clean</div><div class="line">$ mvn install -DskipTests -Dtar</div></pre></td></tr></table></figure>
-<p>编译过程中，下载ua-parser-1.3.0.pom可能会失败，出现类似下面的错误，无法连接到<a href="http://maven.twttr.com:80，会重复尝试几次连接不上就build" target="_blank" rel="external">http://maven.twttr.com:80，会重复尝试几次连接不上就build</a> failed了。这个可能是因为<a href="http://maven.twttr.com:80地址被墙了" target="_blank" rel="external">http://maven.twttr.com:80地址被墙了</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Building Flume NG Morphline Solr Sink 1.6.0</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">Downloading: http://10.10.1.10:8082/content/groups/public/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: https://repository.cloudera.com/artifactory/cloudera-repos/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: http://repo1.maven.org/maven2/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: http://repository.jboss.org/nexus/content/groups/public/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: https://repo.maven.apache.org/maven2/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">Downloading: http://maven.twttr.com/ua_parser/ua-parser/1.3.0/ua-parser-1.3.0.pom</div><div class="line">八月 26, 2016 12:11:25 下午 org.apache.maven.wagon.providers.http.httpclient.impl.execchain.RetryExec execute</div><div class="line">信息: I/O exception (java.net.NoRouteToHostException) caught when processing request to &#123;&#125;-&gt;http://maven.twttr.com:80: No route to host</div><div class="line">八月 26, 2016 12:11:25 下午 org.apache.maven.wagon.providers.http.httpclient.impl.execchain.RetryExec execute</div><div class="line">信息: Retrying request to &#123;&#125;-&gt;http://maven.twttr.com:80</div></pre></td></tr></table></figure>
-<p>我把网上解决无法连接<a href="http://maven.twttr.com的办法汇总了一下，需要在Flume的pom文件中最上面添加下面这些repository地址，来下载ua-parser-1.3.0.pom" target="_blank" rel="external">http://maven.twttr.com的办法汇总了一下，需要在Flume的pom文件中最上面添加下面这些repository地址，来下载ua-parser-1.3.0.pom</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;repositories&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">	  &lt;id&gt;maven.tempo-db.com&lt;/id&gt;</div><div class="line">	  &lt;url&gt;http://maven.oschina.net/service/local/repositories/sonatype-public-grid/content/&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">	  &lt;id&gt;p2.jfrog.org&lt;/id&gt;</div><div class="line">	  &lt;url&gt;http://p2.jfrog.org/libs-releases&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">	&lt;repository&gt;</div><div class="line">	  &lt;id&gt;nexus.axiomalaska.com&lt;/id&gt;</div><div class="line">	  &lt;url&gt;http://nexus.axiomalaska.com/nexus/content/repositories/public&lt;/url&gt;</div><div class="line">	&lt;/repository&gt;</div><div class="line">&lt;/repositories&gt;</div></pre></td></tr></table></figure>
-<p>添加后如下图所示</p>
-<p><img src="http://img.blog.csdn.net/20160826121945067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Maven"></p>
-<p>再次编译打包后，就成功了。可以在apache-flume-1.6.0-src/flume-ng-dist/target/路径下找到我们打包好的apache-flume-1.6.0-bin.tar.gz，这样我们就可以在flume的源代码上进行自己的修改并且可以打包应用了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Reactor Summary:</div><div class="line">[INFO]</div><div class="line">[INFO] Apache Flume ....................................... SUCCESS [  0.928 s]</div><div class="line">[INFO] Flume NG SDK ....................................... SUCCESS [  3.490 s]</div><div class="line">[INFO] Flume NG Configuration ............................. SUCCESS [  1.329 s]</div><div class="line">[INFO] Flume Auth ......................................... SUCCESS [  4.949 s]</div><div class="line">[INFO] Flume NG Core ...................................... SUCCESS [  8.924 s]</div><div class="line">[INFO] Flume NG Sinks ..................................... SUCCESS [  0.050 s]</div><div class="line">[INFO] Flume NG HDFS Sink ................................. SUCCESS [  2.947 s]</div><div class="line">[INFO] Flume NG IRC Sink .................................. SUCCESS [  1.002 s]</div><div class="line">[INFO] Flume NG Channels .................................. SUCCESS [  0.041 s]</div><div class="line">[INFO] Flume NG JDBC channel .............................. SUCCESS [  1.691 s]</div><div class="line">[INFO] Flume NG file-based channel ........................ SUCCESS [  6.320 s]</div><div class="line">[INFO] Flume NG Spillable Memory channel .................. SUCCESS [  1.323 s]</div><div class="line">[INFO] Flume NG Node ...................................... SUCCESS [  2.382 s]</div><div class="line">[INFO] Flume NG Embedded Agent ............................ SUCCESS [  1.458 s]</div><div class="line">[INFO] Flume NG HBase Sink ................................ SUCCESS [  3.763 s]</div><div class="line">[INFO] Flume NG ElasticSearch Sink ........................ SUCCESS [  1.914 s]</div><div class="line">[INFO] Flume NG Morphline Solr Sink ....................... SUCCESS [02:41 min]</div><div class="line">[INFO] Flume Kafka Sink ................................... SUCCESS [  1.194 s]</div><div class="line">[INFO] Flume NG Kite Dataset Sink ......................... SUCCESS [  2.804 s]</div><div class="line">[INFO] Flume NG Hive Sink ................................. SUCCESS [  2.462 s]</div><div class="line">[INFO] Flume Sources ...................................... SUCCESS [  0.030 s]</div><div class="line">[INFO] Flume Scribe Source ................................ SUCCESS [  1.081 s]</div><div class="line">[INFO] Flume JMS Source ................................... SUCCESS [  1.362 s]</div><div class="line">[INFO] Flume Twitter Source ............................... SUCCESS [  0.895 s]</div><div class="line">[INFO] Flume Kafka Source ................................. SUCCESS [  1.066 s]</div><div class="line">[INFO] flume-kafka-channel ................................ SUCCESS [  1.093 s]</div><div class="line">[INFO] Flume legacy Sources ............................... SUCCESS [  0.028 s]</div><div class="line">[INFO] Flume legacy Avro source ........................... SUCCESS [  0.998 s]</div><div class="line">[INFO] Flume legacy Thrift Source ......................... SUCCESS [  1.248 s]</div><div class="line">[INFO] Flume NG Clients ................................... SUCCESS [  0.026 s]</div><div class="line">[INFO] Flume NG Log4j Appender ............................ SUCCESS [  3.208 s]</div><div class="line">[INFO] Flume NG Tools ..................................... SUCCESS [  0.902 s]</div><div class="line">[INFO] Flume NG distribution .............................. SUCCESS [ 12.454 s]</div><div class="line">[INFO] Flume NG Integration Tests ......................... SUCCESS [  1.278 s]</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] BUILD SUCCESS</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Total time: 03:57 min</div><div class="line">[INFO] Finished at: 2016-08-26T12:24:44+08:00</div><div class="line">[INFO] Final Memory: 411M/868M</div><div class="line">[INFO] ------------------------------------------------------------------------</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/yydcj/article/details/38824823" target="_blank" rel="external">http://blog.csdn.net/yydcj/article/details/38824823</a></li>
-<li><a href="https://www.iteblog.com/archives/1043" target="_blank" rel="external">https://www.iteblog.com/archives/1043</a></li>
-<li><a href="http://blog.csdn.net/qianshangding0708/article/details/48087911" target="_blank" rel="external">http://blog.csdn.net/qianshangding0708/article/details/48087911</a></li>
-<li><a href="http://blog.csdn.net/yeruby/article/details/50751927" target="_blank" rel="external">http://blog.csdn.net/yeruby/article/details/50751927</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（四）Failover和LoadBalance模式" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/25/Flume/Flume学习（四）Failover和LoadBalance模式/" class="article-date">
-  	<time datetime="2016-08-25T05:18:47.000Z" itemprop="datePublished">2016-08-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/25/Flume/Flume学习（四）Failover和LoadBalance模式/">Flume学习（四）Failover和LoadBalance模式</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://img.blog.csdn.net/20160824170052276?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Failover"></p>
-<p>Flume内置支持Failover和LoadBalance两种模式，这两种模式都支持Sink配置一个Group，Failover的Group具有故障转移的功能，LoadBalance的Group具有负载均衡的功能</p>
-<ul>
-<li>Failover支持故障转移</li>
-<li>LoadBalance支持负载均衡</li>
-</ul>
-<h3 id="Failover模式"><a href="#Failover模式" class="headerlink" title="Failover模式"></a>Failover模式</h3><p>我这里是用本机模拟此架构，Agent是采集端，分别写入Sink1和Sink2，Collector1和Collector2是Collect端。此架构允许Collector1和Collector2部分停机，需要在采集层（Agent）每一个Sink同时指向Collect层的2个相同的Flume Agent（Collector1和Collector2）。所以使用failover架构就是为了防止Collect层Flume Agent（Collector1和Collector2）因为故障或例行停机维护。</p>
-<h5 id="Agent节点的flume-failover-agent-conf配置"><a href="#Agent节点的flume-failover-agent-conf配置" class="headerlink" title="Agent节点的flume_failover_agent.conf配置"></a>Agent节点的flume_failover_agent.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">agentX.sources = sX</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = sk1 sk2</div><div class="line"></div><div class="line">agentX.sources.sX.channels = chX</div><div class="line">agentX.sources.sX.type = exec</div><div class="line">agentX.sources.sX.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line"># 配置sinks，这里我们指定了2个相同的Agent（即Collector1和Collector2，这里我们使用本机测试，所以是两个相同的Agent进程，hostname都是本机IP，只是port不同用于区分）</div><div class="line">agentX.sinks.sk1.channel = chX</div><div class="line">agentX.sinks.sk1.type = avro</div><div class="line">agentX.sinks.sk1.hostname = 10.10.1.23</div><div class="line">agentX.sinks.sk1.port = 44441</div><div class="line"></div><div class="line">agentX.sinks.sk2.channel = chX</div><div class="line">agentX.sinks.sk2.type = avro</div><div class="line">agentX.sinks.sk2.hostname = 10.10.1.23</div><div class="line">agentX.sinks.sk2.port = 44442</div><div class="line"></div><div class="line"># 配置failover组信息，把上面的两个sink配置成一个group，并且指定类型为failover</div><div class="line">agentX.sinkgroups = g1</div><div class="line">agentX.sinkgroups.g1.sinks = sk1 sk2</div><div class="line">agentX.sinkgroups.g1.processor.type = failover</div><div class="line"># 此处建议设置priority优先级，数值越大优先级越高，优先级低的作为容灾使用，sk1正常情况，sk2是不消费的</div><div class="line">agentX.sinkgroups.g1.processor.priority.sk1 = 9</div><div class="line">agentX.sinkgroups.g1.processor.priority.sk2 = 7</div><div class="line">agentX.sinkgroups.g1.processor.maxpenalty = 10000</div></pre></td></tr></table></figure>
-<h5 id="Collector1节点的flume-failover-collector1-conf配置"><a href="#Collector1节点的flume-failover-collector1-conf配置" class="headerlink" title="Collector1节点的flume_failover_collector1.conf配置"></a>Collector1节点的flume_failover_collector1.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent1.sources = s1</div><div class="line">agent1.channels = ch1</div><div class="line">agent1.sinks = sk1</div><div class="line"></div><div class="line">agent1.sources.s1.channels = ch1</div><div class="line">agent1.sources.s1.type = avro</div><div class="line">agent1.sources.s1.bind = 10.10.1.23</div><div class="line">agent1.sources.s1.port = 44441</div><div class="line"></div><div class="line">agent1.channels.ch1.type = memory</div><div class="line">agent1.channels.ch1.capacity = 1000</div><div class="line">agent1.channels.ch1.transactionCapacity = 100</div><div class="line"></div><div class="line">agent1.sinks.sk1.channel = ch1</div><div class="line">agent1.sinks.sk1.type = logger</div></pre></td></tr></table></figure>
-<h5 id="Collector2节点的flume-failover-collector2-conf配置"><a href="#Collector2节点的flume-failover-collector2-conf配置" class="headerlink" title="Collector2节点的flume_failover_collector2.conf配置"></a>Collector2节点的flume_failover_collector2.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent2.sources = s2</div><div class="line">agent2.channels = ch2</div><div class="line">agent2.sinks = sk2</div><div class="line"></div><div class="line">agent2.sources.s2.channels = ch2</div><div class="line">agent2.sources.s2.type = avro</div><div class="line">agent2.sources.s2.bind = 10.10.1.23</div><div class="line">agent2.sources.s2.port = 44442</div><div class="line"></div><div class="line">agent2.channels.ch2.type = memory</div><div class="line">agent2.channels.ch2.capacity = 1000</div><div class="line">agent2.channels.ch2.transactionCapacity = 100</div><div class="line"></div><div class="line">agent2.sinks.sk2.channel = ch2</div><div class="line">agent2.sinks.sk2.type = logger</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<ul>
-<li>如果是多台机器实验，Collector1和Collector2的flume.conf配置其实可以是一样的，只是我这里使用的本机测试，所以需要指定不同的port来模拟2台不同的机器，flume.conf配置文件也分开了。</li>
-</ul>
-<h5 id="启动Flume"><a href="#启动Flume" class="headerlink" title="启动Flume"></a>启动Flume</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 启动采集端，AgentX</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_failover_agent.conf -Dflume.root.logger=DEBUG,console -n agentX</div><div class="line"></div><div class="line"># 启动2个Collect端，Collector1和Collector2</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_failover_collector1.conf -Dflume.root.logger=DEBUG,console -n agent1</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_failover_collector2.conf -Dflume.root.logger=DEBUG,console -n agent2</div></pre></td></tr></table></figure>
-<p>这时候我们发现采集的日志都在Agent1中的控制台输出，Agent2并没有日志输出。但是我们查看44441和44442端口号发现AgentX和Agent1，Agent2都保持TCP连接的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$ ps -ef | grep flume</div><div class="line">  501  8446  6602   0  5:45PM ttys000    0:01.02 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0_agent_2/conf:/Users/yunyu/dev/flume-1.6.0_agent_2/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_collector2.conf -n agent2</div><div class="line">  501  8455  4754   0  5:45PM ttys001    0:01.21 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_agent.conf -n agentX</div><div class="line">  501  8436  5574   0  5:45PM ttys003    0:01.28 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0_agent_1/conf:/Users/yunyu/dev/flume-1.6.0_agent_1/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_collector1.conf -n agent1</div><div class="line">  501  8466  5608   0  5:45PM ttys005    0:00.00 grep flume</div><div class="line"></div><div class="line">$ lsof -i:44441</div><div class="line">COMMAND  PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</div><div class="line">java    8436 yunyu  156u  IPv6 0xd0e0ada8bdad6435      0t0  TCP localhost:44441 (LISTEN)</div><div class="line">java    8436 yunyu  161u  IPv6 0xd0e0ada8c2f7d3d5      0t0  TCP localhost:44441-&gt;localhost:52471 (ESTABLISHED)</div><div class="line">java    8455 yunyu  210u  IPv6 0xd0e0ada8c3175955      0t0  TCP localhost:52471-&gt;localhost:44441 (ESTABLISHED)</div><div class="line"></div><div class="line">$ lsof -i:44442</div><div class="line">COMMAND  PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</div><div class="line">java    8446 yunyu  156u  IPv6 0xd0e0ada8e3f0b3f5      0t0  TCP localhost:44442 (LISTEN)</div><div class="line">java    8446 yunyu  161u  IPv6 0xd0e0ada8bdad43f5      0t0  TCP localhost:44442-&gt;localhost:52470 (ESTABLISHED)</div><div class="line">java    8455 yunyu  156u  IPv6 0xd0e0ada8c3152955      0t0  TCP localhost:52470-&gt;localhost:44442 (ESTABLISHED)</div></pre></td></tr></table></figure>
-<p>此时我们杀掉Agent1的进程，我们会看到AgentX的控制台会报错提示：Connection Refused无法连接到Agent1。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># flume Collector1的进程已经没有了</div><div class="line">$ ps -ef | grep flume</div><div class="line">  501  8446  6602   0  5:45PM ttys000    0:05.13 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0_agent_2/conf:/Users/yunyu/dev/flume-1.6.0_agent_2/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_collector2.conf -n agent2</div><div class="line">  501  8455  4754   0  5:45PM ttys001    0:07.85 /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/bin/java -Xmx20m -Dflume.root.logger=DEBUG,console -cp /Users/yunyu/dev/flume-1.6.0/conf:/Users/yunyu/dev/flume-1.6.0/lib/* -Djava.library.path= org.apache.flume.node.Application -f conf/flume_failover_agent.conf -n agentX</div><div class="line">  501  8732  5608   0  6:08PM ttys005    0:00.00 grep flume</div><div class="line"></div><div class="line"># 再次查看44441端口发现TCP连接已经断开了</div><div class="line">$ lsof -i:44441</div></pre></td></tr></table></figure>
-<p>这个时候我们再有日志采集会发现日志都输出到Collector2的控制台了，说明我们的failover机制生效了。</p>
-<h3 id="LoadBalance模式"><a href="#LoadBalance模式" class="headerlink" title="LoadBalance模式"></a>LoadBalance模式</h3><p>同Failover一样，AgentX是采集端，分别写入Sink1和Sink2，Collector1和Collector2是Collect端。此架构支持负载均衡分发处理，需要在采集层（AgentX）每一个Sink同时指向Collect层的2个相同的Flume Agent（Collector1和Collector2）。所以使用loadBalance架构就是为了流量分发，防止流量过于集中到其中某些机器导致服务器负载不均衡或者过载。</p>
-<h5 id="Agent节点的flume-loadbalance-agent-conf配置"><a href="#Agent节点的flume-loadbalance-agent-conf配置" class="headerlink" title="Agent节点的flume_loadbalance_agent.conf配置"></a>Agent节点的flume_loadbalance_agent.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">agentX.sources = sX</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = sk1 sk2</div><div class="line"></div><div class="line">agentX.sources.sX.channels = chX</div><div class="line">agentX.sources.sX.type = exec</div><div class="line">agentX.sources.sX.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line"># Configure sinks</div><div class="line">agentX.sinks.sk1.channel = chX</div><div class="line">agentX.sinks.sk1.type = avro</div><div class="line">agentX.sinks.sk1.hostname = 10.10.1.46</div><div class="line">agentX.sinks.sk1.port = 44441</div><div class="line"></div><div class="line">agentX.sinks.sk2.channel = chX</div><div class="line">agentX.sinks.sk2.type = avro</div><div class="line">agentX.sinks.sk2.hostname = 10.10.1.46</div><div class="line">agentX.sinks.sk2.port = 44442</div><div class="line"></div><div class="line"># Configure loadbalance</div><div class="line">agentX.sinkgroups = g1</div><div class="line">agentX.sinkgroups.g1.sinks = sk1 sk2</div><div class="line">agentX.sinkgroups.g1.processor.type = load_balance</div><div class="line">agentX.sinkgroups.g1.processor.backoff=true</div><div class="line">agentX.sinkgroups.g1.processor.selector=round_robin</div></pre></td></tr></table></figure>
-<h5 id="Collector1节点的flume-loadbalance-collector1-conf配置"><a href="#Collector1节点的flume-loadbalance-collector1-conf配置" class="headerlink" title="Collector1节点的flume_loadbalance_collector1.conf配置"></a>Collector1节点的flume_loadbalance_collector1.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent1.sources = s1</div><div class="line">agent1.channels = ch1</div><div class="line">agent1.sinks = sk1</div><div class="line"></div><div class="line">agent1.sources.s1.channels = ch1</div><div class="line">agent1.sources.s1.type = avro</div><div class="line">agent1.sources.s1.bind = 10.10.1.46</div><div class="line">agent1.sources.s1.port = 44441</div><div class="line"></div><div class="line">agent1.channels.ch1.type = memory</div><div class="line">agent1.channels.ch1.capacity = 1000</div><div class="line">agent1.channels.ch1.transactionCapacity = 100</div><div class="line"></div><div class="line">agent1.sinks.sk1.channel = ch1</div><div class="line">agent1.sinks.sk1.type = logger</div></pre></td></tr></table></figure>
-<h5 id="Collector2节点的flume-loadbalance-collector2-conf配置"><a href="#Collector2节点的flume-loadbalance-collector2-conf配置" class="headerlink" title="Collector2节点的flume_loadbalance_collector2.conf配置"></a>Collector2节点的flume_loadbalance_collector2.conf配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent2.sources = s2</div><div class="line">agent2.channels = ch2</div><div class="line">agent2.sinks = sk2</div><div class="line"></div><div class="line">agent2.sources.s2.channels = ch2</div><div class="line">agent2.sources.s2.type = avro</div><div class="line">agent2.sources.s2.bind = 10.10.1.23</div><div class="line">agent2.sources.s2.port = 44442</div><div class="line"></div><div class="line">agent2.channels.ch2.type = memory</div><div class="line">agent2.channels.ch2.capacity = 1000</div><div class="line">agent2.channels.ch2.transactionCapacity = 100</div><div class="line"></div><div class="line">agent2.sinks.sk2.channel = ch2</div><div class="line">agent2.sinks.sk2.type = logger</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<ul>
-<li>如果是多台机器实验，Collector1和Collector2的flume.conf配置其实可以是一样的，只是我这里使用的本机测试，所以需要指定不同的port来模拟2台不同的机器，flume.conf配置文件也分开了。</li>
-</ul>
-<h5 id="启动Flume-1"><a href="#启动Flume-1" class="headerlink" title="启动Flume"></a>启动Flume</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 启动采集端，AgentX</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_loadbalance_agent.conf -Dflume.root.logger=DEBUG,console -n agentX</div><div class="line"></div><div class="line"># 启动2个Collect端，Collector1和Collector2</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_loadbalance_collector1.conf -Dflume.root.logger=DEBUG,console -n agent1</div><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_loadbalance_collector2.conf -Dflume.root.logger=DEBUG,console -n agent2</div></pre></td></tr></table></figure>
-<p>这个时候只要我们不断有日志采集会发现日志会分别输出到Collector1和Collector2的控制台了，说明我们的loadbalance机制生效了。</p>
-<p>最后给出别人博客总结的三种模式的对比图，看完就非常清晰明了了</p>
-<p><img src="http://img.blog.csdn.net/20160923160614674?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Default"></p>
-<p><img src="http://img.blog.csdn.net/20160923160704878?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Failover"></p>
-<p><img src="http://img.blog.csdn.net/20160923160718087?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="LoadBalance"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://shiyanjun.cn/archives/1497.html" target="_blank" rel="external">http://shiyanjun.cn/archives/1497.html</a></li>
-<li><a href="http://tech.meituan.com/mt-log-system-arch.html" target="_blank" rel="external">http://tech.meituan.com/mt-log-system-arch.html</a></li>
-<li><a href="http://www.cnblogs.com/lishouguang/p/4558790.html" target="_blank" rel="external">http://www.cnblogs.com/lishouguang/p/4558790.html</a></li>
-<li><a href="http://blog.csdn.net/qianshangding0708/article/details/49300427" target="_blank" rel="external">http://blog.csdn.net/qianshangding0708/article/details/49300427</a></li>
-<li><a href="http://www.aboutyun.com/blog-70-465.html" target="_blank" rel="external">http://www.aboutyun.com/blog-70-465.html</a></li>
-<li><a href="http://jinnianshilongnian.iteye.com/blog/2261225" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/2261225</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
 	</div>
 
 

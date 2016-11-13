@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,484 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Storm/Storm学习（二）Storm架构及原理（转）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/07/Storm/Storm学习（二）Storm架构及原理（转）/" class="article-date">
+  	<time datetime="2016-11-07T11:34:53.000Z" itemprop="datePublished">2016-11-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/07/Storm/Storm学习（二）Storm架构及原理（转）/">Storm学习（二）Storm架构及原理（转）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Storm集群环境已经搭建好了，但是在翻译官网的Getting Started的时候感觉有很多概念都不是太理解，所以这篇重点研究一下Storm架构及原理</p>
+<p>以下内容转载自：<a href="https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI" target="_blank" rel="external">https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI</a></p>
+<h3 id="Storm-与传统的大数据"><a href="#Storm-与传统的大数据" class="headerlink" title="Storm 与传统的大数据"></a>Storm 与传统的大数据</h3><p>Storm 与其他大数据解决方案的不同之处在于它的处理方式。Hadoop 在本质上是一个批处理系统。数据被引入 Hadoop 文件系统 (HDFS) 并分发到各个节点进行处理。当处理完成时，结果数据返回到 HDFS 供始发者使用。Storm 支持创建拓扑结构来转换没有终点的数据流。不同于 Hadoop 作业，这些转换从不停止，它们会持续处理到达的数据。</p>
+<p>但 Storm 不只是一个传统的大数据分析系统：它是复杂事件处理 (CEP) 系统的一个示例。CEP 系统通常分类为计算和面向检测，其中每个系统都可通过用户定义的算法在 Storm 中实现。举例而言，CEP 可用于识别事件洪流中有意义的事件，然后实时地处理这些事件。</p>
+<h3 id="Storm的基本组件"><a href="#Storm的基本组件" class="headerlink" title="Storm的基本组件"></a>Storm的基本组件</h3><p>Storm的集群表面上看和Hadoop的集群非常像。但是在Hadoop上面你运行的是MapReduce的Job, 而在Storm上面你运行的是Topology。它们是非常不一样的 — 一个关键的区别是： 一个MapReduce Job最终会结束， 而一个Topology运永远运行（除非你显式的杀掉他）。</p>
+<p>在Storm的集群里面有两种节点： 控制节点(master node)和工作节点(worker node)。控制节点上面运行一个后台程序： Nimbus， 它的作用类似Hadoop里面的JobTracker。Nimbus负责在集群里面分布代码，分配工作给机器， 并且监控状态。</p>
+<p>每一个工作节点上面运行一个叫做Supervisor的节点（类似 TaskTracker）。Supervisor会监听分配给它那台机器的工作，根据需要 启动/关闭工作进程。每一个工作进程执行一个Topology（类似 Job）的一个子集；一个运行的Topology由运行在很多机器上的很多工作进程 Worker（类似 Child）组成</p>
+<h5 id="Storm-Topology结构"><a href="#Storm-Topology结构" class="headerlink" title="Storm Topology结构"></a>Storm Topology结构</h5><p><img src="http://img.blog.csdn.net/20161107201042412?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm Flow"></p>
+<h5 id="Storm-VS-MapReduce"><a href="#Storm-VS-MapReduce" class="headerlink" title="Storm VS MapReduce"></a>Storm VS MapReduce</h5><p><img src="http://img.blog.csdn.net/20161107201112288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm VS MapReduce"></p>
+<p>Nimbus和Supervisor之间的所有协调工作都是通过一个Zookeeper集群来完成。并且，Nimbus进程和Supervisor都是快速失败（fail-fast)和无状态的。所有的状态要么在Zookeeper里面， 要么在本地磁盘上。这也就意味着你可以用kill -9来杀死Nimbus和Supervisor进程， 然后再重启它们，它们可以继续工作， 就好像什么都没有发生过似的。这个设计使得Storm不可思议的稳定。</p>
+<h3 id="Topologies"><a href="#Topologies" class="headerlink" title="Topologies"></a>Topologies</h3><p>为了在Storm上面做实时计算，你要去建立一些Topologies。一个Topology就是一个计算节点所组成的图。Topology里面的每个处理节点都包含处理逻辑，而节点之间的连接则表示数据流动的方向。</p>
+<p>运行一个Topology是很简单的。首先，把你所有的代码以及所依赖的jar打进一个jar包。然后运行类似下面的这个命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm jar all-your-code.jar backtype.storm.MyTopology arg1 arg2</div></pre></td></tr></table></figure>
+<p>这个命令会运行主类: backtype.strom.MyTopology, 参数是arg1, arg2。这个类的main函数定义这个Topology并且把它提交给Nimbus。storm jar负责连接到Nimbus并且上传jar文件。</p>
+<p>因为Topology的定义其实就是一个Thrift结构并且Nimbus就是一个Thrift服务， 有可以用任何语言创建并且提交Topology。上面的方面是用JVM-based语言提交的最简单的方法, 看一下文章: 在生产集群上运行Topology去看看怎么启动以及停止Topologies。</p>
+<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><p>Stream是Storm里面的关键抽象。一个Stream是一个没有边界的Tuple序列。Storm提供一些原语来分布式地、可靠地把一个Stream传输进一个新的Stream。比如： 你可以把一个Tweets流传输到热门话题的流。</p>
+<p>Storm提供的最基本的处理Stream的原语是Spout和Bolt。你可以实现Spout和Bolt对应的接口以处理你的应用的逻辑。</p>
+<h4 id="Spout"><a href="#Spout" class="headerlink" title="Spout"></a>Spout</h4><p>Spout的流的源头。比如一个Spout可能从Kestrel队列里面读取消息并且把这些消息发射成一个流。又比如一个Spout可以调用Twitter的一个api并且把返回的Tweets发射成一个流。</p>
+<p>通常Spout会从外部数据源（队列、数据库等）读取数据，然后封装成Tuple形式，之后发送到Stream中。Spout是一个主动的角色，在接口内部有个nextTuple函数，Storm框架会不停的调用该函数。</p>
+<p><img src="http://img.blog.csdn.net/20161107202111762?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Spout"></p>
+<h4 id="Bolt"><a href="#Bolt" class="headerlink" title="Bolt"></a>Bolt</h4><p>Bolt可以接收任意多个输入Stream，作一些处理，有些Bolt可能还会发射一些新的Stream。一些复杂的流转换，比如从一些Tweet里面计算出热门话题，需要多个步骤，从而也就需要多个Bolt。Bolt可以做任何事情: 运行函数，过滤Tuple，做一些聚合，做一些合并以及访问数据库等等。</p>
+<p>Bolt处理输入的Stream，并产生新的输出Stream。Bolt可以执行过滤、函数操作、Join、操作数据库等任何操作。Bolt是一个被动的角色，其接口中有一个execute(Tuple input)方法，在接收到消息之后会调用此函数，用户可以在此方法中执行自己的处理逻辑。</p>
+<p><img src="http://img.blog.csdn.net/20161107202143477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Bolt"></p>
+<p>Spout和Bolt所组成一个网络会被打包成Topology，Topology是Storm里面最高一级的抽象（类Job）， 你可以把Topology提交给Storm的集群来运行。Topology的结构在Topology那一段已经说过了，这里就不再赘述了。</p>
+<p><img src="http://img.blog.csdn.net/20161107202222212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Topology结构"></p>
+<p>Topology里面的每一个节点都是并行运行的。在你的Topology里面，你可以指定每个节点的并行度， Storm则会在集群里面分配那么多线程来同时计算。</p>
+<p>一个Topology会一直运行直到你显式停止它。Storm自动重新分配一些运行失败的任务，并且Storm保证你不会有数据丢失，即使在一些机器意外停机并且消息被丢掉的情况下。</p>
+<h3 id="数据模型-Data-Model"><a href="#数据模型-Data-Model" class="headerlink" title="数据模型(Data Model)"></a>数据模型(Data Model)</h3><p>Storm使用Tuple来作为它的数据模型。每个Tuple是一堆值，每个值有一个名字，并且每个值可以是任何类型，在我的理解里面一个Tuple可以看作一个没有方法的Java对象。总体来看，Storm支持所有的基本类型、字符串以及字节数组作为Tuple的值类型。你也可以使用你自己定义的类型来作为值类型，只要你实现对应的序列化器(Serializer)。</p>
+<p>一个Tuple代表数据流中的一个基本的处理单元，例如一条Cookie日志，它可以包含多个Field，每个Field表示一个属性。</p>
+<p>Tuple本来应该是一个Key-Value的Map，由于各个组件间传递的Tuple的字段名称已经事先定义好了，所以Tuple只需要按序填入各个Value，所以就是一个Value List。</p>
+<p>一个没有边界的、源源不断的、连续的Tuple序列就组成了Stream。</p>
+<p>Topology里面的每个节点必须定义它要发射的Tuple的每个字段。 比如下面这个Bolt定义它所发射的Tuple包含两个字段，类型分别是: double和triple。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">publicclassDoubleAndTripleBoltimplementsIRichBolt &#123;</div><div class="line">    </div><div class="line">    privateOutputCollectorBase _collector;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoidprepare(Map conf, TopologyContext context, OutputCollectorBase collector) &#123;</div><div class="line">        _collector = collector;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoidexecute(Tuple input) &#123;</div><div class="line">        intval = input.getInteger(0);</div><div class="line">        _collector.emit(input,newValues(val*2, val*3));</div><div class="line">        _collector.ack(input);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoidcleanup() &#123;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoiddeclareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(newFields(&quot;double&quot;,&quot;triple&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>declareOutputFields方法定义要输出的字段 ： [“double”, “triple”]。这个Bolt的其它部分我们接下来会解释。</p>
+<h3 id="一个简单的Topology"><a href="#一个简单的Topology" class="headerlink" title="一个简单的Topology"></a>一个简单的Topology</h3><p>让我们来看一个简单的Topology的例子， 我们看一下storm-starter里面的ExclamationTopology:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">TopologyBuilder builder =newTopologyBuilder();</div><div class="line">builder.setSpout(1,newTestWordSpout(),10);</div><div class="line">builder.setBolt(2,newExclamationBolt(),3)</div><div class="line">        .shuffleGrouping(1);</div><div class="line">builder.setBolt(3,newExclamationBolt(),2)</div><div class="line">        .shuffleGrouping(2);</div></pre></td></tr></table></figure>
+<p>这个Topology包含一个Spout和两个Bolt。Spout发射单词，每个Bolt在每个单词后面加个”!!!”。这三个节点被排成一条线: Spout发射单词给第一个Bolt，第一个Bolt然后把处理好的单词发射给第二个Bolt。如果Spout发射的单词是[“bob”]和[“john”], 那么第二个Bolt会发射[“bolt!!!!!!”]和[“john!!!!!!”]出来。</p>
+<p>我们使用setSpout和setBolt来定义Topology里面的节点。这些方法接收我们指定的一个id，一个包含处理逻辑的对象(Spout或者Bolt), 以及你所需要的并行度。</p>
+<p>这个包含处理的对象如果是Spout那么要实现IRichSpout的接口，如果是Bolt，那么就要实现IRichBolt接口。</p>
+<p>最后一个指定并行度的参数是可选的。它表示集群里面需要多少个Thread来一起执行这个节点。如果你忽略它那么Storm会分配一个线程来执行这个节点。</p>
+<p>setBolt方法返回一个InputDeclarer对象，这个对象是用来定义Bolt的输入。这里第一个Bolt声明它要读取Spout所发射的所有的Tuple —— 使用shuffle grouping。而第二个Bolt声明它读取第一个Bolt所发射的Tuple。shuffle grouping表示所有的Tuple会被随机的分发给Bolt的所有Task。给Task分发Tuple的策略有很多种，后面会介绍。</p>
+<p>如果你想第二个Bolt读取Spout和第一个Bolt所发射的所有的Tuple， 那么你应该这样定义第二个Bolt:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">builder.setBolt(3,newExclamationBolt(),5)</div><div class="line">            .shuffleGrouping(1)</div><div class="line">            .shuffleGrouping(2);</div></pre></td></tr></table></figure>
+<p>让我们深入地看一下这个Topology里面的Spout和Bolt是怎么实现的。Spout负责发射新的Tuple到这个Topology里面来。TestWordSpout从[“nathan”, “mike”, “jackson”, “golda”, “bertels”]里面随机选择一个单词发射出来。TestWordSpout里面的nextTuple()方法是这样定义的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">publicvoidnextTuple() &#123;</div><div class="line">    Utils.sleep(100);</div><div class="line">    finalString[] words =newString[] &#123;&quot;nathan&quot;,&quot;mike&quot;,</div><div class="line">                     &quot;jackson&quot;,&quot;golda&quot;,&quot;bertels&quot;&#125;;</div><div class="line">    finalRandom rand =newRandom();</div><div class="line">    finalString word = words[rand.nextInt(words.length)];</div><div class="line">    _collector.emit(newValues(word));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，实现很简单。</p>
+<p>ExclamationBolt把”!!!”拼接到输入tuple后面。我们来看下ExclamationBolt的完整实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">publicstaticclassExclamationBoltimplementsIRichBolt &#123;</div><div class="line">    OutputCollector _collector;</div><div class="line"> </div><div class="line">    publicvoidprepare(Map conf, TopologyContext context,</div><div class="line">                        OutputCollector collector) &#123;</div><div class="line">        _collector = collector;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoidexecute(Tuple tuple) &#123;</div><div class="line">        _collector.emit(tuple,newValues(tuple.getString(0) +&quot;!!!&quot;));</div><div class="line">        _collector.ack(tuple);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoidcleanup() &#123;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoiddeclareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(newFields(&quot;word&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>prepare方法提供给Bolt一个Outputcollector用来发射tuple。Bolt可以在任何时候发射Tuple —— 在prepare, execute或者cleanup方法里面, 或者甚至在另一个线程里面异步发射。这里prepare方法只是简单地把OutputCollector作为一个类字段保存下来给后面execute方法使用。</p>
+<p>execute方法从Bolt的一个输入接收Tuple(一个Bolt可能有多个输入源)。ExclamationBolt获取Tuple的第一个字段，加上”!!!”之后再发射出去。如果一个Bolt有多个输入源，你可以通过调用Tuple#getSourceComponent方法来知道它是来自哪个输入源的。</p>
+<p>execute方法里面还有其它一些事情值得一提：输入Tuple被作为emit方法的第一个参数，并且输入Tuple在最后一行被ack。这些呢都是Storm可靠性API的一部分，后面会解释。</p>
+<p>cleanup方法在Bolt被关闭的时候调用，它应该清理所有被打开的资源。但是集群不保证这个方法一定会被执行。比如执行Task的机器down掉了，那么根本就没有办法来调用那个方法。cleanup设计的时候是被用来在local mode的时候才被调用(也就是说在一个进程里面模拟整个storm集群), 并且你想在关闭一些Topology的时候避免资源泄漏。</p>
+<p>最后，declareOutputFields定义一个叫做”word”的字段的Tuple。</p>
+<p>以local mode运行ExclamationTopology<br>让我们看看怎么以local mode运行ExclamationToplogy。</p>
+<p>Storm的运行有两种模式: 本地模式和分布式模式。在本地模式中，Storm用一个进程里面的线程来模拟所有的Spout和Bolt。本地模式对开发和测试来说比较有用。你运行storm-starter里面的Topology的时候它们就是以本地模式运行的，你可以看到Topology里面的每一个组件在发射什么消息。</p>
+<p>在分布式模式下，Storm由一堆机器组成。当你提交Topology给master的时候，你同时也把Topology的代码提交了。master负责分发你的代码并且负责给你的Topolgoy分配工作进程。如果一个工作进程挂掉了， master节点会把认为重新分配到其它节点。关于如何在一个集群上面运行Topology，你可以看看Running topologies on a production cluster文章。</p>
+<p>下面是以本地模式运行ExclamationTopology的代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Config conf =newConfig();</div><div class="line">conf.setDebug(true);</div><div class="line">conf.setNumWorkers(2);</div><div class="line"> </div><div class="line">LocalCluster cluster =newLocalCluster();</div><div class="line">cluster.submitTopology(&quot;test&quot;, conf, builder.createTopology());</div><div class="line">Utils.sleep(10000);</div><div class="line">cluster.killTopology(&quot;test&quot;);</div><div class="line">cluster.shutdown();</div></pre></td></tr></table></figure>
+<p>首先， 这个代码定义通过定义一个LocalCluster对象来定义一个进程内的集群。提交Topology给这个虚拟的集群和提交Topology给分布式集群是一样的。通过调用submitTopology方法来提交Topology， 它接受三个参数：要运行的Topology的名字，一个配置对象以及要运行的Topology本身。</p>
+<p>Topology的名字是用来唯一区别一个Topology的，这样你然后可以用这个名字来杀死这个Topology的。前面已经说过了，你必须显式的杀掉一个Topology，否则它会一直运行。</p>
+<p>Conf对象可以配置很多东西，下面两个是最常见的：</p>
+<ul>
+<li><p>TOPOLOGY_WORKERS(setNumWorkers) 定义你希望集群分配多少个工作进程给你来执行这个Topology。Topology里面的每个组件会被需要线程来执行。每个组件到底用多少个线程是通过setBolt和setSpout来指定的。这些线程都运行在工作进程里面。每一个工作进程包含一些节点的一些工作线程。比如，如果你指定300个线程，50个进程，那么每个工作进程里面要执行6个线程，而这6个线程可能属于不同的组件(Spout, Bolt)。你可以通过调整每个组件的并行度以及这些线程所在的进程数量来调整Topology的性能。</p>
+</li>
+<li><p>TOPOLOGY_DEBUG(setDebug), 当它被设置成true的话，storm会记录下每个组件所发射的每条消息。这在本地环境调试Topology很有用，但是在线上这么做的话会影响性能的。</p>
+</li>
+</ul>
+<p>感兴趣的话可以去看看Conf对象的Javadoc去看看topology的所有配置。<br>可以看看创建一个新Storm项目去看看怎么配置开发环境以使你能够以本地模式运行Topology.</p>
+<p>运行中的Topology主要由以下三个组件组成的：</p>
+<ul>
+<li>Worker processes（进程）</li>
+<li>Executors (threads)（线程）</li>
+<li>Tasks</li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20161107205213355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Worker"></p>
+<p>Spout或者Bolt的Task个数一旦指定之后就不能改变了，而Executor的数量可以根据情况来进行动态的调整。默认情况下# executor = #tasks即一个Executor中运行着一个Task</p>
+<p><img src="http://img.blog.csdn.net/20161107205238449?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Executor"></p>
+<p><img src="http://img.blog.csdn.net/20161107205311189?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Topology"></p>
+<p><img src="http://img.blog.csdn.net/20161107205348799?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="conf"></p>
+<h3 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h3><p>流分组策略告诉Topology如何在两个组件之间发送Tuple。要记住，Spouts和Bolts以很多Task的形式在Topology里面同步执行。如果从Task的粒度来看一个运行的Topology，它应该是这样的:</p>
+<p><img src="http://img.blog.csdn.net/20161107210310422?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Grouping"></p>
+<p>从Task角度来看Topology</p>
+<p>当Bolt A的一个task要发送一个Tuple给Bolt B， 它应该发送给Bolt B的哪个Task呢？</p>
+<p>Stream Grouping专门回答这种问题的。在我们深入研究不同的Stream Grouping之前，让我们看一下storm-starter里面的另外一个Topology。WordCountTopology读取一些句子，输出句子里面每个单词出现的次数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">TopologyBuilder builder =newTopologyBuilder();</div><div class="line"> </div><div class="line">builder.setSpout(1,newRandomSentenceSpout(),5);</div><div class="line">builder.setBolt(2,newSplitSentence(),8)</div><div class="line">        .shuffleGrouping(1);</div><div class="line">builder.setBolt(3,newWordCount(),12)</div><div class="line">        .fieldsGrouping(2,newFields(&quot;word&quot;));</div></pre></td></tr></table></figure>
+<p>SplitSentence对于句子里面的每个单词发射一个新的Tuple, WordCount在内存里面维护一个单词-&gt;次数的Mapping，WordCount每收到一个单词，它就更新内存里面的统计状态。</p>
+<p>有好几种不同的Stream Grouping:</p>
+<p>最简单的Grouping是shuffle grouping, 它随机发给任何一个Task。上面例子里面RandomSentenceSpout和SplitSentence之间用的就是shuffle grouping, shuffle grouping对各个Task的Tuple分配的比较均匀。</p>
+<p>一种更有趣的Grouping是fields grouping, SplitSentence和WordCount之间使用的就是fields grouping, 这种Grouping机制保证相同Field值的Tuple会去同一个Task，这对于WordCount来说非常关键，如果同一个单词不去同一个task，那么统计出来的单词次数就不对了。</p>
+<p>fields grouping是Stream合并，Stream聚合以及很多其它场景的基础。在背后呢，fields grouping使用的一致性哈希来分配Tuple的。</p>
+<p>还有一些其它类型的Stream Grouping. 你可以在Concepts一章里更详细的了解。</p>
+<p>下面是一些常用的 “路由选择” 机制：</p>
+<p>Storm的Grouping即消息的Partition机制。当一个Tuple被发送时，如何确定将它发送个某个（些）Task来处理？？</p>
+<ul>
+<li>ShuffleGrouping：随机选择一个Task来发送。</li>
+<li>FieldGrouping：根据Tuple中Fields来做一致性hash，相同hash值的Tuple被发送到相同的Task。</li>
+<li>AllGrouping：广播发送，将每一个Tuple发送到所有的Task。</li>
+<li>GlobalGrouping：所有的Tuple会被发送到某个Bolt中的id最小的那个Task。</li>
+<li>NoneGrouping：不关心Tuple发送给哪个Task来处理，等价于ShuffleGrouping。</li>
+<li>DirectGrouping：直接将Tuple发送到指定的Task来处理。</li>
+</ul>
+<h3 id="使用别的语言来定义Bolt"><a href="#使用别的语言来定义Bolt" class="headerlink" title="使用别的语言来定义Bolt"></a>使用别的语言来定义Bolt</h3><p>Bolt可以使用任何语言来定义。用其它语言定义的Bolt会被当作子进程(subprocess)来执行， Storm使用JSON消息通过stdin/stdout来和这些subprocess通信。这个通信协议是一个只有100行的库，Storm团队给这些库开发了对应的Ruby, Python和Fancy版本。</p>
+<p>下面是WordCountTopology里面的SplitSentence的定义:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">publicstaticclassSplitSentenceextendsShellBoltimplementsIRichBolt &#123;</div><div class="line">    publicSplitSentence() &#123;</div><div class="line">        super(&quot;python&quot;,&quot;splitsentence.py&quot;);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoiddeclareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(newFields(&quot;word&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SplitSentence继承自ShellBolt并且声明这个Bolt用Python来运行，并且参数是: splitsentence.py。下面是splitsentence.py的定义:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">importstorm</div><div class="line"> </div><div class="line">classSplitSentenceBolt(storm.BasicBolt):</div><div class="line">    defprocess(self, tup):</div><div class="line">        words=tup.values[0].split(&quot; &quot;)</div><div class="line">        forwordinwords:</div><div class="line">          storm.emit([word])</div><div class="line"> </div><div class="line">SplitSentenceBolt().run()</div></pre></td></tr></table></figure>
+<p>更多有关用其它语言定义Spout和Bolt的信息， 以及用其它语言来创建topology的 信息可以参见: Using non-JVM languages with Storm.</p>
+<h3 id="可靠的消息处理"><a href="#可靠的消息处理" class="headerlink" title="可靠的消息处理"></a>可靠的消息处理</h3><p>在这个教程的前面，我们跳过了有关Tuple的一些特征。这些特征就是Storm的可靠性API： Storm如何保证Spout发出的每一个Tuple都被完整处理。看看《storm如何保证消息不丢失》以更深入了解storm的可靠性API.</p>
+<p>Storm允许用户在Spout中发射一个新的源Tuple时为其指定一个MessageId，这个MessageId可以是任意的Object对象。多个源Tuple可以共用同一个MessageId，表示这多个源Tuple对用户来说是同一个消息单元。Storm的可靠性是指Storm会告知用户每一个消息单元是否在一个指定的时间内被完全处理。完全处理的意思是该MessageId绑定的源Tuple以及由该源Tuple衍生的所有Tuple都经过了Topology中每一个应该到达的Bolt的处理。</p>
+<p><img src="http://img.blog.csdn.net/20161107210353469?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Message"></p>
+<p>在Spout中由message 1绑定的tuple1和tuple2分别经过bolt1和bolt2的处理，然后生成了两个新的Tuple，并最终流向了bolt3。当bolt3处理完之后，称message 1被完全处理了。</p>
+<p>Storm中的每一个Topology中都包含有一个Acker组件。Acker组件的任务就是跟踪从Spout中流出的每一个messageId所绑定的Tuple树中的所有Tuple的处理情况。如果在用户设置的最大超时时间内这些Tuple没有被完全处理，那么Acker会告诉Spout该消息处理失败，相反则会告知Spout该消息处理成功。</p>
+<p>那么Acker是如何记录Tuple的处理结果呢？？</p>
+<p>A xor A = 0.</p>
+<p>A xor B…xor B xor A = 0，其中每一个操作数出现且仅出现两次。</p>
+<p>在Spout中，Storm系统会为用户指定的MessageId生成一个对应的64位的整数，作为整个Tuple Tree的RootId。RootId会被传递给Acker以及后续的Bolt来作为该消息单元的唯一标识。同时，无论Spout还是Bolt每次新生成一个Tuple时，都会赋予该Tuple一个唯一的64位整数的Id。</p>
+<p>当Spout发射完某个MessageId对应的源Tuple之后，它会告诉Acker自己发射的RootId以及生成的那些源Tuple的Id。而当Bolt处理完一个输入Tuple并产生出新的Tuple时，也会告知Acker自己处理的输入Tuple的Id以及新生成的那些Tuple的Id。Acker只需要对这些Id进行异或运算，就能判断出该RootId对应的消息单元是否成功处理完成了。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI" target="_blank" rel="external">https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/opensource/os-twitterstorm/#list1" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/opensource/os-twitterstorm/#list1</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Storm/">Storm</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Storm/Storm学习（一）Storm集群环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/" class="article-date">
+  	<time datetime="2016-11-07T06:57:13.000Z" itemprop="datePublished">2016-11-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/">Storm学习（一）Storm集群环境搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天开始搭建Storm集群环境了，主要参考官网的步骤一点一点学习的</p>
+<p>搭建Storm集群的主要步骤如下:</p>
+<ul>
+<li>搭建好一个Zookeeper集群</li>
+<li>安装好依赖的环境</li>
+<li>下载并解压一个Storm版本</li>
+<li>补充主要的配置到storm.yaml配置文件</li>
+<li>后台执行Storm启动脚本</li>
+</ul>
+<h3 id="Zookeeper集群环境搭建"><a href="#Zookeeper集群环境搭建" class="headerlink" title="Zookeeper集群环境搭建"></a>Zookeeper集群环境搭建</h3><p>这里我们不做详细介绍了，Zookeeper集群环境搭建我之前单独写过一篇文章，请参考。</p>
+<h3 id="安装依赖环境"><a href="#安装依赖环境" class="headerlink" title="安装依赖环境"></a>安装依赖环境</h3><p>Storm依赖于Java环境和Python环境，具体版本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Java 7</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure>
+<p>可能Storm在不同的Java和Python版本下会不好用</p>
+<h4 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h4><p>省略</p>
+<h4 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 下载Python2.6.6</div><div class="line">$ wget http://www.python.org/ftp/python/2.6.6/Python-2.6.6.tar.bz2</div><div class="line"></div><div class="line"># 编译安装Python2.6.6</div><div class="line">$ tar –jxvf Python-2.6.6.tar.bz2</div><div class="line">$ cd Python-2.6.6</div><div class="line">$ ./configure</div><div class="line">$ make</div><div class="line">$ make install</div><div class="line"></div><div class="line"># 测试Python</div><div class="line">$ python -V</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure>
+<h3 id="下载Storm"><a href="#下载Storm" class="headerlink" title="下载Storm"></a>下载Storm</h3><p>在Storm的GitHub中选择一个Storm版本下载安装，这里我选择的0.10.2版本</p>
+<ul>
+<li><a href="http://storm.apache.org/downloads.html" target="_blank" rel="external">http://storm.apache.org/downloads.html</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载Storm安装包</div><div class="line">$ curl -O http://apache.fayea.com/storm/apache-storm-0.10.2/apache-storm-0.10.2.tar.gz</div><div class="line"></div><div class="line"># 解压Storm压缩包</div><div class="line">$ tar -xvf apache-storm-0.10.2.tar</div></pre></td></tr></table></figure>
+<h3 id="修改storm-yaml配置文件"><a href="#修改storm-yaml配置文件" class="headerlink" title="修改storm.yaml配置文件"></a>修改storm.yaml配置文件</h3><p>Storm启动会加载conf/storm.yaml配置文件，该配置文件会覆盖掉defaults.yaml配置文件中的配置。下面介绍少部分重要的配置</p>
+<ul>
+<li>storm.zookeeper.servers : Storm依赖的Zookeeper集群地址</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">storm.zookeeper.servers:</div><div class="line">  - &quot;111.222.333.444&quot;</div><div class="line">  - &quot;555.666.777.888&quot;</div></pre></td></tr></table></figure>
+<p>如果Zookeeper集群使用的不是默认的端口号，可以通过storm.zookeeper.port配置来修改，否则会出现通信错误。</p>
+<ul>
+<li>storm.local.dir : Nimbus和Supervisor进程用于存储少量状态，如jars、confs等的本地磁盘目录，需要提前创建该目录并给以足够的访问权限。需要在每个Storm机器中都创建这样一个目录。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.local.dir: &quot;/mnt/storm&quot;</div></pre></td></tr></table></figure>
+<p>也可以使用相对路径，相对于$STORM_HOME（即Storm的安装路径），如果不设置该配置就是用默认目录$STORM_HOME/storm-local</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.local.dir: $STORM_HOME/storm-local</div></pre></td></tr></table></figure>
+<ul>
+<li>nimbus.seeds : Storm集群Nimbus机器地址，各个Supervisor工作节点需要知道哪个机器是Nimbus，以便下载Topologies的jars、confs等文件。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nimbus.seeds: [&quot;111.222.333.44&quot;]</div></pre></td></tr></table></figure>
+<p>这里推荐使用机器的hostname，如果你想设置Nimbus的HA高可用，你必须设置每个正在运行的Nimbus的hostname。如果是假的分布式集群，可以使用默认值，但是建议设置Nimbus的hostname。</p>
+<ul>
+<li>supervisor.slots.ports : 对于每个Supervisor工作节点，需要配置该工作节点可以运行的worker数量。每个worker占用一个单独的端口用于接收消息，该配置选项即用于定义哪些端口是可被worker使用的。默认情况下，每个节点上可运行4个workers，分别在6700、6701、6702和6703端口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">supervisor.slots.ports:</div><div class="line">    - 6700</div><div class="line">    - 6701</div><div class="line">    - 6702</div><div class="line">    - 6703</div></pre></td></tr></table></figure>
+<h3 id="健康检查（下面这段翻译的不够准确，仅供参考）"><a href="#健康检查（下面这段翻译的不够准确，仅供参考）" class="headerlink" title="健康检查（下面这段翻译的不够准确，仅供参考）"></a>健康检查（下面这段翻译的不够准确，仅供参考）</h3><p>Storm提供一种机制 —— 管理者可以配置一个监控者周期的执行管理者提供的脚本，检查node节点是否健康。管理者有决定node节点在健康状态。如果一个脚本查明node节点处于非健康状态，必须打印以ERROR开头标准化输出错误。监控者周期的执行脚本在storm.health.check.dir并且检查输出结果。如果脚本的输出结果包括ERROR，监控者将会关闭worker。</p>
+<p>如果监控者正在运行与监控”/bin/storm node-health-check”可以被调用，以确定监控者是否被启动，或者该node节点是否是不健康的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 健康检查的目录配置如下</div><div class="line">storm.health.check.dir: &quot;healthchecks&quot;</div><div class="line"># 健康检查等待超时时间配置</div><div class="line">storm.health.check.timeout.ms: 5000</div></pre></td></tr></table></figure>
+<h3 id="配置外部依赖库和环境变量（可选）"><a href="#配置外部依赖库和环境变量（可选）" class="headerlink" title="配置外部依赖库和环境变量（可选）"></a>配置外部依赖库和环境变量（可选）</h3><p>如果你需要支持外部依赖库或者自定义插件，你可以定位这些jar到extlib和extlib-daemon目录下。注意extlib-daemon目录存储的jar只被用于daemons启动(Nimbus, Supervisor, DRPC, UI, Logviewer)，如，HDFS和自定义的定时任务库。因此STORM_EXT_CLASSPATH和STORM_EXT_CLASSPATH_DAEMON这两个环境变量都需要被配置，为了外部依赖classpath和后台启动的外部依赖classpath。</p>
+<h3 id="启动Storm后台进程"><a href="#启动Storm后台进程" class="headerlink" title="启动Storm后台进程"></a>启动Storm后台进程</h3><p>最后一步就是启动Storm的后台进程，很关键的一点这些后台进程都在监控下。Storm是快速失败（fail-fast)，意味着无论什么时候发生错误，进程都会停止。Storm被设计成这样可以在任何点安全的停止，并且当进程重启时可以正确的被恢复。这也是说明Storm为什么是无状态的系统。如果Nimbus或者Supervisors重启，正在运行的topologies不会受到影响。</p>
+<p>下面是如何启动Storm的后台进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Nimbus: Run the command &quot;bin/storm nimbus&quot; under supervision on the master machine.</div><div class="line"></div><div class="line">Supervisor: Run the command &quot;bin/storm supervisor&quot; under supervision on each worker machine. The supervisor daemon is responsible for starting and stopping worker processes on that machine.</div><div class="line"></div><div class="line">UI: Run the Storm UI (a site you can access from the browser that gives diagnostics on the cluster and topologies) by running the command &quot;bin/storm ui&quot; under supervision. The UI can be accessed by navigating your web browser to http://&#123;ui host&#125;:8080.</div></pre></td></tr></table></figure>
+<p>Storm后台进程被启动后，将在Storm安装部署目录下的logs/子目录下生成各个进程的日志文件</p>
+<p>以上是翻译自Storm的官网，接下来是针对于我自己的Storm集群的配置过程</p>
+<h3 id="Storm集群搭建步骤"><a href="#Storm集群搭建步骤" class="headerlink" title="Storm集群搭建步骤"></a>Storm集群搭建步骤</h3><p>修改storm.yaml配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.zookeeper.servers:    - &quot;hadoop2&quot;    - &quot;hadoop3&quot;nimbus.host: &quot;hadoop1&quot;</div></pre></td></tr></table></figure>
+<p>注意：这里hadoop1, hadoop2, hadoop3是我之前安装Hadoop集群环境对应的三台机器的hostname，需要根据个人实际环境进行修改。这里我将hadoop1这台机器作为Nimbus，hadoop2和hadoop3这两台机器作为Supervisor。其他配置都使用默认的配置。</p>
+<p>启动Nimbus</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm nimbusRunning: /usr/local/java/bin/java -server -Ddaemon.name=nimbus -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2/conf -Xmx1024m -Dlogfile.name=nimbus.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.daemon.nimbus</div></pre></td></tr></table></figure>
+<p>启动Supervisor</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm supervisorRunning: /usr/local/java/bin/java -server -Ddaemon.name=supervisor -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/conf -Xmx256m -Dlogfile.name=supervisor.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.daemon.supervisor</div></pre></td></tr></table></figure>
+<p>启动UI</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm uiRunning: /usr/local/java/bin/java -server -Ddaemon.name=ui -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2:/data/storm-0.10.2/conf -Xmx768m -Dlogfile.name=ui.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.ui.core</div></pre></td></tr></table></figure>
+<p>启动成功之后访问<a href="http://hadoop1:8080，效果图如下" target="_blank" rel="external">http://hadoop1:8080，效果图如下</a></p>
+<p><img src="http://img.blog.csdn.net/20161107192753473?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm UI"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://storm.apache.org/releases/0.10.2/Setting-up-a-Storm-cluster.html" target="_blank" rel="external">http://storm.apache.org/releases/0.10.2/Setting-up-a-Storm-cluster.html</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Storm/">Storm</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker/Docker实战（二十二）Docker-Compose部署Zookeeper集群环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/04/Docker/Docker实战（二十二）Docker-Compose部署Zookeeper集群环境/" class="article-date">
+  	<time datetime="2016-11-04T07:27:19.000Z" itemprop="datePublished">2016-11-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/04/Docker/Docker实战（二十二）Docker-Compose部署Zookeeper集群环境/">Docker实战（二十二）Docker-Compose部署Zookeeper集群环境</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本篇我们具体使用Docker-Compose来部署Zookeeper集群环境，这里我们使用Zookeeper官方提供的Docker镜像来搭建集群环境，官方的镜像地址：<a href="https://hub.docker.com/_/zookeeper/" target="_blank" rel="external">https://hub.docker.com/_/zookeeper/</a></p>
+<h4 id="下载Zookeeper官方的Docker镜像"><a href="#下载Zookeeper官方的Docker镜像" class="headerlink" title="下载Zookeeper官方的Docker镜像"></a>下载Zookeeper官方的Docker镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker pull zookeeper:latest</div></pre></td></tr></table></figure>
+<h4 id="zoo-cfg配置文件"><a href="#zoo-cfg配置文件" class="headerlink" title="zoo.cfg配置文件"></a>zoo.cfg配置文件</h4><p>这里我们将部署三台Docker容器组成一个Zookeeper集群，然后我们在本地创建一个zoo.cfg配置文件，指定好Zookeeper集群的配置，zk1，zk2，zk3分别是三台Zookeeper服务器的host名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=10</div><div class="line">syncLimit=5</div><div class="line">dataDir=/opt/data</div><div class="line">clientPort=2181</div><div class="line">dataLogDir=/opt/log</div></pre></td></tr></table></figure>
+<h4 id="docker-compose-yml配置文件"><a href="#docker-compose-yml配置文件" class="headerlink" title="docker-compose.yml配置文件"></a>docker-compose.yml配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">version: &apos;2&apos;</div><div class="line">services:</div><div class="line">   zoo1:</div><div class="line">      # 指定当前构建的Docker容器的镜像</div><div class="line">      image: zookeeper</div><div class="line">      restart: always</div><div class="line">      # 指定当前构建的Docker容器的名称</div><div class="line">      container_name: zk1</div><div class="line">      networks:</div><div class="line">         zoo_net:</div><div class="line">            # 指定当前构建的Docker容器的IP地址</div><div class="line">            ipv4_address: 172.18.0.2</div><div class="line">      # 指定当前构建的Docker容器的host配置</div><div class="line">      extra_hosts:</div><div class="line">         - &quot;zoo1:172.18.0.2&quot;</div><div class="line">         - &quot;zoo2:172.18.0.3&quot;</div><div class="line">         - &quot;zoo3:172.18.0.4&quot;</div><div class="line">      # 指定当前构建的Docker容器的volume挂在目录设置</div><div class="line">      volumes:</div><div class="line">         - ~/Downloads/yunyu/zookeeper_docker/data/zoo1:/opt/data</div><div class="line">         - ~/Downloads/yunyu/zookeeper_docker/logs/zoo1:/opt/log</div><div class="line">      # 指定当前构建的Docker容器对外开放的端口号映射</div><div class="line">      ports:</div><div class="line">         - &quot;2181:2181&quot;</div><div class="line">         - &quot;2881:2888&quot;</div><div class="line">         - &quot;3881:3888&quot;</div><div class="line">      # 指定当前构建的Docker容器环境变量设置</div><div class="line">      environment:</div><div class="line">         ZOO_MY_ID: 1</div><div class="line">         ZOO_SERVERS: server.1=zoo1:2881:3881 server.2=zoo2:2882:3882 server.3=zoo3:2883:3883</div><div class="line"></div><div class="line">   zoo2:</div><div class="line">      image: zookeeper</div><div class="line">      restart: always</div><div class="line">      container_name: zk2</div><div class="line">      networks:</div><div class="line">         zoo_net:</div><div class="line">            ipv4_address: 172.18.0.3</div><div class="line">      extra_hosts:</div><div class="line">         - &quot;zoo1:172.18.0.2&quot;</div><div class="line">         - &quot;zoo2:172.18.0.3&quot;</div><div class="line">         - &quot;zoo3:172.18.0.4&quot;</div><div class="line">      volumes:</div><div class="line">         - ~/Downloads/yunyu/zookeeper_docker/data/zoo2:/opt/data</div><div class="line">         - ~/Downloads/yunyu/zookeeper_docker/logs/zoo2:/opt/log</div><div class="line">      ports:</div><div class="line">         - &quot;2182:2181&quot;</div><div class="line">         - &quot;2882:2888&quot;</div><div class="line">         - &quot;3882:3888&quot;</div><div class="line">      environment:</div><div class="line">         ZOO_MY_ID: 2</div><div class="line">         ZOO_SERVERS: server.1=zoo1:2881:3881 server.2=zoo2:2882:3882 server.3=zoo3:2883:3883</div><div class="line"></div><div class="line">   zoo3:</div><div class="line">      image: zookeeper</div><div class="line">      restart: always</div><div class="line">      container_name: zk3</div><div class="line">      networks:</div><div class="line">         zoo_net:</div><div class="line">            ipv4_address: 172.18.0.4</div><div class="line">      extra_hosts:</div><div class="line">         - &quot;zoo1:172.18.0.2&quot;</div><div class="line">         - &quot;zoo2:172.18.0.3&quot;</div><div class="line">         - &quot;zoo3:172.18.0.4&quot;</div><div class="line">      volumes:</div><div class="line">         - ~/Downloads/yunyu/zookeeper_docker/data/zoo3:/opt/data</div><div class="line">         - ~/Downloads/yunyu/zookeeper_docker/logs/zoo3:/opt/log</div><div class="line">      ports:</div><div class="line">         - &quot;2183:2181&quot;</div><div class="line">         - &quot;2883:2888&quot;</div><div class="line">         - &quot;3883:3888&quot;</div><div class="line">      environment:</div><div class="line">         ZOO_MY_ID: 3</div><div class="line">         ZOO_SERVERS: server.1=zoo1:2881:3881 server.2=zoo2:2882:3882 server.3=zoo3:2883:3883</div><div class="line"></div><div class="line">networks:</div><div class="line">  zoo_net:</div><div class="line">    driver: bridge</div><div class="line">    ipam:</div><div class="line">      driver: default</div><div class="line">      config:</div><div class="line">      - subnet: 172.18.0.0/16</div><div class="line">        gateway: 172.18.0.1</div></pre></td></tr></table></figure>
+<p>这里需要注意几点</p>
+<ol>
+<li>因为我们是单机部署了多个Docker容器模拟Zookeeper集群的，所以需要做端口映射2181，2888，3888。需要将2888和3888端口也暴露出来，因为如果不暴露出来一旦leader几点挂了，其他follower无法再次进行选举，因为选举是通过3888端口进行的</li>
+<li>这里我们指定好了Docker容器的IP地址，这样不会动态的去获取IP地址导致每次启动Docker容器IP地址都会变化</li>
+<li>需要设置/etc/hosts配置文件中的host配置</li>
+<li>将Docker容器中的/opt/data和/opt/log目录挂在到宿主机的指定目录下</li>
+<li>设置了一个网卡zoo_net，网段是172.18.0.0，网关是172.18.0.1</li>
+<li>Docker-Compose的version 2版本语法有些变化，注意检查一下networks的配置，否则启动docker-compose up会无法启动</li>
+</ol>
+<h4 id="启动Docker-Compose"><a href="#启动Docker-Compose" class="headerlink" title="启动Docker-Compose"></a>启动Docker-Compose</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 启动Docker-Compose后，会自动创建Docker容器并且启动</div><div class="line">$ docker-compose up</div><div class="line"></div><div class="line"># 查看当前正在运行的Docker容器</div><div class="line">$ docker-compose ps</div><div class="line">Name              Command               State                                   Ports</div><div class="line">----------------------------------------------------------------------------------------------------------------------</div><div class="line">zk1    /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2181-&gt;2181/tcp, 0.0.0.0:2881-&gt;2888/tcp, 0.0.0.0:3881-&gt;3888/tcp</div><div class="line">zk2    /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2182-&gt;2181/tcp, 0.0.0.0:2882-&gt;2888/tcp, 0.0.0.0:3882-&gt;3888/tcp</div><div class="line">zk3    /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2183-&gt;2181/tcp, 0.0.0.0:2883-&gt;2888/tcp, 0.0.0.0:3883-&gt;3888/tcp</div></pre></td></tr></table></figure>
+<h4 id="验证Zookeeper集群的可用性"><a href="#验证Zookeeper集群的可用性" class="headerlink" title="验证Zookeeper集群的可用性"></a>验证Zookeeper集群的可用性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"># 分别进入到正在运行的三个Docker容器中</div><div class="line">$ docker exec -it 486110828ff1 /bin/bash</div><div class="line"></div><div class="line"># 进入Zookeeper的安装目录，这里要参考Zookeeper官方的Dockerfile文件配置</div><div class="line">$ cd /zookeeper-3.4.9/bin</div><div class="line"></div><div class="line"># 检查Zookeeper的状态（三个Docker容器的状态都不一样，只有一个leader，另外两个是follower）</div><div class="line">$ zkServer.sh status</div><div class="line">ZooKeeper JMX enabled by default</div><div class="line">Using config: /conf/zoo.cfg</div><div class="line">Mode: follower</div><div class="line"></div><div class="line"># 分别监听三个Docker容器的2181端口情况，都是正在监听状态</div><div class="line">$ netstat -anp | grep 2181</div><div class="line">tcp        0      0 :::2181                 :::*                    LISTEN      -</div><div class="line"></div><div class="line"># 然后通过宿主机检查2181, 2182, 2183三个端口（这里连接的是2182端口）</div><div class="line">$ telnet 10.10.1.66 2182</div><div class="line">Trying 10.10.1.66...</div><div class="line">Connected to localhost.</div><div class="line">Escape character is &apos;^]&apos;.</div><div class="line"></div><div class="line"># telnet能够连接说明2182端口，同时检查对应2182端口的Docker容器会创建一个TCP连接如下，说明连接都正常了</div><div class="line">$ netstat -anp | grep 2181</div><div class="line">tcp        0      0 :::2181                 :::*                    LISTEN      -</div><div class="line">tcp        0      0 ::ffff:172.18.0.3:2181  ::ffff:172.18.0.1:48996 ESTABLISHED -</div><div class="line"></div><div class="line"># 检查重新Zookeeper的重新选举功能</div><div class="line"># 停止leader的Docker容器</div><div class="line">$ docker stop 486110828ff1</div><div class="line"></div><div class="line"># 再分别查看另外两个Docker容器的Zookeeper服务状态，其中一个会被选举成leader，另外一个还是follower</div><div class="line">$ zkServer.sh status</div><div class="line">ZooKeeper JMX enabled by default</div><div class="line">Using config: /conf/zoo.cfg</div><div class="line">Mode: leader</div></pre></td></tr></table></figure>
+<p>到此为止，我们的使用Zookeeper官方Docker镜像搭建Zookeeper集群已经完成了</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/compose-file/#/network-configuration-reference" target="_blank" rel="external">https://docs.docker.com/compose/compose-file/#/network-configuration-reference</a></li>
+<li><a href="https://docs.docker.com/compose/networking/" target="_blank" rel="external">https://docs.docker.com/compose/networking/</a></li>
+<li><a href="https://hub.docker.com/_/zookeeper/" target="_blank" rel="external">https://hub.docker.com/_/zookeeper/</a></li>
+<li><a href="https://github.com/31z4/zookeeper-docker/blob/7e7eac6d6c11428849ec13bb7d240e4cfa21b2e7/3.4.9/Dockerfile">https://github.com/31z4/zookeeper-docker/blob/7e7eac6d6c11428849ec13bb7d240e4cfa21b2e7/3.4.9/Dockerfile</a></li>
+<li><a href="https://github.com/31z4/zookeeper-docker/tree/7e7eac6d6c11428849ec13bb7d240e4cfa21b2e7">https://github.com/31z4/zookeeper-docker/tree/7e7eac6d6c11428849ec13bb7d240e4cfa21b2e7</a></li>
+<li><a href="http://blog.csdn.net/cuisongliu/article/details/51817203" target="_blank" rel="external">http://blog.csdn.net/cuisongliu/article/details/51817203</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker环境/">Docker环境</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Docker/Docker实战（二十一）Docker-Compose安装和使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/04/Docker/Docker实战（二十一）Docker-Compose安装和使用/" class="article-date">
+  	<time datetime="2016-11-04T02:44:23.000Z" itemprop="datePublished">2016-11-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/04/Docker/Docker实战（二十一）Docker-Compose安装和使用/">Docker实战（二十一）Docker-Compose安装和使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近决定使用官方的Zookeeper的Docker镜像搭建Zookeeper集群环境，在DockerHub官网中找到了Zookeeper官方的镜像地址：<a href="https://hub.docker.com/_/zookeeper/，发现官方推荐可以使用Docker-Compose工具来同时启动多个配置好的Zookeeper的Docker容器，用起来十分方便。" target="_blank" rel="external">https://hub.docker.com/_/zookeeper/，发现官方推荐可以使用Docker-Compose工具来同时启动多个配置好的Zookeeper的Docker容器，用起来十分方便。</a></p>
+<h4 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h4><ul>
+<li>我本地的环境是 : MacOS</li>
+<li>公司测试环境是 : Ubuntu</li>
+</ul>
+<h4 id="Docker-Compose安装"><a href="#Docker-Compose安装" class="headerlink" title="Docker-Compose安装"></a>Docker-Compose安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 注意这里要安装比较高的版本，否则在使用docker-compose.yml配置文件的时候，新老版本的docker-compose.yml配置文件的语法略有不同，我这里安装的1.8.1版本</div><div class="line">$ curl -L https://github.com/docker/compose/releases/download/1.8.1/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose </div><div class="line">$ chmod +x /usr/local/bin/docker-compose</div><div class="line"></div><div class="line"># 安装完成之后，检查Docker-Compose版本</div><div class="line">$ docker-compose version</div><div class="line">docker-compose version 1.8.1, build 878cff1</div><div class="line">docker-py version: 1.10.3</div><div class="line">CPython version: 2.7.9</div><div class="line">OpenSSL version: OpenSSL 1.0.2h  3 May 2016</div><div class="line"></div><div class="line"># 卸载也很方便，直接执行下面的命令即可</div><div class="line">$ rm /usr/local/bin/docker-compose</div></pre></td></tr></table></figure>
+<h4 id="Docker-Compose用法"><a href="#Docker-Compose用法" class="headerlink" title="Docker-Compose用法"></a>Docker-Compose用法</h4><p>基本步骤如下：</p>
+<ul>
+<li>创建一个docker-compose.yml配置文件</li>
+<li>docker-compose up启动Docker容器</li>
+<li>docker-compose ps查看Docker容器运行状态</li>
+</ul>
+<h4 id="Docker-Compose命令用法"><a href="#Docker-Compose命令用法" class="headerlink" title="Docker-Compose命令用法"></a>Docker-Compose命令用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 命令</div><div class="line">build : 创建或者再建服务。服务被创建后会标记为project_service(比如composetest_db)，如果改变了一个服务的Dockerfile或者构建目录的内容，可以使用docker-compose build来重建它</div><div class="line">help : 显示命令的帮助和使用信息</div><div class="line">kill : 通过发送SIGKILL的信号强制停止运行的容器，这个信号可以选择性的通过，比如：docker-compose kill -s SIGKINT</div><div class="line">logs : 显示服务的日志输出</div><div class="line">port : 为端口绑定输出公共信息</div><div class="line">ps : 显示容器</div><div class="line">pull : 拉取服务镜像</div><div class="line">rm : 删除停止的容器</div><div class="line">run : 在服务上运行一个一次性命令，比如：docker-compose run web Python manage.py shell</div><div class="line">scale : 设置为一个服务启动的容器数量，数量是以这样的参数形式指定的：service=num，比如：docker-compose scale web=2 worker=3</div><div class="line">start : 启动已经存在的容器作为一个服务</div><div class="line">stop : 停止运行的容器而不删除它们，它们可以使用命令docker-compose start重新启动起来</div><div class="line">up : 为一个服务构建、创建、启动、附加到容器。连接的服务会被启动，除非它们已经在运行了。默认情况下，docker-compose up会集中每个容器的输出，当存在时，所有的容器会停止，运行docker-compose up -d会在后台启动容器并使它们运行。</div><div class="line">默认情况下，如果服务存在容器的话，docker-compose up会停止并再创建它们（使用了volumes-from会保留已挂载的卷），如果不想使容器停止并再创建的话，使用docker-compose up --no-recreate，如果有需要的话，这会启动任何停止的容器</div><div class="line"></div><div class="line"># 选项</div><div class="line">–verbose : 显示更多输出</div><div class="line">–version : 显示版本号并退出</div><div class="line">-f,–file FILE : 指定一个可选的Compose yaml文件（默认：docker-compose.yml）</div><div class="line">-p,–project-name NAME : 指定可选的项目名称（默认：当前目录名称）</div></pre></td></tr></table></figure>
+<h4 id="docker-compose-yml配置文件用法"><a href="#docker-compose-yml配置文件用法" class="headerlink" title="docker-compose.yml配置文件用法"></a>docker-compose.yml配置文件用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># Service配置 : 主要是配置Docker服务的详情信息（一个Service可以理解为一套Docker容器服务）</div><div class="line"># 这里简单介绍一下我理解的配置用法</div><div class="line">image : 指定Docker镜像名称</div><div class="line">container_name : 创建出来的Docker容器名称</div><div class="line">networks : 设置网路配置</div><div class="line">extra_hosts : 设置/etc/hosts文件配置</div><div class="line">volumes : 设置挂在目录配置</div><div class="line">ports : 设置Docker容器对外开放的端口号映射</div><div class="line">expose : 设置Docker容器内部使用的端口号</div><div class="line">environment : 环境变量设置</div><div class="line"></div><div class="line"># Network配置 : 主要配置Docker容器的网络信息</div><div class="line">driver : 配置网卡类型（bridge, none, host三种类型）</div><div class="line"></div><div class="line"># Version配置 : 主要指定Docker-Compose配置文件的版本，这里指定使用Version 2版本</div><div class="line">verison: &apos;2&apos;</div><div class="line"></div><div class="line"># 注意：Version 2 files are supported by Compose 1.6.0+ and require a Docker Engine of version 1.10.0+.</div></pre></td></tr></table></figure>
+<p>因为我也是刚开始使用，所以并不是很熟悉，这里docker-compose.yml配置文件的用法具体请参考官网的说明。下一篇我们会以Docker-Compose来管理Zookeepr官方的Docker容器</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/compose-file/#/network-configuration-reference" target="_blank" rel="external">https://docs.docker.com/compose/compose-file/#/network-configuration-reference</a></li>
+</ul>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/install/" target="_blank" rel="external">https://docs.docker.com/compose/install/</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/#/network-configuration-reference" target="_blank" rel="external">https://docs.docker.com/compose/compose-file/#/network-configuration-reference</a></li>
+<li><a href="https://docs.docker.com/compose/networking/" target="_blank" rel="external">https://docs.docker.com/compose/networking/</a></li>
+<li><a href="http://blog.csdn.net/zhiaini06/article/details/45287663" target="_blank" rel="external">http://blog.csdn.net/zhiaini06/article/details/45287663</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker环境/">Docker环境</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Docker/">Docker</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Shell/Shell脚本学习（八）调试Shell脚本" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -680,332 +1158,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（十四）Flume整合Kafka" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/17/Flume/Flume学习（十四）Flume整合Kafka/" class="article-date">
-  	<time datetime="2016-10-17T05:32:03.000Z" itemprop="datePublished">2016-10-17</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/17/Flume/Flume学习（十四）Flume整合Kafka/">Flume学习（十四）Flume整合Kafka</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
-<li>JDK1.7.0_79</li>
-<li>Flume1.6.0</li>
-<li>kafka_2.11-0.9.0.0</li>
-</ul>
-<h3 id="Flume整合Kafka的相关配置"><a href="#Flume整合Kafka的相关配置" class="headerlink" title="Flume整合Kafka的相关配置"></a>Flume整合Kafka的相关配置</h3><h4 id="flume-agent-file-conf配置文件"><a href="#flume-agent-file-conf配置文件" class="headerlink" title="flume_agent_file.conf配置文件"></a>flume_agent_file.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">agentX.sources = sX</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = sk1 sk2</div><div class="line"></div><div class="line">agentX.sources.sX.channels = chX</div><div class="line">agentX.sources.sX.type = exec</div><div class="line">agentX.sources.sX.command = tail -F -n +0 /Users/yunyu/Downloads/track.log</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line"># Configure sinks</div><div class="line">agentX.sinks.sk1.channel = chX</div><div class="line">agentX.sinks.sk1.type = avro</div><div class="line">agentX.sinks.sk1.hostname = hadoop1</div><div class="line">agentX.sinks.sk1.port = 41414</div><div class="line"></div><div class="line">agentX.sinks.sk2.channel = chX</div><div class="line">agentX.sinks.sk2.type = avro</div><div class="line">agentX.sinks.sk2.hostname = hadoop2</div><div class="line">agentX.sinks.sk2.port = 41414</div><div class="line"></div><div class="line"># Configure loadbalance</div><div class="line">agentX.sinkgroups = g1</div><div class="line">agentX.sinkgroups.g1.sinks = sk1 sk2</div><div class="line">agentX.sinkgroups.g1.processor.type = load_balance</div><div class="line">agentX.sinkgroups.g1.processor.backoff = true</div><div class="line">agentX.sinkgroups.g1.processor.selector = round_robin</div></pre></td></tr></table></figure>
-<h4 id="flume-collector-kafka-conf配置文件"><a href="#flume-collector-kafka-conf配置文件" class="headerlink" title="flume_collector_kafka.conf配置文件"></a>flume_collector_kafka.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sinkagentX.channels = chXagentX.sinks = flume-kafka-sinkagentX.sources.flume-avro-sink.channels = chXagentX.sources.flume-avro-sink.type = avroagentX.sources.flume-avro-sink.bind = hadoop1agentX.sources.flume-avro-sink.port = 41414agentX.sources.flume-avro-sink.threads = 8agentX.channels.chX.type = memoryagentX.channels.chX.capacity = 10000agentX.channels.chX.transactionCapacity = 100agentX.sinks.flume-kafka-sink.type = org.apache.flume.sink.kafka.KafkaSinkagentX.sinks.flume-kafka-sink.topic = kafka_cluster_topicagentX.sinks.flume-kafka-sink.brokerList = hadoop1:9092,hadoop2:9092,hadoop3:9092agentX.sinks.flume-kafka-sink.requiredAcks = 1agentX.sinks.flume-kafka-sink.batchSize = 20agentX.sinks.flume-kafka-sink.channel = chX</div></pre></td></tr></table></figure>
-<h4 id="启动Flume-Agent"><a href="#启动Flume-Agent" class="headerlink" title="启动Flume Agent"></a>启动Flume Agent</h4><p>启动Flume Agent监听track.log日志文件的变化，并且上报的Flume Collector</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_agent_file.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
-<h4 id="启动Flume-Collector"><a href="#启动Flume-Collector" class="headerlink" title="启动Flume Collector"></a>启动Flume Collector</h4><p>启动Flume Collector监听Agent上报的消息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_collector_kafka.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
-<h4 id="启动Kafka"><a href="#启动Kafka" class="headerlink" title="启动Kafka"></a>启动Kafka</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 启动Zookeeper服务（我这里是启动的外置Zookeeper集群，不是Kafka内置的Zookeeper）</div><div class="line">$ ./bin zkServer.sh start</div><div class="line"></div><div class="line"># 启动Kafka服务</div><div class="line">$ ./bin/kafka-server-start.sh -daemon config/server.properties</div><div class="line"></div><div class="line"># 如果是第一次启动Kafka，需要创建一个Topic，用于存储Flume收集上来的日志消息</div><div class="line">$ ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic kafka_cluster_topic</div></pre></td></tr></table></figure>
-<h4 id="启动Kafka-Consumer"><a href="#启动Kafka-Consumer" class="headerlink" title="启动Kafka Consumer"></a>启动Kafka Consumer</h4><p>启动Kafka Consumer来消费Kafka中的消息，这时候如果track.log日志文件有新日志写入，通过Flume上传并且写入到Kafka，最终可以在Kafka Consumer消费端看到日志文件中的内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">./bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafka_cluster_topic --from-beginning</div><div class="line"></div><div class="line">this is a message</div><div class="line">birdben is my name</div><div class="line">...</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://flume.apache.org/FlumeUserGuide.html#kafka-sink" target="_blank" rel="external">https://flume.apache.org/FlumeUserGuide.html#kafka-sink</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/17/Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用/" class="article-date">
-  	<time datetime="2016-10-17T02:32:45.000Z" itemprop="datePublished">2016-10-17</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/17/Kafka/Kafka学习（二）KafkaOffsetMonitor监控工具使用/">Kafka学习（二）KafkaOffsetMonitor监控工具使用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="启动Zookeeper"><a href="#启动Zookeeper" class="headerlink" title="启动Zookeeper"></a>启动Zookeeper</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3三台服务器的Zookeeper服务</div><div class="line">$ ./bin/zkServer.sh startZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgStarting zookeeper ... already running as process 4468.</div><div class="line"></div><div class="line"># 分别查看一下Zookeeper服务的状态</div><div class="line">$ ./bin/zkServer.sh statusZooKeeper JMX enabled by defaultUsing config: /data/zookeeper-3.4.8/bin/../conf/zoo.cfgMode: leader</div></pre></td></tr></table></figure>
-<h3 id="启动Kafka"><a href="#启动Kafka" class="headerlink" title="启动Kafka"></a>启动Kafka</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 分别启动Hadoop1，Hadoop2，Hadoop3三台服务器的Kafka服务</div><div class="line">$ ./bin/kafka-server-start.sh config/server.properties &amp;</div></pre></td></tr></table></figure>
-<h3 id="运行KafkaOffsetMonitor监控服务"><a href="#运行KafkaOffsetMonitor监控服务" class="headerlink" title="运行KafkaOffsetMonitor监控服务"></a>运行KafkaOffsetMonitor监控服务</h3><p>下载 <a href="https://github.com/quantifind/KafkaOffsetMonitor/releases/latest">KafkaOffsetMonitor</a> 的jar包，然后执行下面的运行命令，然后我们就能够访问 <a href="http://localhost:9999/" target="_blank" rel="external">http://localhost:9999/</a> 来进入KafkaOffsetMonitor的监控后台。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">java -cp KafkaOffsetMonitor-assembly-0.2.1.jar \</div><div class="line">     com.quantifind.kafka.offsetapp.OffsetGetterWeb \</div><div class="line">     --zk hadoop1,hadoop2,hadoop3 \</div><div class="line">     --port 9999 \</div><div class="line">     --refresh 10.seconds \</div><div class="line">     --retain 2.days</div></pre></td></tr></table></figure>
-<ul>
-<li>offsetStorage : 已取消</li>
-<li>zk : Zookeeper服务器地址</li>
-<li>port : KafkaOffsetMonitor监控服务使用的Web服务器端口</li>
-<li>refresh : 多长时间将app数据刷新一次到DB</li>
-<li>retain : 保存多久的数据到DB</li>
-<li>dbName : 历史数据存储的数据库名(default ‘offsetapp’)</li>
-<li>kafkaOffsetForceFromStart : 已取消</li>
-<li>stormZKOffsetBase : 已取消</li>
-<li>pluginsArgs : 扩展使用</li>
-</ul>
-<p>注意：这里使用的0.2.1版本，0.2.1版本已经没有offsetStorage参数了，所以网上搜索的一些文章中使用的老版本还配置了offsetStorage参数，这里需要注意一下。</p>
-<p><img src="http://img.blog.csdn.net/20161017111332769?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="KafkaOffsetMonitor效果图"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://github.com/quantifind/KafkaOffsetMonitor">https://github.com/quantifind/KafkaOffsetMonitor</a></li>
-<li><a href="https://github.com/quantifind/KafkaOffsetMonitor/issues/86">https://github.com/quantifind/KafkaOffsetMonitor/issues/86</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/MQ/">MQ</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/13/Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）/" class="article-date">
-  	<time datetime="2016-10-13T08:52:54.000Z" itemprop="datePublished">2016-10-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/13/Flume/Flume学习（十三）Flume + HDFS + Hive离线分析（再续）/">Flume学习（十三）Flume + HDFS + Hive离线分析（再续）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在《Flume学习（十一）Flume + HDFS + Hive离线分析》这篇中我们就遇到了Hive分区的问题，这里我们再来回顾一下之前待调研的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 问题二：</div><div class="line">之前我们在Flume中配置了采集到的日志输出到HDFS的保存路径是下面两种，一种使用了日期分割的，一种是没有使用日期分割的</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/20160923</div><div class="line">- hdfs://10.10.1.64:8020/flume/events/</div><div class="line"></div><div class="line"># 解决方案：</div><div class="line">如果我们使用第二种不用日期分割的方式，在Hive上创建表指定/flume/events路径是没有问题，查询数据也都正常，但是如果使用第一种日期分割的方式，在Hive上创建表就必须指定具体的子目录，而不是/flume/events根目录，这样虽然表能够建成功但是却查询不到任何数据，因为指定的对应HDFS目录不正确，应该指定为/flume/events/20160923。这个问题确实也困扰我很久，最后才发现原来是Hive建表指定的HDFS目录不正确。</div><div class="line"></div><div class="line">指定location为&apos;/flume/events&apos;不好用，Hive中查询command_json_table表中没有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div><div class="line"></div><div class="line">指定location为&apos;/flume/events/20160923&apos;好用，Hive中查询command_json_table_20160923表中有数据</div><div class="line">hive&gt; CREATE EXTERNAL TABLE IF NOT EXISTS command_json_table_20160923(time STRING, hostname STRING, li STRING, lu STRING, nu STRING, cmd STRING)</div><div class="line">ROW FORMAT SERDE &apos;org.apache.hive.hcatalog.data.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/20160923&apos;;</div><div class="line"></div><div class="line">建议的解决方式是使用Hive的表分区来做，需要调研Hive的表分区是否支持使用HDFS已经分割好的目录结构（需要调研）</div></pre></td></tr></table></figure>
-<p>上面是我们之前的问题原文描述，之前需要调研Hive表分区是否可以使用HDFS已经分割好的目录结构，这里我找到了一篇blog，终于理解了Hive关于External表如何使用partition的，下面给出了原文和译文的链接地址</p>
-<p>原文链接：</p>
-<ul>
-<li><a href="http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/" target="_blank" rel="external">http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/</a></li>
-</ul>
-<p>译文链接：</p>
-<ul>
-<li><p>我们带着上面的问题继续优化，之前的解决办法是按照我们日志中的name属性值存储在HDFS的不同目录中，本篇我们使用Partition来解决数据量增长的情况，我们在之前使用name属性的基础上在新建dt目录（按照月份来分割数据）</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sinkagentX.channels = chXagentX.sinks = flume-hdfs-sinkagentX.sources.flume-avro-sink.channels = chXagentX.sources.flume-avro-sink.type = avroagentX.sources.flume-avro-sink.bind = hadoop1agentX.sources.flume-avro-sink.port = 41414agentX.sources.flume-avro-sink.threads = 8#定义拦截器，为消息添加时间戳和Host地址</div><div class="line">#将日志中的name属性添加到Header中，用来做HDFS存储的目录结构，type_name属性就是从日志文件中解析出来的name属性的值，这里使用%Y%m表达式代表按照年月分区agentX.sources.flume-avro-sink.interceptors = i1 i2agentX.sources.flume-avro-sink.interceptors.i1.type = timestampagentX.sources.flume-avro-sink.interceptors.i2.type = regex_extractoragentX.sources.flume-avro-sink.interceptors.i2.regex = &quot;name&quot;:&quot;(.*?)&quot;agentX.sources.flume-avro-sink.interceptors.i2.serializers = s1agentX.sources.flume-avro-sink.interceptors.i2.serializers.s1.name = type_nameagentX.channels.chX.type = memoryagentX.channels.chX.capacity = 1000agentX.channels.chX.transactionCapacity = 100agentX.sinks.flume-hdfs-sink.type = hdfsagentX.sinks.flume-hdfs-sink.channel = chXagentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%&#123;type_name&#125;/%Y%magentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStreamagentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div></pre></td></tr></table></figure>
-<h5 id="在HDFS中查看文件目录"><a href="#在HDFS中查看文件目录" class="headerlink" title="在HDFS中查看文件目录"></a>在HDFS中查看文件目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 可以看到HDFS文件目录已经按照我们的name属性区分开了</div><div class="line">hdfs dfs -ls /flume/events/drwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:01 /flume/events/birdben.api.calldrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.click_addrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.open_hbdrwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:02 /flume/events/birdben.ad.view_ad</div><div class="line"></div><div class="line"># 查看个不同name下的目录是按照年月分割开的</div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_adFound 2 itemsdrwxr-xr-x   - yunyu supergroup          0 2016-10-13 06:18 /flume/events/birdben.ad.click_ad/201610drwxr-xr-x   - yunyu supergroup          0 2016-10-13 07:07 /flume/events/birdben.ad.click_ad/201611</div><div class="line"></div><div class="line"># 数据文件是存储在具体的年月目录下的</div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_ad/201610/Found 1 items-rw-r--r--   2 yunyu supergroup       1596 2016-10-13 06:18 /flume/events/birdben.ad.click_ad/201610/events-.1476364422107</div></pre></td></tr></table></figure>
-<h3 id="Hive按照不同的HDFS目录建表"><a href="#Hive按照不同的HDFS目录建表" class="headerlink" title="Hive按照不同的HDFS目录建表"></a>Hive按照不同的HDFS目录建表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"># 这里我们是需要先理解Hive的内部表和外部表的区别，然后我们在之前的建表语句中加入partition分区，我们这里使用的是dt字段作为partition，dt字段不能够与建表语句中的字段重复，否则建表时会报错。</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_click_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.click_ad&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_open_hb(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.open_hb&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_view_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">partitioned by (dt string)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.view_ad&apos;;</div><div class="line"></div><div class="line"># 这时候我们查询表，表中是没有数据的。我们需要手工添加partition分区之后，才能查到数据。</div><div class="line">hive&gt; select * from birdben_ad_click_ad;</div><div class="line"></div><div class="line"># 建表完成之后，我们需要手工添加partition目录为我们Flume之前划分的好的年月目录</div><div class="line">alter table birdben_ad_click_ad add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben_ad_click_ad/201610&apos;;</div><div class="line">alter table birdben_ad_click_ad add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben_ad_click_ad/201611&apos;;</div><div class="line"></div><div class="line">alter table birdben_ad_open_hb add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben.ad.open_hb/201610&apos;;</div><div class="line">alter table birdben_ad_open_hb add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben.ad.open_hb/201611&apos;;</div><div class="line"></div><div class="line">alter table birdben_ad_view_ad add partition(dt=&apos;201610&apos;) location &apos;/flume/events/birdben.ad.view_ad/201610&apos;;</div><div class="line">alter table birdben_ad_view_ad add partition(dt=&apos;201611&apos;) location &apos;/flume/events/birdben.ad.view_ad/201611&apos;;</div><div class="line"></div><div class="line"># 这时候我们查询表，能够查询到全部的数据了（包括201610和201611的数据）</div><div class="line">hive&gt; select * from birdben_ad_click_ad;</div><div class="line">OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201611Time taken: 0.1 seconds, Fetched: 9 row(s)</div><div class="line"></div><div class="line"># 也可以按照分区字段查询数据，这样就能够证明我们可以使用Hive的External表partition对应到我们Flume中创建好的 %Y%m（年月） 目录结构</div><div class="line">hive&gt; select * from birdben_ad_click_ad where dt = &apos;201610&apos;;</div><div class="line">OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201610[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201610Time taken: 0.099 seconds, Fetched: 6 row(s)</div><div class="line"></div><div class="line">hive&gt; select * from birdben_ad_click_ad where dt = &apos;201611&apos;;</div><div class="line">OK</div><div class="line">[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL	201611[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULL	201611Time taken: 0.11 seconds, Fetched: 3 row(s)</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实我写了这么多篇Flume + HDFS + Hive的文章，就是为了证明Flume可以按照指定的Header的key分别写入不同的HDFS目录，Hive又可以通过External表将Location定位到Flume写入的HDFS目录，而且还可以通过Partition分区定位到Flume设置的Header对应的目录，这样就能够比较优雅的将Flume, HDFS, Hive整合到一起了。但是还是有些需要优化的地方，比如说我们的日志格式不够规范，每种日志都有不同的格式，而且还都写入到同一个track.log日志文件中，只能通过name属性作区分。还有就是Hive的Partition每次需要手工去修改表，否则无法查询到HDFS对应目录下的数据，也有人使用 <a href="https://github.com/don9z/hadoop-tools/blob/master/hive/addpartition.py">script</a> 脚本来做这些事情，待以后有时间继续深入研究。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/" target="_blank" rel="external">http://blog.zhengdong.me/2012/02/22/hive-external-table-with-partitions/</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/12/Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）/" class="article-date">
-  	<time datetime="2016-10-12T05:43:55.000Z" itemprop="datePublished">2016-10-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/12/Flume/Flume学习（十二）Flume + HDFS + Hive离线分析（续）/">Flume学习（十二）Flume + HDFS + Hive离线分析（续）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一篇中我们已经实现了使用Flume收集日志并且输出到HDFS中，并且结合Hive在HDFS进行离线的查询分析。但是也同样遇到了一些问题，本篇将解决更复杂的日志收集情况，将不同的日志格式写入到同一个日志文件，然后用Flume根据Header来写入到HDFS不同的目录。</p>
-<h3 id="日志结构"><a href="#日志结构" class="headerlink" title="日志结构"></a>日志结构</h3><p>我们会讲所有的日志都写入到track.log文件中，包含API调用的日志以及其他埋点日志，这里是通过name来区分日志类型的，不同的日志类型有着不同的json结构。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">### API日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;name&quot;:&quot;birdben.api.call&quot;,&quot;request&quot;:&quot;POST /api/message/receive&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;bid&quot;:&quot;59885256139866115&quot;,&quot;uid&quot;:&quot;&quot;,&quot;did&quot;:&quot;1265&quot;,&quot;duid&quot;:&quot;dxf536&quot;,&quot;hb_uid&quot;:&quot;59885256030814209&quot;,&quot;ua&quot;:&quot;Dalvik/1.6.0 (Linux; U; Android 4.4.4; YQ601 Build/KTU84P)&quot;,&quot;device_id&quot;:&quot;fa48a076-f35f-3217-8575-5fc1f02f1ac0&quot;,&quot;ip&quot;:&quot;::ffff:10.10.1.242&quot;,&quot;server_timestamp&quot;:1475912702996&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T07:45:02.996Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;name&quot;:&quot;birdben.api.call&quot;,&quot;request&quot;:&quot;GET /api/message/ad-detail&quot;,&quot;status&quot;:&quot;succeeded&quot;,&quot;bid&quot;:&quot;59885256139866115&quot;,&quot;uid&quot;:&quot;&quot;,&quot;did&quot;:&quot;1265&quot;,&quot;duid&quot;:&quot;dxf536&quot;,&quot;hb_uid&quot;:&quot;59885256030814209&quot;,&quot;ua&quot;:&quot;Dalvik/1.6.0 (Linux; U; Android 4.4.4; YQ601 Build/KTU84P)&quot;,&quot;device_id&quot;:&quot;fa48a076-f35f-3217-8575-5fc1f02f1ac0&quot;,&quot;ip&quot;:&quot;::ffff:10.10.1.242&quot;,&quot;server_timestamp&quot;:1475912787476&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T07:46:27.476Z&quot;&#125;</div><div class="line"></div><div class="line">### 打开App日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914816071&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.open_hb&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914829286&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:29.286Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914827206&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.open_hb&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914840425&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:40.425Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475915077351&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;name&quot;:&quot;birdben.ad.open_hb&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475915090579&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:24:50.579Z&quot;&#125;</div><div class="line"></div><div class="line">### 加载页面日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914816133&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.view_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914829332&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:29.332Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475914827284&quot;,&quot;rpid&quot;:&quot;63152468644593670&quot;,&quot;name&quot;:&quot;birdben.ad.view_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475914840498&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:20:40.499Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475915077585&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;name&quot;:&quot;birdben.ad.view_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475915090789&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:24:50.789Z&quot;&#125;</div><div class="line"></div><div class="line">### 点击链接日志</div><div class="line"></div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475912701768&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475912715001&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T07:45:15.001Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475913832349&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475913845544&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:04:05.544Z&quot;&#125;</div><div class="line">&#123;&quot;logs&quot;:[&#123;&quot;timestamp&quot;:&quot;1475915080561&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;bid&quot;:0,&quot;uid&quot;:0,&quot;did&quot;:0,&quot;duid&quot;:0,&quot;hb_uid&quot;:0,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;server_timestamp&quot;:1475915093792&#125;],&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;logs&quot;,&quot;timestamp&quot;:&quot;2016-10-08T08:24:53.792Z&quot;&#125;</div></pre></td></tr></table></figure>
-<h3 id="如何解析track-log日志文件中的日志"><a href="#如何解析track-log日志文件中的日志" class="headerlink" title="如何解析track.log日志文件中的日志"></a>如何解析track.log日志文件中的日志</h3><p>按照我们之前的做法，我们会使用Flume都讲日志的内容收集到HDFS上存储，但是这里的track.log日志文件中包含多种不同结构的json日志，而且这里的json数据结构是嵌套复杂对象的，我们不好在Hive上创建相应结构的表，只能创建一个大表要包含所有的日志字段，无法做到对某种日志的分析，如果像之前的做法可能无法满足我们的需求。</p>
-<ul>
-<li>问题一：如何Hive解析这种嵌套复杂对象的json数据结构</li>
-<li><p>问题二：如何将多种不同的日志在HDFS按类型分开存储</p>
-</li>
-<li><p>问题一解决办法：<br>在网上找到第三方的插件能够解析嵌套复杂对象的json数据结构，主要是替换Hive自己内嵌的Serde解析器（org.apache.hive.hcatalog.data.JsonSerDe），Github地址：<a href="https://github.com/rcongiu/Hive-JSON-Serde">https://github.com/rcongiu/Hive-JSON-Serde</a></p>
-</li>
-<li><p>问题二解决办法：<br>这里我有个想法是按照日志类型，我们可以区分我们的日志结构，根据name属性分为API日志，打开APP日志，加载页面日志，点击链接日志。但是要如何在Flume根据name属性区分开不同的日志内容，并且写入到HDFS的不同目录呢？答案就是使用Flume的Interceptor</p>
-</li>
-</ul>
-<h3 id="Hive安装Hive-JSON-Serde插件"><a href="#Hive安装Hive-JSON-Serde插件" class="headerlink" title="Hive安装Hive-JSON-Serde插件"></a>Hive安装Hive-JSON-Serde插件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 从GitHub下载Hive-JSON-Serde</div><div class="line">$ git clone https://github.com/rcongiu/Hive-JSON-Serde</div><div class="line"></div><div class="line"># 编译打包Hive-JSON-Serde，打包成功之后会在json-serde/target目录生成相应的jar包</div><div class="line">$ cd Hive-JSON-Serde</div><div class="line">$ mvn package</div><div class="line"></div><div class="line"># 复制打包好的jar到Hive的HIVE_AUX_JARS_PATH目录下，需要重启Hive服务，这样就不需要每次在Hive Shell中都进行add jar操作了</div><div class="line">$ cp json-serde/target/json-serde-1.3.8-SNAPSHOT-jar-with-dependencies.jar /usr/local/hive/hcatalog/share/hcatalog/</div><div class="line"></div><div class="line"># HIVE_AUX_JARS_PATH是在$&#123;HIVE_HOME&#125;/conf/hive-env.sh配置文件中设置的</div><div class="line">export HIVE_AUX_JARS_PATH=/usr/local/hive/hcatalog/share/hcatalog</div><div class="line"></div><div class="line"># Hive Shell中创建表，如下</div><div class="line"># 这里使用了我们刚刚引用的&apos;org.openx.data.jsonserde.JsonSerDe&apos;解析器</div><div class="line"># 这样所有的日志都可以通过birdben_log_table表来查询，但是部分字段属性可能没有建表中包含进来，这样可能查出来的属性值是NULL</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_log_table(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events&apos;;</div></pre></td></tr></table></figure>
-<h3 id="Flume的Interceptor"><a href="#Flume的Interceptor" class="headerlink" title="Flume的Interceptor"></a>Flume的Interceptor</h3><p>先回想一下我们是如何将日期作为参数写入到HDFS不同目录的，我们是在Flume中使用了Interceptor来将我们的name属性加入到Event的Header中，然后在Sink中通过获取Header中的name属性的值来写入到HDFS中的不同目录。</p>
-<h5 id="Flume的配置文件"><a href="#Flume的配置文件" class="headerlink" title="Flume的配置文件"></a>Flume的配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-hdfs-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 10.10.1.64</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line"></div><div class="line"></div><div class="line">#定义拦截器，为消息添加时间戳和Host地址</div><div class="line">#将日志中的name属性添加到Header中，用来做HDFS存储的目录结构，type_name属性就是从日志文件中解析出来的name属性的值</div><div class="line">agentX.sources.flume-avro-sink.interceptors = i1 i2</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i1.type = timestamp</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.type = regex_extractor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.regex = &quot;name&quot;:&quot;(.*?)&quot;</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.serializers = s1</div><div class="line">agentX.sources.flume-avro-sink.interceptors.i2.serializers.s1.name = type_name</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-hdfs-sink.type = hdfs</div><div class="line">agentX.sinks.flume-hdfs-sink.channel = chX</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.path = hdfs://10.10.1.64:8020/flume/events/%&#123;type_name&#125;</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.fileType = DataStream</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.filePrefix = events-</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollInterval = 300</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollSize = 0</div><div class="line">agentX.sinks.flume-hdfs-sink.hdfs.rollCount = 300</div></pre></td></tr></table></figure>
-<h5 id="在HDFS中查看文件目录"><a href="#在HDFS中查看文件目录" class="headerlink" title="在HDFS中查看文件目录"></a>在HDFS中查看文件目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 可以看到HDFS文件目录已经按照我们的name属性区分开了</div><div class="line">$ hdfs dfs -ls /flume/eventsdrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.api.calldrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.ad.click_addrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.ad.open_hbdrwxr-xr-x   - yunyu supergroup          0 2016-10-11 03:58 /flume/events/birdben.ad.view_ad</div><div class="line"></div><div class="line">$ hdfs dfs -ls /flume/events/birdben.ad.click_adFound 1 items-rwxr-xr-x   2 yunyu supergroup        798 2016-10-11 03:58 /flume/events/birdben.ad.click_ad/events-.1476183217539</div></pre></td></tr></table></figure>
-<h3 id="Hive按照不同的HDFS目录建表"><a href="#Hive按照不同的HDFS目录建表" class="headerlink" title="Hive按照不同的HDFS目录建表"></a>Hive按照不同的HDFS目录建表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># Hive中我们重新建表，这次我们按照HDFS已经分好的目录建表</div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_click_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.click_ad&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_open_hb(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.open_hb&apos;;</div><div class="line"></div><div class="line">CREATE EXTERNAL TABLE IF NOT EXISTS birdben_ad_view_ad(logs array&lt;struct&lt;name:string, rpid:string, bid:string, uid:string, did:string, duid:string, hbuid:string, ua:string, device_id:string, ip:string, server_timestamp:BIGINT&gt;&gt;, level STRING, message STRING, client_timestamp BIGINT)</div><div class="line">ROW FORMAT SERDE &apos;org.openx.data.jsonserde.JsonSerDe&apos;</div><div class="line">STORED AS TEXTFILE</div><div class="line">LOCATION &apos;/flume/events/birdben.ad.view_ad&apos;;</div><div class="line"></div><div class="line"># 在Hive中查询birdben_ad_click_ad表中的数据</div><div class="line">hive&gt; select * from birdben_ad_click_ad;OK[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63146996042563584&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475912715001&#125;]	info	logs	NULL[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63148812297830402&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475913845544&#125;]	info	logs	NULL[&#123;&quot;name&quot;:&quot;birdben.ad.click_ad&quot;,&quot;rpid&quot;:&quot;63152468644593666&quot;,&quot;bid&quot;:&quot;0&quot;,&quot;uid&quot;:&quot;0&quot;,&quot;did&quot;:&quot;0&quot;,&quot;duid&quot;:&quot;0&quot;,&quot;hbuid&quot;:null,&quot;ua&quot;:&quot;&quot;,&quot;device_id&quot;:&quot;&quot;,&quot;ip&quot;:null,&quot;server_timestamp&quot;:1475915093792&#125;]	info	logs	NULLTime taken: 0.519 seconds, Fetched: 3 row(s)</div><div class="line"></div><div class="line"># 在Hive中查询birdben_ad_click_ad表中的数据总数</div><div class="line">hive&gt; select count(*) from birdben_ad_click_ad;Query ID = yunyu_20161011234624_fbd62672-91ee-4497-8ea1-f5a1e765a147Total jobs = 1Launching Job 1 out of 1Number of reduce tasks determined at compile time: 1In order to change the average load for a reducer (in bytes):  set hive.exec.reducers.bytes.per.reducer=&lt;number&gt;In order to limit the maximum number of reducers:  set hive.exec.reducers.max=&lt;number&gt;In order to set a constant number of reducers:  set mapreduce.job.reduces=&lt;number&gt;Starting Job = job_1476004456759_0008, Tracking URL = http://hadoop1:8088/proxy/application_1476004456759_0008/Kill Command = /data/hadoop-2.7.1/bin/hadoop job  -kill job_1476004456759_0008Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 12016-10-11 23:46:33,190 Stage-1 map = 0%,  reduce = 0%2016-10-11 23:46:39,554 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 0.95 sec2016-10-11 23:46:48,909 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.56 secMapReduce Total cumulative CPU time: 2 seconds 560 msecEnded Job = job_1476004456759_0008MapReduce Jobs Launched: Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 2.56 sec   HDFS Read: 8849 HDFS Write: 2 SUCCESSTotal MapReduce CPU Time Spent: 2 seconds 560 msecOK3Time taken: 25.73 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
-<p>到此为止，我们上面说的两个问题都得到了解决，后续还会继续调优。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/ahjzgyxy/article/details/44423025" target="_blank" rel="external">http://blog.csdn.net/ahjzgyxy/article/details/44423025</a></li>
-<li><a href="http://blog.csdn.net/xiao_jun_0820/article/details/38333171" target="_blank" rel="external">http://blog.csdn.net/xiao_jun_0820/article/details/38333171</a></li>
-<li><a href="http://lxw1234.com/archives/2015/11/543.htm" target="_blank" rel="external">http://lxw1234.com/archives/2015/11/543.htm</a></li>
-<li><a href="http://lxw1234.com/archives/2015/11/545.htm" target="_blank" rel="external">http://lxw1234.com/archives/2015/11/545.htm</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
 	</div>
 
 

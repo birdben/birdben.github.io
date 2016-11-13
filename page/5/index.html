@@ -105,7 +105,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 11.11px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,354 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Kibana/Kibana学习（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/17/Kibana/Kibana学习（二）/" class="article-date">
+  	<time datetime="2016-08-16T17:35:19.000Z" itemprop="datePublished">2016-08-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/17/Kibana/Kibana学习（二）/">Kibana学习（二）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Kibana已经给我们提供了多种不同的报表形式，如下图所示</p>
+<p><img src="http://img.blog.csdn.net/20160815175622375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Kibana_Visualization"></p>
+<table>
+<thead>
+<tr>
+<th>图表名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Area chart</td>
+<td>区域图</td>
+<td></td>
+</tr>
+<tr>
+<td>Data table</td>
+<td>表格</td>
+<td></td>
+</tr>
+<tr>
+<td>Line chart</td>
+<td>线性图</td>
+<td></td>
+</tr>
+<tr>
+<td>Markdown widget</td>
+<td>Markdown</td>
+<td></td>
+</tr>
+<tr>
+<td>Metric</td>
+<td>统计计数</td>
+<td></td>
+</tr>
+<tr>
+<td>Pie chart</td>
+<td>饼图</td>
+<td></td>
+</tr>
+<tr>
+<td>Tile map</td>
+<td>地图分布</td>
+<td></td>
+</tr>
+<tr>
+<td>Vertical bar chart</td>
+<td>柱状图</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>metrics（度量）：具体考察的数量值，例如：数量，金额等等（这里就类似OLAP中的度量的概念），可以选择多个metrics度量来考察数量值。</li>
+<li>buckets（维度）：观察数据的角度，从多个角度作为标准衡量数据，例如：时间，地点，类型等等（这里就类似OLAP中的维度的概念），可以选择多个buckets维度来观察数据。</li>
+</ul>
+<p>下面我们用以前做的command命令行日志收集来创建不同的Kibana图表</p>
+<h3 id="Area-chart区域图，Line-chart线性图，Vertical-bar-chart柱状图"><a href="#Area-chart区域图，Line-chart线性图，Vertical-bar-chart柱状图" class="headerlink" title="Area chart区域图，Line chart线性图，Vertical bar chart柱状图"></a>Area chart区域图，Line chart线性图，Vertical bar chart柱状图</h3><p>因为Area chart，Line chart，Vertical bar chart是X-Y轴的图结构，所以一般情况是Y轴是统计的数据的值（也就是度量），X轴可以选择我们的索引字段作为观察数据的角度（也就是维度）</p>
+<h4 id="metrics"><a href="#metrics" class="headerlink" title="metrics"></a>metrics</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># Y-Axis:设置Y轴的度量是Count</div><div class="line">&#123;</div><div class="line">	Aggregation:		Count</div><div class="line">&#125;</div><div class="line"></div><div class="line"># Y-Axis:设置Y轴的度量是Unique Count</div><div class="line">&#123;</div><div class="line">	Aggregation:		Unique Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="buckets"><a href="#buckets" class="headerlink" title="buckets"></a>buckets</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># X-Axis:设置X轴的维度是@timestamp字段</div><div class="line">&#123;</div><div class="line">	Aggregation:	Date Histogram,</div><div class="line">	Field:			@timestamp,</div><div class="line">	Interval:		Daily</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># Split Area:设置可以按照CMD字段在同一个Area chart中区分统计不同的Count值</div><div class="line"># Split Line:设置可以按照CMD字段在同一个Line chart中区分统计不同的Count值</div><div class="line"># Split Bars:设置可以按照CMD字段在同一个Bars chart中区分统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Sub Aggregation:	Terms,</div><div class="line">	Field:				CMD,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Split Chart:设置可以按照host字段拆分出多个chart统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Sub Aggregation:	Terms,</div><div class="line">	Field:				host,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Pie-chart饼状图"><a href="#Pie-chart饼状图" class="headerlink" title="Pie chart饼状图"></a>Pie chart饼状图</h3><p>因为Pie chart是没有X-Y轴的图结构，所以一般情况是slice切片是统计的数据的值（也就是度量），Split Slices可以选择我们的索引字段用来切分数据（也就是维度）</p>
+<h4 id="metrics-1"><a href="#metrics-1" class="headerlink" title="metrics"></a>metrics</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Slice Size:设置slice切片统计的度量是Count</div><div class="line">&#123;</div><div class="line">	Aggregation:		Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="buckets-1"><a href="#buckets-1" class="headerlink" title="buckets"></a>buckets</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Split Slices:设置可以按照CMD字段在同一个Pie chart中区分统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Aggregation:		Terms,</div><div class="line">	Field:				host,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Split Chart:设置可以按照host字段拆分出多个chart统计不同的Count值</div><div class="line">&#123;</div><div class="line">	Sub Aggregation:	Terms,</div><div class="line">	Field:				host,</div><div class="line">	Order:				Top,</div><div class="line">	Size:				5,</div><div class="line">	Order By:			metric:Count</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Kibana/Kibana学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/16/Kibana/Kibana学习（一）/" class="article-date">
+  	<time datetime="2016-08-16T15:55:39.000Z" itemprop="datePublished">2016-08-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/16/Kibana/Kibana学习（一）/">Kibana学习（一）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前在搭建ELK环境的过程中遇到了一些问题，在此进行总结，以后会不断更新的。</p>
+<h4 id="Kibana的默认索引-kibana无法在ES创建"><a href="#Kibana的默认索引-kibana无法在ES创建" class="headerlink" title="Kibana的默认索引.kibana无法在ES创建"></a>Kibana的默认索引.kibana无法在ES创建</h4><p>这个问题是因为我在ES中安装了ik插件，修改了elasticsearch.yml的配置文件，但是没有在ES的lib包目录中引入ik的jar包，所以在Kibana访问ES的时候ES报错了，检查ES的log文件发现了是elasticsearch.yml的ik插件配置没有找到ik的jar包</p>
+<ul>
+<li>所以Kibana报错最好的找错方式就是看ES的log</li>
+</ul>
+<h4 id="ES创建了User的index之后，在Kibana配置该索引时’Time-field-name’为空，没有-Timestamp选项"><a href="#ES创建了User的index之后，在Kibana配置该索引时’Time-field-name’为空，没有-Timestamp选项" class="headerlink" title="ES创建了User的index之后，在Kibana配置该索引时’Time-field name’为空，没有@Timestamp选项"></a>ES创建了User的index之后，在Kibana配置该索引时’Time-field name’为空，没有@Timestamp选项</h4><p>这个问题是因为ES创建的User的mapping中没有个一个字段是date类型，所以就没有@Timestamp字段，修改User的mapping重新索引数据后@Timestamp字段就出现了，如果需要手动添加Timestamp字段可以参考如下步骤。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. Go to Settings → Advanced.</div><div class="line">2. Edit the metaFields and add &quot;_timestamp&quot;. Hit save.</div><div class="line">3. Now go back to Settings → Indices and _timestamp will be available in the drop-down list for &quot;Time-field name&quot;.</div></pre></td></tr></table></figure>
+<p><img src="http://i.stack.imgur.com/ngaPk.png" alt="metaFields"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/29429201/timestamp-not-appearing-in-kibana" target="_blank" rel="external">http://stackoverflow.com/questions/29429201/timestamp-not-appearing-in-kibana</a></li>
+</ul>
+<h4 id="Kibana创建图表的时候，选择的Aggregation-Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation-Terms使用"><a href="#Kibana创建图表的时候，选择的Aggregation-Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation-Terms使用" class="headerlink" title="Kibana创建图表的时候，选择的Aggregation Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation Terms使用"></a>Kibana创建图表的时候，选择的Aggregation Terms字段报错，该字段已经被Analyzed分词了，无法被Aggregation Terms使用</h4><p>问题是因为我自己创建的索引command_index的mapping，所有的String字段都没有指定分词情况，所以ES默认都是Analyzed分词。所以这里只需要将mapping修改一下，将所有的String类型字段都指定分词方式(“index”:”not_analyzed”)，这样指定的字段就不会分词了，就可以使用Aggregation Terms方式创建图表了。（注意：一定要删除原来的mapping，重新索引数据才可以）</p>
+<h4 id="Kibana使用Pie-Charts错误：”Pie-chart-response-converter-Splitting-charts-without-splitting-sliced-is-not-supported-Pretend-that-we-are-just-splitting-slices”"><a href="#Kibana使用Pie-Charts错误：”Pie-chart-response-converter-Splitting-charts-without-splitting-sliced-is-not-supported-Pretend-that-we-are-just-splitting-slices”" class="headerlink" title="Kibana使用Pie Charts错误：”Pie chart response converter:Splitting charts without splitting sliced is not supported.Pretend that we are just splitting slices”"></a>Kibana使用Pie Charts错误：”Pie chart response converter:Splitting charts without splitting sliced is not supported.Pretend that we are just splitting slices”</h4><p>其实这个错误是因为在创建图表的时候选择了错误的类型，本来只是想创建一个单个的饼图（用线来切分的），所以应该使用Split Slice类型（从字面上应该也能理解），但是却选择了Split Chart类型了，所以就会出现上面的错误。</p>
+<p><img src="http://img.blog.csdn.net/20160812170725251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<p>下面是来自stackoverflow的解释，还清晰的给出了这两个类型的例子，很直观的区别开了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">If you want to do a &quot;split slice &quot; operation on a pie chart,first you need to create a pie chart with slices.Here from what I understand,you tried to give the option &quot;split chart&quot; first,which actually is to make differrent pie charts,in the same row or column,which needs more than one pie-chart. This also requires pie-charts (with slices) to be created first. So you need to create pie-charts and then only you can use &quot;split chart&quot;. i In the figures below,the first one shows an ordinary pie-chart created by &quot;split-slice&quot; and the second one shows five pie charts stacked horizontally using the &quot;split chart&quot; method.</div></pre></td></tr></table></figure>
+<p><img src="http://i.stack.imgur.com/fHvO0.png" alt="Split Slice"><br><img src="http://i.stack.imgur.com/4P7OK.png" alt="Split Chart"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/28691889/kibana-4-making-pie-chart-error-message" target="_blank" rel="external">http://stackoverflow.com/questions/28691889/kibana-4-making-pie-chart-error-message</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Shell/Shell脚本学习（四）EOF的用法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/15/Shell/Shell脚本学习（四）EOF的用法/" class="article-date">
+  	<time datetime="2016-08-14T16:15:18.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/15/Shell/Shell脚本学习（四）EOF的用法/">Shell脚本学习（四）EOF的用法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Shell脚本的EOF"><a href="#Shell脚本的EOF" class="headerlink" title="Shell脚本的EOF"></a>Shell脚本的EOF</h4><p>EOF通常与&lt;&lt;结合使用，&lt;&lt;EOF表示后续的输入作为子命令或子shell的输入参数，直到遇到EOF，再次返回到主shell中。EOF可将其理解为分界符（delimiter），它的作用就是将两个 delimiter 之间的内容传递给交互式程序(cmd命令)作为输入参数。</p>
+<p>其使用形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">交互式程序(cmd命令)&lt;&lt;EOF</div><div class="line">command1</div><div class="line">command2</div><div class="line">...</div><div class="line">EOF</div></pre></td></tr></table></figure>
+<ul>
+<li>注意，最后的EOF必须单独占一行。</li>
+</ul>
+<p>EOF一般常和cat命令连用。一般有以下两种形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.将内容直接输出到标准输出（屏幕）</div><div class="line">cat &lt;&lt;EOF</div><div class="line"></div><div class="line">2.将标准输出进行重定向，将本应输出到屏幕的内容重定向到文件</div><div class="line">cat &lt;&lt;EOF &gt; filename或者cat &lt;&lt;EOF &gt;&gt; filename</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 将下面的脚本内容输出到helloworld.sh文件中</div><div class="line">$ cat &lt;&lt; EOF &gt; helloworld.sh</div><div class="line">&gt; echo &quot;hello&quot;</div><div class="line">&gt; echo &quot;world&quot;</div><div class="line">&gt; EOF</div><div class="line"></div><div class="line">$ sh helloworld.sh</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Shell/">Shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Shell/Shell脚本学习（三）注释的用法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/11/Shell/Shell脚本学习（三）注释的用法/" class="article-date">
+  	<time datetime="2016-08-11T05:06:18.000Z" itemprop="datePublished">2016-08-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/11/Shell/Shell脚本学习（三）注释的用法/">Shell脚本学习（三）注释的用法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Shell脚本的注释"><a href="#Shell脚本的注释" class="headerlink" title="Shell脚本的注释"></a>Shell脚本的注释</h4><p>Shell脚本单行注释用#，这个我想大家应该都知道。如果要把一段代码全部注释掉，可以用如下方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line"></div><div class="line">echo &quot;我不是单行注释&quot;</div><div class="line"># echo &quot;我是单行注释，你看不到我&quot;</div><div class="line"></div><div class="line">echo &quot;我不是多行注释&quot;</div><div class="line">:&lt;&lt;COMMENT</div><div class="line">echo &quot;我是多行注释1，你看不到我&quot;</div><div class="line">echo &quot;我是多行注释2，你看不到我&quot;</div><div class="line">COMMENT</div><div class="line">echo &quot;我没有看到多行注释1和多行注释2&quot;</div></pre></td></tr></table></figure>
+<p>其实COMMENT可以随意命名，只要别跟中间的注释内容相同即可。当Shell脚本执行遇到:&lt;&lt;COMMENT，就不执行脚本了，一直到再碰到COMMENT后才重新开始执行脚本。如果忘记写COMMENT或者写错(由于已经不执行脚本了，所以即使写错也不会报错)，则:&lt;&lt;COMMENT之后的脚步将都不会执行。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/xyqzki/article/details/8762035" target="_blank" rel="external">http://blog.csdn.net/xyqzki/article/details/8762035</a></li>
+</ul>
+<h4 id="Shell脚本的文件注释模板"><a href="#Shell脚本的文件注释模板" class="headerlink" title="Shell脚本的文件注释模板"></a>Shell脚本的文件注释模板</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#!bin/bash</div><div class="line"># ----------------------------------------------------------------------</div><div class="line"># name:			login.sh</div><div class="line"># version:		1.0</div><div class="line"># createTime:	2016-06-22</div><div class="line"># description:	shell脚本的功能描述</div><div class="line"># author:		birdben</div><div class="line"># email:		191654006@163.com</div><div class="line"># github:		https://github.com/birdben</div><div class="line"># ----------------------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>这里推荐一个比较好的Shell代码规范</p>
+<ul>
+<li><a href="http://blog.csdn.net/wirelessqa/article/details/18863403" target="_blank" rel="external">http://blog.csdn.net/wirelessqa/article/details/18863403</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Shell/">Shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Shell/Shell脚本学习（二）制作SSH登录远程服务器的Shell脚本" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -634,529 +982,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Web框架/">Web框架</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Git/Hexo + Github搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/02/Git/Hexo + Github搭建个人博客/" class="article-date">
-  	<time datetime="2016-07-02T08:41:26.000Z" itemprop="datePublished">2016-07-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/02/Git/Hexo + Github搭建个人博客/">Hexo + Github搭建个人博客</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Hexo简介"><a href="#Hexo简介" class="headerlink" title="Hexo简介"></a>Hexo简介</h3><p>hexo是一款基于Node.js的静态博客框架，官网地址：<a href="https://hexo.io/zh-cn/" target="_blank" rel="external">https://hexo.io/zh-cn/</a></p>
-<h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>程序猿应该基本都会用git了，我在这里就不详细介绍了。</p>
-<ul>
-<li>建立新的Repository，仓库名为【your_user_name.github.io】</li>
-<li>后续想要把网站部署到Github上，需要在【your_user_name.github.io】此仓库下的Setting配置中添加一个Deploy keys</li>
-</ul>
-<p>Generating a new SSH key可以参考：</p>
-<ul>
-<li><a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/" target="_blank" rel="external">https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/</a></li>
-</ul>
-<h4 id="安装NodeJS"><a href="#安装NodeJS" class="headerlink" title="安装NodeJS"></a>安装NodeJS</h4><ul>
-<li>因为我是Mac笔记本，所以可以使用homebrew安装</li>
-<li>也可以下载并安装NodeJS，官网地址：<a href="https://nodejs.org/" target="_blank" rel="external">https://nodejs.org/</a></li>
-</ul>
-<h4 id="安装Hexo过程"><a href="#安装Hexo过程" class="headerlink" title="安装Hexo过程"></a>安装Hexo过程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># 使用npm安装Hexo</div><div class="line">$ npm install -g hexo-cli</div><div class="line"></div><div class="line"># 初始化Hexo</div><div class="line">$ hexo init</div><div class="line"></div><div class="line"># 复制一个markdown文章到&#123;Hexo&#125;/source/_posts目录下</div><div class="line">$ cp /Users/ben/Linux常用命令.md &#123;Hexo&#125;/source/_posts/Linux常用命令.md</div><div class="line"></div><div class="line"># 生成静态页面</div><div class="line">$ hexo generate</div><div class="line"></div><div class="line"># 启动本地服务，浏览器访问：http://localhost:4000</div><div class="line">$ hexo server</div><div class="line"></div><div class="line"># 配置Hexo的_config.yml</div><div class="line">deploy:</div><div class="line">     type: git</div><div class="line">     repo:https://github.com/birdben/birdben.github.io.git</div><div class="line">     branch:master</div><div class="line"></div><div class="line"># 要提交到Github上需要安装hexo-deployer-git插件 </div><div class="line">$ npm install hexo-deployer-git --save</div><div class="line"></div><div class="line"># 部署网站到Github上</div><div class="line">$ hexo deploy</div><div class="line"></div><div class="line"># 访问博客地址：http://birdben.github.io/</div><div class="line"># 大功告成!!</div></pre></td></tr></table></figure>
-<h3 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h3><p>每次部署的步骤，可按以下三步来进行。</p>
-<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo deploy</li>
-</ul>
-<h3 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 从Github下载主题</div><div class="line">$ git clone https://github.com/A-limon/pacman.git &#123;Hexo&#125;/themes/pacman</div><div class="line"></div><div class="line"># 修改_config.yml中的theme配置</div><div class="line">theme : pacman</div><div class="line"></div><div class="line"># 重新生成静态页面</div><div class="line">$ hexo generate</div><div class="line"></div><div class="line"># 启动本地服务，浏览器访问：http://localhost:4000</div><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<h3 id="建站目录"><a href="#建站目录" class="headerlink" title="建站目录"></a>建站目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 初始化网站目录</div><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ cd &lt;folder&gt;</div><div class="line">$ npm install</div><div class="line"></div><div class="line"># 执行完npm install命令后，会生成如下的目录结构</div><div class="line">.</div><div class="line">├── .deploy       #需要部署的文件</div><div class="line">├── node_modules  #Hexo插件</div><div class="line">├── public        #生成的静态网页文件</div><div class="line">├── scaffolds     #模板</div><div class="line">├── source        #博客正文和其他源文件, 404 favicon CNAME 等都应该放在这里。Markdown 和 HTML 文件会被解析并放到 public 文件夹，而其他文件会被拷贝过去。</div><div class="line">|   ├── _drafts   #草稿</div><div class="line">|   └── _posts    #文章</div><div class="line">├── themes        #主题</div><div class="line">├── _config.yml   #全局配置文件</div><div class="line">└── package.json</div></pre></td></tr></table></figure>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>网站的具体配置，请参考官网：<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">https://hexo.io/zh-cn/docs/configuration.html</a></p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"># init : 新建一个网站。如果没有设置folder，Hexo默认在目前的文件夹建立网站。</div><div class="line">$ hexo init [folder]</div><div class="line"></div><div class="line"># new : 新建一篇文章。如果没有设置 layout 的话，默认使用 _config.yml 中的 default_layout 参数代替。如果标题包含空格的话，请使用引号括起来。</div><div class="line">$ hexo new [layout] &lt;title&gt;</div><div class="line"></div><div class="line"># generate : 生成静态文件。</div><div class="line">参数：</div><div class="line">-d, --deploy : 文件生成后立即部署网站</div><div class="line">-w, --watch : 监视文件变动</div><div class="line">$ hexo generate</div><div class="line"></div><div class="line"># publish : 发表草稿。</div><div class="line">$ hexo publish [layout] &lt;filename&gt;</div><div class="line"></div><div class="line"># server : 启动服务器。默认情况下，访问网址为： http://localhost:4000/。</div><div class="line">$ hexo server</div><div class="line">参数：</div><div class="line">-p, --port : 重设端口</div><div class="line">-s, --static : 只使用静态文件</div><div class="line">-l, --log : 启动日记记录，使用覆盖记录格式</div><div class="line"></div><div class="line"># deploy : 部署网站。</div><div class="line">$ hexo deploy</div><div class="line">参数：</div><div class="line">-g, --generate : 部署之前预先生成静态文件</div><div class="line"></div><div class="line"># render : 渲染文件。</div><div class="line">$ hexo render &lt;file1&gt; [file2] ...</div><div class="line">参数：</div><div class="line">-o, --output : 设置输出路径</div><div class="line"></div><div class="line"># migrate : 从其他博客系统迁移内容。</div><div class="line">$ hexo migrate &lt;type&gt;</div><div class="line"></div><div class="line"># clean : 清除缓存文件 (db.json) 和已生成的静态文件 (public)。</div><div class="line">$ hexo clean</div><div class="line"></div><div class="line"># list : 列出网站资料。</div><div class="line">$ hexo list &lt;type&gt;</div><div class="line"></div><div class="line"># version : 显示 Hexo 版本。</div><div class="line">$ hexo version</div><div class="line"></div><div class="line"># 安全模式，在安全模式下，不会载入插件和脚本。当您在安装新插件遭遇问题时，可以尝试以安全模式重新执行。</div><div class="line">$ hexo --safe</div><div class="line"></div><div class="line"># 调试模式，在终端中显示调试信息并记录到 debug.log。当您碰到问题时，可以尝试用调试模式重新执行一次，并 提交调试信息到 GitHub。</div><div class="line">$ hexo --debug</div><div class="line"></div><div class="line"># 简洁模式，隐藏终端信息。</div><div class="line">$ hexo --silent</div><div class="line"></div><div class="line"># 自定义配置文件的路径，执行后将不再使用 _config.yml。</div><div class="line">$ hexo --config custom.yml</div><div class="line"></div><div class="line"># 显示草稿，显示 source/_drafts 文件夹中的草稿文章。</div><div class="line">$ hexo --draft</div><div class="line"></div><div class="line"># 自定义 CWD，自定义当前工作目录（Current working directory）的路径。</div><div class="line">$ hexo --cwd /path/to/cwd</div></pre></td></tr></table></figure>
-<h4 id="Hexo添加管理博客"><a href="#Hexo添加管理博客" class="headerlink" title="Hexo添加管理博客"></a>Hexo添加管理博客</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 新建博文，其中postName是博文题目，新的博文会自动生成在博客目录下source/_posts/postName.md</div><div class="line">$ hexo new &quot;postName&quot;</div><div class="line"></div><div class="line"># 文件自动生成格式如下:</div><div class="line">---</div><div class="line"># 博文题目 </div><div class="line">title: &quot;It Starts with iGaze: Visual Attention Driven Networkingwith Smart Glasses&quot;</div><div class="line"># 生成时间</div><div class="line">date: 2014-11-21 11:25:38</div><div class="line"># 标签, 多个标签可以使用[]数组格式</div><div class="line">tags:[tag1, tag2, tag3]</div><div class="line"># 分类, 多个分类可以使用[]数组格式</div><div class="line">categories:[cat1,cat2,cat3]</div><div class="line">---</div><div class="line">正文, 使用 Markdown 语法书写</div></pre></td></tr></table></figure>
-<h4 id="Hexo添加统计分析工具"><a href="#Hexo添加统计分析工具" class="headerlink" title="Hexo添加统计分析工具"></a>Hexo添加统计分析工具</h4><h5 id="设置birdben-github-io-themes-yilia-config-yml"><a href="#设置birdben-github-io-themes-yilia-config-yml" class="headerlink" title="设置birdben.github.io/themes/yilia/_config.yml"></a>设置birdben.github.io/themes/yilia/_config.yml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># Miscellaneous</div><div class="line">google_analytics: </div><div class="line">  enable: false</div><div class="line">  ## e.g. UA-82900755-1 your google analytics ID.</div><div class="line">  id: UA-82900755-1</div><div class="line">  ## e.g. yangjian.me your google analytics site or set the value as auto.</div><div class="line">  site: auto</div><div class="line">cnzz_tongji:</div><div class="line">  enable: true</div><div class="line">  siteid: 1260188951</div></pre></td></tr></table></figure>
-<h4 id="添加Google-Analytics分析工具"><a href="#添加Google-Analytics分析工具" class="headerlink" title="添加Google Analytics分析工具"></a>添加Google Analytics分析工具</h4><h5 id="birdben-github-io-themes-yilia-layout-partial-google-analytics-ejs"><a href="#birdben-github-io-themes-yilia-layout-partial-google-analytics-ejs" class="headerlink" title="birdben.github.io/themes/yilia/layout/_partial/google-analytics.ejs"></a>birdben.github.io/themes/yilia/layout/_partial/google-analytics.ejs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;% if (theme.google_analytics)&#123; %&gt;</div><div class="line">&lt;!-- Google Analytics --&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  (function(i,s,o,g,r,a,m)&#123;i[&apos;GoogleAnalyticsObject&apos;]=r;i[r]=i[r]||function()&#123;</div><div class="line">  (i[r].q=i[r].q||[]).push(arguments)&#125;,i[r].l=1*new Date();a=s.createElement(o),</div><div class="line">  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)</div><div class="line">  &#125;)(window,document,&apos;script&apos;,&apos;https://www.google-analytics.com/analytics.js&apos;,&apos;ga&apos;);</div><div class="line"></div><div class="line">  ga(&apos;create&apos;, &apos;UA-82900755-1&apos;, &apos;auto&apos;);</div><div class="line">  ga(&apos;send&apos;, &apos;pageview&apos;);</div><div class="line"></div><div class="line">&lt;/script&gt;</div><div class="line">&lt;!-- End Google Analytics --&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
-<p>登录Google Analytics复制如图中的统计代码，保存到google-analytics.ejs文件中，在birdben.github.io/themes/yilia/_config.yml文件中设置Google Analytics的跟踪ID</p>
-<p><img src="http://img.blog.csdn.net/20160822022626078?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Google Analytics统计"></p>
-<h4 id="添加CNZZ分析工具"><a href="#添加CNZZ分析工具" class="headerlink" title="添加CNZZ分析工具"></a>添加CNZZ分析工具</h4><h5 id="birdben-github-io-themes-yilia-layout-partial-head-ejs"><a href="#birdben-github-io-themes-yilia-layout-partial-head-ejs" class="headerlink" title="birdben.github.io/themes/yilia/layout/_partial/head.ejs"></a>birdben.github.io/themes/yilia/layout/_partial/head.ejs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 修改head.ejs，在&lt;/head&gt;前面添加如下代码</div><div class="line">&lt;%- partial(&apos;cnzz-analytics&apos;) %&gt;</div></pre></td></tr></table></figure>
-<h5 id="birdben-github-io-themes-yilia-layout-partial-cnzz-analytics-ejs"><a href="#birdben-github-io-themes-yilia-layout-partial-cnzz-analytics-ejs" class="headerlink" title="birdben.github.io/themes/yilia/layout/_partial/cnzz-analytics.ejs"></a>birdben.github.io/themes/yilia/layout/_partial/cnzz-analytics.ejs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;% if (theme.cnzz_tongji.enable)&#123; %&gt;</div><div class="line">&lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">var cnzz_protocol = ((&quot;https:&quot; == document.location.protocol) ? &quot; https://&quot; : &quot; http://&quot;);document.write(unescape(&quot;%3Cspan id=&apos;cnzz_stat_icon_1260188951&apos;%3E%3C/span%3E%3Cscript src=&apos;&quot; + cnzz_protocol + &quot;s4.cnzz.com/z_stat.php%3Fid%3D1260188951&apos; type=&apos;text/javascript&apos;%3E%3C/script%3E&quot;));</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
-<p>登录CNZZ复制如图中的统计代码，保存到cnzz-analytics.ejs文件中，在birdben.github.io/themes/yilia/_config.yml文件中设置CNZZ的siteid</p>
-<p><img src="http://img.blog.csdn.net/20160822021829052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="CNZZ统计"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">https://hexo.io/zh-cn/docs/</a></li>
-<li><a href="http://www.cnblogs.com/zhcncn/p/4097881.html" target="_blank" rel="external">http://www.cnblogs.com/zhcncn/p/4097881.html</a></li>
-<li><a href="http://www.jianshu.com/p/465830080ea9" target="_blank" rel="external">http://www.jianshu.com/p/465830080ea9</a></li>
-<li><a href="http://opiece.me/2015/04/09/hexo-guide/" target="_blank" rel="external">http://opiece.me/2015/04/09/hexo-guide/</a></li>
-<li><a href="http://www.jianshu.com/p/b7886271e21a" target="_blank" rel="external">http://www.jianshu.com/p/b7886271e21a</a></li>
-<li><a href="http://www.cnblogs.com/tengj/p/5365434.html" target="_blank" rel="external">http://www.cnblogs.com/tengj/p/5365434.html</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git命令/">Git命令</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Git/">Git</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker/Docker实战（十六）Docker安装HBase环境" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/01/Docker/Docker实战（十六）Docker安装HBase环境/" class="article-date">
-  	<time datetime="2016-06-30T16:05:19.000Z" itemprop="datePublished">2016-07-01</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/01/Docker/Docker实战（十六）Docker安装HBase环境/">Docker实战（十六）Docker安装HBase环境</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="HBase安装"><a href="#HBase安装" class="headerlink" title="HBase安装"></a>HBase安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 下载HBase</div><div class="line">$ wget http://apache.fayea.com/hbase/0.98.19/hbase-0.98.19-hadoop2-bin.tar.gz</div><div class="line"></div><div class="line"># 解压HBase压缩包</div><div class="line">$ tar -zxvf hbase-0.98.19-hadoop2-bin.tar.gz</div><div class="line"></div><div class="line"># 需要修改下面HBase相关的配置文件</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/hbase:v1</div><div class="line"># desc : 当前版本安装的hbase</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 jdk7 镜像</div><div class="line">FROM birdben/jdk7:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 设置 hbase 的环境变量，若读者有其他的环境变量需要设置，也可以在这里添加。</div><div class="line">ENV HBASE_HOME /software/hbase-0.98.19</div><div class="line">ENV PATH $&#123;HBASE_HOME&#125;/bin:$PATH</div><div class="line"></div><div class="line"># 复制 hbase-0.98.19 文件到镜像中（hbase-0.98.19 文件夹要和Dockerfile文件在同一路径），这里直接把上一篇Hadoop环境直接用上了</div><div class="line">ADD hbase-0.98.19 /software/hbase-0.98.19</div><div class="line"></div><div class="line"># 授权HBASE_HOME路径给admin用户</div><div class="line">RUN sudo chown -R admin /software/hbase-0.98.19</div><div class="line"></div><div class="line"># 容器需要开放HBase 60010端口</div><div class="line">EXPOSE 60010</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/hbase/Dockerfile">https://github.com/birdben/birdDocker/blob/master/hbase/Dockerfile</a></p>
-<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:hbase]</div><div class="line">command=/software/hbase-0.98.19/bin/start-hbase.sh</div></pre></td></tr></table></figure>
-<h5 id="配置HBASE-HOME-conf-hbase-env-sh"><a href="#配置HBASE-HOME-conf-hbase-env-sh" class="headerlink" title="配置HBASE_HOME/conf/hbase-env.sh"></a>配置HBASE_HOME/conf/hbase-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/software/jdk7</div><div class="line">export HBASE_CLASSPATH=/software/hbase-0.98.19/lib/</div><div class="line">export HBASE_IDENT_STRING=my</div><div class="line">export HBASE_PID_DIR=$&#123;HBASE_HOME&#125;/tmp</div><div class="line">export HBASE_MANAGES_ZK=true</div></pre></td></tr></table></figure>
-<h5 id="配置HBASE-HOME-conf-hbase-site-xml，hbase-default-xml并不在conf目录-需要从-src-main-resources-目录拷贝并且改名为hbase-site-xml"><a href="#配置HBASE-HOME-conf-hbase-site-xml，hbase-default-xml并不在conf目录-需要从-src-main-resources-目录拷贝并且改名为hbase-site-xml" class="headerlink" title="配置HBASE_HOME/conf/hbase-site.xml，hbase-default.xml并不在conf目录, 需要从./src/main/resources/目录拷贝并且改名为hbase-site.xml"></a>配置HBASE_HOME/conf/hbase-site.xml，hbase-default.xml并不在conf目录, 需要从./src/main/resources/目录拷贝并且改名为hbase-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</div><div class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</div><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</div><div class="line">    &lt;!-- 使用本地文件系统 --&gt;</div><div class="line">    &lt;value&gt;file:///software/hbase-0.98.19/hbase_dir&lt;/value&gt;</div><div class="line">    &lt;!-- 使用本地的HDFS文件系统 --&gt;</div><div class="line">    &lt;!-- &lt;value&gt;hdfs://Ben:9000/hbase&lt;/value&gt; --&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.zookeeper.property.dataDir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/software/hbase-0.98.19/zookeeper_dir&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/hbase:v1&quot; .</div><div class="line"># 执行已经构件好的镜像，挂载在宿主机器的存储路径也不同，-h设置hostname，Hadoop配置文件需要使用</div><div class="line">$ docker run -p 9999:22 -p 60010:60010 -t -i &apos;birdben/hbase:v1&apos;</div></pre></td></tr></table></figure>
-<h5 id="supervisor无法监控hbase"><a href="#supervisor无法监控hbase" class="headerlink" title="supervisor无法监控hbase"></a>supervisor无法监控hbase</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisor监控hbase不成功，是因为supervisor启动的程序必须是非daemon的启动方式，之前的文章已经反复提过好几次这个问题，但是$&#123;HBASE_HOME&#125;/bin/start-hbase.sh的启动脚本，实际上是调用了hbase-daemon.sh的daemon启动脚本，所以这里supervisor启动hbase后，hbase进程的状态仍然是hbase (exit status 0; expected)，是因为无法监控hbase进程，但是不影响hbase的正常启动和使用</div></pre></td></tr></table></figure>
-<h5 id="使用hbase-shell登录HBase服务器进行操作"><a href="#使用hbase-shell登录HBase服务器进行操作" class="headerlink" title="使用hbase shell登录HBase服务器进行操作"></a>使用hbase shell登录HBase服务器进行操作</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 通过ssh远程连接使用admin账号远程登录HBase的Docker容器</div><div class="line">$ cd /software/hbase-0.98.19/bin/</div><div class="line">$ ./hbase shell</div><div class="line">2016-06-30 06:03:57,427 INFO  [main] Configuration.deprecation: hadoop.native.lib is deprecated. Instead, use io.native.lib.available</div><div class="line">HBase Shell; enter &apos;help&lt;RETURN&gt;&apos; for list of supported commands.</div><div class="line">Type &quot;exit&lt;RETURN&gt;&quot; to leave the HBase Shell</div><div class="line">Version 0.98.19-hadoop2, r1e527e73bc539a04ba0fa4ed3c0a82c7e9dd7d15, Fri Apr 22 19:07:24 PDT 2016</div><div class="line">hbase(main):001:0&gt;</div><div class="line"></div><div class="line"># 查询所有的Table</div><div class="line">hbase(main):001:0&gt; list</div><div class="line"></div><div class="line"># 创建新表</div><div class="line">hbase(main):001:0&gt; create &apos;test&apos;,&apos;name&apos;</div><div class="line">0 row(s) in 0.5780 seconds</div><div class="line">=&gt; Hbase::Table - test</div><div class="line"></div><div class="line"># 再次查询所有的Table</div><div class="line">hbase(main):001:0&gt; list</div><div class="line">TABLE</div><div class="line">test</div><div class="line">1 row(s) in 0.0100 seconds</div><div class="line">=&gt; [&quot;test&quot;]</div></pre></td></tr></table></figure>
-<h5 id="浏览器查看"><a href="#浏览器查看" class="headerlink" title="浏览器查看"></a>浏览器查看</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 查看HBase：</div><div class="line">http://10.211.55.4:60010/master-status</div></pre></td></tr></table></figure>
-<h5 id="启动hbase可能会报错-Address-already-in-use"><a href="#启动hbase可能会报错-Address-already-in-use" class="headerlink" title="启动hbase可能会报错 Address already in use"></a>启动hbase可能会报错 Address already in use</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">master: java.net.BindException: Address already in use</div><div class="line">master:         at sun.nio.ch.Net.bind(Native Method)</div><div class="line">master:         at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:124)</div><div class="line">master:         at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:59)</div><div class="line">master:         at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:52)</div><div class="line">master:         at org.apache.zookeeper.server.NIOServerCnxnFactory.configure(NIOServerCnxnFactory.java:111)</div><div class="line">master:         at org.apache.zookeeper.server.quorum.QuorumPeerMain.runFromConfig(QuorumPeerMain.java:130)</div><div class="line">master:         at org.apache.hadoop.hbase.zookeeper.HQuorumPeer.runZKServer(HQuorumPeer.java:73)</div><div class="line">master:         at org.apache.hadoop.hbase.zookeeper.HQuorumPeer.main(HQuorumPeer.java:63)</div><div class="line"></div><div class="line"># 报错的原因是Zookeeper的端口被占用了或者Zookeeper已经启动了。</div><div class="line">export HBASE_MANAGES_ZK=true</div><div class="line"># 这个参数表示启动hbase之前自动启动zk</div><div class="line"># 解决的办法有2种：</div><div class="line">1.启动hbase的之前kill掉所有的zk进程，让hbase启动zk</div><div class="line">2.将参数HBASE_MANAGES_ZK 改成false</div><div class="line"># 在hbase之前手动启动zk</div><div class="line"></div><div class="line"># 我这里使用的是方式一，可能之前zk的2181端口被其他应用占用了，所以kill掉所有占用2181端口的进程，再启动hbase就好用了</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://hbase.apache.org/book.html#quickstart" target="_blank" rel="external">http://hbase.apache.org/book.html#quickstart</a></li>
-<li><a href="http://os.51cto.com/art/201211/363518.htm" target="_blank" rel="external">http://os.51cto.com/art/201211/363518.htm</a></li>
-<li><a href="http://blog.csdn.net/21aspnet/article/details/18776833" target="_blank" rel="external">http://blog.csdn.net/21aspnet/article/details/18776833</a></li>
-<li><a href="http://blog.chinaunix.net/uid-77311-id-4580084.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-77311-id-4580084.html</a></li>
-<li><a href="http://blog.csdn.net/lxpbs8851/article/details/8268894" target="_blank" rel="external">http://blog.csdn.net/lxpbs8851/article/details/8268894</a></li>
-<li><a href="http://my.oschina.net/u/914897/blog/526014" target="_blank" rel="external">http://my.oschina.net/u/914897/blog/526014</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HBase/">HBase</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Linux/Linux常用命令（三）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/26/Linux/Linux常用命令（三）/" class="article-date">
-  	<time datetime="2016-06-25T21:18:31.000Z" itemprop="datePublished">2016-06-26</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/26/Linux/Linux常用命令（三）/">Linux常用命令（三）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h3><p>以下的案例都使用的百度开源API进行的测试，具体地址如下：<br><a href="https://www.juhe.cn/docs/api/id/39" target="_blank" rel="external">https://www.juhe.cn/docs/api/id/39</a></p>
-<ul>
-<li>接口地址：<a href="http://v.juhe.cn/weather/index" target="_blank" rel="external">http://v.juhe.cn/weather/index</a></li>
-<li>支持格式：json/xml</li>
-<li>请求方式：get</li>
-<li>请求示例：<a href="http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY" target="_blank" rel="external">http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY</a></li>
-<li>请求参数说明：</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>类型</th>
-<th>必填</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cityname</td>
-<td>string</td>
-<td>Y</td>
-<td>城市名或城市ID，如：”苏州”，需要utf8 urlencode</td>
-</tr>
-<tr>
-<td>dtype</td>
-<td>string</td>
-<td>N</td>
-<td>返回数据格式：json或xml,默认json</td>
-</tr>
-<tr>
-<td>format</td>
-<td>int</td>
-<td>N</td>
-<td>未来6天预报(future)两种返回格式，1或2，默认1</td>
-</tr>
-<tr>
-<td>key</td>
-<td>string</td>
-<td>Y</td>
-<td>你申请的key</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>接口地址：<a href="http://v.juhe.cn/toutiao/index" target="_blank" rel="external">http://v.juhe.cn/toutiao/index</a></li>
-<li>支持格式：json</li>
-<li>请求方式：get/post</li>
-<li>请求示例：<a href="http://v.juhe.cn/toutiao/index?type=top&amp;key=APPKEY" target="_blank" rel="external">http://v.juhe.cn/toutiao/index?type=top&amp;key=APPKEY</a></li>
-<li>接口备注：返回头条，社会，国内，娱乐，体育，军事，科技，财经，时尚等新闻信息</li>
-<li>请求参数说明：</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>类型</th>
-<th>必填</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>key</td>
-<td>string</td>
-<td>是</td>
-<td>应用APPKEY</td>
-</tr>
-<tr>
-<td>type</td>
-<td>string</td>
-<td>否</td>
-<td>类型：top(头条，默认),shehui(社会),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育)junshi(军事),keji(科技),caijing(财经),shishang(时尚)</td>
-</tr>
-</tbody>
-</table>
-<h5 id="curl-d-传递请求数据"><a href="#curl-d-传递请求数据" class="headerlink" title="curl -d 传递请求数据"></a>curl -d 传递请求数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 参数：</div><div class="line"># -G:指定GET方式发送请求</div><div class="line"># --data/-d:指定使用POST方式传递数据</div></pre></td></tr></table></figure>
-<h5 id="curl-发送GET请求"><a href="#curl-发送GET请求" class="headerlink" title="curl 发送GET请求"></a>curl 发送GET请求</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 方式一：curl 以?方式传递参数发送GET请求</div><div class="line"># 默认curl使用POST方式请求数据，这种方式下直接通过URL传递数据，也就是以?方式添加到url后面</div><div class="line"># 格式：curl &quot;https://hostname.com:8080/getMethod?param1=value1&amp;param2=value2&quot;</div><div class="line"></div><div class="line"># 方式二：curl -G -d 发送GET请求</div><div class="line"># 但是如果有-d参数，也可以加上-G参数指定使用GET方式请求数据，如果不加上-G则默认使用的POST方式请求数据</div><div class="line"># 格式：curl -G -d &quot;param1=value1&amp;param2=value2&quot; &quot;http://hostname.com:8080/getMethod&quot;</div><div class="line"></div><div class="line"># 使用?方式传递参数，不使用-d方式</div><div class="line">$ curl &quot;http://v.juhe.cn/weather/index?format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot;</div><div class="line"></div><div class="line"># 也可以使用-d方式传递参数，但是必须指定-G来指定GET方式请求数据，因为该接口只支持GET方式请求，如果不加-G参数，使用-d参数就默认为POST方式请求</div><div class="line">$ curl -G -d &quot;format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot; &quot;http://v.juhe.cn/weather/index&quot;</div><div class="line"></div><div class="line"># 以下的方式就会报错，因为该接口只支持GET方式请求，不支持POST方式请求，如果不加-G参数，使用-d参数就默认为POST方式请求</div><div class="line">$ curl -d &quot;format=2&amp;cityname=%E8%8B%8F%E5%B7%9E&amp;key=您申请的KEY&quot; &quot;http://v.juhe.cn/weather/index&quot;</div><div class="line"># 返回的结果是error_code:203901，获取不到cityname参数</div><div class="line">&#123;&quot;resultcode&quot;:&quot;201&quot;,&quot;reason&quot;:&quot;Error Cityname!&quot;,&quot;result&quot;:null,&quot;error_code&quot;:203901&#125;</div></pre></td></tr></table></figure>
-<h5 id="curl-发送POST请求"><a href="#curl-发送POST请求" class="headerlink" title="curl 发送POST请求"></a>curl 发送POST请求</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 格式：curl -d/--data &quot;param1=value1&amp;param2=value2&quot; &quot;http://hostname.com:8080/html/postMethod&quot;</div><div class="line">$ curl -d &quot;type=tiyu&amp;key=申请的KEY&quot; &quot;http://v.juhe.cn/toutiao/index&quot;</div><div class="line">$ curl --data &quot;type=tiyu&amp;key=申请的KEY&quot; &quot;http://v.juhe.cn/toutiao/index&quot;</div><div class="line"></div><div class="line"># POST提交多个同名参数，paramList是一个数组参数</div><div class="line">$ curl -XPOST &apos;http://hostname.com/postMethod&apos; -d &apos;userName=birdben&amp;paramList=[&quot;aa&quot;, &quot;bb&quot;]&apos;</div><div class="line"></div><div class="line"># form表单上传文件</div><div class="line"># 可以通过 --form/-F 方式指定使用POST方式传递数据</div><div class="line"># --form/-F 参数相当于设置form表单的method=&quot;POST&quot;和enctype=&quot;multipart/form-data&quot;两个属性</div><div class="line"># filename为文本框中的name元素对应的属性值。&lt;type=&quot;text&quot; name=&quot;filename&quot;&gt;</div><div class="line">$ curl --form &quot;filename=@filename.txt&quot; &quot;http://hostname.com:8080/html/uploadFile&quot;</div><div class="line">$ curl -F &quot;filename=@filename.txt;type=text/plain&quot;  &quot;http://hostname.com:8080/html/uploadFile&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-特殊字符处理"><a href="#curl-特殊字符处理" class="headerlink" title="curl 特殊字符处理"></a>curl 特殊字符处理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 默认情况下，通过GET/POST方式传递过去的数据中若有特殊字符（或者中文字符），首先需要将特殊字符转义在传递给服务器端，如&quot;value 1&quot;值中包含有空格，则需要先将空格转换成%20，如：</div><div class="line">$ curl -d &quot;value%201&quot; &quot;http://hostname.com&quot;</div><div class="line"></div><div class="line"># 在新版本的curl中，提供了新的选项 --data-urlencode，通过该选项提供的参数会自动转义特殊字符。</div><div class="line">$ curl --data-urlencode &quot;value 1&quot; &quot;http://hostname.com&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-指定其它协议"><a href="#curl-指定其它协议" class="headerlink" title="curl 指定其它协议"></a>curl 指定其它协议</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 除了使用GET和POST协议外，还可以通过 -X 选项指定其它协议，一般用过ES删除索引的时候用的比较多，如：</div><div class="line">$ curl -X DELETE &quot;https://hostname.com&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-设置http请求头信息"><a href="#curl-设置http请求头信息" class="headerlink" title="curl 设置http请求头信息"></a>curl 设置http请求头信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line"># 以下操作可以挂代理抓包查看并且验证</div><div class="line"># -v 通过使用 -v 和 -trace获取更多的链接信息</div><div class="line"># 访问https://www.github.com/下面返回的信息会提示该域名已经被重定向到https://github.com/</div><div class="line">$ curl -v &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line">* Rebuilt URL to: https://www.github.com/</div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.130...</div><div class="line">* Connected to www.github.com (192.30.252.130) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Host: www.github.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -A 设置http请求头User-Agent，可以指定自己这次访问所模拟的浏览器信息</div><div class="line"># 前一个直接用curl命令的，User-Agent: curl/7.37.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line"># 使用-A参数重新指定浏览器信息后，User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">&gt; User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">$ curl -v -A &quot;Mozilla/5.0 Firefox/21.0&quot; &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line"> Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.120...</div><div class="line">* Connected to www.github.com (192.30.252.120) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: Mozilla/5.0 Firefox/21.0</div><div class="line">&gt; Host: www.github.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -e 设置http请求头Referer，解释：检查http访问的Referer是服务器端常用的限制方法。比如你先访问网站的首页，再访问里面所指定的下载页，这第二次访问的referer地址就是第一次访问成功后的页面地址。这样，服务器端只要发现对下载页面某次访问的referer地址不是首页的地址，就可以断定那是个盗链了。所以这里我们可以自己修改我们的Referer链接地址。</div><div class="line">$ curl -v -e &quot;http://birdben.com/&quot; &quot;http://birdben.com/download.html&quot;</div><div class="line"></div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 50.63.202.46...</div><div class="line">* Connected to birdben.com (50.63.202.46) port 80 (#0)</div><div class="line">&gt; GET /download.html HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Host: birdben.com</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; Referer: http://birdben.com/</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 302 Found</div><div class="line">&lt; Connection: close</div><div class="line">&lt; Pragma: no-cache</div><div class="line">&lt; cache-control: no-cache</div><div class="line">&lt; Location: /download.html</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># --header/-H 设置header</div><div class="line">$ curl -H &quot;Connection:keep-alive&quot; -H &quot;Host:127.0.0.1&quot; -H &quot;Accept-Language:es&quot; -H &quot;Cookie:ID=1234&quot; &quot;https://www.github.com/&quot;</div><div class="line"></div><div class="line">* Hostname was NOT found in DNS cache</div><div class="line">*   Trying 192.30.252.129...</div><div class="line">* Connected to www.github.com (192.30.252.129) port 443 (#0)</div><div class="line">* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</div><div class="line">* Server certificate: github.com</div><div class="line">* Server certificate: DigiCert SHA2 Extended Validation Server CA</div><div class="line">* Server certificate: DigiCert High Assurance EV Root CA</div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; User-Agent: curl/7.37.1</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; Connection:keep-alive</div><div class="line">&gt; Host:127.0.0.1</div><div class="line">&gt; Accept-Language:es</div><div class="line">&gt; Cookie:ID=1234</div><div class="line">&gt;</div><div class="line">&lt; HTTP/1.1 301 Moved Permanently</div><div class="line">&lt; Content-length: 0</div><div class="line">&lt; Location: https://github.com/</div><div class="line">&lt; Connection: close</div><div class="line">&lt;</div><div class="line">* Closing connection 0</div><div class="line"></div><div class="line"># -I 设置http响应头处理，仅仅返回header</div><div class="line">$ curl -I &quot;https://github.com&quot;</div><div class="line"></div><div class="line"># --dump-header/-D 将http header保存到/tmp/header文件</div><div class="line">$ curl -D /tmp/header &quot;https://github.com&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-o-O-下载"><a href="#curl-o-O-下载" class="headerlink" title="curl -o/-O 下载"></a>curl -o/-O 下载</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 通过-o/-O选项保存下载的文件到指定的文件中：</div><div class="line">-o：将文件保存为命令行中指定的文件名的文件中</div><div class="line">-O：使用URL中默认的文件名保存文件到本地</div><div class="line"></div><div class="line"># 将文件下载到本地并命名为test.html</div><div class="line">$ curl -o test.html &quot;http://apistore.baidu.com/apiworks/servicedetail/478.html&quot;</div><div class="line"></div><div class="line"># 将文件保存到本地并命名为478.html</div><div class="line">$ curl -O &quot;http://apistore.baidu.com/apiworks/servicedetail/478.html&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-L-重定向"><a href="#curl-L-重定向" class="headerlink" title="curl -L 重定向"></a>curl -L 重定向</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 默认情况下CURL不会发送HTTP Location headers(重定向).当一个被请求页面移动到另一个站点时，会发送一个HTTP Loaction header作为请求，然后将请求重定向到新的地址上。</div><div class="line"></div><div class="line"># 例如：浏览器访问京东以前的域名www.360buy.com，会自动将地址重定向到www.jd.com上。通过curl命令就会出现如下信息</div><div class="line">$ curl &quot;www.360buy.com&quot;</div><div class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;</div><div class="line">&lt;body bgcolor=&quot;white&quot;&gt;</div><div class="line">&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;</div><div class="line">&lt;p&gt;The requested resource has been assigned a new permanent URI.&lt;/p&gt;</div><div class="line">&lt;hr/&gt;Server: JDWS&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div><div class="line"># 这时可以通过使用-L选项进行强制重定向，让curl使用地址重定向，此时就会返回京东首页的信息</div><div class="line">$ curl -L &quot;www.360buy.com&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-O-从FTP服务器下载文件"><a href="#curl-O-从FTP服务器下载文件" class="headerlink" title="curl -O 从FTP服务器下载文件"></a>curl -O 从FTP服务器下载文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># curl同样支持FTP下载，若在url中指定的是某个文件路径而非具体的某个要下载的文件名， curl则会列出该目录下的所有文件名而并非下载该目录下的所有文件</div><div class="line"></div><div class="line"># 列出public_html下的所有文件夹和文件</div><div class="line">$ curl -u user:pass -O &quot;ftp://ftp_server/html/&quot;</div><div class="line"># 下载index.css文件</div><div class="line">$ curl -u user:pass -O &quot;ftp://ftp_server/css/index.css&quot;</div><div class="line"></div><div class="line"># 从FTP服务器下载文件的另一种写法</div><div class="line">$ curl &quot;ftp://user:pass@ftp_server:port/path/file&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-T-上传文件到FTP服务器"><a href="#curl-T-上传文件到FTP服务器" class="headerlink" title="curl -T 上传文件到FTP服务器"></a>curl -T 上传文件到FTP服务器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 通过 -T 选项可将指定的本地文件上传到FTP服务器上</div><div class="line"># 将myfile.txt文件上传到服务器</div><div class="line">$ curl -u user:pass -T myfile.txt &quot;ftp://ftp.testserver.com:port/path/&quot;</div><div class="line"></div><div class="line"># 同时上传多个文件</div><div class="line">$ curl -u user:pass -T &quot;&#123;file1,file2&#125;&quot; &quot;ftp://ftp.testserver.com&quot;</div></pre></td></tr></table></figure>
-<h5 id="curl-u-授权（没有测试过）"><a href="#curl-u-授权（没有测试过）" class="headerlink" title="curl -u 授权（没有测试过）"></a>curl -u 授权（没有测试过）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 在访问需要授权的页面时，可通过-u选项提供用户名和密码进行授权</div><div class="line">$ curl -u username:password URL</div><div class="line"></div><div class="line"># 通常的做法是在命令行只输入用户名，之后会提示输入密码，这样可以保证在查看历史记录时不会将密码泄露</div><div class="line">$ curl -u username URL</div></pre></td></tr></table></figure>
-<h5 id="curl-x-设置代理"><a href="#curl-x-设置代理" class="headerlink" title="curl -x 设置代理"></a>curl -x 设置代理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># -x 选项可以为CURL添加代理功能</div><div class="line"># 指定代理主机和端口</div><div class="line">$ curl -x proxysever.com:8888 -U user:pass &quot;http://google.co.jp&quot;</div></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://linux.cn/article-4957-1.html" target="_blank" rel="external">https://linux.cn/article-4957-1.html</a></li>
-<li><a href="http://www.cnblogs.com/gbyukg/p/3326825.html" target="_blank" rel="external">http://www.cnblogs.com/gbyukg/p/3326825.html</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Linux/">Linux</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker/Docker实战（十五）Docker安装Hive环境" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/25/Docker/Docker实战（十五）Docker安装Hive环境/" class="article-date">
-  	<time datetime="2016-06-25T12:30:28.000Z" itemprop="datePublished">2016-06-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/25/Docker/Docker实战（十五）Docker安装Hive环境/">Docker实战（十五）Docker安装Hive环境</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="Hive安装"><a href="#Hive安装" class="headerlink" title="Hive安装"></a>Hive安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Hive必须运行在Hadoop之上，则需要先安装Hadoop环境，而且还需要MySQL数据库，具体Hadoop安装请参考上一篇文章，我们这里继承上一篇已经安装好的Hadoop镜像</div><div class="line"></div><div class="line"># 下载Hive</div><div class="line">$ wget http://apache.mirrors.ionfish.org/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz</div><div class="line"></div><div class="line"># 解压Hive压缩包</div><div class="line">$ tar -zxvf apache-hive-1.2.1-bin.tar.gz</div><div class="line"></div><div class="line"># 下载MySQL驱动包</div><div class="line">$ wget http://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz</div><div class="line"></div><div class="line"># 解压MySQL驱动压缩包</div><div class="line">$ tar -zxvf mysql-connector-java-5.1.38.tar.gz</div><div class="line"></div><div class="line"># 需要修改下面Hive相关的配置文件</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">############################################</div><div class="line"># version : birdben/hive:v1</div><div class="line"># desc : 当前版本安装的hive</div><div class="line">############################################</div><div class="line"># 设置继承自我们创建的 hadoop 镜像</div><div class="line">FROM birdben/hadoop:v1</div><div class="line"></div><div class="line"># 下面是一些创建者的基本信息</div><div class="line">MAINTAINER birdben (191654006@163.com)</div><div class="line"></div><div class="line"># 设置环境变量，所有操作都是非交互式的</div><div class="line">ENV DEBIAN_FRONTEND noninteractive</div><div class="line"></div><div class="line"># 添加 supervisord 的配置文件，并复制配置文件到对应目录下面。（supervisord.conf文件和Dockerfile文件在同一路径）</div><div class="line">COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf</div><div class="line"></div><div class="line"># 复制 hive-1.2.1 文件到镜像中（hive-1.2.1 文件夹要和Dockerfile文件在同一路径），这里直接把上一篇Hadoop环境直接用上了</div><div class="line">ADD apache-hive-1.2.1-bin /software/hive-1.2.1</div><div class="line"></div><div class="line"># 复制MySQL的驱动包到镜像中</div><div class="line">COPY mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar /software/hive-1.2.1/lib/mysql-connector-java-5.1.38-bin.jar</div><div class="line"></div><div class="line"># 授权HIVE_HOME路径给admin用户</div><div class="line">RUN sudo chown -R admin /software/hive-1.2.1</div><div class="line"></div><div class="line"># 执行supervisord来同时执行多个命令，使用 supervisord 的可执行路径启动服务。</div><div class="line">CMD [&quot;/usr/bin/supervisord&quot;]</div></pre></td></tr></table></figure>
-<h5 id="Dockerfile源文件链接："><a href="#Dockerfile源文件链接：" class="headerlink" title="Dockerfile源文件链接："></a>Dockerfile源文件链接：</h5><p><a href="https://github.com/birdben/birdDocker/blob/master/hive/Dockerfile">https://github.com/birdben/birdDocker/blob/master/hive/Dockerfile</a></p>
-<h5 id="supervisor配置文件内容"><a href="#supervisor配置文件内容" class="headerlink" title="supervisor配置文件内容"></a>supervisor配置文件内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 配置文件包含目录和进程</div><div class="line"># 第一段 supervsord 配置软件本身，使用 nodaemon 参数来运行。</div><div class="line"># 第二段包含要控制的 2 个服务。每一段包含一个服务的目录和启动这个服务的命令。</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">nodaemon=true</div><div class="line"></div><div class="line">[program:sshd]</div><div class="line">command=/usr/sbin/sshd -D</div><div class="line"></div><div class="line">[program:metastore]</div><div class="line">command=/software/hive-1.2.1/bin/hive --service metastore</div><div class="line"></div><div class="line">[program:hiveserver2]</div><div class="line">command=/software/hive-1.2.1/bin/hive --service hiveserver2</div></pre></td></tr></table></figure>
-<h5 id="配置HIVE-HOME-conf-hive-env-sh（默认不存在，将hive-env-sh-template复制并改名为hive-env-sh）"><a href="#配置HIVE-HOME-conf-hive-env-sh（默认不存在，将hive-env-sh-template复制并改名为hive-env-sh）" class="headerlink" title="配置HIVE_HOME/conf/hive-env.sh（默认不存在，将hive-env.sh.template复制并改名为hive-env.sh）"></a>配置HIVE_HOME/conf/hive-env.sh（默认不存在，将hive-env.sh.template复制并改名为hive-env.sh）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HADOOP_HOME=/software/hadoop-2.7.1</div></pre></td></tr></table></figure>
-<h5 id="配置HIVE-HOME-conf-hive-log4j-properties（默认不存在，将hive-log4j-properties-template复制并改名为hive-log4j-properties）"><a href="#配置HIVE-HOME-conf-hive-log4j-properties（默认不存在，将hive-log4j-properties-template复制并改名为hive-log4j-properties）" class="headerlink" title="配置HIVE_HOME/conf/hive-log4j.properties（默认不存在，将hive-log4j.properties.template复制并改名为hive-log4j.properties）"></a>配置HIVE_HOME/conf/hive-log4j.properties（默认不存在，将hive-log4j.properties.template复制并改名为hive-log4j.properties）</h5><h5 id="配置HIVE-HOME-conf-hdfs-site-xml（默认不存在，将hive-default-xml-template复制并改名为hive-site-xml）"><a href="#配置HIVE-HOME-conf-hdfs-site-xml（默认不存在，将hive-default-xml-template复制并改名为hive-site-xml）" class="headerlink" title="配置HIVE_HOME/conf/hdfs-site.xml（默认不存在，将hive-default.xml.template复制并改名为hive-site.xml）"></a>配置HIVE_HOME/conf/hdfs-site.xml（默认不存在，将hive-default.xml.template复制并改名为hive-site.xml）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</div><div class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</div><div class="line"></div><div class="line">&lt;configuration&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">    &lt;!-- metastore我的mysql不是在该server上，是在另一台Docker镜像中 --&gt;</div><div class="line">    &lt;name&gt;hive.metastore.local&lt;/name&gt;</div><div class="line">    &lt;value&gt;false&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">    &lt;!-- mysql服务的ip和端口号 --&gt;</div><div class="line">		&lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div><div class="line">		&lt;value&gt;jdbc:mysql://172.17.0.2:3306/hive&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;javax.jdo.option.ConnectionDriveName&lt;/name&gt;</div><div class="line">		&lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</div><div class="line">		&lt;value&gt;root&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</div><div class="line">		&lt;value&gt;root&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">    &lt;!-- hive的仓库目录，需要在HDFS上创建，并修改权限 --&gt;</div><div class="line">		&lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;</div><div class="line">		&lt;value&gt;/hive/warehouse&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">    &lt;!-- 运行hive得主机地址及端口，即本机ip和端口号，启动metastore服务 --&gt;</div><div class="line">	  &lt;name&gt;hive.metastore.uris&lt;/name&gt;</div><div class="line">    &lt;value&gt;thrift://Ben:9083&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<h5 id="控制台终端"><a href="#控制台终端" class="headerlink" title="控制台终端"></a>控制台终端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div></pre></td><td class="code"><pre><div class="line"># 先启动MySQL的Docker容器</div><div class="line">$ sudo docker run -p 9999:22 -p 3306:3306 -t -i -v /docker/mysql/data:/software/mysql-5.6.22/data birdben/mysql:v1</div><div class="line"></div><div class="line"># 然后查看MySQL的Docker容器的IP地址，Hive连接MySQL的IP地址需要配置这个IP</div><div class="line">$ sudo docker inspect --format &apos;&#123;&#123;.NetworkSettings.IPAddress&#125;&#125;&apos; 34b5ac61b8bd</div><div class="line">$ 172.17.0.2</div><div class="line"></div><div class="line"># 构建镜像</div><div class="line">$ docker build -t=&quot;birdben/hive:v1&quot; .</div><div class="line"># 执行已经构件好的镜像，挂载在宿主机器的存储路径也不同，-h设置hostname，Hadoop配置文件需要使用</div><div class="line">$ docker run -h Ben -p 9998:22 -p 9083:9083 -p 9000:9000 -p 8088:8088 -p 50020:50020 -p 50070:50070 -p 50075:50075 -p 50090:50090 -t -i &apos;birdben/hive:v1&apos;</div><div class="line"></div><div class="line"></div><div class="line"># 然后直接通过ssh远程连接使用admin账号远程登录Hive的Docker容器</div><div class="line">$ ssh root@10.211.55.4 -p 9998</div><div class="line"></div><div class="line"># 启动hive shell，发现如下的错误，原因是还没有启动Hadoop，所以hive连接Hadoop时，报错java.net.ConnectException: Call From Ben/172.17.0.3 to Ben:9000 failed on connection exception: java.net.ConnectException: Connection refused;</div><div class="line"></div><div class="line">$ admin@Ben:/$ cd /software/hive-1.2.1/bin</div><div class="line">$ admin@Ben:/$ ./hive shell</div><div class="line">16/06/25 10:48:40 WARN conf.HiveConf: HiveConf of name hive.metastore.local does not exist</div><div class="line"></div><div class="line">Logging initialized using configuration in file:/software/hive-1.2.1/conf/hive-log4j.properties</div><div class="line">Exception in thread &quot;main&quot; java.lang.RuntimeException: java.net.ConnectException: Call From Ben/172.17.0.3 to Ben:9000 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused</div><div class="line"></div><div class="line"># 所以我们先启动Hadoop</div><div class="line"># 先初始化namenode</div><div class="line">$ admin@Ben:/$ cd /software/hadoop-2.7.1/bin</div><div class="line">$ admin@Ben:/software/hadoop-2.7.1/sbin$ ./hdfs namenode -format</div><div class="line"></div><div class="line"># 启动所有服务</div><div class="line">admin@Ben:/$ cd /software/hadoop-2.7.1/sbin</div><div class="line">admin@Ben:/software/hadoop-2.7.1/sbin$ ./start-all.sh</div><div class="line"></div><div class="line"># 执行jps命令之前需要先把$JAVA_HOME/bin添加到PATH环境变量</div><div class="line">admin@Ben:/$ export PATH=/software/jdk7/bin/:$PATH</div><div class="line"></div><div class="line"># 执行jps命令如果能看到下面的6个进程就说明Hadoop启动的没有问题</div><div class="line">admin@Ben:/software/hadoop-2.7.1/sbin$ jps</div><div class="line">985 Jps</div><div class="line">282 DataNode</div><div class="line">587 ResourceManager</div><div class="line">436 SecondaryNameNode</div><div class="line">166 NameNode</div><div class="line">691 NodeManager</div><div class="line"></div><div class="line"># 此时重新启动hive shell，就可以成功登录hive了</div><div class="line">$ admin@Ben:/$ cd /software/hive-1.2.1/bin</div><div class="line">$ admin@Ben:/$ ./hive shell</div><div class="line">hive&gt;</div><div class="line">hive&gt; show databases;</div><div class="line">OK</div><div class="line">default</div><div class="line">Time taken: 1.323 seconds, Fetched: 1 row(s)</div><div class="line"></div><div class="line"># 注意：这里我是使用了之前的MySQL的Docker镜像，因为之前的MySQL的Docker镜像已经处理了root账号的更改密码和远程登录授权问题，所以这里没有涉及这些问题，具体设置可以参考之前的Docker安装MySQL镜像的文章</div><div class="line"></div><div class="line"># 我们需要预先在mysql中创建一个hive的数据库，因为hive-site.xml是连接到这个hive数据库的，所有的hive元数据都是存在这个hive数据库中的</div><div class="line"># 我们在hive中创建新的数据库和表来验证hive的元数据都存储在mysql了</div><div class="line"></div><div class="line"># 在hive中创建一个新的数据库test_hive，test_hive这个数据库会对应mysql中的hive数据库中的DBS表中的一条记录</div><div class="line">hive&gt; CREATE DATABASE test_hive;</div><div class="line"></div><div class="line"># 在hive中创建一个新的表test_person，test_person这个表会对应mysql中的hive数据库中的TBLS表中的一条记录</div><div class="line">hive&gt; USE test_hive;</div><div class="line">hive&gt; CREATE TABLE test_person (id INT,name string) ROW FORMAT DELIMITED FIELDS TERMINATED BY &apos;\t&apos;;</div><div class="line"></div><div class="line"></div><div class="line"># 在hive创建表的时候可能会遇到如下问题，是因为MySQL数据库字符集设置的utf-8导致的</div><div class="line"># Specified key was too long; max key length is 767 bytes</div><div class="line"># 修改MySQL的hive数据库的字符集为latin1就好用了</div><div class="line">$ alter database hive character set latin1;</div><div class="line"># 参考：http://blog.163.com/zhangjie_0303/blog/static/990827062013112623615941/</div><div class="line"></div><div class="line"># test_person.txt</div><div class="line">1	John</div><div class="line">2	Ben</div><div class="line">3	Allen</div><div class="line">4	Jimmy</div><div class="line">5	Will</div><div class="line">6	Jackson</div><div class="line"></div><div class="line"># 用scp命令将本地test_person.txt文件传到hive的Docker容器中</div><div class="line">$ scp -P 9998 /Users/ben/workspace_git/birdDocker/hive/test_person.txt admin@10.211.55.4:/software/hive-1.2.1/</div><div class="line"></div><div class="line"># 导入数据到test_person.txt到test_person表</div><div class="line">hive&gt; LOAD DATA LOCAL INPATH &apos;/software/hive-1.2.1/test_person.txt&apos; OVERWRITE INTO TABLE test_person;</div><div class="line">Loading data to table test_hive.test_person</div><div class="line">Table test_hive.test_person stats: [numFiles=1, numRows=0, totalSize=45, rawDataSize=0]</div><div class="line">OK</div><div class="line">Time taken: 2.885 seconds</div><div class="line"></div><div class="line"># 查看test_person表数据</div><div class="line">hive&gt; select * from test_person;</div><div class="line">OK</div><div class="line">1	John</div><div class="line">2	Ben</div><div class="line">3	Allen</div><div class="line">4	Jimmy</div><div class="line">5	Will</div><div class="line">6	Jackson</div><div class="line">Time taken: 0.7 seconds, Fetched: 6 row(s)</div><div class="line"></div><div class="line"># 查看test_hive数据库在HDFS中存储的目录</div><div class="line">$ admin@Ben:$ cd /software/hadoop-2.7.1/bin</div><div class="line"></div><div class="line"># 查看HDFS中/hive/warehouse目录下的所有文件，此目录是在hive-site.xml中hive.metastore.warehouse.dir参数配置的路径/hive/warehouse</div><div class="line">$ admin@Ben:/software/hadoop-2.7.1/bin$ ./hdfs dfs -ls /hive/warehouse/</div><div class="line">Found 1 items</div><div class="line">drwxr-xr-x   - admin supergroup          0 2016-06-25 11:39 /hive/warehouse/test_hive.db</div><div class="line"></div><div class="line"># 查看test_person表在HDFS中存储的目录</div><div class="line">$ admin@Ben:/software/hadoop-2.7.1/bin$ ./hdfs dfs -ls /hive/warehouse/test_hive.db/</div><div class="line">Found 1 items</div><div class="line">drwxr-xr-x   - admin supergroup          0 2016-06-25 11:52 /hive/warehouse/test_hive.db/test_person</div><div class="line"></div><div class="line"># 在深入一层就能看到我们导入的文件test_person.txt了</div><div class="line">$ admin@Ben:/software/hadoop-2.7.1/bin$ ./hdfs dfs -ls /hive/warehouse/test_hive.db/test_person/</div><div class="line">Found 1 items</div><div class="line">-rwxr-xr-x   3 admin supergroup         45 2016-06-25 11:52 /hive/warehouse/test_hive.db/test_person/test_person.txt</div><div class="line"></div><div class="line"># 查看test_person.txt文件里的内容，就是我们导入的内容</div><div class="line">$ admin@Ben:/software/hadoop-2.7.1/bin$ ./hdfs dfs -cat /hive/warehouse/test_hive.db/test_person/test_person.txt</div><div class="line">1	John</div><div class="line">2	Ben</div><div class="line">3	Allen</div><div class="line">4	Jimmy</div><div class="line">5	Will</div><div class="line">6	Jackson</div><div class="line"></div><div class="line"># OK，大功告成了，可以回家了 ^_^</div></pre></td></tr></table></figure>
-<h5 id="test-hive数据库在MySQL的hive数据库中的DBS表中的一条记录"><a href="#test-hive数据库在MySQL的hive数据库中的DBS表中的一条记录" class="headerlink" title="test_hive数据库在MySQL的hive数据库中的DBS表中的一条记录"></a>test_hive数据库在MySQL的hive数据库中的DBS表中的一条记录</h5><p><img src="http://img.blog.csdn.net/20160625194151411?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="DBS表"></p>
-<h5 id="test-person表在MySQL的hive数据库中的TBLS表中的一条记录"><a href="#test-person表在MySQL的hive数据库中的TBLS表中的一条记录" class="headerlink" title="test_person表在MySQL的hive数据库中的TBLS表中的一条记录"></a>test_person表在MySQL的hive数据库中的TBLS表中的一条记录</h5><p><img src="http://img.blog.csdn.net/20160625194314403?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="TBLS表"></p>
-<h5 id="元数据解析"><a href="#元数据解析" class="headerlink" title="元数据解析"></a>元数据解析</h5><p>在MySQL可以查看Hive元数据表，除了DBS和TBLS存储数据库和表的基本信息，其他表的说明见下表:</p>
-<table>
-<thead>
-<tr>
-<th>MySQL的表</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BUCKETING_COLS</td>
-<td>Hive表CLUSTERED BY字段信息(字段名，字段序号)</td>
-</tr>
-<tr>
-<td>CDS</td>
-</tr>
-<tr>
-<td>COLUMNS_V2</td>
-<td>存放表格的字段信息</td>
-</tr>
-<tr>
-<td>DATABASE_PARAMS    </td>
-</tr>
-<tr>
-<td>DBS</td>
-<td>存放hive所有数据库信息</td>
-</tr>
-<tr>
-<td>FUNCS    </td>
-</tr>
-<tr>
-<td>FUNC_RU    </td>
-</tr>
-<tr>
-<td>GLOBAL_PRIVS    </td>
-</tr>
-<tr>
-<td>PARTITIONS</td>
-<td>Hive表分区信息(创建时间，具体的分区)</td>
-</tr>
-<tr>
-<td>PARTITION_KEYS</td>
-<td>Hive分区表分区键(名称，类型，comment，序号)</td>
-</tr>
-<tr>
-<td>PARTITION_KEY_VALS</td>
-<td>Hive表分区名(键值，序号)</td>
-</tr>
-<tr>
-<td>PARTITION_PARAMS    </td>
-</tr>
-<tr>
-<td>PART_COL_STATS    </td>
-</tr>
-<tr>
-<td>ROLES    </td>
-</tr>
-<tr>
-<td>SDS</td>
-<td>所有hive表、表分区所对应的hdfs数据目录和数据格式。</td>
-</tr>
-<tr>
-<td>SD_PARAMS    </td>
-</tr>
-<tr>
-<td>SEQUENCE_TABLE</td>
-<td>SEQUENCE_TABLE表保存了hive对象的下一个可用ID，如’org.apache.hadoop.hive.metastore.model.MTable’, 21，则下一个新创建的hive表其TBL_ID就是21，同时SEQUENCE_TABLE表中271786被更新为26(这里每次都是+5)。同样，COLUMN，PARTITION等都有相应的记录</td>
-</tr>
-<tr>
-<td>SERDES</td>
-<td>Hive表序列化反序列化使用的类库信息</td>
-</tr>
-<tr>
-<td>SERDE_PARAMS</td>
-<td>序列化反序列化信息，如行分隔符、列分隔符、NULL的表示字符等</td>
-</tr>
-<tr>
-<td>SKEWED_COL_NAMES    </td>
-</tr>
-<tr>
-<td>SKEWED_COL_VALUE_LOC_MAP    </td>
-</tr>
-<tr>
-<td>SKEWED_STRING_LIST    </td>
-</tr>
-<tr>
-<td>SKEWED_STRING_LIST_VALUES    </td>
-</tr>
-<tr>
-<td>SKEWED_VALUES    </td>
-</tr>
-<tr>
-<td>SORT_COLS</td>
-<td>Hive表SORTED BY字段信息(字段名，sort类型，字段序号)</td>
-</tr>
-<tr>
-<td>TABLE_PARAMS</td>
-<td>表级属性，如是否外部表，表注释等</td>
-</tr>
-<tr>
-<td>TAB_COL_STATS    </td>
-</tr>
-<tr>
-<td>TBLS</td>
-<td>所有hive表的基本信息</td>
-</tr>
-<tr>
-<td>VERSION    </td>
-</tr>
-</tbody>
-</table>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://my.oschina.net/u/204498/blog/522772" target="_blank" rel="external">http://my.oschina.net/u/204498/blog/522772</a></li>
-<li><a href="http://blog.fens.me/hadoop-hive-intro/" target="_blank" rel="external">http://blog.fens.me/hadoop-hive-intro/</a></li>
-<li><a href="http://www.mincoder.com/article/5809.shtml" target="_blank" rel="external">http://www.mincoder.com/article/5809.shtml</a></li>
-<li><a href="http://blog.163.com/zhangjie_0303/blog/static/990827062013112623615941/" target="_blank" rel="external">http://blog.163.com/zhangjie_0303/blog/static/990827062013112623615941/</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker命令/">Docker命令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Docker/">Docker</a>
 	</div>
 
 

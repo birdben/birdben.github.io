@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Storm学习（二）Storm架构及原理（转） | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Storm集群环境已经搭建好了，但是在翻译官网的Getting Started的时候感觉有很多概念都不是太理解，所以这篇重点研究一下Storm架构及原理
+以下内容转载自：https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI
+Storm 与传统的大数据Storm 与其他大数据解决方案的不同之处在于它的处理方式。Hadoop 在本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Storm学习（二）Storm架构及原理（转）">
+<meta property="og:url" content="https://github.com/birdben/2016/11/07/Storm/Storm学习（二）Storm架构及原理（转）/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Storm集群环境已经搭建好了，但是在翻译官网的Getting Started的时候感觉有很多概念都不是太理解，所以这篇重点研究一下Storm架构及原理
+以下内容转载自：https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI
+Storm 与传统的大数据Storm 与其他大数据解决方案的不同之处在于它的处理方式。Hadoop 在本">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107201042412?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107201112288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107202111762?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107202143477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107202222212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107205213355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107205238449?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107205311189?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107205348799?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107210310422?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107210353469?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2016-11-13T04:19:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Storm学习（二）Storm架构及原理（转）">
+<meta name="twitter:description" content="Storm集群环境已经搭建好了，但是在翻译官网的Getting Started的时候感觉有很多概念都不是太理解，所以这篇重点研究一下Storm架构及原理
+以下内容转载自：https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI
+Storm 与传统的大数据Storm 与其他大数据解决方案的不同之处在于它的处理方式。Hadoop 在本">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161107201042412?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11.11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 18.89px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13.33px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11.11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11.11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17.78px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 16.67px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 10px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 15.56px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 12.22px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 11.11px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.22px;">Linux命令</a> <a href="/tags/Maven配置/" style="font-size: 12.22px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12.22px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 14.44px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 11.11px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13.33px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Storm/Storm学习（二）Storm架构及原理（转）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/07/Storm/Storm学习（二）Storm架构及原理（转）/" class="article-date">
+  	<time datetime="2016-11-07T11:34:53.000Z" itemprop="datePublished">2016-11-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Storm学习（二）Storm架构及原理（转）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Storm/">Storm</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Storm集群环境已经搭建好了，但是在翻译官网的Getting Started的时候感觉有很多概念都不是太理解，所以这篇重点研究一下Storm架构及原理</p>
+<p>以下内容转载自：<a href="https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI" target="_blank" rel="external">https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI</a></p>
+<h3 id="Storm-与传统的大数据"><a href="#Storm-与传统的大数据" class="headerlink" title="Storm 与传统的大数据"></a>Storm 与传统的大数据</h3><p>Storm 与其他大数据解决方案的不同之处在于它的处理方式。Hadoop 在本质上是一个批处理系统。数据被引入 Hadoop 文件系统 (HDFS) 并分发到各个节点进行处理。当处理完成时，结果数据返回到 HDFS 供始发者使用。Storm 支持创建拓扑结构来转换没有终点的数据流。不同于 Hadoop 作业，这些转换从不停止，它们会持续处理到达的数据。</p>
+<p>但 Storm 不只是一个传统的大数据分析系统：它是复杂事件处理 (CEP) 系统的一个示例。CEP 系统通常分类为计算和面向检测，其中每个系统都可通过用户定义的算法在 Storm 中实现。举例而言，CEP 可用于识别事件洪流中有意义的事件，然后实时地处理这些事件。</p>
+<h3 id="Storm的基本组件"><a href="#Storm的基本组件" class="headerlink" title="Storm的基本组件"></a>Storm的基本组件</h3><p>Storm的集群表面上看和Hadoop的集群非常像。但是在Hadoop上面你运行的是MapReduce的Job, 而在Storm上面你运行的是Topology。它们是非常不一样的 — 一个关键的区别是： 一个MapReduce Job最终会结束， 而一个Topology运永远运行（除非你显式的杀掉他）。</p>
+<p>在Storm的集群里面有两种节点： 控制节点(master node)和工作节点(worker node)。控制节点上面运行一个后台程序： Nimbus， 它的作用类似Hadoop里面的JobTracker。Nimbus负责在集群里面分布代码，分配工作给机器， 并且监控状态。</p>
+<p>每一个工作节点上面运行一个叫做Supervisor的节点（类似 TaskTracker）。Supervisor会监听分配给它那台机器的工作，根据需要 启动/关闭工作进程。每一个工作进程执行一个Topology（类似 Job）的一个子集；一个运行的Topology由运行在很多机器上的很多工作进程 Worker（类似 Child）组成</p>
+<h5 id="Storm-Topology结构"><a href="#Storm-Topology结构" class="headerlink" title="Storm Topology结构"></a>Storm Topology结构</h5><p><img src="http://img.blog.csdn.net/20161107201042412?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm Flow"></p>
+<h5 id="Storm-VS-MapReduce"><a href="#Storm-VS-MapReduce" class="headerlink" title="Storm VS MapReduce"></a>Storm VS MapReduce</h5><p><img src="http://img.blog.csdn.net/20161107201112288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm VS MapReduce"></p>
+<p>Nimbus和Supervisor之间的所有协调工作都是通过一个Zookeeper集群来完成。并且，Nimbus进程和Supervisor都是快速失败（fail-fast)和无状态的。所有的状态要么在Zookeeper里面， 要么在本地磁盘上。这也就意味着你可以用kill -9来杀死Nimbus和Supervisor进程， 然后再重启它们，它们可以继续工作， 就好像什么都没有发生过似的。这个设计使得Storm不可思议的稳定。</p>
+<h3 id="Topologies"><a href="#Topologies" class="headerlink" title="Topologies"></a>Topologies</h3><p>为了在Storm上面做实时计算，你要去建立一些Topologies。一个Topology就是一个计算节点所组成的图。Topology里面的每个处理节点都包含处理逻辑，而节点之间的连接则表示数据流动的方向。</p>
+<p>运行一个Topology是很简单的。首先，把你所有的代码以及所依赖的jar打进一个jar包。然后运行类似下面的这个命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm jar all-your-code.jar backtype.storm.MyTopology arg1 arg2</div></pre></td></tr></table></figure>
+<p>这个命令会运行主类: backtype.strom.MyTopology, 参数是arg1, arg2。这个类的main函数定义这个Topology并且把它提交给Nimbus。storm jar负责连接到Nimbus并且上传jar文件。</p>
+<p>因为Topology的定义其实就是一个Thrift结构并且Nimbus就是一个Thrift服务， 有可以用任何语言创建并且提交Topology。上面的方面是用JVM-based语言提交的最简单的方法, 看一下文章: 在生产集群上运行Topology去看看怎么启动以及停止Topologies。</p>
+<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><p>Stream是Storm里面的关键抽象。一个Stream是一个没有边界的Tuple序列。Storm提供一些原语来分布式地、可靠地把一个Stream传输进一个新的Stream。比如： 你可以把一个Tweets流传输到热门话题的流。</p>
+<p>Storm提供的最基本的处理Stream的原语是Spout和Bolt。你可以实现Spout和Bolt对应的接口以处理你的应用的逻辑。</p>
+<h4 id="Spout"><a href="#Spout" class="headerlink" title="Spout"></a>Spout</h4><p>Spout的流的源头。比如一个Spout可能从Kestrel队列里面读取消息并且把这些消息发射成一个流。又比如一个Spout可以调用Twitter的一个api并且把返回的Tweets发射成一个流。</p>
+<p>通常Spout会从外部数据源（队列、数据库等）读取数据，然后封装成Tuple形式，之后发送到Stream中。Spout是一个主动的角色，在接口内部有个nextTuple函数，Storm框架会不停的调用该函数。</p>
+<p><img src="http://img.blog.csdn.net/20161107202111762?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Spout"></p>
+<h4 id="Bolt"><a href="#Bolt" class="headerlink" title="Bolt"></a>Bolt</h4><p>Bolt可以接收任意多个输入Stream，作一些处理，有些Bolt可能还会发射一些新的Stream。一些复杂的流转换，比如从一些Tweet里面计算出热门话题，需要多个步骤，从而也就需要多个Bolt。Bolt可以做任何事情: 运行函数，过滤Tuple，做一些聚合，做一些合并以及访问数据库等等。</p>
+<p>Bolt处理输入的Stream，并产生新的输出Stream。Bolt可以执行过滤、函数操作、Join、操作数据库等任何操作。Bolt是一个被动的角色，其接口中有一个execute(Tuple input)方法，在接收到消息之后会调用此函数，用户可以在此方法中执行自己的处理逻辑。</p>
+<p><img src="http://img.blog.csdn.net/20161107202143477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Bolt"></p>
+<p>Spout和Bolt所组成一个网络会被打包成Topology，Topology是Storm里面最高一级的抽象（类Job）， 你可以把Topology提交给Storm的集群来运行。Topology的结构在Topology那一段已经说过了，这里就不再赘述了。</p>
+<p><img src="http://img.blog.csdn.net/20161107202222212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Topology结构"></p>
+<p>Topology里面的每一个节点都是并行运行的。在你的Topology里面，你可以指定每个节点的并行度， Storm则会在集群里面分配那么多线程来同时计算。</p>
+<p>一个Topology会一直运行直到你显式停止它。Storm自动重新分配一些运行失败的任务，并且Storm保证你不会有数据丢失，即使在一些机器意外停机并且消息被丢掉的情况下。</p>
+<h3 id="数据模型-Data-Model"><a href="#数据模型-Data-Model" class="headerlink" title="数据模型(Data Model)"></a>数据模型(Data Model)</h3><p>Storm使用Tuple来作为它的数据模型。每个Tuple是一堆值，每个值有一个名字，并且每个值可以是任何类型，在我的理解里面一个Tuple可以看作一个没有方法的Java对象。总体来看，Storm支持所有的基本类型、字符串以及字节数组作为Tuple的值类型。你也可以使用你自己定义的类型来作为值类型，只要你实现对应的序列化器(Serializer)。</p>
+<p>一个Tuple代表数据流中的一个基本的处理单元，例如一条Cookie日志，它可以包含多个Field，每个Field表示一个属性。</p>
+<p>Tuple本来应该是一个Key-Value的Map，由于各个组件间传递的Tuple的字段名称已经事先定义好了，所以Tuple只需要按序填入各个Value，所以就是一个Value List。</p>
+<p>一个没有边界的、源源不断的、连续的Tuple序列就组成了Stream。</p>
+<p>Topology里面的每个节点必须定义它要发射的Tuple的每个字段。 比如下面这个Bolt定义它所发射的Tuple包含两个字段，类型分别是: double和triple。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">publicclassDoubleAndTripleBoltimplementsIRichBolt &#123;</div><div class="line">    </div><div class="line">    privateOutputCollectorBase _collector;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoidprepare(Map conf, TopologyContext context, OutputCollectorBase collector) &#123;</div><div class="line">        _collector = collector;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoidexecute(Tuple input) &#123;</div><div class="line">        intval = input.getInteger(0);</div><div class="line">        _collector.emit(input,newValues(val*2, val*3));</div><div class="line">        _collector.ack(input);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoidcleanup() &#123;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    publicvoiddeclareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(newFields(&quot;double&quot;,&quot;triple&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>declareOutputFields方法定义要输出的字段 ： [“double”, “triple”]。这个Bolt的其它部分我们接下来会解释。</p>
+<h3 id="一个简单的Topology"><a href="#一个简单的Topology" class="headerlink" title="一个简单的Topology"></a>一个简单的Topology</h3><p>让我们来看一个简单的Topology的例子， 我们看一下storm-starter里面的ExclamationTopology:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">TopologyBuilder builder =newTopologyBuilder();</div><div class="line">builder.setSpout(1,newTestWordSpout(),10);</div><div class="line">builder.setBolt(2,newExclamationBolt(),3)</div><div class="line">        .shuffleGrouping(1);</div><div class="line">builder.setBolt(3,newExclamationBolt(),2)</div><div class="line">        .shuffleGrouping(2);</div></pre></td></tr></table></figure>
+<p>这个Topology包含一个Spout和两个Bolt。Spout发射单词，每个Bolt在每个单词后面加个”!!!”。这三个节点被排成一条线: Spout发射单词给第一个Bolt，第一个Bolt然后把处理好的单词发射给第二个Bolt。如果Spout发射的单词是[“bob”]和[“john”], 那么第二个Bolt会发射[“bolt!!!!!!”]和[“john!!!!!!”]出来。</p>
+<p>我们使用setSpout和setBolt来定义Topology里面的节点。这些方法接收我们指定的一个id，一个包含处理逻辑的对象(Spout或者Bolt), 以及你所需要的并行度。</p>
+<p>这个包含处理的对象如果是Spout那么要实现IRichSpout的接口，如果是Bolt，那么就要实现IRichBolt接口。</p>
+<p>最后一个指定并行度的参数是可选的。它表示集群里面需要多少个Thread来一起执行这个节点。如果你忽略它那么Storm会分配一个线程来执行这个节点。</p>
+<p>setBolt方法返回一个InputDeclarer对象，这个对象是用来定义Bolt的输入。这里第一个Bolt声明它要读取Spout所发射的所有的Tuple —— 使用shuffle grouping。而第二个Bolt声明它读取第一个Bolt所发射的Tuple。shuffle grouping表示所有的Tuple会被随机的分发给Bolt的所有Task。给Task分发Tuple的策略有很多种，后面会介绍。</p>
+<p>如果你想第二个Bolt读取Spout和第一个Bolt所发射的所有的Tuple， 那么你应该这样定义第二个Bolt:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">builder.setBolt(3,newExclamationBolt(),5)</div><div class="line">            .shuffleGrouping(1)</div><div class="line">            .shuffleGrouping(2);</div></pre></td></tr></table></figure>
+<p>让我们深入地看一下这个Topology里面的Spout和Bolt是怎么实现的。Spout负责发射新的Tuple到这个Topology里面来。TestWordSpout从[“nathan”, “mike”, “jackson”, “golda”, “bertels”]里面随机选择一个单词发射出来。TestWordSpout里面的nextTuple()方法是这样定义的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">publicvoidnextTuple() &#123;</div><div class="line">    Utils.sleep(100);</div><div class="line">    finalString[] words =newString[] &#123;&quot;nathan&quot;,&quot;mike&quot;,</div><div class="line">                     &quot;jackson&quot;,&quot;golda&quot;,&quot;bertels&quot;&#125;;</div><div class="line">    finalRandom rand =newRandom();</div><div class="line">    finalString word = words[rand.nextInt(words.length)];</div><div class="line">    _collector.emit(newValues(word));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，实现很简单。</p>
+<p>ExclamationBolt把”!!!”拼接到输入tuple后面。我们来看下ExclamationBolt的完整实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">publicstaticclassExclamationBoltimplementsIRichBolt &#123;</div><div class="line">    OutputCollector _collector;</div><div class="line"> </div><div class="line">    publicvoidprepare(Map conf, TopologyContext context,</div><div class="line">                        OutputCollector collector) &#123;</div><div class="line">        _collector = collector;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoidexecute(Tuple tuple) &#123;</div><div class="line">        _collector.emit(tuple,newValues(tuple.getString(0) +&quot;!!!&quot;));</div><div class="line">        _collector.ack(tuple);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoidcleanup() &#123;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoiddeclareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(newFields(&quot;word&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>prepare方法提供给Bolt一个Outputcollector用来发射tuple。Bolt可以在任何时候发射Tuple —— 在prepare, execute或者cleanup方法里面, 或者甚至在另一个线程里面异步发射。这里prepare方法只是简单地把OutputCollector作为一个类字段保存下来给后面execute方法使用。</p>
+<p>execute方法从Bolt的一个输入接收Tuple(一个Bolt可能有多个输入源)。ExclamationBolt获取Tuple的第一个字段，加上”!!!”之后再发射出去。如果一个Bolt有多个输入源，你可以通过调用Tuple#getSourceComponent方法来知道它是来自哪个输入源的。</p>
+<p>execute方法里面还有其它一些事情值得一提：输入Tuple被作为emit方法的第一个参数，并且输入Tuple在最后一行被ack。这些呢都是Storm可靠性API的一部分，后面会解释。</p>
+<p>cleanup方法在Bolt被关闭的时候调用，它应该清理所有被打开的资源。但是集群不保证这个方法一定会被执行。比如执行Task的机器down掉了，那么根本就没有办法来调用那个方法。cleanup设计的时候是被用来在local mode的时候才被调用(也就是说在一个进程里面模拟整个storm集群), 并且你想在关闭一些Topology的时候避免资源泄漏。</p>
+<p>最后，declareOutputFields定义一个叫做”word”的字段的Tuple。</p>
+<p>以local mode运行ExclamationTopology<br>让我们看看怎么以local mode运行ExclamationToplogy。</p>
+<p>Storm的运行有两种模式: 本地模式和分布式模式。在本地模式中，Storm用一个进程里面的线程来模拟所有的Spout和Bolt。本地模式对开发和测试来说比较有用。你运行storm-starter里面的Topology的时候它们就是以本地模式运行的，你可以看到Topology里面的每一个组件在发射什么消息。</p>
+<p>在分布式模式下，Storm由一堆机器组成。当你提交Topology给master的时候，你同时也把Topology的代码提交了。master负责分发你的代码并且负责给你的Topolgoy分配工作进程。如果一个工作进程挂掉了， master节点会把认为重新分配到其它节点。关于如何在一个集群上面运行Topology，你可以看看Running topologies on a production cluster文章。</p>
+<p>下面是以本地模式运行ExclamationTopology的代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Config conf =newConfig();</div><div class="line">conf.setDebug(true);</div><div class="line">conf.setNumWorkers(2);</div><div class="line"> </div><div class="line">LocalCluster cluster =newLocalCluster();</div><div class="line">cluster.submitTopology(&quot;test&quot;, conf, builder.createTopology());</div><div class="line">Utils.sleep(10000);</div><div class="line">cluster.killTopology(&quot;test&quot;);</div><div class="line">cluster.shutdown();</div></pre></td></tr></table></figure>
+<p>首先， 这个代码定义通过定义一个LocalCluster对象来定义一个进程内的集群。提交Topology给这个虚拟的集群和提交Topology给分布式集群是一样的。通过调用submitTopology方法来提交Topology， 它接受三个参数：要运行的Topology的名字，一个配置对象以及要运行的Topology本身。</p>
+<p>Topology的名字是用来唯一区别一个Topology的，这样你然后可以用这个名字来杀死这个Topology的。前面已经说过了，你必须显式的杀掉一个Topology，否则它会一直运行。</p>
+<p>Conf对象可以配置很多东西，下面两个是最常见的：</p>
+<ul>
+<li><p>TOPOLOGY_WORKERS(setNumWorkers) 定义你希望集群分配多少个工作进程给你来执行这个Topology。Topology里面的每个组件会被需要线程来执行。每个组件到底用多少个线程是通过setBolt和setSpout来指定的。这些线程都运行在工作进程里面。每一个工作进程包含一些节点的一些工作线程。比如，如果你指定300个线程，50个进程，那么每个工作进程里面要执行6个线程，而这6个线程可能属于不同的组件(Spout, Bolt)。你可以通过调整每个组件的并行度以及这些线程所在的进程数量来调整Topology的性能。</p>
+</li>
+<li><p>TOPOLOGY_DEBUG(setDebug), 当它被设置成true的话，storm会记录下每个组件所发射的每条消息。这在本地环境调试Topology很有用，但是在线上这么做的话会影响性能的。</p>
+</li>
+</ul>
+<p>感兴趣的话可以去看看Conf对象的Javadoc去看看topology的所有配置。<br>可以看看创建一个新Storm项目去看看怎么配置开发环境以使你能够以本地模式运行Topology.</p>
+<p>运行中的Topology主要由以下三个组件组成的：</p>
+<ul>
+<li>Worker processes（进程）</li>
+<li>Executors (threads)（线程）</li>
+<li>Tasks</li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20161107205213355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Worker"></p>
+<p>Spout或者Bolt的Task个数一旦指定之后就不能改变了，而Executor的数量可以根据情况来进行动态的调整。默认情况下# executor = #tasks即一个Executor中运行着一个Task</p>
+<p><img src="http://img.blog.csdn.net/20161107205238449?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Executor"></p>
+<p><img src="http://img.blog.csdn.net/20161107205311189?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Topology"></p>
+<p><img src="http://img.blog.csdn.net/20161107205348799?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="conf"></p>
+<h3 id="流分组策略-Stream-Grouping"><a href="#流分组策略-Stream-Grouping" class="headerlink" title="流分组策略(Stream Grouping)"></a>流分组策略(Stream Grouping)</h3><p>流分组策略告诉Topology如何在两个组件之间发送Tuple。要记住，Spouts和Bolts以很多Task的形式在Topology里面同步执行。如果从Task的粒度来看一个运行的Topology，它应该是这样的:</p>
+<p><img src="http://img.blog.csdn.net/20161107210310422?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Grouping"></p>
+<p>从Task角度来看Topology</p>
+<p>当Bolt A的一个task要发送一个Tuple给Bolt B， 它应该发送给Bolt B的哪个Task呢？</p>
+<p>Stream Grouping专门回答这种问题的。在我们深入研究不同的Stream Grouping之前，让我们看一下storm-starter里面的另外一个Topology。WordCountTopology读取一些句子，输出句子里面每个单词出现的次数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">TopologyBuilder builder =newTopologyBuilder();</div><div class="line"> </div><div class="line">builder.setSpout(1,newRandomSentenceSpout(),5);</div><div class="line">builder.setBolt(2,newSplitSentence(),8)</div><div class="line">        .shuffleGrouping(1);</div><div class="line">builder.setBolt(3,newWordCount(),12)</div><div class="line">        .fieldsGrouping(2,newFields(&quot;word&quot;));</div></pre></td></tr></table></figure>
+<p>SplitSentence对于句子里面的每个单词发射一个新的Tuple, WordCount在内存里面维护一个单词-&gt;次数的Mapping，WordCount每收到一个单词，它就更新内存里面的统计状态。</p>
+<p>有好几种不同的Stream Grouping:</p>
+<p>最简单的Grouping是shuffle grouping, 它随机发给任何一个Task。上面例子里面RandomSentenceSpout和SplitSentence之间用的就是shuffle grouping, shuffle grouping对各个Task的Tuple分配的比较均匀。</p>
+<p>一种更有趣的Grouping是fields grouping, SplitSentence和WordCount之间使用的就是fields grouping, 这种Grouping机制保证相同Field值的Tuple会去同一个Task，这对于WordCount来说非常关键，如果同一个单词不去同一个task，那么统计出来的单词次数就不对了。</p>
+<p>fields grouping是Stream合并，Stream聚合以及很多其它场景的基础。在背后呢，fields grouping使用的一致性哈希来分配Tuple的。</p>
+<p>还有一些其它类型的Stream Grouping. 你可以在Concepts一章里更详细的了解。</p>
+<p>下面是一些常用的 “路由选择” 机制：</p>
+<p>Storm的Grouping即消息的Partition机制。当一个Tuple被发送时，如何确定将它发送个某个（些）Task来处理？？</p>
+<ul>
+<li>ShuffleGrouping：随机选择一个Task来发送。</li>
+<li>FieldGrouping：根据Tuple中Fields来做一致性hash，相同hash值的Tuple被发送到相同的Task。</li>
+<li>AllGrouping：广播发送，将每一个Tuple发送到所有的Task。</li>
+<li>GlobalGrouping：所有的Tuple会被发送到某个Bolt中的id最小的那个Task。</li>
+<li>NoneGrouping：不关心Tuple发送给哪个Task来处理，等价于ShuffleGrouping。</li>
+<li>DirectGrouping：直接将Tuple发送到指定的Task来处理。</li>
+</ul>
+<h3 id="使用别的语言来定义Bolt"><a href="#使用别的语言来定义Bolt" class="headerlink" title="使用别的语言来定义Bolt"></a>使用别的语言来定义Bolt</h3><p>Bolt可以使用任何语言来定义。用其它语言定义的Bolt会被当作子进程(subprocess)来执行， Storm使用JSON消息通过stdin/stdout来和这些subprocess通信。这个通信协议是一个只有100行的库，Storm团队给这些库开发了对应的Ruby, Python和Fancy版本。</p>
+<p>下面是WordCountTopology里面的SplitSentence的定义:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">publicstaticclassSplitSentenceextendsShellBoltimplementsIRichBolt &#123;</div><div class="line">    publicSplitSentence() &#123;</div><div class="line">        super(&quot;python&quot;,&quot;splitsentence.py&quot;);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    publicvoiddeclareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(newFields(&quot;word&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SplitSentence继承自ShellBolt并且声明这个Bolt用Python来运行，并且参数是: splitsentence.py。下面是splitsentence.py的定义:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">importstorm</div><div class="line"> </div><div class="line">classSplitSentenceBolt(storm.BasicBolt):</div><div class="line">    defprocess(self, tup):</div><div class="line">        words=tup.values[0].split(&quot; &quot;)</div><div class="line">        forwordinwords:</div><div class="line">          storm.emit([word])</div><div class="line"> </div><div class="line">SplitSentenceBolt().run()</div></pre></td></tr></table></figure>
+<p>更多有关用其它语言定义Spout和Bolt的信息， 以及用其它语言来创建topology的 信息可以参见: Using non-JVM languages with Storm.</p>
+<h3 id="可靠的消息处理"><a href="#可靠的消息处理" class="headerlink" title="可靠的消息处理"></a>可靠的消息处理</h3><p>在这个教程的前面，我们跳过了有关Tuple的一些特征。这些特征就是Storm的可靠性API： Storm如何保证Spout发出的每一个Tuple都被完整处理。看看《storm如何保证消息不丢失》以更深入了解storm的可靠性API.</p>
+<p>Storm允许用户在Spout中发射一个新的源Tuple时为其指定一个MessageId，这个MessageId可以是任意的Object对象。多个源Tuple可以共用同一个MessageId，表示这多个源Tuple对用户来说是同一个消息单元。Storm的可靠性是指Storm会告知用户每一个消息单元是否在一个指定的时间内被完全处理。完全处理的意思是该MessageId绑定的源Tuple以及由该源Tuple衍生的所有Tuple都经过了Topology中每一个应该到达的Bolt的处理。</p>
+<p><img src="http://img.blog.csdn.net/20161107210353469?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Message"></p>
+<p>在Spout中由message 1绑定的tuple1和tuple2分别经过bolt1和bolt2的处理，然后生成了两个新的Tuple，并最终流向了bolt3。当bolt3处理完之后，称message 1被完全处理了。</p>
+<p>Storm中的每一个Topology中都包含有一个Acker组件。Acker组件的任务就是跟踪从Spout中流出的每一个messageId所绑定的Tuple树中的所有Tuple的处理情况。如果在用户设置的最大超时时间内这些Tuple没有被完全处理，那么Acker会告诉Spout该消息处理失败，相反则会告知Spout该消息处理成功。</p>
+<p>那么Acker是如何记录Tuple的处理结果呢？？</p>
+<p>A xor A = 0.</p>
+<p>A xor B…xor B xor A = 0，其中每一个操作数出现且仅出现两次。</p>
+<p>在Spout中，Storm系统会为用户指定的MessageId生成一个对应的64位的整数，作为整个Tuple Tree的RootId。RootId会被传递给Acker以及后续的Bolt来作为该消息单元的唯一标识。同时，无论Spout还是Bolt每次新生成一个Tuple时，都会赋予该Tuple一个唯一的64位整数的Id。</p>
+<p>当Spout发射完某个MessageId对应的源Tuple之后，它会告诉Acker自己发射的RootId以及生成的那些源Tuple的Id。而当Bolt处理完一个输入Tuple并产生出新的Tuple时，也会告知Acker自己处理的输入Tuple的Id以及新生成的那些Tuple的Id。Acker只需要对这些Id进行异或运算，就能判断出该RootId对应的消息单元是否成功处理完成了。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI" target="_blank" rel="external">https://my.oschina.net/leejun2005/blog/147607?fromerr=NjSkGlQI</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/opensource/os-twitterstorm/#list1" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/opensource/os-twitterstorm/#list1</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Storm学习（一）Storm集群环境搭建</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
