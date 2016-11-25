@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Hadoop学习（二）Hadoop架构及原理 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过上一章Hadoop完全分布式集群的环境搭建，遇到了各种各样的疑问，包括MRv1代和MRv2代的区别，对很多Hadoop进程的意义都进行了详细的了解，包括一些Hadoop组件的原理
+先来说说我的疑问
+
+有NameNode和DataNode，有ResourceManager和NodeManager，为什么没有网上说的JobTracker和TaskTracker
+SecondaryNameNode是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop学习（二）Hadoop架构及原理">
+<meta property="og:url" content="https://github.com/birdben/2016/09/12/Hadoop/Hadoop学习（二）Hadoop架构及原理/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="通过上一章Hadoop完全分布式集群的环境搭建，遇到了各种各样的疑问，包括MRv1代和MRv2代的区别，对很多Hadoop进程的意义都进行了详细的了解，包括一些Hadoop组件的原理
+先来说说我的疑问
+
+有NameNode和DataNode，有ResourceManager和NodeManager，为什么没有网上说的JobTracker和TaskTracker
+SecondaryNameNode是">
+<meta property="og:image" content="http://img.blog.csdn.net/20160924114720210?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20160924114749368?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20161030164443369?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2016-11-25T01:47:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop学习（二）Hadoop架构及原理">
+<meta name="twitter:description" content="通过上一章Hadoop完全分布式集群的环境搭建，遇到了各种各样的疑问，包括MRv1代和MRv2代的区别，对很多Hadoop进程的意义都进行了详细的了解，包括一些Hadoop组件的原理
+先来说说我的疑问
+
+有NameNode和DataNode，有ResourceManager和NodeManager，为什么没有网上说的JobTracker和TaskTracker
+SecondaryNameNode是">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160924114720210?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 14px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 13px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12px;">Linux命令</a> <a href="/tags/MapReduce/" style="font-size: 12px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 13px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Hadoop/Hadoop学习（二）Hadoop架构及原理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/12/Hadoop/Hadoop学习（二）Hadoop架构及原理/" class="article-date">
+  	<time datetime="2016-09-12T02:29:27.000Z" itemprop="datePublished">2016-09-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hadoop学习（二）Hadoop架构及原理
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop原理架构体系/">Hadoop原理架构体系</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过上一章Hadoop完全分布式集群的环境搭建，遇到了各种各样的疑问，包括MRv1代和MRv2代的区别，对很多Hadoop进程的意义都进行了详细的了解，包括一些Hadoop组件的原理</p>
+<p>先来说说我的疑问</p>
+<ul>
+<li>有NameNode和DataNode，有ResourceManager和NodeManager，为什么没有网上说的JobTracker和TaskTracker</li>
+<li>SecondaryNameNode是做什么的</li>
+<li>MRv1和MRv2有什么区别</li>
+<li>YARN是做什么的</li>
+<li>core-site.xml, hdfs-site.xml, mapred-site.xml, yarn-site.xml这几个配置文件是配置什么的</li>
+<li>HDFS默认的端口号是8020还是9000</li>
+</ul>
+<p>看了上面的疑问，我想如果对Hadoop有研究的人应该都知道答案了。但是对于我这样的初学者理解起来还是费了点时间，下面我们将逐渐解答上面的疑团。</p>
+<h3 id="MRv1和MRv2的区别"><a href="#MRv1和MRv2的区别" class="headerlink" title="MRv1和MRv2的区别"></a>MRv1和MRv2的区别</h3><p>先说说MRv1和MRv2，MRv1就是MapReduce v1版本和MapReduce v2版本，从 Hadoop 0.23.0 版本开始，Hadoop 的 MapReduce 框架完全重构，发生了根本的变化。新的 Hadoop MapReduce 框架命名为 MapReduceV2 或者叫 Yarn。这里我们使用的Hadoop-2.7.1版本，也就是用的YARN版本。</p>
+<h4 id="YARN的好处"><a href="#YARN的好处" class="headerlink" title="YARN的好处"></a>YARN的好处</h4><p>与MRv1相比，YARN不再是一个单纯的计算框架，而是一个框架管理器，用户可以将各种各样的计算框架移植到YARN之上，由YARN进行统一管理和资源分配，由于将现有框架移植到YARN之上需要一定的工作量，当前YARN仅可运行MapReduce这种离线计算框架。</p>
+<p>我们知道，不存在一种统一的计算框架适合所有应用场景，也就是说，如果你想设计一种计算框架，可以高效地进行离线计算、在线计算、流式计算、内存计算等，是不可能的。既然没有全能的计算框架，为什么不开发一个容纳和管理各种计算框架的框架管理平台（实际上是资源管理平台）呢，而YARN正是干这件事情的东西。</p>
+<p>YANR本质上是一个资源统一管理系统，这一点与几年前的mesos（<a href="http://www.mesosproject.org/），更早的Torque（http://www.adaptivecomputing.com/products/open-source/torque/）基本一致。将各种框架运行在YARN之上，可以实现框架的资源统一管理和分配，使他们共享一个集群，而不是“一个框架一个集群”，这可大大降低运维成本和硬件成本。" target="_blank" rel="external">http://www.mesosproject.org/），更早的Torque（http://www.adaptivecomputing.com/products/open-source/torque/）基本一致。将各种框架运行在YARN之上，可以实现框架的资源统一管理和分配，使他们共享一个集群，而不是“一个框架一个集群”，这可大大降低运维成本和硬件成本。</a></p>
+<p>下面列举了比较流行的多计算框架</p>
+<ul>
+<li>MapReduce:  这个框架人人皆知，它是一种离线计算框架，将一个算法抽象成Map和Reduce两个阶段进行处理，非常适合数据密集型计算。</li>
+<li>Spark:  我们知道，MapReduce计算框架不适合（不是不能做，是不适合，效率太低）迭代计算（常见于machine learning领域，比如PageRank）和交互式计算（data mining领域，比如SQL查询），MapReduce是一种磁盘计算框架，而Spark则是一种内存计算框架，它将数据尽可能放到内存中以提高迭代应用和交互式应用的计算效率。官方首页：<a href="http://spark-project.org/" target="_blank" rel="external">http://spark-project.org/</a></li>
+<li>Storm:  MapReduce也不适合进行流式计算、实时分析，比如广告点击计算等，而Storm则更擅长这种计算、它在实时性要远远好于MapReduce计算框架。官方首页：<a href="http://storm-project.net/" target="_blank" rel="external">http://storm-project.net/</a></li>
+</ul>
+<p>在YARN中，各种计算框架不再是作为一个服务部署到集群的各个节点上（比如MapReduce框架，不再需要部署JobTracler、TaskTracker等服务），而是被封装成一个用户程序库（lib）存放在客户端，当需要对计算框架进行升级时，只需升级用户程序库即可，多么容易！</p>
+<p>再来看看MRv1和MRv2的对比。</p>
+<h4 id="MRv1结构图"><a href="#MRv1结构图" class="headerlink" title="MRv1结构图"></a>MRv1结构图</h4><ul>
+<li>NameNode : HDFS分发节点</li>
+<li>DataNode : HDFS数据节点</li>
+<li>JobTracker : 首先用户程序 (JobClient) 提交了一个 job，job 的信息会发送到 Job Tracker 中，Job Tracker 是 Map-reduce 框架的中心，他需要与集群中的机器定时通信 (heartbeat), 需要管理哪些程序应该跑在哪些机器上，需要管理所有 job 失败、重启等操作。</li>
+<li>TaskTracker : TaskTracker 是 Map-reduce 集群中每台机器都有的一个部分，他做的事情主要是监视自己所在机器的资源情况。TaskTracker 同时监视当前机器的 tasks 运行状况。TaskTracker 需要把这些信息通过 heartbeat 发送给 JobTracker，JobTracker 会搜集这些信息以给新提交的 job 分配运行在哪些机器上。</li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20160924114720210?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="MRv1"></p>
+<p>当一个客户端向一个 Hadoop 集群发出一个请求时，此请求由 JobTracker 管理。JobTracker 与 NameNode 联合将工作分发到离它所处理的数据尽可能近的位置。NameNode 是文件系统的主系统，提供元数据服务来执行数据分发和复制。JobTracker 将 Map 和 Reduce 任务安排到一个或多个 TaskTracker 上的可用插槽中。TaskTracker 与 DataNode（分布式文件系统）一起对来自 DataNode 的数据执行 Map 和 Reduce 任务。当 Map 和 Reduce 任务完成时，TaskTracker 会告知 JobTracker，后者确定所有任务何时完成并最终告知客户作业已完成。</p>
+<p>从 图 1 中可以看到，MRv1 实现了一个相对简单的集群管理器来执行 MapReduce 处理。MRv1 提供了一种分层的集群管理模式，其中大数据作业以单个 Map 和 Reduce 任务的形式渗入一个集群，并最后聚合成作业来报告给用户。但这种简单性有一些隐秘，不过也不是很隐秘的问题。 </p>
+<h5 id="MRv1-的缺陷"><a href="#MRv1-的缺陷" class="headerlink" title="MRv1 的缺陷"></a>MRv1 的缺陷</h5><ul>
+<li>JobTracker 是 Map-reduce 的集中处理点，存在单点故障。</li>
+<li>JobTracker 完成了太多的任务，造成了过多的资源消耗，当 map-reduce job 非常多的时候，会造成很大的内存开销，潜在来说，也增加了 JobTracker fail 的风险，这也是业界普遍总结出老 Hadoop 的 Map-Reduce 只能支持 4000 节点主机的上限。</li>
+<li>在 TaskTracker 端，以 map/reduce task 的数目作为资源的表示过于简单，没有考虑到 cpu/ 内存的占用情况，如果两个大内存消耗的 task 被调度到了一块，很容易出现 OOM。</li>
+<li>在 TaskTracker 端，把资源强制划分为 map task slot 和 reduce task slot, 如果当系统中只有 map task 或者只有 reduce task 的时候，会造成资源的浪费，也就是前面提过的集群资源利用的问题。</li>
+<li>源代码层面分析的时候，会发现代码非常的难读，常常因为一个 class 做了太多的事情，代码量达 3000 多行，，造成 class 的任务不清晰，增加 bug 修复和版本维护的难度。</li>
+<li>从操作的角度来看，现在的 Hadoop MapReduce 框架在有任何重要的或者不重要的变化 ( 例如 bug 修复，性能提升和特性化 ) 时，都会强制进行系统级别的升级更新。更糟的是，它不管用户的喜好，强制让分布式集群系统的每一个用户端同时更新。这些更新会让用户为了验证他们之前的应用程序是不是适用新的 Hadoop 版本而浪费大量时间。</li>
+</ul>
+<h4 id="MRv2结构图"><a href="#MRv2结构图" class="headerlink" title="MRv2结构图"></a>MRv2结构图</h4><ul>
+<li>NameNode : HDFS分发节点</li>
+<li>DataNode : HDFS数据节点</li>
+<li>ResourceManager : MR资源管理</li>
+<li>NodeManager : NodeManager是执行应用程序的容器，监控应用程序的资源使用情况 (CPU，内存，硬盘，网络 ) 并且向调度器汇报。</li>
+<li>ApplicationMaster : ApplicationMaster是向调度器索要适当的资源容器，运行任务，跟踪应用程序的状态和监控它们的进程，处理任务的失败原因。 </li>
+<li>SecondaryNameNode</li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20160924114749368?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="MRv2"></p>
+<p>重构根本的思想是将 JobTracker 两个主要的功能分离成单独的组件，这两个功能是资源管理和任务调度 / 监控。新的资源管理器全局管理所有应用程序计算资源的分配，每一个应用的 ApplicationMaster 负责相应的调度和协调。一个应用程序无非是一个单独的传统的 MapReduce 任务或者是一个 DAG( 有向无环图 ) 任务。ResourceManager 和每一台机器的节点管理服务器能够管理用户在那台机器上的进程并能对计算进行组织。</p>
+<p>事实上，每一个应用的 ApplicationMaster 是一个详细的框架库，它结合从 ResourceManager 获得的资源和 NodeManager 协同工作来运行和监控任务。</p>
+<p>上图中 ResourceManager 支持分层级的应用队列，这些队列享有集群一定比例的资源。从某种意义上讲它就是一个纯粹的调度器，它在执行过程中不对应用进行监控和状态跟踪。同样，它也不能重启因应用失败或者硬件错误而运行失败的任务。</p>
+<p>ResourceManager 是基于应用程序对资源的需求进行调度的 ; 每一个应用程序需要不同类型的资源因此就需要不同的容器。资源包括：内存，CPU，磁盘，网络等等。可以看出，这同现 Mapreduce 固定类型的资源使用模型有显著区别，它给集群的使用带来负面的影响。资源管理器提供一个调度策略的插件，它负责将集群资源分配给多个队列和应用程序。调度插件可以基于现有的能力调度和公平调度模型。</p>
+<p>上图中 NodeManager 是每一台机器框架的代理，是执行应用程序的容器，监控应用程序的资源使用情况 (CPU，内存，硬盘，网络 ) 并且向调度器汇报。</p>
+<p>每一个应用的 ApplicationMaster 的职责有：向调度器索要适当的资源容器，运行任务，跟踪应用程序的状态和监控它们的进程，处理任务的失败原因。 </p>
+<h4 id="新旧-Hadoop-MapReduce-框架比对"><a href="#新旧-Hadoop-MapReduce-框架比对" class="headerlink" title="新旧 Hadoop MapReduce 框架比对"></a>新旧 Hadoop MapReduce 框架比对</h4><p>让我们来对新旧 MapReduce 框架做详细的分析和对比，可以看到有以下几点显著变化：<br>首先客户端不变，其调用 API 及接口大部分保持兼容，这也是为了对开发使用者透明化，使其不必对原有代码做大的改变 ( 详见 2.3 Demo 代码开发及详解)，但是原框架中核心的 JobTracker 和 TaskTracker 不见了，取而代之的是 ResourceManager, ApplicationMaster 与 NodeManager 三个部分。</p>
+<p>我们来详细解释这三个部分，首先 ResourceManager 是一个中心的服务，它做的事情是调度、启动每一个 Job 所属的 ApplicationMaster、另外监控 ApplicationMaster 的存在情况。细心的读者会发现：Job 里面所在的 task 的监控、重启等等内容不见了。这就是 AppMst 存在的原因。ResourceManager 负责作业与资源的调度。接收 JobSubmitter 提交的作业，按照作业的上下文 (Context) 信息，以及从 NodeManager 收集来的状态信息，启动调度过程，分配一个 Container 作为 App Mstr<br>NodeManager 功能比较专一，就是负责 Container 状态的维护，并向 RM 保持心跳。</p>
+<p>ApplicationMaster 负责一个 Job 生命周期内的所有工作，类似老的框架中 JobTracker。但注意每一个 Job（不是每一种）都有一个 ApplicationMaster，它可以运行在 ResourceManager 以外的机器上。</p>
+<p>Yarn 框架相对于老的 MapReduce 框架什么优势呢？我们可以看到：<br>这个设计大大减小了 JobTracker（也就是现在的 ResourceManager）的资源消耗，并且让监测每一个 Job 子任务 (tasks) 状态的程序分布式化了，更安全、更优美。</p>
+<p>在新的 Yarn 中，ApplicationMaster 是一个可变更的部分，用户可以对不同的编程模型写自己的 AppMst，让更多类型的编程模型能够跑在 Hadoop 集群中，可以参考 hadoop Yarn 官方配置模板中的 mapred-site.xml 配置。</p>
+<p>对于资源的表示以内存为单位 ( 在目前版本的 Yarn 中，没有考虑 cpu 的占用 )，比之前以剩余 slot 数目更合理。</p>
+<p>老的框架中，JobTracker 一个很大的负担就是监控 job 下的 tasks 的运行状况，现在，这个部分就扔给 ApplicationMaster 做了，而 ResourceManager 中有一个模块叫做 ApplicationsMasters( 注意不是 ApplicationMaster)，它是监测 ApplicationMaster 的运行状况，如果出问题，会将其在其他机器上重启。</p>
+<p>Container 是 Yarn 为了将来作资源隔离而提出的一个框架。这一点应该借鉴了 Mesos 的工作，目前是一个框架，仅仅提供 java 虚拟机内存的隔离 ,hadoop 团队的设计思路应该后续能支持更多的资源调度和控制 , 既然资源表示成内存量，那就没有了之前的 map slot/reduce slot 分开造成集群资源闲置的尴尬情况。</p>
+<p>引入YARN作为通用资源调度平台后，Hadoop得以支持多种计算框架，如MapReduce、Spark、Storm等。MRv1是Hadoop1中的MapReduce，MRv2是Hadoop2中的MapReduce。下面是MRv1和MRv2之间的一些基本变化：</p>
+<p>MRv1包括三个部分：运行时环境（jobtracker和tasktracker）、编程模型（MapReduce）、数据处理引擎（Map任务和Reduce任务）<br>MRv2中，重用了MRv1中的编程模型和数据处理引擎。但是运行时环境被重构了。jobtracker被拆分成了通用的资源调度平台YARN和负责各个计算框架的任务调度模型AM。<br>MRv1中任务是运行在Map slot和Reduce slot中的，计算节点上的Map slot资源和Reduce slot资源不能重用。而MRv2中任务是运行在container中的，map任务结束后，相应container结束，空闲出来的资源可以让reduce使用。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://dongxicheng.org/mapreduce-nextgen/what-can-we-benifit-from-yarn/" target="_blank" rel="external">http://dongxicheng.org/mapreduce-nextgen/what-can-we-benifit-from-yarn/</a></li>
+</ul>
+<h3 id="Hadoop的默认端口"><a href="#Hadoop的默认端口" class="headerlink" title="Hadoop的默认端口"></a>Hadoop的默认端口</h3><p>Hadoop集群的各部分一般都会使用到多个端口，有些是daemon之间进行交互之用，有些是用于RPC访问以及HTTP访问。而随着Hadoop周边组件的增多，完全记不住哪个端口对应哪个应用，特收集记录如此，以便查询。</p>
+<p>这里包含我们使用到的组件：HDFS, YARN, HBase, Hive, ZooKeeper。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>Daemon</th>
+<th>端口</th>
+<th>配置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50010</td>
+<td>dfs.datanode.address</td>
+<td>datanode服务端口，用于数据传输</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50075</td>
+<td>dfs.datanode.http.address</td>
+<td>http服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50475</td>
+<td>dfs.datanode.https.address</td>
+<td>https服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50020</td>
+<td>dfs.datanode.ipc.address</td>
+<td>ipc服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>NameNode</td>
+<td>50070</td>
+<td>dfs.namenode.http-address</td>
+<td>http服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>NameNode</td>
+<td>50470</td>
+<td>dfs.namenode.https-address</td>
+<td>https服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>NameNode</td>
+<td>8020</td>
+<td>fs.defaultFS</td>
+<td>接收Client连接的RPC端口，用于获取文件系统metadata信息。</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>journalnode</td>
+<td>8485</td>
+<td>dfs.journalnode.rpc-address</td>
+<td>RPC服务</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>journalnode</td>
+<td>8480</td>
+<td>dfs.journalnode.http-address    HTTP服务</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>ZKFC</td>
+<td>8019</td>
+<td>dfs.ha.zkfc.port</td>
+<td>ZooKeeper FailoverController，用于NN HA</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8032</td>
+<td>yarn.resourcemanager.address</td>
+<td>RM的applications manager(ASM)端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8030</td>
+<td>yarn.resourcemanager.scheduler.address</td>
+<td>scheduler组件的IPC端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8031</td>
+<td>yarn.resourcemanager.resource-tracker.address</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8033</td>
+<td>yarn.resourcemanager.admin.address</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8088</td>
+<td>yarn.resourcemanager.webapp.address</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8040</td>
+<td>yarn.nodemanager.localizer.address</td>
+<td>localizer IPC</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8042</td>
+<td>yarn.nodemanager.webapp.address</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8041</td>
+<td>yarn.nodemanager.address</td>
+<td>NM中container manager的端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>JobHistory Server</td>
+<td>10020</td>
+<td>mapreduce.jobhistory.address</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>JobHistory Server</td>
+<td>19888</td>
+<td>mapreduce.jobhistory.webapp.address</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>Master</td>
+<td>60000</td>
+<td>hbase.master.port</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>Master</td>
+<td>60010</td>
+<td>hbase.master.info.port</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>RegionServer</td>
+<td>60020</td>
+<td>hbase.regionserver.port</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>RegionServer</td>
+<td>60030</td>
+<td>hbase.regionserver.info.port</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>HQuorumPeer</td>
+<td>2181</td>
+<td>hbase.zookeeper.property.clientPort</td>
+<td>HBase-managed ZK mode，使用独立的ZooKeeper集群则不会启用该端口。</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>HQuorumPeer</td>
+<td>2888</td>
+<td>hbase.zookeeper.peerport</td>
+<td>HBase-managed ZK mode，使用独立的ZooKeeper集群则不会启用该端口。</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>HQuorumPeer</td>
+<td>3888</td>
+<td>hbase.zookeeper.leaderport</td>
+<td>HBase-managed ZK mode，使用独立的ZooKeeper集群则不会启用该端口。</td>
+</tr>
+<tr>
+<td>Hive</td>
+<td>Metastore</td>
+<td>9083</td>
+<td>/etc/default/hive-metastore中export PORT=<port>来更新默认端口</port></td>
+</tr>
+<tr>
+<td>Hive</td>
+<td>HiveServer</td>
+<td>10000</td>
+<td>/etc/hive/conf/hive-env.sh中export HIVE_SERVER2_THRIFT_PORT=<port>来更新默认端口</port></td>
+</tr>
+<tr>
+<td>ZooKeeper</td>
+<td>Server</td>
+<td>2181</td>
+<td>/etc/zookeeper/conf/zoo.cfg中clientPort=<port></port></td>
+<td>对客户端提供服务的端口</td>
+</tr>
+<tr>
+<td>ZooKeeper</td>
+<td>Server</td>
+<td>2888</td>
+<td>/etc/zookeeper/conf/zoo.cfg中server.x=[hostname]:nnnnn[:nnnnn]，标蓝部分</td>
+<td>follower用来连接到leader，只在leader上监听该端口。</td>
+</tr>
+<tr>
+<td>ZooKeeper</td>
+<td>Server</td>
+<td>3888</td>
+<td>/etc/zookeeper/conf/zoo.cfg中server.x=[hostname]:nnnnn[:nnnnn]，标蓝部分</td>
+<td>用于leader选举的。只在electionAlg是1,2或3(默认)时需要。</td>
+</tr>
+</tbody>
+</table>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/zzhongcy/article/details/19912577" target="_blank" rel="external">http://blog.csdn.net/zzhongcy/article/details/19912577</a></li>
+<li><a href="http://blog.csdn.net/wulantian/article/details/46341043" target="_blank" rel="external">http://blog.csdn.net/wulantian/article/details/46341043</a></li>
+</ul>
+<h3 id="Hadoop的IPC机制"><a href="#Hadoop的IPC机制" class="headerlink" title="Hadoop的IPC机制"></a>Hadoop的IPC机制</h3><p>参考文章：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/xuxm2007/archive/2012/06/22/2558599.html" target="_blank" rel="external">http://www.cnblogs.com/xuxm2007/archive/2012/06/22/2558599.html</a></li>
+<li><a href="https://my.oschina.net/zavakid/blog/119020" target="_blank" rel="external">https://my.oschina.net/zavakid/blog/119020</a></li>
+<li><a href="http://seandeng888.iteye.com/blog/2160714" target="_blank" rel="external">http://seandeng888.iteye.com/blog/2160714</a></li>
+</ul>
+<h3 id="YARN在Hadoop中的作用"><a href="#YARN在Hadoop中的作用" class="headerlink" title="YARN在Hadoop中的作用"></a>YARN在Hadoop中的作用</h3><h3 id="YARN的ResourceManager"><a href="#YARN的ResourceManager" class="headerlink" title="YARN的ResourceManager"></a>YARN的ResourceManager</h3><h3 id="SecondaryNameNode节点"><a href="#SecondaryNameNode节点" class="headerlink" title="SecondaryNameNode节点"></a>SecondaryNameNode节点</h3><p>参考文章：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/likehua/p/4023777.html" target="_blank" rel="external">http://www.cnblogs.com/likehua/p/4023777.html</a></li>
+</ul>
+<h3 id="MapReduce-shuffle过程原理"><a href="#MapReduce-shuffle过程原理" class="headerlink" title="MapReduce shuffle过程原理"></a>MapReduce shuffle过程原理</h3><h3 id="MapReduce原理分析"><a href="#MapReduce原理分析" class="headerlink" title="MapReduce原理分析"></a>MapReduce原理分析</h3><p>最简单的MapReduce应用程序至少包含 3 个部分：一个 Map 函数、一个 Reduce 函数和一个 main 函数。在运行一个mapreduce计算任务时候，任务过程被分为两个阶段：map阶段和reduce阶段，每个阶段都是用键值对（key/value）作为输入（input）和输出（output）。main 函数将作业控制和文件输入/输出结合起来。</p>
+<p>所以我们编写了下面的三个Java类</p>
+<ul>
+<li>WordCount：MapReduce程序入口类</li>
+<li>TokenizerMapper：Map并行读取文本，对读取的单词进行map操作，每个词都以<key,value>形式生成。</key,value></li>
+<li>IntSumReducer：Reduce操作是对map的结果进行排序，合并，最后得出词频。</li>
+</ul>
+<p>简单来说，map负责把任务分解成多个任务，reduce负责把分解后多任务处理的结果汇总起来。</p>
+<h4 id="MapReduce的执行过程"><a href="#MapReduce的执行过程" class="headerlink" title="MapReduce的执行过程"></a>MapReduce的执行过程</h4><p><img src="http://img.blog.csdn.net/20161030164443369?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="MapReduce执行过程"></p>
+<p>MapReduce的执行过程主要包含是三个阶段：Map阶段、Shuffle阶段、Reduce阶段</p>
+<ul>
+<li><p>Map阶段：</p>
+<ul>
+<li>分片（Split）：map阶段的输入通常是HDFS上文件，在运行Mapper前，FileInputFormat会将输入文件分割成多个split ——1个split至少包含1个HDFS的Block（默认为64M）；然后每一个分片运行一个map进行处理。</li>
+<li><p>执行（Map）：对输入分片中的每个键值对调用map()函数进行运算，然后输出一个结果键值对。</p>
+<p>  Partitioner：对map()的输出进行partition，即根据key或value及reduce的数量来决定当前的这对键值对最终应该交由哪个reduce处理。默认是对key哈希后再以reduce task数量取模，默认的取模方式只是为了避免数据倾斜。然后该key/value对以及partitionIdx的结果都会被写入环形缓冲区。</p>
+</li>
+<li><p>溢写（Spill）：map输出写在内存中的环形缓冲区，默认当缓冲区满80%，启动溢写线程，将缓冲的数据写出到磁盘。</p>
+<p>  Sort：在溢写到磁盘之前，使用快排对缓冲区数据按照partitionIdx, key排序。（每个partitionIdx表示一个分区，一个分区对应一个reduce）</p>
+<p>  Combiner：如果设置了Combiner，那么在Sort之后，还会对具有相同key的键值对进行合并，减少溢写到磁盘的数据量。</p>
+</li>
+<li><p>合并（Merge）：溢写可能会生成多个文件，这时需要将多个文件合并成一个文件。合并的过程中会不断地进行 sort &amp; combine 操作，最后合并成了一个已分区且已排序的文件。</p>
+</li>
+</ul>
+</li>
+<li><p>Shuffle阶段：广义上Shuffle阶段横跨Map端和Reduce端，在Map端包括Spill过程，在Reduce端包括copy和merge/sort过程。通常认为Shuffle阶段就是将map的输出作为reduce的输入的过程</p>
+<ul>
+<li>Copy过程：Reduce端启动一些copy线程，通过HTTP方式将map端输出文件中属于自己的部分拉取到本地。Reduce会从多个map端拉取数据，并且每个map的数据都是有序的。</li>
+<li>Merge过程：Copy过来的数据会先放入内存缓冲区中，这里的缓冲区比较大；当缓冲区数据量达到一定阈值时，将数据溢写到磁盘（与map端类似，溢写过程会执行 sort &amp; combine）。如果生成了多个溢写文件，它们会被merge成一个有序的最终文件。这个过程也会不停地执行 sort &amp; combine 操作。</li>
+</ul>
+</li>
+<li><p>Reduce阶段：Shuffle阶段最终生成了一个有序的文件作为Reduce的输入，对于该文件中的每一个键值对调用reduce()方法，并将结果写到HDFS。</p>
+</li>
+</ul>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://langyu.iteye.com/blog/992916" target="_blank" rel="external">http://langyu.iteye.com/blog/992916</a></li>
+<li><a href="http://blog.itpub.net/29754888/viewspace-1704959/" target="_blank" rel="external">http://blog.itpub.net/29754888/viewspace-1704959/</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/18/Hive/Hive学习（一）Hive环境搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Hive学习（一）Hive环境搭建
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/11/Git/Git的SSH-Key用法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Git的SSH-Key用法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Hadoop学习（五）Hadoop日志总结 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过之前的WordCount和AdLog实例，我们已经能够编写出简单的MapReduce实例了，但是第一次编写还是难免会遇到一些问题，比如AdLog解析json日志结构的时候出错怎么办，如何查看MapReduce的运行日志呢，这就是我们本篇要重点介绍的Hadoop日志
+理解Hadoop的日志Hadoop的日志一般会分为下面两种
+
+Hadoop系统服务输出的日志
+Mapreduce程序输出来的日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop学习（五）Hadoop日志总结">
+<meta property="og:url" content="https://github.com/birdben/2016/09/10/Hadoop/Hadoop学习（五）Hadoop日志总结/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="通过之前的WordCount和AdLog实例，我们已经能够编写出简单的MapReduce实例了，但是第一次编写还是难免会遇到一些问题，比如AdLog解析json日志结构的时候出错怎么办，如何查看MapReduce的运行日志呢，这就是我们本篇要重点介绍的Hadoop日志
+理解Hadoop的日志Hadoop的日志一般会分为下面两种
+
+Hadoop系统服务输出的日志
+Mapreduce程序输出来的日志">
+<meta property="og:updated_time" content="2016-11-25T01:47:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop学习（五）Hadoop日志总结">
+<meta name="twitter:description" content="通过之前的WordCount和AdLog实例，我们已经能够编写出简单的MapReduce实例了，但是第一次编写还是难免会遇到一些问题，比如AdLog解析json日志结构的时候出错怎么办，如何查看MapReduce的运行日志呢，这就是我们本篇要重点介绍的Hadoop日志
+理解Hadoop的日志Hadoop的日志一般会分为下面两种
+
+Hadoop系统服务输出的日志
+Mapreduce程序输出来的日志">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Akka/" style="font-size: 11px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 13px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 11px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 11px;">ElasticSearch</a> <a href="/tags/Flume/" style="font-size: 17px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13px;">Git命令</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 14px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 13px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 12px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12px;">Linux命令</a> <a href="/tags/MapReduce/" style="font-size: 12px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 12px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 12px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11px;">Spring</a> <a href="/tags/Storm/" style="font-size: 13px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 13px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Hadoop/Hadoop学习（五）Hadoop日志总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/10/Hadoop/Hadoop学习（五）Hadoop日志总结/" class="article-date">
+  	<time datetime="2016-09-10T02:08:16.000Z" itemprop="datePublished">2016-09-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hadoop学习（五）Hadoop日志总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop原理架构体系/">Hadoop原理架构体系</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/">MapReduce</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过之前的WordCount和AdLog实例，我们已经能够编写出简单的MapReduce实例了，但是第一次编写还是难免会遇到一些问题，比如AdLog解析json日志结构的时候出错怎么办，如何查看MapReduce的运行日志呢，这就是我们本篇要重点介绍的Hadoop日志</p>
+<h2 id="理解Hadoop的日志"><a href="#理解Hadoop的日志" class="headerlink" title="理解Hadoop的日志"></a>理解Hadoop的日志</h2><p>Hadoop的日志一般会分为下面两种</p>
+<ul>
+<li>Hadoop系统服务输出的日志</li>
+<li>Mapreduce程序输出来的日志</li>
+</ul>
+<h3 id="Hadoop系统服务输出的日志"><a href="#Hadoop系统服务输出的日志" class="headerlink" title="Hadoop系统服务输出的日志"></a>Hadoop系统服务输出的日志</h3><p>也就是我们启动NameNode, DataNode, NodeManager ResourceManager, HistoryServer等等系统自带的服务输出来的日志，默认是存放在${HADOOP_HOME}/logs目录下。</p>
+<p>可以在mapred-site.xml配置文件中指定Hadoop日志的输出路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">	&lt;!-- hadoop的日志输出指定目录--&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;mapred.local.dir&lt;/name&gt;</div><div class="line">		&lt;value&gt;/home/yunyu/birdben_logs&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;configuration&gt;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>服务名</th>
+<th>服务类型</th>
+<th>日志文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resourcemanager</td>
+<td>YARN</td>
+<td>yarn-${USER}-resourcemanager-${hostname}.log</td>
+</tr>
+<tr>
+<td>nodemanager</td>
+<td>YARN</td>
+<td>yarn-${USER}-nodemanager-${hostname}.log</td>
+</tr>
+<tr>
+<td>historyserver</td>
+<td>HDFS</td>
+<td>mapred-${USER}-historyserver-${hostname}.log</td>
+</tr>
+<tr>
+<td>secondarynamenode</td>
+<td>HDFS</td>
+<td>hadoop-${USER}-secondarynamenode-${hostname}.log</td>
+</tr>
+<tr>
+<td>namenode</td>
+<td>HDFS</td>
+<td>hadoop-${USER}-namenode-${hostname}.log</td>
+</tr>
+<tr>
+<td>datanode</td>
+<td>HDFS</td>
+<td>hadoop-${USER}-datanode-${hostname}.log</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">用resourcemanager的输出日志举例 : yarn-$&#123;USER&#125;-resourcemanager-$&#123;hostname&#125;.log</div><div class="line"></div><div class="line">$&#123;USER&#125;是指启动resourcemanager进程的用户</div><div class="line">$&#123;hostname&#125;是resourcemanager进程所在机器的hostname；当日志到达一定的大小（可以在$&#123;HADOOP_HOME&#125;/etc/Hadoop/log4j.properties文件中配置）将会被切割出一个新的文件，切割出来的日志文件名类似yarn-$&#123;USER&#125;-resourcemanager-$&#123;hostname&#125;.log.数字的，后面的数字越大，代表日志越旧。在默认情况下，只保存前20个日志文件</div><div class="line"></div><div class="line">-rw-rw-r--  1 yunyu yunyu  8987088 Oct 27 11:24 yarn-yunyu-nodemanager-hadoop1.log-rw-rw-r--  1 yunyu yunyu      700 Oct 27 10:19 yarn-yunyu-nodemanager-hadoop1.out-rw-rw-r--  1 yunyu yunyu     2062 Oct 26 18:25 yarn-yunyu-nodemanager-hadoop1.out.1-rw-rw-r--  1 yunyu yunyu     2062 Oct 26 17:51 yarn-yunyu-nodemanager-hadoop1.out.2-rw-rw-r--  1 yunyu yunyu      700 Oct 25 16:18 yarn-yunyu-nodemanager-hadoop1.out.3-rw-rw-r--  1 yunyu yunyu     2062 Oct 23 17:54 yarn-yunyu-nodemanager-hadoop1.out.4</div></pre></td></tr></table></figure>
+<h3 id="Mapreduce程序输出来的日志"><a href="#Mapreduce程序输出来的日志" class="headerlink" title="Mapreduce程序输出来的日志"></a>Mapreduce程序输出来的日志</h3><p>MapReduce程序输出来的日志又细分为下面两种</p>
+<ul>
+<li>作业运行日志（历史作业日志）</li>
+<li>任务运行日志（Container日志）</li>
+</ul>
+<h4 id="作业运行日志（历史作业日志）"><a href="#作业运行日志（历史作业日志）" class="headerlink" title="作业运行日志（历史作业日志）"></a>作业运行日志（历史作业日志）</h4><p>作业运行由MRAppMaster（MapReduce作业的ApplicationMaster）产生，详细记录了作业启动时间、运行时间，每个任务启动时间、运行时间、Counter值等信息。这些信息对分析作业是很有帮助的，我们可以通过这些历史作业记录得到每天有多少个作业运行成功、有多少个作业运行失败、每个队列作业运行了多少个作业等很有用的信息。</p>
+<p>MapReduce作业的ApplicationMaster也运行在Container中，且是编号为000001的Container，比如container_1385051297072_0001_01_000001，它自身可认为是一个特殊的task，因此，也有自己的运行日志（Container日志），该日志与Map Task和Reduce Task类似，但并不是这里介绍的“作业运行日志”。</p>
+<p>作业运行日志和其他的日志文件不一样，是因为这些历史作业记录文件是存储在HDFS上的，而不是存储在本地系统文件中的，可以修改mapred-site.xml配置文件指定对应HDFS的存储路径，而且可以指定正在运行的MapReduce作业和已经完成的MapReduce作业信息在HDFS的存储路径。</p>
+<h5 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h5><pre><code>&lt;!-- MapReduce已完成作业信息在HDFS的存储路径 --&gt;
+&lt;property&gt;
+    &lt;name&gt;mapreduce.jobhistory.done-dir&lt;/name&gt;
+    &lt;value&gt;${yarn.app.mapreduce.am.staging-dir}/history/done&lt;/value&gt;
+&lt;/property&gt;
+&lt;!-- MapReduce正在运行作业信息在HDFS的存储路径 --&gt;
+&lt;property&gt;
+    &lt;name&gt;mapreduce.jobhistory.intermediate-done-dir&lt;/name&gt;
+    &lt;value&gt;${yarn.app.mapreduce.am.staging-dir}/history/done_intermediate&lt;/value&gt;
+&lt;/property&gt;
+&lt;!-- MapReduce作业信息在HDFS默认的存储路径 --&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.app.mapreduce.am.staging-dir&lt;/name&gt;
+    &lt;value&gt;/tmp/hadoop-yarn/staging&lt;/value&gt;
+&lt;/property&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">作业运行日志产生过程如下：</div><div class="line"></div><div class="line">- 步骤1：ResourceManager启动作业的ApplicationMaster，ApplicationMaster运行过程中，将日志写到$&#123;yarn.app.mapreduce.am.staging-dir&#125;/yarn/.staging/job_XXXXX_XXX/下，其中参数yarn.app.mapreduce.am.staging-dir 的默认值是/tmp/hadoop-yarn/staging，该目录下将存在3个文件，分别是以&quot;.jhist&quot;、&quot;.summary&quot;和&quot;.xml&quot;结尾的文件，分别表示作业运行日志、作业概要信息和作业配置属性</div><div class="line"></div><div class="line">- 步骤2：所有任务运行完成后，意味着，该作业运行完成，此时ApplicationMaster将三个文件拷贝到$&#123;mapreduce.jobhistory.intermediate-done-dir&#125;/$&#123;username&#125;目录下，拷贝后的文件名后面添加&quot;_tmp&quot;,其中mapreduce.jobhistory.intermediate-done-dir默认值是$&#123;yarn.app.mapreduce.am.staging-dir&#125;/history/done_intermediate</div><div class="line"></div><div class="line">- 步骤3：ApplicationMaster将拷贝完成的三个文件重新命名成&quot;.jhist&quot;、&quot;.summary&quot;和&quot;.xml&quot;结尾的文件（去掉&quot;_tmp&quot;）</div><div class="line"></div><div class="line">- 步骤4：周期性扫描线程定期将done_intermediate的日志文件转移到done目录（通过参数mapreduce.jobhistory.done-dir配置，默认值为$&#123;yarn.app.mapreduce.am.staging-dir&#125;/history/done）下，同时删除&quot;.summary&quot;文件（该文件中的信息，.jhist文件中都有）。</div><div class="line"></div><div class="line">- 步骤5：ApplicationMaster移除</div><div class="line">$&#123;yarn.app.mapreduce.am.staging-dir&#125;/yarn/.staging/job_XXXXX_XXX/目录</div><div class="line">默认情况下，任务运行日志产只会存放在各NodeManager的本地磁盘上，你可以打开日志聚集功能，以便让任务将运行日志推送到HDFS上，以便集中管理和分析。</div><div class="line"></div><div class="line">### 特别需要注意下</div><div class="line"></div><div class="line">默认情况下，NodeManager将日志保存到yarn.nodemanager.log-dirs下，，该属性缺省值为$&#123;yarn.log.dir&#125;/userlogs，也就是Hadoop安装目录下的logs/userlogs目录中，通常为了分摊磁盘负载，我们会为该参数设置多个路径，此外，需要注意的是，ApplicationMaster的自身的日志也存放在该路目下，因为它也运行在Container之中，是一个特殊的task。举例如下，其中，最后一个是某个作业的ApplicationMaster日志（编号是000001）。</div><div class="line"></div><div class="line">即ApplicationMaster日志目录名称为container_XXX_000001，普通task日志目录名称则为container_XXX_000002，container_XXX_000003，...</div><div class="line"></div><div class="line">container_XXX_00000X每个目录下包含三个日志文件：stdout、stderr和syslog</div><div class="line"></div><div class="line">- stderr : 错误文件输出</div><div class="line">- stdout : System.out.println控制台输出，我们自己写的MapReduce程序的System.out.println输出都将写入到此文件中</div><div class="line">- syslog : logger系统日志输出，我们自己的MapReduce程序的logger.info日志记录都将写入到此文件中</div><div class="line"></div><div class="line">#### HistoryServer</div><div class="line"></div><div class="line">Hadoop自带了一个HistoryServer用于查看Mapreduce作业记录，比如用了多少个Map、用了多少个Reduce、作业提交时间、作业启动时间、作业完成时间等信息。</div><div class="line"></div><div class="line">需要在mapred-site.xml配置文件中配置HistoryServer的通信地址，并且需要我们手动启动HistoryServer服务</div><div class="line"></div><div class="line">##### 启动HistoryServer</div></pre></td></tr></table></figure>
+
+$ mr-jobhistory-daemon.sh   start historyserver
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### mapred-site.xml</div></pre></td></tr></table></figure>
+
+&lt;!-- MapReduce JobHistory Server的IPC通信地址，默认端口号是10020 --&gt;
+&lt;property&gt;
+    &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+    &lt;value&gt;hadoop1:10020&lt;/value&gt;
+&lt;/property&gt;
+&lt;!-- MapReduce JobHistory Server的Web服务器访问地址，默认端口号是19888 --&gt;
+&lt;property&gt;
+    &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+    &lt;value&gt;hadoop1:19888&lt;/value&gt;
+&lt;/property&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">我们可以在HDFS上查看一下MapReduce作业信息相关内容</div></pre></td></tr></table></figure>
+
+$ hdfs dfs -ls /data/history/done/2016/10/26/000000
+Found 34 items
+-rwxrwx---   2 yunyu supergroup      33487 2016-10-26 01:46 /data/history/done/2016/10/26/000000/job_1477390779880_0003-1477471590330-yunyu-wordcount-1477471605995-1-1-SUCCEEDED-default-1477471593992.jhist
+-rwxrwx---   2 yunyu supergroup     113716 2016-10-26 01:46 /data/history/done/2016/10/26/000000/job_1477390779880_0003_conf.xml
+-rwxrwx---   2 yunyu supergroup      33478 2016-10-26 01:48 /data/history/done/2016/10/26/000000/job_1477390779880_0004-1477471680580-yunyu-wordcount-1477471695328-1-1-SUCCEEDED-default-1477471684537.jhist
+-rwxrwx---   2 yunyu supergroup     113716 2016-10-26 01:48 /data/history/done/2016/10/26/000000/job_1477390779880_0004_conf.xml
+-rwxrwx---   2 yunyu supergroup      33472 2016-10-26 01:49 /data/history/done/2016/10/26/000000/job_1477390779880_0005-1477471725086-yunyu-wordcount-1477471740048-1-1-SUCCEEDED-default-1477471729179.jhist
+-rwxrwx---   2 yunyu supergroup     113716 2016-10-26 01:49 /data/history/done/2016/10/26/000000/job_1477390779880_0005_conf.xml
+-rwxrwx---   2 yunyu supergroup      33483 2016-10-26 01:53 /data/history/done/2016/10/26/000000/job_1477390779880_0006-1477471983695-yunyu-wordcount-1477471999289-1-1-SUCCEEDED-default-1477471987996.jhist
+-rwxrwx---   2 yunyu supergroup     113716 2016-10-26 01:53 /data/history/done/2016/10/26/000000/job_1477390779880_0006_conf.xml
+-rwxrwx---   2 yunyu supergroup      33479 2016-10-26 01:55 /data/history/done/2016/10/26/000000/job_1477390779880_0007-1477472135663-yunyu-wordcount-1477472150775-1-1-SUCCEEDED-default-1477472139406.jhist
+-rwxrwx---   2 yunyu supergroup     113716 2016-10-26 01:55 /data/history/done/2016/10/26/000000/job_1477390779880_0007_conf.xml
+-rwxrwx---   2 yunyu supergroup      33477 2016-10-26 02:42 /data/history/done/2016/10/26/000000/job_1477390779880_0008-1477474917310-yunyu-wordcount-1477474934028-1-1-SUCCEEDED-default-1477474921803.jhist
+-rwxrwx---   2 yunyu supergroup     113716 2016-10-26 02:42 /data/history/done/2016/10/26/000000/job_1477390779880_0008_conf.xml
+-rwxrwx---   2 yunyu supergroup      33487 2016-10-26 03:25 /data/history/done/2016/10/26/000000/job_1477477415810_0001-1477477521120-yunyu-wordcount-1477477540308-1-1-SUCCEEDED-default-1477477527364.jhist
+-rwxrwx---   2 yunyu supergroup     113712 2016-10-26 03:25 /data/history/done/2016/10/26/000000/job_1477477415810_0001_conf.xml
+-rwxrwx---   2 yunyu supergroup      33483 2016-10-26 03:51 /data/history/done/2016/10/26/000000/job_1477477415810_0002-1477479057999-yunyu-wordcount-1477479076500-1-1-SUCCEEDED-default-1477479062997.jhist
+-rwxrwx---   2 yunyu supergroup     113712 2016-10-26 03:51 /data/history/done/2016/10/26/000000/job_1477477415810_0002_conf.xml
+-rwxrwx---   2 yunyu supergroup      33476 2016-10-26 04:01 /data/history/done/2016/10/26/000000/job_1477477415810_0003-1477479645080-yunyu-wordcount-1477479661516-1-1-SUCCEEDED-default-1477479650248.jhist
+-rwxrwx---   2 yunyu supergroup     113712 2016-10-26 04:01 /data/history/done/2016/10/26/000000/job_1477477415810_0003_conf.xml
+-rwxrwx---   2 yunyu supergroup      33470 2016-10-26 04:36 /data/history/done/2016/10/26/000000/job_1477477415810_0004-1477481804256-yunyu-wordcount-1477481820774-1-1-SUCCEEDED-default-1477481809917.jhist
+-rwxrwx---   2 yunyu supergroup     113638 2016-10-26 04:36 /data/history/done/2016/10/26/000000/job_1477477415810_0004_conf.xml
+-rwxrwx---   2 yunyu supergroup      33519 2016-10-26 04:46 /data/history/done/2016/10/26/000000/job_1477477415810_0005-1477482378129-yunyu-wordcount-1477482394056-1-1-SUCCEEDED-default-1477482382630.jhist
+-rwxrwx---   2 yunyu supergroup     113682 2016-10-26 04:46 /data/history/done/2016/10/26/000000/job_1477477415810_0005_conf.xml
+-rwxrwx---   2 yunyu supergroup      33518 2016-10-26 04:56 /data/history/done/2016/10/26/000000/job_1477477415810_0006-1477482967602-yunyu-wordcount-1477482983257-1-1-SUCCEEDED-default-1477482971751.jhist
+-rwxrwx---   2 yunyu supergroup     113682 2016-10-26 04:56 /data/history/done/2016/10/26/000000/job_1477477415810_0006_conf.xml
+-rwxrwx---   2 yunyu supergroup      33524 2016-10-26 05:05 /data/history/done/2016/10/26/000000/job_1477477415810_0007-1477483516841-yunyu-wordcount-1477483533885-1-1-SUCCEEDED-default-1477483521388.jhist
+-rwxrwx---   2 yunyu supergroup     113682 2016-10-26 05:05 /data/history/done/2016/10/26/000000/job_1477477415810_0007_conf.xml
+-rwxrwx---   2 yunyu supergroup      33519 2016-10-26 05:27 /data/history/done/2016/10/26/000000/job_1477477415810_0008-1477484838977-yunyu-wordcount-1477484854521-1-1-SUCCEEDED-default-1477484843086.jhist
+-rwxrwx---   2 yunyu supergroup     113682 2016-10-26 05:27 /data/history/done/2016/10/26/000000/job_1477477415810_0008_conf.xml
+-rwxrwx---   2 yunyu supergroup      33520 2016-10-26 19:21 /data/history/done/2016/10/26/000000/job_1477534790849_0001-1477534850971-yunyu-wordcount-1477534870748-1-1-SUCCEEDED-default-1477534857063.jhist
+-rwxrwx---   2 yunyu supergroup     113699 2016-10-26 19:21 /data/history/done/2016/10/26/000000/job_1477534790849_0001_conf.xml
+-rwxrwx---   2 yunyu supergroup      33521 2016-10-26 20:23 /data/history/done/2016/10/26/000000/job_1477534790849_0002-1477538573459-yunyu-wordcount-1477538590195-1-1-SUCCEEDED-default-1477538577756.jhist
+-rwxrwx---   2 yunyu supergroup     113699 2016-10-26 20:23 /data/history/done/2016/10/26/000000/job_1477534790849_0002_conf.xml
+-rwxrwx---   2 yunyu supergroup      33519 2016-10-26 20:24 /data/history/done/2016/10/26/000000/job_1477534790849_0003-1477538645546-yunyu-wordcount-1477538662701-1-1-SUCCEEDED-default-1477538650360.jhist
+-rwxrwx---   2 yunyu supergroup     113699 2016-10-26 20:24 /data/history/done/2016/10/26/000000/job_1477534790849_0003_conf.xml
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">通过上面的结果我们可以得到一下几点：</div><div class="line"></div><div class="line">- （1）历史作业记录是存放在HDFS目录中；</div><div class="line">- （2）由于历史作业记录可能非常多，所以历史作业记录是按照年/月/日的形式分别存放在相应的目录中，这样便于管理和查找；</div><div class="line">- （3）对于每一个Hadoop历史作业记录相关信息都用两个文件存放，后缀名分别为*.jhist，*.xml。*.jhist文件里存放的是具体Hadoop作业的详细信息，如下：</div><div class="line">- （4）每一个作业的历史记录都存放在一个单独的文件中。</div></pre></td></tr></table></figure>
+
+hdfs dfs -cat /data/history/done/2016/10/26/000000/job_1477534790849_0003-1477538645546-yunyu-wordcount-1477538662701-1-1-SUCCEEDED-default-1477538650360.jhist
+Avro-Json
+{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;Event&quot;,&quot;namespace&quot;:&quot;org.apache.hadoop.mapreduce.jobhistory&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;type&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;enum&quot;,&quot;name&quot;:&quot;EventType&quot;,&quot;symbols&quot;:[&quot;JOB_SUBMITTED&quot;,&quot;JOB_INITED&quot;,&quot;JOB_FINISHED&quot;,&quot;JOB_PRIORITY_CHANGED&quot;,&quot;JOB_STATUS_CHANGED&quot;,&quot;JOB_QUEUE_CHANGED&quot;,&quot;JOB_FAILED&quot;,&quot;JOB_KILLED&quot;,&quot;JOB_ERROR&quot;,&quot;JOB_INFO_CHANGED&quot;,&quot;TASK_STARTED&quot;,&quot;TASK_FINISHED&quot;,&quot;TASK_FAILED&quot;,&quot;TASK_UPDATED&quot;,&quot;NORMALIZED_RESOURCE&quot;,&quot;MAP_ATTEMPT_STARTED&quot;,&quot;MAP_ATTEMPT_FINISHED&quot;,&quot;MAP_ATTEMPT_FAILED&quot;,&quot;MAP_ATTEMPT_KILLED&quot;,&quot;REDUCE_ATTEMPT_STARTED&quot;,&quot;REDUCE_ATTEMPT_FINISHED&quot;,&quot;REDUCE_ATTEMPT_FAILED&quot;,&quot;REDUCE_ATTEMPT_KILLED&quot;,&quot;SETUP_ATTEMPT_STARTED&quot;,&quot;SETUP_ATTEMPT_FINISHED&quot;,&quot;SETUP_ATTEMPT_FAILED&quot;,&quot;SETUP_ATTEMPT_KILLED&quot;,&quot;CLEANUP_ATTEMPT_STARTED&quot;,&quot;CLEANUP_ATTEMPT_FINISHED&quot;,&quot;CLEANUP_ATTEMPT_FAILED&quot;,&quot;CLEANUP_ATTEMPT_KILLED&quot;,&quot;AM_STARTED&quot;]}},{&quot;name&quot;:&quot;event&quot;,&quot;type&quot;:[{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobFinished&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;finishedMaps&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;finishedReduces&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;failedMaps&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;failedReduces&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;totalCounters&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JhCounters&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;groups&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JhCounterGroup&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;displayName&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counts&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JhCounter&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;displayName&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;value&quot;,&quot;type&quot;:&quot;long&quot;}]}}}]}}}]}},{&quot;name&quot;:&quot;mapCounters&quot;,&quot;type&quot;:&quot;JhCounters&quot;},{&quot;name&quot;:&quot;reduceCounters&quot;,&quot;type&quot;:&quot;JhCounters&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobInfoChange&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;submitTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;launchTime&quot;,&quot;type&quot;:&quot;long&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobInited&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;launchTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;totalMaps&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;totalReduces&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;jobStatus&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;uberized&quot;,&quot;type&quot;:&quot;boolean&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;AMStarted&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;applicationAttemptId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;startTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;containerId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;nodeManagerHost&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;nodeManagerPort&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;nodeManagerHttpPort&quot;,&quot;type&quot;:&quot;int&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobPriorityChange&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;priority&quot;,&quot;type&quot;:&quot;string&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobQueueChange&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;jobQueueName&quot;,&quot;type&quot;:&quot;string&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobStatusChanged&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;jobStatus&quot;,&quot;type&quot;:&quot;string&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobSubmitted&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;jobName&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;userName&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;submitTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;jobConfPath&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;acls&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;map&quot;,&quot;values&quot;:&quot;string&quot;}},{&quot;name&quot;:&quot;jobQueueName&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;workflowId&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null},{&quot;name&quot;:&quot;workflowName&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null},{&quot;name&quot;:&quot;workflowNodeName&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null},{&quot;name&quot;:&quot;workflowAdjacencies&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null},{&quot;name&quot;:&quot;workflowTags&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;JobUnsuccessfulCompletion&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;jobid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;finishedMaps&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;finishedReduces&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;jobStatus&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;diagnostics&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;MapAttemptFinished&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;attemptId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskStatus&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;mapFinishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;hostname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;port&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;rackname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;state&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counters&quot;,&quot;type&quot;:&quot;JhCounters&quot;},{&quot;name&quot;:&quot;clockSplits&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;cpuUsages&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;vMemKbytes&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;physMemKbytes&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;ReduceAttemptFinished&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;attemptId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskStatus&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;shuffleFinishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;sortFinishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;hostname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;port&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;rackname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;state&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counters&quot;,&quot;type&quot;:&quot;JhCounters&quot;},{&quot;name&quot;:&quot;clockSplits&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;cpuUsages&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;vMemKbytes&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;physMemKbytes&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskAttemptFinished&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;attemptId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskStatus&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;rackname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;hostname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;state&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counters&quot;,&quot;type&quot;:&quot;JhCounters&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskAttemptStarted&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;attemptId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;startTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;trackerName&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;httpPort&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;shufflePort&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;containerId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;locality&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null},{&quot;name&quot;:&quot;avataar&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskAttemptUnsuccessfulCompletion&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;attemptId&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;hostname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;port&quot;,&quot;type&quot;:&quot;int&quot;},{&quot;name&quot;:&quot;rackname&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;error&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counters&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;JhCounters&quot;],&quot;default&quot;:null},{&quot;name&quot;:&quot;clockSplits&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;cpuUsages&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;vMemKbytes&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}},{&quot;name&quot;:&quot;physMemKbytes&quot;,&quot;type&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;items&quot;:&quot;int&quot;}}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskFailed&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;error&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;failedDueToAttempt&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;]},{&quot;name&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counters&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;JhCounters&quot;],&quot;default&quot;:null}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskFinished&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;counters&quot;,&quot;type&quot;:&quot;JhCounters&quot;},{&quot;name&quot;:&quot;successfulAttemptId&quot;,&quot;type&quot;:[&quot;null&quot;,&quot;string&quot;],&quot;default&quot;:null}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskStarted&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;taskType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;startTime&quot;,&quot;type&quot;:&quot;long&quot;},{&quot;name&quot;:&quot;splitLocations&quot;,&quot;type&quot;:&quot;string&quot;}]},{&quot;type&quot;:&quot;record&quot;,&quot;name&quot;:&quot;TaskUpdated&quot;,&quot;fields&quot;:[{&quot;name&quot;:&quot;taskid&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;finishTime&quot;,&quot;type&quot;:&quot;long&quot;}]}]}]}
+{&quot;type&quot;:&quot;AM_STARTED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.AMStarted&quot;:{&quot;applicationAttemptId&quot;:&quot;appattempt_1477534790849_0003_000001&quot;,&quot;startTime&quot;:1477538647394,&quot;containerId&quot;:&quot;container_1477534790849_0003_01_000001&quot;,&quot;nodeManagerHost&quot;:&quot;hadoop1&quot;,&quot;nodeManagerPort&quot;:47596,&quot;nodeManagerHttpPort&quot;:8042}}}
+
+{&quot;type&quot;:&quot;JOB_SUBMITTED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.JobSubmitted&quot;:{&quot;jobid&quot;:&quot;job_1477534790849_0003&quot;,&quot;jobName&quot;:&quot;wordcount&quot;,&quot;userName&quot;:&quot;yunyu&quot;,&quot;submitTime&quot;:1477538645546,&quot;jobConfPath&quot;:&quot;hdfs://hadoop1/tmp/hadoop-yarn/staging/yunyu/.staging/job_1477534790849_0003/job.xml&quot;,&quot;acls&quot;:{},&quot;jobQueueName&quot;:&quot;default&quot;,&quot;workflowId&quot;:{&quot;string&quot;:&quot;&quot;},&quot;workflowName&quot;:{&quot;string&quot;:&quot;&quot;},&quot;workflowNodeName&quot;:{&quot;string&quot;:&quot;&quot;},&quot;workflowAdjacencies&quot;:{&quot;string&quot;:&quot;&quot;},&quot;workflowTags&quot;:{&quot;string&quot;:&quot;&quot;}}}}
+
+{&quot;type&quot;:&quot;JOB_QUEUE_CHANGED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.JobQueueChange&quot;:{&quot;jobid&quot;:&quot;job_1477534790849_0003&quot;,&quot;jobQueueName&quot;:&quot;default&quot;}}}
+
+{&quot;type&quot;:&quot;JOB_INITED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.JobInited&quot;:{&quot;jobid&quot;:&quot;job_1477534790849_0003&quot;,&quot;launchTime&quot;:1477538650360,&quot;totalMaps&quot;:1,&quot;totalReduces&quot;:1,&quot;jobStatus&quot;:&quot;INITED&quot;,&quot;uberized&quot;:false}}}
+
+{&quot;type&quot;:&quot;JOB_INFO_CHANGED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.JobInfoChange&quot;:{&quot;jobid&quot;:&quot;job_1477534790849_0003&quot;,&quot;submitTime&quot;:1477538645546,&quot;launchTime&quot;:1477538650360}}}
+
+{&quot;type&quot;:&quot;TASK_STARTED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.TaskStarted&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_m_000000&quot;,&quot;taskType&quot;:&quot;MAP&quot;,&quot;startTime&quot;:1477538650763,&quot;splitLocations&quot;:&quot;hadoop1,hadoop2&quot;}}}
+
+{&quot;type&quot;:&quot;TASK_STARTED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.TaskStarted&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_r_000000&quot;,&quot;taskType&quot;:&quot;REDUCE&quot;,&quot;startTime&quot;:1477538650767,&quot;splitLocations&quot;:&quot;&quot;}}}
+
+{&quot;type&quot;:&quot;MAP_ATTEMPT_STARTED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.TaskAttemptStarted&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_m_000000&quot;,&quot;taskType&quot;:&quot;MAP&quot;,&quot;attemptId&quot;:&quot;attempt_1477534790849_0003_m_000000_0&quot;,&quot;startTime&quot;:1477538652833,&quot;trackerName&quot;:&quot;hadoop2&quot;,&quot;httpPort&quot;:8042,&quot;shufflePort&quot;:13562,&quot;containerId&quot;:&quot;container_1477534790849_0003_01_000002&quot;,&quot;locality&quot;:{&quot;string&quot;:&quot;NODE_LOCAL&quot;},&quot;avataar&quot;:{&quot;string&quot;:&quot;VIRGIN&quot;}}}}
+
+{&quot;type&quot;:&quot;MAP_ATTEMPT_FINISHED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.MapAttemptFinished&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_m_000000&quot;,&quot;attemptId&quot;:&quot;attempt_1477534790849_0003_m_000000_0&quot;,&quot;taskType&quot;:&quot;MAP&quot;,&quot;taskStatus&quot;:&quot;SUCCEEDED&quot;,&quot;mapFinishTime&quot;:1477538656711,&quot;finishTime&quot;:1477538656933,&quot;hostname&quot;:&quot;hadoop2&quot;,&quot;port&quot;:34358,&quot;rackname&quot;:&quot;/default-rack&quot;,&quot;state&quot;:&quot;map&quot;,&quot;counters&quot;:{&quot;name&quot;:&quot;COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:115420},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:194},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;MAP_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map input records&quot;,&quot;value&quot;:4},{&quot;name&quot;:&quot;MAP_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map output records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;MAP_OUTPUT_BYTES&quot;,&quot;displayName&quot;:&quot;Map output bytes&quot;,&quot;value&quot;:141},{&quot;name&quot;:&quot;MAP_OUTPUT_MATERIALIZED_BYTES&quot;,&quot;displayName&quot;:&quot;Map output materialized bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;SPLIT_RAW_BYTES&quot;,&quot;displayName&quot;:&quot;Input split bytes&quot;,&quot;value&quot;:109},{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:83},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:490},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:216502272},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:666292224},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:120721408}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.input.FileInputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Input Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_READ&quot;,&quot;displayName&quot;:&quot;Bytes Read&quot;,&quot;value&quot;:85}]}]},&quot;clockSplits&quot;:[3941,11,12,11,11,12,11,11,12,11,11,12],&quot;cpuUsages&quot;:[40,41,41,41,41,41,40,41,41,41,41,41],&quot;vMemKbytes&quot;:[27111,81334,135557,189780,244003,298226,352449,406672,460895,515118,569341,623564],&quot;physMemKbytes&quot;:[8809,26428,44047,61666,79285,96904,114523,132142,149761,167380,184999,202618]}}}
+
+{&quot;type&quot;:&quot;TASK_FINISHED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.TaskFinished&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_m_000000&quot;,&quot;taskType&quot;:&quot;MAP&quot;,&quot;finishTime&quot;:1477538656933,&quot;status&quot;:&quot;SUCCEEDED&quot;,&quot;counters&quot;:{&quot;name&quot;:&quot;COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:115420},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:194},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;MAP_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map input records&quot;,&quot;value&quot;:4},{&quot;name&quot;:&quot;MAP_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map output records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;MAP_OUTPUT_BYTES&quot;,&quot;displayName&quot;:&quot;Map output bytes&quot;,&quot;value&quot;:141},{&quot;name&quot;:&quot;MAP_OUTPUT_MATERIALIZED_BYTES&quot;,&quot;displayName&quot;:&quot;Map output materialized bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;SPLIT_RAW_BYTES&quot;,&quot;displayName&quot;:&quot;Input split bytes&quot;,&quot;value&quot;:109},{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:83},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:490},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:216502272},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:666292224},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:120721408}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.input.FileInputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Input Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_READ&quot;,&quot;displayName&quot;:&quot;Bytes Read&quot;,&quot;value&quot;:85}]}]},&quot;successfulAttemptId&quot;:{&quot;string&quot;:&quot;attempt_1477534790849_0003_m_000000_0&quot;}}}}
+
+{&quot;type&quot;:&quot;REDUCE_ATTEMPT_STARTED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.TaskAttemptStarted&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_r_000000&quot;,&quot;taskType&quot;:&quot;REDUCE&quot;,&quot;attemptId&quot;:&quot;attempt_1477534790849_0003_r_000000_0&quot;,&quot;startTime&quot;:1477538659565,&quot;trackerName&quot;:&quot;hadoop2&quot;,&quot;httpPort&quot;:8042,&quot;shufflePort&quot;:13562,&quot;containerId&quot;:&quot;container_1477534790849_0003_01_000003&quot;,&quot;locality&quot;:{&quot;string&quot;:&quot;OFF_SWITCH&quot;},&quot;avataar&quot;:{&quot;string&quot;:&quot;VIRGIN&quot;}}}}
+
+{&quot;type&quot;:&quot;REDUCE_ATTEMPT_FINISHED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.ReduceAttemptFinished&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_r_000000&quot;,&quot;attemptId&quot;:&quot;attempt_1477534790849_0003_r_000000_0&quot;,&quot;taskType&quot;:&quot;REDUCE&quot;,&quot;taskStatus&quot;:&quot;SUCCEEDED&quot;,&quot;shuffleFinishTime&quot;:1477538662152,&quot;sortFinishTime&quot;:1477538662173,&quot;finishTime&quot;:1477538662652,&quot;hostname&quot;:&quot;hadoop2&quot;,&quot;port&quot;:34358,&quot;rackname&quot;:&quot;/default-rack&quot;,&quot;state&quot;:&quot;reduce &gt; reduce&quot;,&quot;counters&quot;:{&quot;name&quot;:&quot;COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:115365},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:72},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:2}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;REDUCE_INPUT_GROUPS&quot;,&quot;displayName&quot;:&quot;Reduce input groups&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_SHUFFLE_BYTES&quot;,&quot;displayName&quot;:&quot;Reduce shuffle bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;REDUCE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce input records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SHUFFLED_MAPS&quot;,&quot;displayName&quot;:&quot;Shuffled Maps &quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:60},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:820},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:120524800},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:672628736},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:15728640}]},{&quot;name&quot;:&quot;Shuffle Errors&quot;,&quot;displayName&quot;:&quot;Shuffle Errors&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BAD_ID&quot;,&quot;displayName&quot;:&quot;BAD_ID&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;CONNECTION&quot;,&quot;displayName&quot;:&quot;CONNECTION&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;IO_ERROR&quot;,&quot;displayName&quot;:&quot;IO_ERROR&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_LENGTH&quot;,&quot;displayName&quot;:&quot;WRONG_LENGTH&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_MAP&quot;,&quot;displayName&quot;:&quot;WRONG_MAP&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_REDUCE&quot;,&quot;displayName&quot;:&quot;WRONG_REDUCE&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.output.FileOutputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Output Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;Bytes Written&quot;,&quot;value&quot;:72}]}]},&quot;clockSplits&quot;:[2689,35,35,35,35,35,35,35,35,35,35,36],&quot;cpuUsages&quot;:[68,68,69,68,68,69,68,68,69,68,68,69],&quot;vMemKbytes&quot;:[27369,82107,136846,191584,246323,301062,355801,410539,465278,520017,574755,629494],&quot;physMemKbytes&quot;:[4904,14712,24520,34328,44137,53945,63754,73561,83370,93179,102986,112795]}}}
+
+{&quot;type&quot;:&quot;TASK_FINISHED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.TaskFinished&quot;:{&quot;taskid&quot;:&quot;task_1477534790849_0003_r_000000&quot;,&quot;taskType&quot;:&quot;REDUCE&quot;,&quot;finishTime&quot;:1477538662652,&quot;status&quot;:&quot;SUCCEEDED&quot;,&quot;counters&quot;:{&quot;name&quot;:&quot;COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:115365},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:72},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:2}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;REDUCE_INPUT_GROUPS&quot;,&quot;displayName&quot;:&quot;Reduce input groups&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_SHUFFLE_BYTES&quot;,&quot;displayName&quot;:&quot;Reduce shuffle bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;REDUCE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce input records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SHUFFLED_MAPS&quot;,&quot;displayName&quot;:&quot;Shuffled Maps &quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:60},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:820},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:120524800},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:672628736},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:15728640}]},{&quot;name&quot;:&quot;Shuffle Errors&quot;,&quot;displayName&quot;:&quot;Shuffle Errors&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BAD_ID&quot;,&quot;displayName&quot;:&quot;BAD_ID&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;CONNECTION&quot;,&quot;displayName&quot;:&quot;CONNECTION&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;IO_ERROR&quot;,&quot;displayName&quot;:&quot;IO_ERROR&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_LENGTH&quot;,&quot;displayName&quot;:&quot;WRONG_LENGTH&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_MAP&quot;,&quot;displayName&quot;:&quot;WRONG_MAP&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_REDUCE&quot;,&quot;displayName&quot;:&quot;WRONG_REDUCE&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.output.FileOutputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Output Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;Bytes Written&quot;,&quot;value&quot;:72}]}]},&quot;successfulAttemptId&quot;:{&quot;string&quot;:&quot;attempt_1477534790849_0003_r_000000_0&quot;}}}}
+
+{&quot;type&quot;:&quot;JOB_FINISHED&quot;,&quot;event&quot;:{&quot;org.apache.hadoop.mapreduce.jobhistory.JobFinished&quot;:{&quot;jobid&quot;:&quot;job_1477534790849_0003&quot;,&quot;finishTime&quot;:1477538662701,&quot;finishedMaps&quot;:1,&quot;finishedReduces&quot;:1,&quot;failedMaps&quot;:0,&quot;failedReduces&quot;:0,&quot;totalCounters&quot;:{&quot;name&quot;:&quot;TOTAL_COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:230785},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:194},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:72},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:6},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:2}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.JobCounter&quot;,&quot;displayName&quot;:&quot;Job Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;TOTAL_LAUNCHED_MAPS&quot;,&quot;displayName&quot;:&quot;Launched map tasks&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;TOTAL_LAUNCHED_REDUCES&quot;,&quot;displayName&quot;:&quot;Launched reduce tasks&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;DATA_LOCAL_MAPS&quot;,&quot;displayName&quot;:&quot;Data-local map tasks&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;SLOTS_MILLIS_MAPS&quot;,&quot;displayName&quot;:&quot;Total time spent by all maps in occupied slots (ms)&quot;,&quot;value&quot;:4100},{&quot;name&quot;:&quot;SLOTS_MILLIS_REDUCES&quot;,&quot;displayName&quot;:&quot;Total time spent by all reduces in occupied slots (ms)&quot;,&quot;value&quot;:3087},{&quot;name&quot;:&quot;MILLIS_MAPS&quot;,&quot;displayName&quot;:&quot;Total time spent by all map tasks (ms)&quot;,&quot;value&quot;:4100},{&quot;name&quot;:&quot;MILLIS_REDUCES&quot;,&quot;displayName&quot;:&quot;Total time spent by all reduce tasks (ms)&quot;,&quot;value&quot;:3087},{&quot;name&quot;:&quot;VCORES_MILLIS_MAPS&quot;,&quot;displayName&quot;:&quot;Total vcore-seconds taken by all map tasks&quot;,&quot;value&quot;:4100},{&quot;name&quot;:&quot;VCORES_MILLIS_REDUCES&quot;,&quot;displayName&quot;:&quot;Total vcore-seconds taken by all reduce tasks&quot;,&quot;value&quot;:3087},{&quot;name&quot;:&quot;MB_MILLIS_MAPS&quot;,&quot;displayName&quot;:&quot;Total megabyte-seconds taken by all map tasks&quot;,&quot;value&quot;:4198400},{&quot;name&quot;:&quot;MB_MILLIS_REDUCES&quot;,&quot;displayName&quot;:&quot;Total megabyte-seconds taken by all reduce tasks&quot;,&quot;value&quot;:3161088}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;MAP_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map input records&quot;,&quot;value&quot;:4},{&quot;name&quot;:&quot;MAP_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map output records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;MAP_OUTPUT_BYTES&quot;,&quot;displayName&quot;:&quot;Map output bytes&quot;,&quot;value&quot;:141},{&quot;name&quot;:&quot;MAP_OUTPUT_MATERIALIZED_BYTES&quot;,&quot;displayName&quot;:&quot;Map output materialized bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;SPLIT_RAW_BYTES&quot;,&quot;displayName&quot;:&quot;Input split bytes&quot;,&quot;value&quot;:109},{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_INPUT_GROUPS&quot;,&quot;displayName&quot;:&quot;Reduce input groups&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_SHUFFLE_BYTES&quot;,&quot;displayName&quot;:&quot;Reduce shuffle bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;REDUCE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce input records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:18},{&quot;name&quot;:&quot;SHUFFLED_MAPS&quot;,&quot;displayName&quot;:&quot;Shuffled Maps &quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:143},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:1310},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:337027072},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:1338920960},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:136450048}]},{&quot;name&quot;:&quot;Shuffle Errors&quot;,&quot;displayName&quot;:&quot;Shuffle Errors&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BAD_ID&quot;,&quot;displayName&quot;:&quot;BAD_ID&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;CONNECTION&quot;,&quot;displayName&quot;:&quot;CONNECTION&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;IO_ERROR&quot;,&quot;displayName&quot;:&quot;IO_ERROR&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_LENGTH&quot;,&quot;displayName&quot;:&quot;WRONG_LENGTH&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_MAP&quot;,&quot;displayName&quot;:&quot;WRONG_MAP&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_REDUCE&quot;,&quot;displayName&quot;:&quot;WRONG_REDUCE&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.input.FileInputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Input Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_READ&quot;,&quot;displayName&quot;:&quot;Bytes Read&quot;,&quot;value&quot;:85}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.output.FileOutputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Output Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;Bytes Written&quot;,&quot;value&quot;:72}]}]},&quot;mapCounters&quot;:{&quot;name&quot;:&quot;MAP_COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:115420},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:194},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;MAP_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map input records&quot;,&quot;value&quot;:4},{&quot;name&quot;:&quot;MAP_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Map output records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;MAP_OUTPUT_BYTES&quot;,&quot;displayName&quot;:&quot;Map output bytes&quot;,&quot;value&quot;:141},{&quot;name&quot;:&quot;MAP_OUTPUT_MATERIALIZED_BYTES&quot;,&quot;displayName&quot;:&quot;Map output materialized bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;SPLIT_RAW_BYTES&quot;,&quot;displayName&quot;:&quot;Input split bytes&quot;,&quot;value&quot;:109},{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:14},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:83},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:490},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:216502272},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:666292224},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:120721408}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.input.FileInputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Input Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_READ&quot;,&quot;displayName&quot;:&quot;Bytes Read&quot;,&quot;value&quot;:85}]}]},&quot;reduceCounters&quot;:{&quot;name&quot;:&quot;REDUCE_COUNTERS&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.FileSystemCounter&quot;,&quot;displayName&quot;:&quot;File System Counters&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;FILE_BYTES_READ&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes read&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;FILE_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;FILE: Number of bytes written&quot;,&quot;value&quot;:115365},{&quot;name&quot;:&quot;FILE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;FILE_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;FILE: Number of write operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_READ&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes read&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;HDFS: Number of bytes written&quot;,&quot;value&quot;:72},{&quot;name&quot;:&quot;HDFS_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of read operations&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;HDFS_LARGE_READ_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of large read operations&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;HDFS_WRITE_OPS&quot;,&quot;displayName&quot;:&quot;HDFS: Number of write operations&quot;,&quot;value&quot;:2}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.TaskCounter&quot;,&quot;displayName&quot;:&quot;Map-Reduce Framework&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;COMBINE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine input records&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;COMBINE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Combine output records&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;REDUCE_INPUT_GROUPS&quot;,&quot;displayName&quot;:&quot;Reduce input groups&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_SHUFFLE_BYTES&quot;,&quot;displayName&quot;:&quot;Reduce shuffle bytes&quot;,&quot;value&quot;:114},{&quot;name&quot;:&quot;REDUCE_INPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce input records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;REDUCE_OUTPUT_RECORDS&quot;,&quot;displayName&quot;:&quot;Reduce output records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SPILLED_RECORDS&quot;,&quot;displayName&quot;:&quot;Spilled Records&quot;,&quot;value&quot;:9},{&quot;name&quot;:&quot;SHUFFLED_MAPS&quot;,&quot;displayName&quot;:&quot;Shuffled Maps &quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;FAILED_SHUFFLE&quot;,&quot;displayName&quot;:&quot;Failed Shuffles&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;MERGED_MAP_OUTPUTS&quot;,&quot;displayName&quot;:&quot;Merged Map outputs&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;GC_TIME_MILLIS&quot;,&quot;displayName&quot;:&quot;GC time elapsed (ms)&quot;,&quot;value&quot;:60},{&quot;name&quot;:&quot;CPU_MILLISECONDS&quot;,&quot;displayName&quot;:&quot;CPU time spent (ms)&quot;,&quot;value&quot;:820},{&quot;name&quot;:&quot;PHYSICAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Physical memory (bytes) snapshot&quot;,&quot;value&quot;:120524800},{&quot;name&quot;:&quot;VIRTUAL_MEMORY_BYTES&quot;,&quot;displayName&quot;:&quot;Virtual memory (bytes) snapshot&quot;,&quot;value&quot;:672628736},{&quot;name&quot;:&quot;COMMITTED_HEAP_BYTES&quot;,&quot;displayName&quot;:&quot;Total committed heap usage (bytes)&quot;,&quot;value&quot;:15728640}]},{&quot;name&quot;:&quot;Shuffle Errors&quot;,&quot;displayName&quot;:&quot;Shuffle Errors&quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BAD_ID&quot;,&quot;displayName&quot;:&quot;BAD_ID&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;CONNECTION&quot;,&quot;displayName&quot;:&quot;CONNECTION&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;IO_ERROR&quot;,&quot;displayName&quot;:&quot;IO_ERROR&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_LENGTH&quot;,&quot;displayName&quot;:&quot;WRONG_LENGTH&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_MAP&quot;,&quot;displayName&quot;:&quot;WRONG_MAP&quot;,&quot;value&quot;:0},{&quot;name&quot;:&quot;WRONG_REDUCE&quot;,&quot;displayName&quot;:&quot;WRONG_REDUCE&quot;,&quot;value&quot;:0}]},{&quot;name&quot;:&quot;org.apache.hadoop.mapreduce.lib.output.FileOutputFormatCounter&quot;,&quot;displayName&quot;:&quot;File Output Format Counters &quot;,&quot;counts&quot;:[{&quot;name&quot;:&quot;BYTES_WRITTEN&quot;,&quot;displayName&quot;:&quot;Bytes Written&quot;,&quot;value&quot;:72}]}]}}}}
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 任务运行日志（Container日志）</div><div class="line"></div><div class="line">任务运行日志（即：Container日志）包含ApplicationMaster日志和普通Task日志等信息。默认情况下，这些日志信息是存放在$&#123;HADOOP_HOME&#125;/logs/userlogs目录下</div><div class="line"></div><div class="line">普通Task就是我们的MapReduce实例程序，这类日志就是我们在MapReduce程序中输出的log日志和System.out打印到控制台的输出，例如：logger.info(&quot;test&quot;);和System.out.println(&quot;test&quot;);。这部分日志默认是存储在$&#123;HADOOP_HOME&#125;/logs/userlogs</div><div class="line"></div><div class="line">##### yarn-site.xml</div></pre></td></tr></table></figure>
+
+&lt;property&gt;
+    &lt;name&gt;yarn.nodemanager.log-dirs&lt;/name&gt;
+    &lt;value&gt;${yarn.log.dir}/userlogs&lt;/value&gt;
+&lt;/property&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">对于Container日志，在Hadoop 2.x版本里面，Task是按照application-&gt;Container的层次来管理的，所以在NameNode机器上运行MapReduce程序的时候，在Console里面看到的log都可以通过在相应的DataNode/NodeManager里面的$&#123;HADOOP_HOME&#125;/logs/userlogs下面找到。</div></pre></td></tr></table></figure>
+
+# 查看默认日志存储路径下的文件（一个MapReduce程序对应一个Application，这里的Application会在Console提示出哪一个Application执行我们的MapReduce程序）
+$ ls ${HADOOP_HOME}/logs/userlogs
+drwx--x---  5 yunyu yunyu  4096 Nov  2 20:13 application_1478088725123_0001/
+drwx--x---  5 yunyu yunyu  4096 Nov  2 20:31 application_1478088725123_0002/
+drwx--x---  5 yunyu yunyu  4096 Nov  2 21:05 application_1478088725123_0003/
+drwx--x---  3 yunyu yunyu  4096 Nov  2 21:08 application_1478088725123_0004/
+drwx--x---  3 yunyu yunyu  4096 Nov  2 21:34 application_1478088725123_0006/
+drwx--x---  4 yunyu yunyu  4096 Nov  2 23:49 application_1478101603149_0001/
+drwx--x---  3 yunyu yunyu  4096 Nov  3 00:04 application_1478101603149_0002/
+drwx--x---  3 yunyu yunyu  4096 Nov  3 11:03 application_1478138258749_0001/
+
+# 查看某个Application下的Container日志（如果是Hadoop分布式集群，Container日志可能会分布在多个DataNode机器中）
+$ ll application_1478088725123_0003/
+total 20
+drwx--x---  5 yunyu yunyu 4096 Nov  2 21:05 ./
+drwxr-xr-x 33 yunyu yunyu 4096 Nov  3 14:57 ../
+drwx--x---  2 yunyu yunyu 4096 Nov  2 21:04 container_1478088725123_0003_01_000001/
+drwx--x---  2 yunyu yunyu 4096 Nov  2 21:05 container_1478088725123_0003_01_000002/
+drwx--x---  2 yunyu yunyu 4096 Nov  2 21:05 container_1478088725123_0003_01_000003/
+
+# 查看container下的日志文件，都有三个日志文件
+# stderr : 错误文件输出
+# stdout : System.out.println控制台输出，我们自己写的MapReduce程序的System.out.println输出都将写入到此文件中
+# syslog : logger系统日志输出，我们自己的MapReduce程序的logger.info日志记录都将写入到此文件中
+$ ll application_1478088725123_0003/container_1478088725123_0003_01_000001/*
+-rw-rw-r-- 1 yunyu yunyu   760 Nov  2 21:05 application_1478088725123_0003/container_1478088725123_0003_01_000001/stderr
+-rw-rw-r-- 1 yunyu yunyu     0 Nov  2 21:04 application_1478088725123_0003/container_1478088725123_0003_01_000001/stdout
+-rw-rw-r-- 1 yunyu yunyu 34718 Nov  2 21:05 application_1478088725123_0003/container_1478088725123_0003_01_000001/syslog
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">如果是Hadoop分布式集群，Container日志文件有可能会被分配到多个机器中</div></pre></td></tr></table></figure>
+
+# Hadoop1机器中运行了一部分的Application分配的任务，任务日志在container_1478101603149_0002_01_000001中
+$ ll application_1478101603149_0002/
+total 12
+drwx--x---  3 yunyu yunyu 4096 Nov  3 00:04 ./
+drwxr-xr-x 33 yunyu yunyu 4096 Nov  3 15:03 ../
+drwx--x---  2 yunyu yunyu 4096 Nov  3 00:04 container_1478101603149_0002_01_000001/
+
+# Hadoop2机器中运行了一部分的Application分配的任务，任务日志在container_1478101603149_0002_01_000002和container_1478101603149_0002_01_000003中
+$ ll application_1478101603149_0002/
+total 16
+drwx--x---  4 yunyu yunyu 4096 Nov  3 00:04 ./
+drwxr-xr-x 36 yunyu yunyu 4096 Nov  3 15:03 ../
+drwx--x---  2 yunyu yunyu 4096 Nov  3 00:04 container_1478101603149_0002_01_000002/
+drwx--x---  2 yunyu yunyu 4096 Nov  3 00:04 container_1478101603149_0002_01_000003/
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 日志聚合</div><div class="line"></div><div class="line">将作业和任务日志存放在各个节点上不便于统一管理和分析，为此，我们可以启用日志聚集功能。打开该功能后，各个任务运行完成后，会将生成的日志推送到HDFS的一个目录下（之前的并不会立即删除，在HDFS上，每个任务产生的三个文件，即syslog、stderr和stdout将合并一个文件，并通过索引记录各自位置）。这样我们可以使用HistoryServer统一查看Hadoop相关日志。</div><div class="line"></div><div class="line">这里需要在yarn-site.xml配置文件中添加如下配置</div></pre></td></tr></table></figure>
+
+&lt;property&gt;
+    &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">如果不添加此配置我们在HistoryServer中直接查看logs会报错如下</div></pre></td></tr></table></figure>
+
+Aggregation is not enabled. Try the nodemanager at hadoop1:39175
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 日志聚集相关配置参数</div><div class="line"></div><div class="line">日志聚集是YARN提供的日志中央化管理功能，它能将运行完成的Container/任务日志上传到HDFS上，从而减轻NodeManager负载，且提供一个中央化存储和分析机制。默认情况下，Container/任务日志存在在各个NodeManager上，如果启用日志聚集功能需要额外的配置。</div></pre></td></tr></table></figure>
+
+（1） yarn.log-aggregation-enable
+参数解释：是否启用日志聚集功能。
+默认值：false
+
+（2） yarn.log-aggregation.retain-seconds
+参数解释：在HDFS上聚集的日志最多保存多长时间。
+默认值：-1
+
+（3） yarn.log-aggregation.retain-check-interval-seconds
+参数解释：多长时间检查一次日志，并将满足条件的删除，如果是0或者负数，则为上一个值的1/10。
+默认值：-1
+
+（4） yarn.nodemanager.remote-app-log-dir
+参数解释：当应用程序运行结束后，日志被转移到的HDFS目录（启用日志聚集功能时有效）。
+默认值：/tmp/logs
+
+（5） yarn.log-aggregation.retain-seconds
+参数解释：远程日志目录子目录名称（启用日志聚集功能时有效）。
+默认值：日志将被转移到目录
+${yarn.nodemanager.remote-app-log-dir}/${user}/${thisParam}下
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">我这里犯了一个比较低级的错误，导致我的日志结果一直和我预期的不同，这也让我困惑了许久。问题的现象是我只在Hadoop1的机器中启用了日志聚集功能（yarn.log-aggregation-enable为true），但是我在跑自己的MapReduce任务时还是看不到自己代码中的System.out.println和logger.info日志输出到Container日志文件中，而且发现Container日志文件会少，正常情况下会有container_XXX_00001，container_XXX_00002，container_XXX_00003三个容器运行日志，但是有的时候我发现只有container_XXX_00001和container_XXX_00003没有container_XXX_00002。后来我多次重新跑了MapReduce程序，发现container日志会被正常生成出来，但是MapReduce运行完很快就被删掉了。这样我困惑了很久，后来发现原来是我自己粗心导致了，日志聚集功能只在Hadoop1机器中配置了，而其他两台Hadoop机器没有配置，所以导致只有Hadoop1的Container日志文件被聚集到HDFS上，而且Hadoop1的Container日志聚集到HDFS之后，会将Hadoop1系统中的log文件删除，所以就会少了container_XXX_00002的日志文件。</div></pre></td></tr></table></figure>
+
+# 可以在HDFS中查看到stderr, stdout, syslog聚集的日志文件
+$ hdfs dfs -ls /tmp/logs/yunyu/logs/application_1478159146498_0001
+Found 1 items
+-rw-r-----   2 yunyu supergroup      52122 2016-11-03 00:47 /tmp/logs/yunyu/logs/application_1478159146498_0001/hadoop1_35650
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这里我简单说一下我研究的结论</p>
+<ul>
+<li>Q: 在Hadoop中如何看到MapReduce中的System.out.println输出</li>
+<li><p>A: 在Container日志目录下的stdout日志文件中，默认是在${HADOOP_HOME}/logs/userlogs/application_XXXX/container_XXX_0000X/stdout</p>
+</li>
+<li><p>Q: 在Hadoop中如何看到Log4j或者其他日志组件的日志输出</p>
+</li>
+<li><p>A: 在Container日志目录下的stdout日志文件中，默认是在${HADOOP_HOME}/logs/userlogs/application_XXXX/container_XXX_0000X/syslog</p>
+</li>
+<li><p>Q: 日志文件保存在哪里</p>
+</li>
+<li><p>A: 默认保存在${HADOOP_HOME}/logs/userlogs/目录下</p>
+</li>
+<li><p>Q: 如何通过HistoryServer查看Hadoop日志</p>
+</li>
+<li>A: 需要在yarn-site.xml配置文件中配置yarn.log-aggregation-enable属性为true</li>
+</ul>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.iteblog.com/archives/896" target="_blank" rel="external">https://www.iteblog.com/archives/896</a></li>
+<li><a href="https://www.iteblog.com/archives/936" target="_blank" rel="external">https://www.iteblog.com/archives/936</a></li>
+<li><a href="http://dongxicheng.org/mapreduce-nextgen/hadoop-2-0-jobhistory-log/" target="_blank" rel="external">http://dongxicheng.org/mapreduce-nextgen/hadoop-2-0-jobhistory-log/</a></li>
+<li><a href="http://blog.csdn.net/infovisthinker/article/details/45370089" target="_blank" rel="external">http://blog.csdn.net/infovisthinker/article/details/45370089</a></li>
+<li><a href="http://blog.caiyongfu.cn/?p=614" target="_blank" rel="external">http://blog.caiyongfu.cn/?p=614</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/10/Hadoop/Hadoop学习（四）MapReduce清洗数据实例/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Hadoop学习（四）MapReduce清洗数据实例
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/10/Hadoop/Hadoop学习（三）MapReduce的WordCount实例/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop学习（三）MapReduce的WordCount实例</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
