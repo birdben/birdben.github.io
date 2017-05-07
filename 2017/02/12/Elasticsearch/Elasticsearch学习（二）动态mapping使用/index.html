@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Elasticsearch学习（二）动态mapping使用 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文主要翻译自elastic.co的官方文档
+Dynamic MappingElasticsearch要索引文档，不必首先创建索引，定义映射类型并定义字段。你可以直接创建索引文档，索引，类型和字段将自动生成。
+12PUT data/counters/1 &amp;#123; &amp;quot;count&amp;quot;: 5 &amp;#125;
+创建data索引，counters类型和名为count的字段，count字段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch学习（二）动态mapping使用">
+<meta property="og:url" content="https://github.com/birdben/2017/02/12/Elasticsearch/Elasticsearch学习（二）动态mapping使用/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="本文主要翻译自elastic.co的官方文档
+Dynamic MappingElasticsearch要索引文档，不必首先创建索引，定义映射类型并定义字段。你可以直接创建索引文档，索引，类型和字段将自动生成。
+12PUT data/counters/1 &amp;#123; &amp;quot;count&amp;quot;: 5 &amp;#125;
+创建data索引，counters类型和名为count的字段，count字段">
+<meta property="og:updated_time" content="2017-05-07T10:48:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch学习（二）动态mapping使用">
+<meta name="twitter:description" content="本文主要翻译自elastic.co的官方文档
+Dynamic MappingElasticsearch要索引文档，不必首先创建索引，定义映射类型并定义字段。你可以直接创建索引文档，索引，类型和字段将自动生成。
+12PUT data/counters/1 &amp;#123; &amp;quot;count&amp;quot;: 5 &amp;#125;
+创建data索引，counters类型和名为count的字段，count字段">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Elasticsearch/Elasticsearch学习（二）动态mapping使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/12/Elasticsearch/Elasticsearch学习（二）动态mapping使用/" class="article-date">
+  	<time datetime="2017-02-12T09:42:02.000Z" itemprop="datePublished">2017-02-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Elasticsearch学习（二）动态mapping使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Search/">Search</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要翻译自elastic.co的官方文档</p>
+<h3 id="Dynamic-Mapping"><a href="#Dynamic-Mapping" class="headerlink" title="Dynamic Mapping"></a>Dynamic Mapping</h3><p>Elasticsearch要索引文档，不必首先创建索引，定义映射类型并定义字段。你可以直接创建索引文档，索引，类型和字段将自动生成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PUT data/counters/1 </div><div class="line">&#123; &quot;count&quot;: 5 &#125;</div></pre></td></tr></table></figure>
+<p>创建data索引，counters类型和名为count的字段，count字段的数据类型为long。</p>
+<p>自动检测和添加新类型和字段称为dynamic mapping（动态映射）。 动态映射规则可以根据你的目的自定义：</p>
+<ul>
+<li><em>default</em> mapping（默认Mapping） : 配置要用于新映射类型的基本映射。</li>
+<li>Dynamic field mappings（动态字段Mapping） : 动态检测的规则。</li>
+<li>Dynamic templates（动态模板） : 自定义规则用于为动态添加的字段配置映射。</li>
+</ul>
+<p>注意：Index Template允许你为新索引配置default mappings，settings，alias和warmer，无论是自动创建还是显式创建。</p>
+<h4 id="禁止根据类型自动创建Mapping"><a href="#禁止根据类型自动创建Mapping" class="headerlink" title="禁止根据类型自动创建Mapping"></a>禁止根据类型自动创建Mapping</h4><p>通过将index.mapper.dynamic设置为false，可以禁用根据类型自动创建Mapping，可以通过在config / elasticsearch.yml文件中设置默认值，也可以将每个索引设置为索引设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT /_settings </div><div class="line">&#123;</div><div class="line">  &quot;index.mapper.dynamic&quot;:false</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>禁用所有索引的根据类型自动创建Mapping。</li>
+</ul>
+<p>无论此设置的值如何，仍然可以在创建索引或使用PUT映射API时显式添加Mapping。</p>
+<h3 id="default-mapping"><a href="#default-mapping" class="headerlink" title="default mapping"></a><em>default</em> mapping</h3><p>对于任何新映射类型，Default Mapping被用做基础的Mapping映射，可以通过向索引添加具有名称<em>default</em>的映射类型来定制，无论是在创建索引时还是在使用PUT映射API时。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;_default_&quot;: &#123; </div><div class="line">      &quot;_all&quot;: &#123;</div><div class="line">        &quot;enabled&quot;: false</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line">    &quot;user&quot;: &#123;&#125;, </div><div class="line">    &quot;blogpost&quot;: &#123; </div><div class="line">      &quot;_all&quot;: &#123;</div><div class="line">        &quot;enabled&quot;: true</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><em>default</em> mapping将_all字段默认为disabled。</li>
+<li>user类型从<em>default</em>继承设置。</li>
+<li>blogpost类型覆盖默认值，并启用_all字段。</li>
+</ul>
+<p>虽然<em>default</em>映射可以在创建索引之后更新，但是新默认值将仅影响之后创建的映射类型。</p>
+<p><em>default</em>映射可以与Index Template结合使用，以控制自动创建的索引中的动态创建的类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">PUT _template/logging</div><div class="line">&#123;</div><div class="line">  &quot;template&quot;:   &quot;logs-*&quot;, </div><div class="line">  &quot;settings&quot;: &#123; &quot;number_of_shards&quot;: 1 &#125;, </div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;_default_&quot;: &#123;</div><div class="line">      &quot;_all&quot;: &#123; </div><div class="line">        &quot;enabled&quot;: false</div><div class="line">      &#125;,</div><div class="line">      &quot;dynamic_templates&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;strings&quot;: &#123; </div><div class="line">            &quot;match_mapping_type&quot;: &quot;string&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;,</div><div class="line">              &quot;fields&quot;: &#123;</div><div class="line">                &quot;raw&quot;: &#123;</div><div class="line">                  &quot;type&quot;:  &quot;string&quot;,</div><div class="line">                  &quot;index&quot;: &quot;not_analyzed&quot;,</div><div class="line">                  &quot;ignore_above&quot;: 256</div><div class="line">                &#125;</div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT logs-2015.10.01/event/1</div><div class="line">&#123; &quot;message&quot;: &quot;error:16&quot; &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>logging template将匹配任何以logs-开头的索引</li>
+<li>将使用单个主分片创建匹配索引</li>
+<li>对于新的根据类型创建的Mapping，默认情况下禁用_all字段</li>
+<li>String类型的字段将会被创建成analyzed的主字段，并且还有一个not_analyzed的.raw字段</li>
+</ul>
+<h3 id="Dynamic-templates"><a href="#Dynamic-templates" class="headerlink" title="Dynamic templates"></a>Dynamic templates</h3><p>Dynamic templates允许你可以自定义Mapping并且应用于动态添加的字段，其基于：</p>
+<ul>
+<li>由Elasticsearch检测的<code>datetype</code>，是否满足<code>match_mapping_type</code>。</li>
+<li>该字段的名称，是否满足<code>match</code>和<code>un_match</code>或<code>match_pattern</code>。</li>
+<li>该字段的完整的带.的路径，是否满足<code>path_match</code>和<code>path_unmatch</code>。</li>
+</ul>
+<p>原始字段名{name}和检测到的数据类型{dynamic_type}模板变量可在Mapping格式中用作占位符。</p>
+<p>注意：仅当字段包含具体值（不是空值或空数组）时，才会添加动态字段映射。这意味着如果在dynamic_template中使用了null_value选项，它将仅在第一个有具体值字段的文档之后应用。</p>
+<p>Dynamic templates被指定为命名对象的数组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&quot;dynamic_templates&quot;: [</div><div class="line">	&#123;</div><div class="line">	  &quot;my_template_name&quot;: &#123; </div><div class="line">	    ...  match conditions ... </div><div class="line">	    &quot;mapping&quot;: &#123; ... &#125; </div><div class="line">	  &#125;</div><div class="line">	&#125;,</div><div class="line">	...</div><div class="line">]</div></pre></td></tr></table></figure>
+<ul>
+<li>my_template_name : 模板名称可以是任何字符串值。</li>
+<li>match conditions : 匹配条件可以包括以下任何一个：<code>match_mapping_type</code>，<code>match</code>，<code>match_pattern</code>，<code>unmatch</code>，<code>path_match</code>，<code>path_unmatch</code>。</li>
+<li>mapping : 是设置匹配字段应使用的Mapping映射。</li>
+</ul>
+<p>Template按顺序处理 - 第一个匹配模板即可。新的模板可以使用PUT映射API附加到列表的末尾。如果新模板与现有模板具有相同的名称，则它将替换旧版本。</p>
+<h4 id="match-mapping-type"><a href="#match-mapping-type" class="headerlink" title="match_mapping_type"></a>match_mapping_type</h4><p>match_mapping_type匹配由动态字段映射检测到的数据类型，换句话说，Elasticsearch认为字段应该具有的数据类型。只能自动检测以下数据类型：boolean，date，double，long，object，string。 它还接受*匹配所有数据类型。</p>
+<p>例如，如果我们要将所有integer字段映射为integer而不是long，并将所有string字段同时analyzed和not_analyzed，则可以使用以下模板：</p>
+<p>这里还需要重点看一下Dynamic field Mapping</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.3/dynamic-field-mapping.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/2.3/dynamic-field-mapping.html</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;my_type&quot;: &#123;</div><div class="line">      &quot;dynamic_templates&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;integers&quot;: &#123;</div><div class="line">            &quot;match_mapping_type&quot;: &quot;long&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;integer&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;strings&quot;: &#123;</div><div class="line">            &quot;match_mapping_type&quot;: &quot;string&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;,</div><div class="line">              &quot;fields&quot;: &#123;</div><div class="line">                &quot;raw&quot;: &#123;</div><div class="line">                  &quot;type&quot;:  &quot;string&quot;,</div><div class="line">                  &quot;index&quot;: &quot;not_analyzed&quot;,</div><div class="line">                  &quot;ignore_above&quot;: 256</div><div class="line">                &#125;</div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT my_index/my_type/1</div><div class="line">&#123;</div><div class="line">  &quot;my_integer&quot;: 5, </div><div class="line">  &quot;my_string&quot;: &quot;Some string&quot; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>my_integer字段映射为integer。</li>
+<li>my_string字段映射为analyzed的字符串，和一个not_analyzed的.raw字段。</li>
+</ul>
+<h4 id="match和unmatch"><a href="#match和unmatch" class="headerlink" title="match和unmatch"></a>match和unmatch</h4><p>match参数使用匹配字段名称的模式，而unmatch使用模式排除匹配的字段。</p>
+<p>以下示例匹配名称以long_开头的所有字符串字段（除去了以_text结尾的字符串），并将它们映射为long字段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;my_type&quot;: &#123;</div><div class="line">      &quot;dynamic_templates&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;longs_as_strings&quot;: &#123;</div><div class="line">            &quot;match_mapping_type&quot;: &quot;string&quot;,</div><div class="line">            &quot;match&quot;:   &quot;long_*&quot;,</div><div class="line">            &quot;unmatch&quot;: &quot;*_text&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;long&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT my_index/my_type/1</div><div class="line">&#123;</div><div class="line">  &quot;long_num&quot;: &quot;5&quot;, </div><div class="line">  &quot;long_text&quot;: &quot;foo&quot; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>long_num字段映射为long类型。</li>
+<li>long_text字段使用default string mapping。</li>
+</ul>
+<h4 id="match-pattern"><a href="#match-pattern" class="headerlink" title="match_pattern"></a>match_pattern</h4><p>match_pattern参数调整match参数的行为，以便它支持对字段名称进行完全Java正则表达式匹配，而不是简单的通配符，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&quot;match_pattern&quot;: &quot;regex&quot;,</div><div class="line">&quot;match&quot;: &quot;^profit_\d+$&quot;</div></pre></td></tr></table></figure>
+<h4 id="path-match和path-unmatch"><a href="#path-match和path-unmatch" class="headerlink" title="path_match和path_unmatch"></a>path_match和path_unmatch</h4><p>path_match和path_unmatch参数以与match和unmatch相同的方式工作，但在字段的完整的带.的路径上操作，而不仅仅是最终名称。some_object.*.some_field。</p>
+<p>此示例将name对象中的任何字段的值复制到顶级full_name字段（middle字段除外）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;my_type&quot;: &#123;</div><div class="line">      &quot;dynamic_templates&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;full_name&quot;: &#123;</div><div class="line">            &quot;path_match&quot;:   &quot;name.*&quot;,</div><div class="line">            &quot;path_unmatch&quot;: &quot;*.middle&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;:       &quot;string&quot;,</div><div class="line">              &quot;copy_to&quot;:    &quot;full_name&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT my_index/my_type/1</div><div class="line">&#123;</div><div class="line">  &quot;name&quot;: &#123;</div><div class="line">    &quot;first&quot;:  &quot;Alice&quot;,</div><div class="line">    &quot;middle&quot;: &quot;Mary&quot;,</div><div class="line">    &quot;last&quot;:   &quot;White&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="name-和-dynamic-type"><a href="#name-和-dynamic-type" class="headerlink" title="{name}和{dynamic_type}"></a>{name}和{dynamic_type}</h4><p>在Mapping中{name}和{dynamic_type}占位符将替换为字段名称和检测到的动态类型。 以下示例将所有字符串字段设置为使用与字段名称相同的分析器，并对所有non-string字段禁用doc_values：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">PUT my_index</div><div class="line">&#123;</div><div class="line">  &quot;mappings&quot;: &#123;</div><div class="line">    &quot;my_type&quot;: &#123;</div><div class="line">      &quot;dynamic_templates&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;named_analyzers&quot;: &#123;</div><div class="line">            &quot;match_mapping_type&quot;: &quot;string&quot;,</div><div class="line">            &quot;match&quot;: &quot;*&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;string&quot;,</div><div class="line">              &quot;analyzer&quot;: &quot;&#123;name&#125;&quot;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;no_doc_values&quot;: &#123;</div><div class="line">            &quot;match_mapping_type&quot;:&quot;*&quot;,</div><div class="line">            &quot;mapping&quot;: &#123;</div><div class="line">              &quot;type&quot;: &quot;&#123;dynamic_type&#125;&quot;,</div><div class="line">              &quot;doc_values&quot;: false</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT my_index/my_type/1</div><div class="line">&#123;</div><div class="line">  &quot;english&quot;: &quot;Some English text&quot;, </div><div class="line">  &quot;count&quot;:   5 </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>english字段映射为english analyzer的string字段。</li>
+<li>count字段映射为禁用doc_values的long字段。</li>
+</ul>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.3/dynamic-mapping.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/2.3/dynamic-mapping.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.3/default-mapping.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/2.3/default-mapping.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.3/dynamic-templates.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/2.3/dynamic-templates.html</a></li>
+<li><a href="http://jiangpeng.info/blogs/2014/11/24/elasticsearch-mapping.html" target="_blank" rel="external">http://jiangpeng.info/blogs/2014/11/24/elasticsearch-mapping.html</a></li>
+<li><a href="https://my.oschina.net/u/204498/blog/529955" target="_blank" rel="external">https://my.oschina.net/u/204498/blog/529955</a></li>
+<li><a href="http://www.apache.wiki/pages/viewpage.action?pageId=9406922" target="_blank" rel="external">http://www.apache.wiki/pages/viewpage.action?pageId=9406922</a></li>
+<li><a href="http://ericyy.me/2016/11/17/elasticsearch-02-mapping.html" target="_blank" rel="external">http://ericyy.me/2016/11/17/elasticsearch-02-mapping.html</a></li>
+<li><a href="http://www.biglittleant.cn/2016/12/04/elastic-mapping/" target="_blank" rel="external">http://www.biglittleant.cn/2016/12/04/elastic-mapping/</a></li>
+<li><a href="https://elasticsearch.cn/book/elasticsearch_definitive_guide_2.x/custom-dynamic-mapping.html" target="_blank" rel="external">https://elasticsearch.cn/book/elasticsearch_definitive_guide_2.x/custom-dynamic-mapping.html</a></li>
+<li><a href="http://aoyouzi.iteye.com/blog/2116599" target="_blank" rel="external">http://aoyouzi.iteye.com/blog/2116599</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-nested-query.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-nested-query.html</a></li>
+<li><a href="https://github.com/elastic/kibana/issues/1084">https://github.com/elastic/kibana/issues/1084</a></li>
+<li><a href="http://www.itkeyword.com/doc/7497179070907396685/nested-object-in-kibana-visualize" target="_blank" rel="external">http://www.itkeyword.com/doc/7497179070907396685/nested-object-in-kibana-visualize</a></li>
+<li><a href="https://tech.homeaway.com/development/2016/07/05/improving-kibana-query-language-with-nested-support.html" target="_blank" rel="external">https://tech.homeaway.com/development/2016/07/05/improving-kibana-query-language-with-nested-support.html</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/13/Git/Git思维导图（转）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Git思维导图（转）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/09/JVM/JVM常用命令学习（二）jstat的使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM常用命令学习（二）jstat的使用</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

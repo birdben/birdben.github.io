@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Logstash学习（八）Logstash的metrics告警使用 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近为了提高系统的运行稳定性，在日志收集的过程中要求添加错误日志的告警，这里主要使用Logstash自带的metrics功能。Logstash可以在filter中根据某些字段进行日志的分类，如果某一类的日志出现次数不在正常范围，就会触发metrics event然后进行告警操作，这里我们只是使用简单的发邮件的告警方式。
+Java的日志格式
+12345678910111213142017-02-14">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logstash学习（八）Logstash的metrics告警使用">
+<meta property="og:url" content="https://github.com/birdben/2017/02/15/Logstash/Logstash学习（八）Logstash的metrics告警使用/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="最近为了提高系统的运行稳定性，在日志收集的过程中要求添加错误日志的告警，这里主要使用Logstash自带的metrics功能。Logstash可以在filter中根据某些字段进行日志的分类，如果某一类的日志出现次数不在正常范围，就会触发metrics event然后进行告警操作，这里我们只是使用简单的发邮件的告警方式。
+Java的日志格式
+12345678910111213142017-02-14">
+<meta property="og:updated_time" content="2017-05-07T10:48:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Logstash学习（八）Logstash的metrics告警使用">
+<meta name="twitter:description" content="最近为了提高系统的运行稳定性，在日志收集的过程中要求添加错误日志的告警，这里主要使用Logstash自带的metrics功能。Logstash可以在filter中根据某些字段进行日志的分类，如果某一类的日志出现次数不在正常范围，就会触发metrics event然后进行告警操作，这里我们只是使用简单的发邮件的告警方式。
+Java的日志格式
+12345678910111213142017-02-14">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Logstash/Logstash学习（八）Logstash的metrics告警使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/15/Logstash/Logstash学习（八）Logstash的metrics告警使用/" class="article-date">
+  	<time datetime="2017-02-15T09:53:16.000Z" itemprop="datePublished">2017-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Logstash学习（八）Logstash的metrics告警使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logstash/">Logstash</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近为了提高系统的运行稳定性，在日志收集的过程中要求添加错误日志的告警，这里主要使用Logstash自带的metrics功能。Logstash可以在filter中根据某些字段进行日志的分类，如果某一类的日志出现次数不在正常范围，就会触发metrics event然后进行告警操作，这里我们只是使用简单的发邮件的告警方式。</p>
+<p>Java的日志格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">2017-02-14 14:36:40 [ INFO] - com.yunyu.birdben.task.RiskTask -RiskTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:41 [ INFO] - com.yunyu.birdben.task.RiskTask -RiskTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:42 [ INFO] - com.yunyu.birdben.task.RiskTask -RiskTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:43 [ INFO] - com.yunyu.birdben.task.RiskTask -RiskTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:44 [ INFO] - com.yunyu.birdben.task.RiskTask -RiskTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:45 [ INFO] - com.yunyu.birdben.task.RiskTask -RiskTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:46 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:47 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:48 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:49 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:50 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:51 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:52 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div><div class="line">2017-02-14 14:36:53 [ INFO] - com.yunyu.birdben.task.OtherTask -OtherTask.java(97) -我是日志信息</div></pre></td></tr></table></figure>
+<p>Grok表达式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">JAVA_TIMESTAMP %&#123;YEAR&#125;-%&#123;MONTHNUM&#125;-%&#123;MONTHDAY&#125; %&#123;TIME&#125;</div><div class="line">JAVA_LOGS %&#123;JAVA_TIMESTAMP:timestamp&#125; \[ %&#123;DATA:level&#125;\] - %&#123;DATA:class_name&#125; -%&#123;DATA:file_name&#125;.java\(%&#123;DATA:line&#125;\) -%&#123;GREEDYDATA:msg&#125;</div></pre></td></tr></table></figure>
+<p>日志中有两个文件RiskTask.java和OtherTask.java文件，我们的需求是5分钟内，如果RiskTask的日志一条都没有出现就发送告警邮件。</p>
+<p>这里使用了三个新的插件metrics，ruby，email</p>
+<ul>
+<li>metrics : 用来定时统计和生成metrics event的</li>
+<li>ruby : 使用ruby代码来定制metrics event失效的条件</li>
+<li>email : 不需要多说，就是用来发送告警邮件的</li>
+</ul>
+<h4 id="metrics插件"><a href="#metrics插件" class="headerlink" title="metrics插件"></a>metrics插件</h4><p>默认情况下或根据flush_interval，每5秒刷新一次指标。 指标在事件流中显示为新事件，并执行发生在事件流以及输出之后的任何过滤器。</p>
+<p>一般来说，您需要为指标添加标记，并让输出显式查找该标记。</p>
+<p>被刷新的事件将以以下方式包括每个计量器和计时器度量：</p>
+<ul>
+<li>meter : 计量器度量</li>
+</ul>
+<p>meter =&gt; [ “event_%{field_name}” ]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;[event_%&#123;field_name&#125;] [count]&quot; - 事件的总数</div><div class="line">&quot;[event_%&#123;field_name&#125;] [rate_1m]&quot; - 1分钟滑动窗口中的每秒事件率</div><div class="line">&quot;[event_%&#123;field_name&#125;] [rate_5m]&quot; - 5分钟滑动窗口中的每秒事件率</div><div class="line">&quot;[event_%&#123;field_name&#125;] [rate_15m]&quot; - 15分钟滑动窗口中的每秒事件率</div></pre></td></tr></table></figure>
+<ul>
+<li>timer : 计时器度量</li>
+</ul>
+<p>timer =&gt; [ “thing”, “%{duration}” ]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&quot;[thing] [count]&quot; - 事件的总数</div><div class="line">&quot;[thing] [rate_1m]&quot; - 1分钟滑动窗口中的每秒事件率</div><div class="line">&quot;[thing] [rate_5m]&quot; - 5分钟滑动窗口中的每秒事件率</div><div class="line">&quot;[thing] [rate_15m]&quot; - 15分钟滑动窗口中的每秒事件率</div><div class="line">&quot;[thing] [min]&quot; - 此指标的最小值</div><div class="line">&quot;[thing] [max]&quot; - 此指标的最大值</div><div class="line">&quot;[thing] [stddev]&quot; - 此指标的标准差</div><div class="line">&quot;[thing] [mean]&quot; - 这个指标的平均值</div><div class="line">&quot;[thing] [pXX]&quot; - 此指标的第XX个百分位数（请参阅百分位数）</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">metrics &#123;</div><div class="line">    # 定义metrics计数器数据保存的字段名 field_name的值就是上面Grok表达式解析出来的字段名</div><div class="line">    meter =&gt; [ &quot;event_%&#123;field_name&#125;&quot; ]</div><div class="line">    # 给该metrics添加tag标签，用于区分metrics</div><div class="line">    add_tag =&gt; [ &quot;metric&quot; ]</div><div class="line">    # 每隔5分钟统计一次（测试环境可以适当改小）</div><div class="line">    flush_interval =&gt; 300</div><div class="line">    # 每隔5分钟（flush_interval + 1秒）清空计数器（测试环境可以适当改小）</div><div class="line">    clear_interval =&gt; 301</div><div class="line">    # 10秒内的message数据才统计，避免延迟</div><div class="line">    ignore_older_than =&gt; 10</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="ruby插件"><a href="#ruby插件" class="headerlink" title="ruby插件"></a>ruby插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">if &quot;metric&quot; in [tags] &#123;</div><div class="line">    ruby &#123;</div><div class="line">        # code是定义metrics的过滤规则，满足什么条件删除metric event日志</div><div class="line">        # 如果code为空，就是metric event不会被cancel，那么最终metric event会output到elasticsearch/stdout/email，如果不想每个metric event都触发告警事件，就只能通过ruby插件的code添加ruby代码来控制metric event的取消条件</div><div class="line">        # code =&gt; &quot;&quot;</div><div class="line">        # 如果status_code是500的日志count小于100条，就忽略此事件(即不发送任何消息)。</div><div class="line">        code =&gt; &quot;event.cancel if event[&apos;event_500&apos;][&apos;count&apos;] &lt; 100&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="email插件"><a href="#email插件" class="headerlink" title="email插件"></a>email插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 测试环境建议注释掉邮件发送，否则邮箱容易爆炸</div><div class="line">email &#123;</div><div class="line">    # stmp服务器地址</div><div class="line">    address =&gt; &quot;smtpdm.aliyun.com&quot;</div><div class="line">    # 发件人邮箱地址</div><div class="line">    username =&gt; &quot;service@post.XXX.com&quot;</div><div class="line">    # 发件人邮箱密码</div><div class="line">    password =&gt; &quot;123456&quot;</div><div class="line">    # 发件人邮箱</div><div class="line">    from =&gt; &quot;service@post.XXX.com&quot;</div><div class="line">    # 收件人邮箱</div><div class="line">    to =&gt; &quot;birdben@XXX.com&quot;</div><div class="line">    # 邮件主题</div><div class="line">    subject =&gt; &quot;告警：风控任务未执行&quot;</div><div class="line">    # 邮件内容</div><div class="line">    htmlbody =&gt; &quot;告警内容：com.yunyu.birdben.task.RiskTask没有执行&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结一下我所理解的metrics原理：</p>
+<p>配置文件定义好metrics之后，Logstash每隔flush<em>interval设置的时间就会自动创建一个metrics event，可以把metrics event理解成是Logstash自己创建的一条新的日志，这条新的日志有个名称是event</em>%{field_name}的字段（可能是event_A，event_B，field<em>name根据Grok表达式解析出来的结果确定的），event</em>%{field_name}的字段下有四个字段</p>
+<ul>
+<li>“[event_%{field_name}] [count]” - 事件的总数</li>
+<li>“[event_%{field_name}] [rate_1m]” - 1分钟滑动窗口中的每秒事件率</li>
+<li>“[event_%{field_name}] [rate_5m]” - 5分钟滑动窗口中的每秒事件率</li>
+<li>“[event_%{field_name}] [rate_15m]” - 15分钟滑动窗口中的每秒事件率</li>
+</ul>
+<p>我们可以根据count（事件的总数）的值，来统计每隔flush<em>interval时间，我们要统计的event</em>%{field_name}日志的数量。举个例子，如果field_name是status_code，那我们要统计的日志就是event_200，event_302，event_400，event_500等等。那么，event_200.count就是每隔flush_interval时间内，stats_code是200的事件个数，其他同理。如果metrics event被保存到ES索引中，那么查看到的ES结果就会类似下面的结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&quot;_source&quot;: &#123;</div><div class="line"></div><div class="line">    &quot;@version&quot;: &quot;1&quot;,</div><div class="line">    &quot;@timestamp&quot;: &quot;2017-02-15T11:06:37.402Z&quot;,</div><div class="line">    &quot;message&quot;: &quot;hadoop1&quot;,</div><div class="line">    &quot;evnet_500&quot;: &#123;</div><div class="line">		 &quot;count&quot;: 17,</div><div class="line">	    &quot;rate_1m&quot;: 3.4,</div><div class="line">	    &quot;rate_5m&quot;: 3.4,</div><div class="line">	    &quot;rate_15m&quot;: 3.4</div><div class="line">    &#125;,</div><div class="line">    &quot;evnet_302&quot;: &#123;</div><div class="line">	    &quot;count&quot;: 1074,</div><div class="line">	    &quot;rate_1m&quot;: 197.62554026237865,</div><div class="line">	    &quot;rate_5m&quot;: 211.24966828088344,</div><div class="line">	    &quot;rate_15m&quot;: 213.60997535145182</div><div class="line">    &#125;,</div><div class="line">    &quot;event_200&quot;: &#123;</div><div class="line">	    &quot;count&quot;: 10483,</div><div class="line">	    &quot;rate_1m&quot;: 982.4,</div><div class="line">	    &quot;rate_5m&quot;: 982.4,</div><div class="line">	    &quot;rate_15m&quot;: 982.4</div><div class="line">    &#125;,</div><div class="line">    &quot;tags&quot;: [</div><div class="line">        &quot;metric&quot;</div><div class="line">    ]</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里给metrics event添加了一个metric标签，这样方便与其他业务日志区分开，在后续的ruby处理，email发送邮件，存储ES时，都使用了tag中是否包含metric标签来判断，该日志是否为metrics event。如果是metrics event我们才进行ruby处理，进行event的条件过滤。如果是metrics event我们才发送邮件，并且不保存到ES索引中。</p>
+<p>这里我建议使用event.count来作为判断依据，而不是使用rate。因为count更适合用于是判断日志的收集数量，而rate更适合用于判断日志的收集速率。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/logstash/2.3/plugins-filters-metrics.html#plugins-filters-metrics-clear_interval" target="_blank" rel="external">https://www.elastic.co/guide/en/logstash/2.3/plugins-filters-metrics.html#plugins-filters-metrics-clear_interval</a></li>
+<li><a href="https://www.elastic.co/guide/en/logstash/2.3/plugins-outputs-email.html#plugins-outputs-email-address" target="_blank" rel="external">https://www.elastic.co/guide/en/logstash/2.3/plugins-outputs-email.html#plugins-outputs-email-address</a></li>
+<li><a href="https://www.elastic.co/guide/en/logstash/2.3/plugins-filters-ruby.html#plugins-filters-ruby-code" target="_blank" rel="external">https://www.elastic.co/guide/en/logstash/2.3/plugins-filters-ruby.html#plugins-filters-ruby-code</a></li>
+<li><a href="http://chenlinux.com/2013/07/11/howto-filter-count-in-logstash/" target="_blank" rel="external">http://chenlinux.com/2013/07/11/howto-filter-count-in-logstash/</a></li>
+<li><a href="http://xiaorui.cc/2015/04/16/使用kibana4的新功能metric做数据聚合/" target="_blank" rel="external">http://xiaorui.cc/2015/04/16/使用kibana4的新功能metric做数据聚合/</a></li>
+<li><a href="https://developer.rackspace.com/blog/using-logstash-to-push-metrics-to-graphite/" target="_blank" rel="external">https://developer.rackspace.com/blog/using-logstash-to-push-metrics-to-graphite/</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/05/Java/Python和Java服务器通信实现的理解和比较/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Python和Java服务器通信实现的理解和比较
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/13/Git/Git思维导图（转）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Git思维导图（转）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

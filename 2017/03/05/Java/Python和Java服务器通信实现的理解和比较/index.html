@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Python和Java服务器通信实现的理解和比较 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Python的WSGI和Java的Servlet APIPython的WSGI最近在学习使用Python进行WebServer的编程，发现WSGI（Web Server Gateway Interface）的概念。PythonWeb服务器网关接口（Python Web Server Gateway Interface，缩写为WSGI）是Python应用程序或框架和Web服务器之间的一种接口，已经被">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python和Java服务器通信实现的理解和比较">
+<meta property="og:url" content="https://github.com/birdben/2017/03/05/Java/Python和Java服务器通信实现的理解和比较/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Python的WSGI和Java的Servlet APIPython的WSGI最近在学习使用Python进行WebServer的编程，发现WSGI（Web Server Gateway Interface）的概念。PythonWeb服务器网关接口（Python Web Server Gateway Interface，缩写为WSGI）是Python应用程序或框架和Web服务器之间的一种接口，已经被">
+<meta property="og:updated_time" content="2017-05-07T10:48:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python和Java服务器通信实现的理解和比较">
+<meta name="twitter:description" content="Python的WSGI和Java的Servlet APIPython的WSGI最近在学习使用Python进行WebServer的编程，发现WSGI（Web Server Gateway Interface）的概念。PythonWeb服务器网关接口（Python Web Server Gateway Interface，缩写为WSGI）是Python应用程序或框架和Web服务器之间的一种接口，已经被">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Java/Python和Java服务器通信实现的理解和比较" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/05/Java/Python和Java服务器通信实现的理解和比较/" class="article-date">
+  	<time datetime="2017-03-05T10:41:38.000Z" itemprop="datePublished">2017-03-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python和Java服务器通信实现的理解和比较
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Web，Socket，Python/">Java Web，Socket，Python</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Java，Python/">Java，Python</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Python的WSGI和Java的Servlet-API"><a href="#Python的WSGI和Java的Servlet-API" class="headerlink" title="Python的WSGI和Java的Servlet API"></a>Python的WSGI和Java的Servlet API</h3><h4 id="Python的WSGI"><a href="#Python的WSGI" class="headerlink" title="Python的WSGI"></a>Python的WSGI</h4><p>最近在学习使用Python进行WebServer的编程，发现WSGI（Web Server Gateway Interface）的概念。PythonWeb服务器网关接口（Python Web Server Gateway Interface，缩写为WSGI）是Python应用程序或框架和Web服务器之间的一种接口，已经被广泛接受，它已基本达成它的可移植性方面的目标。WSGI 没有官方的实现，因为WSGI更像一个协议。只要遵照这些协议，WSGI应用(Application)都可以在任何服务器(Server)上运行，反之亦然。</p>
+<p>如果没有WSGI，你选择的Python网络框架将会限制所能够使用的 Web 服务器。</p>
+<p>这就意味着，你基本上只能使用能够正常运行的服务器与框架组合，而不能选择你希望使用的服务器或框架。</p>
+<p>那么，你怎样确保可以在不修改 Web 服务器代码或网络框架代码的前提下，使用自己选择的服务器，并且匹配多个不同的网络框架呢？为了解决这个问题，就出现了PythonWeb 服务器网关接口（Web Server Gateway Interface，WSGI）。</p>
+<p>WSGI的出现，让开发者可以将网络框架与 Web 服务器的选择分隔开来，不再相互限制。现在，你可以真正地将不同的 Web 服务器与网络开发框架进行混合搭配，选择满足自己需求的组合。例如，你可以使用Gunicorn或Nginx/uWSGI或Waitress服务器来运行Django、Flask或Pyramid应用。正是由于服务器和框架均支持WSGI，才真正得以实现二者之间的自由混合搭配。</p>
+<h4 id="Java的Servlet-API"><a href="#Java的Servlet-API" class="headerlink" title="Java的Servlet API"></a>Java的Servlet API</h4><p>下面将类比Java来说明一下：</p>
+<p>如果没有Java Servlet API，你选择的Java Web容器（Java Socket编程框架实现）将会限制所能够使用的Java Web框架（因为没有Java Servlet API，那么SpringMVC可能会实现一套SpringMVCHttpRequest和SpringMVCHttpResponse标准，Struts2可能会实现一套Struts2HttpRequest和Struts2HttpResponse标准，如果Tomcat只支持SpringMVC的API，那么选择Tomcat服务器就只能使用SpringMVC的Web框架来写服务端代码）。</p>
+<p>这就意味着，你基本上只能使用能够正常运行的服务器（Tomcat）与框架（SpringMVC）组合，而不能选择你希望使用的服务器或框架（比如：我要换成Tomcat + Struts2的组合）。</p>
+<p>注意：这里假设没有Java Servlet API，这样就相当于SpringMVC和Struts2可能都要自己实现一套Servlet封装HttpRequest和HttpResponse，这样从SpringMVC更换成Struts2就几乎需要重写服务器端的代码。为了解决这个问题，Java提出了Java Servlet API协议，让所有的Web服务框架都实现此Java Servlet API协议来和Java Web服务器（例如：Tomcat）交互，而复杂的网络连接控制等等都交由Java Web服务器来控制，Java Web服务器用Java Socket编程实现了复杂的网络连接管理。</p>
+<h4 id="详细说说Python的WSGI"><a href="#详细说说Python的WSGI" class="headerlink" title="详细说说Python的WSGI"></a>详细说说Python的WSGI</h4><p>Python Web 开发中，服务端程序可以分为两个部分，一是服务器程序，二是应用程序。前者负责把客户端请求接收，整理，后者负责具体的逻辑处理。为了方便应用程序的开发，我们把常用的功能封装起来，成为各种Web开发框架，例如 Django, Flask, Tornado。不同的框架有不同的开发方式，但是无论如何，开发出的应用程序都要和服务器程序配合，才能为用户提供服务。这样，服务器程序就需要为不同的框架提供不同的支持。这样混乱的局面无论对于服务器还是框架，都是不好的。对服务器来说，需要支持各种不同框架，对框架来说，只有支持它的服务器才能被开发出的应用使用。</p>
+<p>这时候，标准化就变得尤为重要。我们可以设立一个标准，只要服务器程序支持这个标准，框架也支持这个标准，那么他们就可以配合使用。一旦标准确定，双方各自实现。这样，服务器可以支持更多支持标准的框架，框架也可以使用更多支持标准的服务器。</p>
+<ul>
+<li>服务器端：</li>
+</ul>
+<p>服务器必须将可迭代对象的内容传递给客户端，可迭代对象会产生bytestrings，必须完全完成每个bytestring后才能请求下一个。</p>
+<ul>
+<li>应用程序：</li>
+</ul>
+<p>服务器程序会在每次客户端的请求传来时，调用我们写好的应用程序，并将处理好的结果返回给客户端。</p>
+<p>总结：</p>
+<ul>
+<li>Web Server Gateway Interface是Python编写Web业务统一接口。</li>
+<li>无论多么复杂的Web应用程序，入口都是一个WSGI处理函数。</li>
+<li>Web应用程序就是写一个WSGI的处理函数，主要功能在于交互式地浏览和修改数据，生成动态Web内容，针对每个HTTP请求进行响应。</li>
+</ul>
+<h4 id="实现Python的Web应用程序能被访问的方式"><a href="#实现Python的Web应用程序能被访问的方式" class="headerlink" title="实现Python的Web应用程序能被访问的方式"></a>实现Python的Web应用程序能被访问的方式</h4><p>要使 Python 写的程序能在 Web 上被访问，还需要搭建一个支持 Python 的 HTTP 服务器（也就是实现了WSGI server（WSGI协议）的Http服务器）。有如下几种方式：</p>
+<ul>
+<li>可以自己使用Python Socket编程实现一个Http服务器</li>
+<li>使用支持Python的开源的Http服务器（如：uWSGI，wsgiref，Mod_WSGI等等）。如果是使用Nginx，Apache，Lighttpd等Http服务器需要单独安装支持WSGI server的模块插件。</li>
+<li>使用Python开源Web框架（如：Flask，Django等等）内置的Http服务器（Django自带的WSGI Server，一般测试使用）</li>
+</ul>
+<h5 id="Python标准库对WSGI的实现"><a href="#Python标准库对WSGI的实现" class="headerlink" title="Python标准库对WSGI的实现"></a>Python标准库对WSGI的实现</h5><p>wsgiref 是Python标准库给出的 WSGI 的参考实现。simple_server 这一模块实现了一个简单的 HTTP 服务器。</p>
+<p>Python源码中的wsgiref的simple_server.py正好说明上面的分工情况，server的主要作用是接受client的请求，並把的收到的请求交給RequestHandlerClass处理，RequestHandlerClass处理完成后回传结果给client</p>
+<h5 id="uWSGI服务器"><a href="#uWSGI服务器" class="headerlink" title="uWSGI服务器"></a>uWSGI服务器</h5><p>uWSGI是一个Web服务器，它实现了WSGI协议、uwsgi、http等协议。注意uwsgi是一种通信协议，而uWSGI是实现uwsgi协议和WSGI协议的Web服务器。</p>
+<h5 id="Django框架内置的WSGI-Server服务器"><a href="#Django框架内置的WSGI-Server服务器" class="headerlink" title="Django框架内置的WSGI Server服务器"></a>Django框架内置的WSGI Server服务器</h5><p>Django的WSGIServer继承自wsgiref.simple_server.WSGIServer，而WSGIRequestHandler继承自wsgiref.simple_server.WSGIRequestHandler</p>
+<p>之前说到的application，在Django中一般是django.core.handlers.wsgi.WSGIHandler对象，WSGIHandler继承自django.core.handlers.base.BaseHandler，这个是Django处理request的核心逻辑，它会创建一个WSGIRequest实例，而WSGIRequest是从http.HttpRequest继承而来</p>
+<h4 id="Python和Java的类比"><a href="#Python和Java的类比" class="headerlink" title="Python和Java的类比"></a>Python和Java的类比</h4><h5 id="Python和Java的服务器结构"><a href="#Python和Java的服务器结构" class="headerlink" title="Python和Java的服务器结构"></a>Python和Java的服务器结构</h5><ul>
+<li>独立WSGI server（实现了Http服务器功能） + Python Web应用程序<ul>
+<li>例如：Gunicorn，uWSGI + Django，Flask</li>
+</ul>
+</li>
+<li>独立Servlet引擎（Java应用服务器）（实现了Http服务器功能） + Java Web应用程序<ul>
+<li>例如：Jetty，Tomcat + SpringMVC，Struts2</li>
+</ul>
+</li>
+</ul>
+<h5 id="Python和Java服务器共同点"><a href="#Python和Java服务器共同点" class="headerlink" title="Python和Java服务器共同点"></a>Python和Java服务器共同点</h5><ul>
+<li><p>WSGI server（例如Gunicorn和uWSGI）</p>
+<ul>
+<li>WSGI server服务器内部都有组建来实现Socket连接的创建和管理。</li>
+<li>WSGI server服务器都实现了Http服务器功能，能接受Http请求，并且通过Python Web应用程序处理之后返回动态Web内容。</li>
+</ul>
+</li>
+<li><p>Java应用服务器（Jetty和Tomcat）</p>
+<ul>
+<li>Java应用服务器内部都有Connector组件来实现Socket连接的创建和管理。</li>
+<li>Java应用服务器都实现了Http服务器功能，能接受Http请求，并且通过Java Web应用程序处理之后返回动态Web内容。</li>
+</ul>
+</li>
+</ul>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://baike.baidu.com/link?url=xqzfWOAE6U5ZuymeXiaX6VPtfoiYWjtjcfa1uejqEdy0oXlgO8KCra3tu0vU-4k6m9L6BV9l9P4RSDXWBQOjTq" target="_blank" rel="external">http://baike.baidu.com/link?url=xqzfWOAE6U5ZuymeXiaX6VPtfoiYWjtjcfa1uejqEdy0oXlgO8KCra3tu0vU-4k6m9L6BV9l9P4RSDXWBQOjTq</a></li>
+<li><a href="http://www.kaimingwan.com/post/python/zi-ji-dong-shou-kai-fa-ge-webfu-wu-qi-er" target="_blank" rel="external">http://www.kaimingwan.com/post/python/zi-ji-dong-shou-kai-fa-ge-webfu-wu-qi-er</a></li>
+<li><a href="http://blog.csdn.net/on_1y/article/details/18803563" target="_blank" rel="external">http://blog.csdn.net/on_1y/article/details/18803563</a></li>
+<li><a href="http://blog.csdn.net/on_1y/article/details/18818081" target="_blank" rel="external">http://blog.csdn.net/on_1y/article/details/18818081</a></li>
+<li><a href="http://www.nowamagic.net/academy/detail/1330328" target="_blank" rel="external">http://www.nowamagic.net/academy/detail/1330328</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/11/Shell/AWK学习（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          AWK学习（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/15/Logstash/Logstash学习（八）Logstash的metrics告警使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Logstash学习（八）Logstash的metrics告警使用</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

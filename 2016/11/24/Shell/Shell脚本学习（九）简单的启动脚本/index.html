@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Shell脚本学习（九）简单的启动脚本 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近部署了日志收集服务，发现好多服务都要自己写启动脚本，刚刚开始学习Shell只能一边学一边写，就拿简单的Kibana服务来写个启动脚本吧。
+一般服务的启动脚本，都需要实现下面的几点：
+
+需要设置服务的内存使用大小（特别是Java服务）
+后台启动（一些服务支持后台启动，例如：ElasticSearch）
+限制启动用户（最好限定启动服务的用户，防止其他用户误操作）
+设置PID文件目录（一些服务可以在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell脚本学习（九）简单的启动脚本">
+<meta property="og:url" content="https://github.com/birdben/2016/11/24/Shell/Shell脚本学习（九）简单的启动脚本/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="最近部署了日志收集服务，发现好多服务都要自己写启动脚本，刚刚开始学习Shell只能一边学一边写，就拿简单的Kibana服务来写个启动脚本吧。
+一般服务的启动脚本，都需要实现下面的几点：
+
+需要设置服务的内存使用大小（特别是Java服务）
+后台启动（一些服务支持后台启动，例如：ElasticSearch）
+限制启动用户（最好限定启动服务的用户，防止其他用户误操作）
+设置PID文件目录（一些服务可以在">
+<meta property="og:updated_time" content="2017-05-07T10:48:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shell脚本学习（九）简单的启动脚本">
+<meta name="twitter:description" content="最近部署了日志收集服务，发现好多服务都要自己写启动脚本，刚刚开始学习Shell只能一边学一边写，就拿简单的Kibana服务来写个启动脚本吧。
+一般服务的启动脚本，都需要实现下面的几点：
+
+需要设置服务的内存使用大小（特别是Java服务）
+后台启动（一些服务支持后台启动，例如：ElasticSearch）
+限制启动用户（最好限定启动服务的用户，防止其他用户误操作）
+设置PID文件目录（一些服务可以在">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Shell/Shell脚本学习（九）简单的启动脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/24/Shell/Shell脚本学习（九）简单的启动脚本/" class="article-date">
+  	<time datetime="2016-11-24T08:53:09.000Z" itemprop="datePublished">2016-11-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Shell脚本学习（九）简单的启动脚本
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Shell/">Shell</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近部署了日志收集服务，发现好多服务都要自己写启动脚本，刚刚开始学习Shell只能一边学一边写，就拿简单的Kibana服务来写个启动脚本吧。</p>
+<p>一般服务的启动脚本，都需要实现下面的几点：</p>
+<ol>
+<li>需要设置服务的内存使用大小（特别是Java服务）</li>
+<li>后台启动（一些服务支持后台启动，例如：ElasticSearch）</li>
+<li>限制启动用户（最好限定启动服务的用户，防止其他用户误操作）</li>
+<li>设置PID文件目录（一些服务可以在配置文件中设置PID文件目录，例如：Kibana）</li>
+<li>设置服务的logs目录（一些服务可以在配置文件中设置logs目录，例如：ElasticSearch）</li>
+</ol>
+<p>（下面的Kibana启动脚本可能不是最新的，因为目前一直在更新）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"># Kibana Issue : https://github.com/elastic/kibana/issues/5170</div><div class="line">export NODE_OPTIONS=&quot;$&#123;NODE_OPTIONS:=--max-old-space-size=200&#125;&quot;</div><div class="line"></div><div class="line">RETVAL=0</div><div class="line">SYS_USER=&quot;elk&quot;</div><div class="line">SYS_USER_ID=&quot;501&quot;</div><div class="line"></div><div class="line">KB_NAME=&quot;kibana&quot;</div><div class="line">KB_DESC=&quot;Kibana 4.5.4&quot;</div><div class="line">KB_PID_FOLDER=&quot;/var/run/kibana&quot;</div><div class="line">KB_PID_FILE=&quot;$&#123;KB_PID_FOLDER&#125;/$&#123;KB_NAME&#125;.pid&quot;</div><div class="line">KB_LOG_FOLDER=&quot;$&#123;KB_HOME&#125;/logs&quot;</div><div class="line"></div><div class="line"># 限制启动用户</div><div class="line">if [ `id -u` -ne &quot;$&#123;SYS_USER_ID&#125;&quot; ]; then</div><div class="line">    echo &quot;You need $&#123;SYS_USER&#125; privileges to run this script&quot;</div><div class="line">    exit 1</div><div class="line">fi</div><div class="line"></div><div class="line"># 启动服务</div><div class="line">start() &#123;</div><div class="line">    status</div><div class="line">    RETVAL=$?</div><div class="line">    if [ $RETVAL -eq 0 ]; then</div><div class="line">        echo &quot;$&#123;KB_NAME&#125; is already running&quot;</div><div class="line">        exit $RETVAL</div><div class="line">    fi</div><div class="line"></div><div class="line">    echo &quot;Starting $&#123;KB_DESC&#125; : &quot;</div><div class="line">    if [ ! -d &quot;$&#123;KB_PID_FOLDER&#125;&quot; ] ; then</div><div class="line">        mkdir -p $&#123;KB_PID_FOLDER&#125;</div><div class="line">    fi</div><div class="line">    if [ ! -d &quot;$&#123;KB_LOG_FOLDER&#125;&quot; ] ; then</div><div class="line">        mkdir -p $&#123;KB_LOG_FOLDER&#125;</div><div class="line">    fi</div><div class="line"></div><div class="line">    cd $&#123;KB_HOME&#125;/bin</div><div class="line">    nohup kibana 1&gt;$&#123;KB_LOG_FOLDER&#125;/$&#123;KB_NAME&#125;.out 2&gt;$&#123;KB_LOG_FOLDER&#125;/$&#123;KB_NAME&#125;.err &amp;</div><div class="line">    sleep 3</div><div class="line">    PID=`cat &quot;$&#123;KB_PID_FILE&#125;&quot;`</div><div class="line">    echo &quot;$&#123;KB_NAME&#125; started. PID:$PID&quot; </div><div class="line">    return 0 </div><div class="line">&#125;</div><div class="line"></div><div class="line"># 停止服务</div><div class="line">stop() &#123;</div><div class="line">    echo &quot;Stopping $&#123;KB_DESC&#125; : &quot;</div><div class="line">    if status ; then</div><div class="line">    PID=`cat &quot;$&#123;KB_PID_FILE&#125;&quot;`</div><div class="line">    echo &quot;Killing $&#123;KB_NAME&#125; (PID:$PID) with SIGTERM&quot;</div><div class="line">    kill -TERM $PID &gt;/dev/null 2&gt;&amp;1</div><div class="line">    sleep 1</div><div class="line">    if status &amp;&amp; sleep 1 ; then</div><div class="line">        echo &quot;$&#123;KB_NAME&#125; stop failed; still running. Will force kill $&#123;KB_NAME&#125;&quot;</div><div class="line">        kill -KILL $PID &gt;/dev/null 2&gt;&amp;1</div><div class="line">        sleep 1</div><div class="line">        if status &amp;&amp; sleep 1 ; then</div><div class="line">        	echo &quot;$&#123;KB_NAME&#125; stop failed; still running.&quot; </div><div class="line">        else</div><div class="line">            echo &quot;$&#123;KB_NAME&#125; stopped.&quot;</div><div class="line">            rm -f $&#123;KB_PID_FILE&#125;</div><div class="line">        fi</div><div class="line">    else</div><div class="line">        echo &quot;$&#123;KB_NAME&#125; stopped.&quot;</div><div class="line">        rm -f $&#123;KB_PID_FILE&#125;</div><div class="line">    fi</div><div class="line">  fi</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 检查服务状态</div><div class="line">status() &#123;</div><div class="line">    if [ -f &quot;$&#123;KB_PID_FILE&#125;&quot; ] ; then</div><div class="line">        PID=`cat &quot;$&#123;KB_PID_FILE&#125;&quot;`</div><div class="line">        if kill -0 $PID &gt; /dev/null 2&gt; /dev/null ; then</div><div class="line">            return 0</div><div class="line">        else</div><div class="line">        	# program is dead but pid file exists</div><div class="line">            return 2</div><div class="line">        fi</div><div class="line">    else</div><div class="line">    	# program is not running</div><div class="line">        return 3</div><div class="line">    fi</div><div class="line">&#125;</div><div class="line"></div><div class="line">case &quot;$1&quot; in</div><div class="line">    start)</div><div class="line">        start</div><div class="line">        ;;</div><div class="line">    stop)</div><div class="line">        stop</div><div class="line">        ;;</div><div class="line">    status)</div><div class="line">        status</div><div class="line">        RETVAL=$?</div><div class="line">        if [ $RETVAL -eq 0 ] ; then</div><div class="line">            PID=`cat &quot;$&#123;KB_PID_FILE&#125;&quot;`</div><div class="line">            echo &quot;$&#123;KB_NAME&#125; is running. PID:$PID&quot;</div><div class="line">        else</div><div class="line">            echo &quot;$&#123;KB_NAME&#125; is not running&quot;</div><div class="line">        fi</div><div class="line">        exit $RETVAL</div><div class="line">        ;;</div><div class="line">    restart)</div><div class="line">        stop &amp;&amp; start</div><div class="line">        ;;</div><div class="line">    *)</div><div class="line">        # Invalid Arguments, print the following message.</div><div class="line">        echo &quot;Usage: $0 &#123;start|stop|status|restart&#125;&quot; &gt;&amp;2</div><div class="line">        exit 2</div><div class="line">        ;;</div><div class="line">esac</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/29/Go/Go学习（一）开发环境搭建/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Go学习（一）开发环境搭建
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/23/Logstash/Logstash学习（三）Logstash的Grok表达式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Logstash学习（三）Logstash的Grok表达式</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

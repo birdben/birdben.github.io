@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Kibana学习（四）时区差8小时问题 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Kibana连接ES查询数据的时候，会有时差8小时的问题。先来描述一下问题的具体情况，我们先来看看Logstash默认写入到ES的索引数据。timestamp是我们App上报日志的时间戳字段，这个字段是客户端写入日志的时间。@timestamp是使用Logstash写入ES的时候默认自带的时间戳（即Logstash生成ES索引的时间戳）。这里我们的这条日志是2016-10-08由App记录的，由L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kibana学习（四）时区差8小时问题">
+<meta property="og:url" content="https://github.com/birdben/2016/12/05/Kibana/Kibana学习（四）时区差8小时问题/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="Kibana连接ES查询数据的时候，会有时差8小时的问题。先来描述一下问题的具体情况，我们先来看看Logstash默认写入到ES的索引数据。timestamp是我们App上报日志的时间戳字段，这个字段是客户端写入日志的时间。@timestamp是使用Logstash写入ES的时候默认自带的时间戳（即Logstash生成ES索引的时间戳）。这里我们的这条日志是2016-10-08由App记录的，由L">
+<meta property="og:image" content="http://img.blog.csdn.net/20161205190259403?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2017-01-08T07:01:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kibana学习（四）时区差8小时问题">
+<meta name="twitter:description" content="Kibana连接ES查询数据的时候，会有时差8小时的问题。先来描述一下问题的具体情况，我们先来看看Logstash默认写入到ES的索引数据。timestamp是我们App上报日志的时间戳字段，这个字段是客户端写入日志的时间。@timestamp是使用Logstash写入ES的时候默认自带的时间戳（即Logstash生成ES索引的时间戳）。这里我们的这条日志是2016-10-08由App记录的，由L">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161205190259403?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Kibana/Kibana学习（四）时区差8小时问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/05/Kibana/Kibana学习（四）时区差8小时问题/" class="article-date">
+  	<time datetime="2016-12-05T10:35:36.000Z" itemprop="datePublished">2016-12-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kibana学习（四）时区差8小时问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Kibana连接ES查询数据的时候，会有时差8小时的问题。先来描述一下问题的具体情况，我们先来看看Logstash默认写入到ES的索引数据。timestamp是我们App上报日志的时间戳字段，这个字段是客户端写入日志的时间。@timestamp是使用Logstash写入ES的时候默认自带的时间戳（即Logstash生成ES索引的时间戳）。这里我们的这条日志是2016-10-08由App记录的，由Logstash收集到ES服务器的时间是2016-12-05。但是我们发现@timestamp并不是我们系统的当前时间，而是比我们当前的系统时间小了8小时，这就是我们想要解决的8小时时差问题。</p>
+<p>原因是Logstash中默认插入的@timestamp时间字段是按照UTC 00:00标准时区的时间转换成long型的时间戳保存在ES中，而我们系统的时间是中国时区UTC +08:00，由ES查询出来的long型的时间戳再按照UTC +08:00转换成时间就正好相差了8小时。因为@timestamp的long型字段在ES中是不可取回的，所以我们在ES的返回值中是看不到这个long型字段的，只能看到@timestamp根据我们的时区转换后的结果”2016-12-05T11:30:40.911Z”，这个结果正好和我们的系统时间相差了8小时。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;_index&quot;: &quot;api_logs_index_1&quot;,</div><div class="line">    &quot;_type&quot;: &quot;command&quot;,</div><div class="line">    &quot;_id&quot;: &quot;AVjOwAt_jL-eD07Ygku1&quot;,</div><div class="line">    &quot;_version&quot;: 1,</div><div class="line">    &quot;_score&quot;: 1,</div><div class="line">    &quot;_source&quot;: &#123;</div><div class="line">        &quot;logs&quot;: &#123;</div><div class="line">            &quot;timestamp&quot;: &quot;1475912701768&quot;,</div><div class="line">            &quot;rpid&quot;: &quot;65351516503932930&quot;,</div><div class="line">            &quot;name&quot;: &quot;rp.hb.ad.click_ad&quot;,</div><div class="line">            &quot;bid&quot;: 0,</div><div class="line">            &quot;uid&quot;: 0,</div><div class="line">            &quot;did&quot;: 0,</div><div class="line">            &quot;duid&quot;: 0,</div><div class="line">            &quot;hb_uid&quot;: 0,</div><div class="line">            &quot;ua&quot;: &quot;&quot;,</div><div class="line">            &quot;device_id&quot;: &quot;&quot;,</div><div class="line">            &quot;server_timestamp&quot;: 1475912715001</div><div class="line">        &#125;,</div><div class="line">        &quot;level&quot;: &quot;info&quot;,</div><div class="line">        &quot;message&quot;: &quot;logs&quot;,</div><div class="line">        &quot;timestamp&quot;: &quot;2016-10-08T07:45:15.001Z&quot;,</div><div class="line">        &quot;@version&quot;: &quot;1&quot;,</div><div class="line">        &quot;@timestamp&quot;: &quot;2016-12-05T11:30:40.911Z&quot;,</div><div class="line">        &quot;path&quot;: &quot;/home/yunyu/Downloads/track.log&quot;,</div><div class="line">        &quot;host&quot;: &quot;hadoop1&quot;,</div><div class="line">        &quot;type&quot;: &quot;command&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面简单的描述了一下问题。我们需要解决下面两个问题：</p>
+<ol>
+<li>如何让Kibana查询和统计使用的是App写入日志的时间，而不是Logstash写入ES的时间（因为Logstash写入ES时间上会有延迟）</li>
+<li>解决时差相差8小时问题</li>
+</ol>
+<p>一般我们App上报日志都会带有一个timestamp时间戳字段，这个字段是客户端写入日志的时间。当Logstash收集App上报日志的时候，会将timestamp字段保存到ES中，Kibana通过该字段当做统计的字段进行各种按日期统计的查询。</p>
+<p>这里Kibana要求所有ES的索引必须要有一个时间字段作为统计查询的日期字段使用，如果没有ES的索引没有时间或者日期字段，是无法在Kibana中创建索引的。所以默认Kibana也会给一个默认的时间字段@timestamp，这样当我们在Kibana创建api_logs_index索引的时候，就会出现有两个时间字段，一个是timestamp，一个是@timestamp。</p>
+<p><img src="http://img.blog.csdn.net/20161205190259403?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Kibana"></p>
+<p>在Kibana创建索引时，设置索引使用@timestamp字段，但是需要在Logstash中配置@timestamp的值从timestamp取出来的。Logstash中可以指定@timestamp字段的值是从App上报日志的timestamp字段来的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">date &#123;</div><div class="line">    match =&gt; [&quot;timestamp&quot;, &quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;&quot;]</div><div class="line">    target =&gt; &quot;@timestamp&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面用我们这条日志举例，下面的表格是系统时间和UTC时间戳根据北京时区的转换对照表。这里的系统时间转换程UTC时间戳是带有北京时区的。</p>
+<table>
+<thead>
+<tr>
+<th>系统时间</th>
+<th>UTC时间戳</th>
+<th>ES返回（显示）的时间</th>
+<th>ES存储的时间（long）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016/10/18 15:45:15.001Z</td>
+<td>1475912715001</td>
+<td></td>
+<td>timestamp : 1475912715001</td>
+</tr>
+<tr>
+<td>2016/10/18 7:45:15.001Z</td>
+<td>1475883915001</td>
+<td>timestamp : 2016/10/18 7:45:15.001Z</td>
+<td>@timestamp : 1475883915001</td>
+</tr>
+<tr>
+<td>2016/10/17 23:45:15.001Z</td>
+<td></td>
+<td>@timestamp : 2016/10/17 23:45:15.001Z</td>
+</tr>
+</tbody>
+</table>
+<p>Logstash将timestamp的时间2016/10/18 7:45:15.001Z按照默认的标准时区UTC 00:00将timestamp转换成long类型1475912715001存储到ES，而对于@timestamp字段的值，是将timestamp的时间2016/10/18 7:45:15.001Z按照北京时区UTC +08:00将timestamp转换成long类型1475883915001并且赋值给@timestamp并且存储到ES。（为什么要加上北京时区UTC +08:00的原因不清楚，也尝试过不带有Z时区设置的时间格式，转换成的时间戳结果一样）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">date &#123;</div><div class="line">    match =&gt; [&quot;timestamp&quot;, &quot;yyyy-MM-dd HH:mm:ss&quot;]</div><div class="line">    target =&gt; &quot;@timestamp&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ES存储的时间long型到ES返回(显示)时间是按照UTC 00:00标准时间转换的。下面是取回的结果。</p>
+<ul>
+<li>ES将timestamp的long类型1475912715001按照UTC 00:00标准时间转换回时间2016/10/18 7:45:15.001Z</li>
+<li>ES将@timestamp的long类型1475883915001按照UTC 00:00标准时间转换回时间2016-10-07T23:45:15.001Z</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;_index&quot;: &quot;api_logs_index_1&quot;,</div><div class="line">    &quot;_type&quot;: &quot;command&quot;,</div><div class="line">    &quot;_id&quot;: &quot;AVjOwAt_jL-eD07Ygku1&quot;,</div><div class="line">    &quot;_version&quot;: 1,</div><div class="line">    &quot;_score&quot;: 1,</div><div class="line">    &quot;_source&quot;: &#123;</div><div class="line">        &quot;logs&quot;: &#123;</div><div class="line">            &quot;timestamp&quot;: &quot;1475912701768&quot;,</div><div class="line">            &quot;rpid&quot;: &quot;65351516503932930&quot;,</div><div class="line">            &quot;name&quot;: &quot;rp.hb.ad.click_ad&quot;,</div><div class="line">            &quot;bid&quot;: 0,</div><div class="line">            &quot;uid&quot;: 0,</div><div class="line">            &quot;did&quot;: 0,</div><div class="line">            &quot;duid&quot;: 0,</div><div class="line">            &quot;hb_uid&quot;: 0,</div><div class="line">            &quot;ua&quot;: &quot;&quot;,</div><div class="line">            &quot;device_id&quot;: &quot;&quot;,</div><div class="line">            &quot;server_timestamp&quot;: 1475912715001</div><div class="line">        &#125;,</div><div class="line">        &quot;level&quot;: &quot;info&quot;,</div><div class="line">        &quot;message&quot;: &quot;logs&quot;,</div><div class="line">        &quot;timestamp&quot;: &quot;2016-10-08T07:45:15.001Z&quot;,</div><div class="line">        &quot;@version&quot;: &quot;1&quot;,</div><div class="line">        &quot;@timestamp&quot;: &quot;2016-10-07T23:45:15.001Z&quot;,</div><div class="line">        &quot;path&quot;: &quot;/home/yunyu/Downloads/track.log&quot;,</div><div class="line">        &quot;host&quot;: &quot;hadoop1&quot;,</div><div class="line">        &quot;type&quot;: &quot;command&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里可以看到Kibana的查询Request，下面是我选择的时间区间条件</p>
+<ul>
+<li>2016/10/8 7:30:0：按照北京时区UTC +08:00转换为1475883000000</li>
+<li>2016/10/8 8:0:0：按照北京时区UTC +08:00转换为1475884800000</li>
+</ul>
+<p>Kibana Request</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;size&quot;: 500,</div><div class="line">  &quot;sort&quot;: [</div><div class="line">    &#123;</div><div class="line">      &quot;@timestamp&quot;: &#123;</div><div class="line">        &quot;order&quot;: &quot;desc&quot;,</div><div class="line">        &quot;unmapped_type&quot;: &quot;boolean&quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  &quot;query&quot;: &#123;</div><div class="line">    &quot;filtered&quot;: &#123;</div><div class="line">      &quot;query&quot;: &#123;</div><div class="line">        &quot;query_string&quot;: &#123;</div><div class="line">          &quot;analyze_wildcard&quot;: true,</div><div class="line">          &quot;query&quot;: &quot;*&quot;</div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      &quot;filter&quot;: &#123;</div><div class="line">        &quot;bool&quot;: &#123;</div><div class="line">          &quot;must&quot;: [</div><div class="line">            &#123;</div><div class="line">              &quot;range&quot;: &#123;</div><div class="line">                &quot;@timestamp&quot;: &#123;</div><div class="line">                  &quot;gte&quot;: 1475883000000,</div><div class="line">                  &quot;lte&quot;: 1475884800000,</div><div class="line">                  &quot;format&quot;: &quot;epoch_millis&quot;</div><div class="line">                &#125;</div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          ],</div><div class="line">          &quot;must_not&quot;: []</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  &quot;highlight&quot;: &#123;</div><div class="line">    &quot;pre_tags&quot;: [</div><div class="line">      &quot;@kibana-highlighted-field@&quot;</div><div class="line">    ],</div><div class="line">    &quot;post_tags&quot;: [</div><div class="line">      &quot;@/kibana-highlighted-field@&quot;</div><div class="line">    ],</div><div class="line">    &quot;fields&quot;: &#123;</div><div class="line">      &quot;*&quot;: &#123;&#125;</div><div class="line">    &#125;,</div><div class="line">    &quot;require_field_match&quot;: false,</div><div class="line">    &quot;fragment_size&quot;: 2147483647</div><div class="line">  &#125;,</div><div class="line">  &quot;aggs&quot;: &#123;</div><div class="line">    &quot;2&quot;: &#123;</div><div class="line">      &quot;date_histogram&quot;: &#123;</div><div class="line">        &quot;field&quot;: &quot;@timestamp&quot;,</div><div class="line">        &quot;interval&quot;: &quot;30s&quot;,</div><div class="line">        &quot;time_zone&quot;: &quot;Asia/Shanghai&quot;,</div><div class="line">        &quot;min_doc_count&quot;: 0,</div><div class="line">        &quot;extended_bounds&quot;: &#123;</div><div class="line">          &quot;min&quot;: 1475883000000,</div><div class="line">          &quot;max&quot;: 1475884800000</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  &quot;fields&quot;: [</div><div class="line">    &quot;*&quot;,</div><div class="line">    &quot;_source&quot;</div><div class="line">  ],</div><div class="line">  &quot;script_fields&quot;: &#123;&#125;,</div><div class="line">  &quot;fielddata_fields&quot;: [</div><div class="line">    &quot;timestamp&quot;,</div><div class="line">    &quot;@timestamp&quot;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的Request可以看出来我们Kibana Request是将查询时间区间的条件先按照Browser的时区（北京时区UTC +08:00）转换成long型时间戳，然后当成条件查询的@timestamp字段。</p>
+<p>这里的fields就是ES存储的long类型数值。</p>
+<ul>
+<li>timestamp 1475912715001：按照标准时区UTC +00:00转换为2016/10/8 7:45:15</li>
+<li>@timestamp 1475883915001：按照标准时区UTC +00:00转换为2016/10/7 23:45:15</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&quot;fields&quot;: &#123;</div><div class="line">  &quot;timestamp&quot;: [</div><div class="line">    1475912715001</div><div class="line">  ],</div><div class="line">  &quot;@timestamp&quot;: [</div><div class="line">    1475883915001</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Kibana Response</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;took&quot;: 7,</div><div class="line">  &quot;hits&quot;: &#123;</div><div class="line">    &quot;hits&quot;: [</div><div class="line">      &#123;</div><div class="line">        &quot;_index&quot;: &quot;api_logs_index_1&quot;,</div><div class="line">        &quot;_type&quot;: &quot;command&quot;,</div><div class="line">        &quot;_id&quot;: &quot;AVjPhBGGUk8QUkLwTRVu&quot;,</div><div class="line">        &quot;_score&quot;: null,</div><div class="line">        &quot;_source&quot;: &#123;</div><div class="line">          &quot;logs&quot;: &#123;</div><div class="line">            &quot;timestamp&quot;: &quot;1475912701768&quot;,</div><div class="line">            &quot;rpid&quot;: &quot;65351516503932930&quot;,</div><div class="line">            &quot;name&quot;: &quot;rp.hb.ad.click_ad&quot;,</div><div class="line">            &quot;bid&quot;: 0,</div><div class="line">            &quot;uid&quot;: 0,</div><div class="line">            &quot;did&quot;: 0,</div><div class="line">            &quot;duid&quot;: 0,</div><div class="line">            &quot;hb_uid&quot;: 0,</div><div class="line">            &quot;ua&quot;: &quot;&quot;,</div><div class="line">            &quot;device_id&quot;: &quot;&quot;,</div><div class="line">            &quot;server_timestamp&quot;: 1475912715001</div><div class="line">          &#125;,</div><div class="line">          &quot;level&quot;: &quot;info&quot;,</div><div class="line">          &quot;message&quot;: &quot;logs&quot;,</div><div class="line">          &quot;timestamp&quot;: &quot;2016-10-08T07:45:15.001Z&quot;,</div><div class="line">          &quot;@version&quot;: &quot;1&quot;,</div><div class="line">          &quot;@timestamp&quot;: &quot;2016-10-07T23:45:15.001Z&quot;,</div><div class="line">          &quot;path&quot;: &quot;/home/yunyu/Downloads/track.log&quot;,</div><div class="line">          &quot;host&quot;: &quot;hadoop1&quot;,</div><div class="line">          &quot;type&quot;: &quot;command&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;fields&quot;: &#123;</div><div class="line">          &quot;timestamp&quot;: [</div><div class="line">            1475912715001</div><div class="line">          ],</div><div class="line">          &quot;@timestamp&quot;: [</div><div class="line">            1475883915001</div><div class="line">          ]</div><div class="line">        &#125;,</div><div class="line">        &quot;sort&quot;: [</div><div class="line">          1475883915001</div><div class="line">        ]</div><div class="line">      &#125;</div><div class="line">    ],</div><div class="line">    &quot;total&quot;: 1,</div><div class="line">    &quot;max_score&quot;: 0</div><div class="line">  &#125;,</div><div class="line">  &quot;aggregations&quot;: &#123;</div><div class="line">    &quot;2&quot;: &#123;</div><div class="line">      &quot;buckets&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:30:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883000000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:30:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883030000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:31:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883060000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:31:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883090000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:32:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883120000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:32:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883150000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:33:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883180000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:33:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883210000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:34:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883240000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:34:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883270000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:35:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883300000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:35:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883330000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:36:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883360000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:36:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883390000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:37:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883420000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:37:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883450000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:38:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883480000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:38:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883510000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:39:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883540000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:39:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883570000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:40:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883600000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:40:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883630000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:41:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883660000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:41:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883690000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:42:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883720000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:42:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883750000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:43:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883780000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:43:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883810000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:44:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883840000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:44:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883870000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:45:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883900000,</div><div class="line">          &quot;doc_count&quot;: 1</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:45:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883930000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:46:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883960000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:46:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475883990000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:47:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884020000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:47:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884050000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:48:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884080000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:48:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884110000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:49:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884140000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:49:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884170000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:50:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884200000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:50:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884230000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:51:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884260000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:51:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884290000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:52:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884320000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:52:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884350000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:53:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884380000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:53:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884410000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:54:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884440000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:54:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884470000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:55:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884500000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:55:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884530000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:56:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884560000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:56:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884590000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:57:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884620000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:57:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884650000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:58:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884680000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:58:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884710000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:59:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884740000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T07:59:30.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884770000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          &quot;key_as_string&quot;: &quot;2016-10-08T08:00:00.000+08:00&quot;,</div><div class="line">          &quot;key&quot;: 1475884800000,</div><div class="line">          &quot;doc_count&quot;: 0</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ES返回的结果时间是按照标准时区UTC +00:00转换的。这里Kibana还会根据创建索引所选择的时间戳，再将@timestamp的结果转换成Browser默认的时区（即：UTC +08:00）显示出来，也就是在ES返回的@timestamp时间上再加8小时。</p>
+<p>如果timestamp字段没有带有时区设置，我们可以在Logstash中指定locale和timezone属性来设置timestamp的字段的时区，这样就知道timestamp的时间应该按照指定的timezone时区解析成long型时间戳，这样my_timestamp字段在ES中是一个使用+08:00中国时区的long类型时间戳，方便使用ES API直接查询timestamp字段，因为一般人都使用+08:00中国时区将时间转换为long类型的时间戳。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">date &#123;</div><div class="line">    match =&gt; [&quot;timestamp&quot;, &quot;yyyy-MM-dd HH:mm:ss&quot;]</div><div class="line">    target =&gt; &quot;my_timestamp&quot;</div><div class="line">    locale =&gt; &quot;en&quot;</div><div class="line">    timezone =&gt; &quot;+08:00&quot;</div><div class="line">&#125;</div><div class="line"></div><div class="line">date &#123;</div><div class="line">    # 如果日志中的timestamp时间戳带有时区，而且是UTC标准时区，不是中国时区，我们可以使用指定timezone来转换成long类型的@timestamp</div><div class="line">    match =&gt; [&quot;timestamp&quot;, &quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;&quot;]</div><div class="line">    target =&gt; &quot;@timestamp&quot;</div><div class="line">    locale =&gt; &quot;en&quot;</div><div class="line">    timezone =&gt; &quot;+00:00&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Logstash创建索引所使用的YYYY-MM-DD也是使用的@timestamp字段的时间</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://discuss.elastic.co/t/elk-logstash-default-timezone-cause-index-splitting-problem-in-different-timezones/26615" target="_blank" rel="external">https://discuss.elastic.co/t/elk-logstash-default-timezone-cause-index-splitting-problem-in-different-timezones/26615</a></li>
+<li><a href="http://blog.csdn.net/bright_fu/article/details/48439367" target="_blank" rel="external">http://blog.csdn.net/bright_fu/article/details/48439367</a></li>
+<li><a href="https://1024tools.com/timestamp" target="_blank" rel="external">https://1024tools.com/timestamp</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/15/Kafka/Kafka学习（四）指定Kafka的data和logs路径/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Kafka学习（四）指定Kafka的data和logs路径
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/29/Go/Go学习（一）开发环境搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Go学习（一）开发环境搭建</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

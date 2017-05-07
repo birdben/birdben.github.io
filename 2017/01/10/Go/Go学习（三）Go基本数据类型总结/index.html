@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Go学习（三）Go基本数据类型总结 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近一直在写Go，但是一直都不是很明白Go的基础数据类型都有哪些，int，int32，int64都有，而且运算的时候还需要先转换，感觉使用起来很麻烦，所以特意看了一下官方文档深入了解一下Go相关的数据类型。
+
+基本类型：boolean，numeric，string类型的命名实例是预先声明的。
+复合类型：array，struct，指针，function，interface，slice，map，cha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go学习（三）Go基本数据类型总结">
+<meta property="og:url" content="https://github.com/birdben/2017/01/10/Go/Go学习（三）Go基本数据类型总结/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="最近一直在写Go，但是一直都不是很明白Go的基础数据类型都有哪些，int，int32，int64都有，而且运算的时候还需要先转换，感觉使用起来很麻烦，所以特意看了一下官方文档深入了解一下Go相关的数据类型。
+
+基本类型：boolean，numeric，string类型的命名实例是预先声明的。
+复合类型：array，struct，指针，function，interface，slice，map，cha">
+<meta property="og:updated_time" content="2017-05-07T10:48:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go学习（三）Go基本数据类型总结">
+<meta name="twitter:description" content="最近一直在写Go，但是一直都不是很明白Go的基础数据类型都有哪些，int，int32，int64都有，而且运算的时候还需要先转换，感觉使用起来很麻烦，所以特意看了一下官方文档深入了解一下Go相关的数据类型。
+
+基本类型：boolean，numeric，string类型的命名实例是预先声明的。
+复合类型：array，struct，指针，function，interface，slice，map，cha">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Go/Go学习（三）Go基本数据类型总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/10/Go/Go学习（三）Go基本数据类型总结/" class="article-date">
+  	<time datetime="2017-01-10T02:31:02.000Z" itemprop="datePublished">2017-01-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go学习（三）Go基本数据类型总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Go/">Go</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Go/">Go</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近一直在写Go，但是一直都不是很明白Go的基础数据类型都有哪些，int，int32，int64都有，而且运算的时候还需要先转换，感觉使用起来很麻烦，所以特意看了一下官方文档深入了解一下Go相关的数据类型。</p>
+<ul>
+<li>基本类型：boolean，numeric，string类型的命名实例是预先声明的。</li>
+<li>复合类型：array，struct，指针，function，interface，slice，map，channel类型（可以使用type构造）。</li>
+</ul>
+<h3 id="Numeric-types"><a href="#Numeric-types" class="headerlink" title="Numeric types"></a>Numeric types</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">A numeric type represents sets of integer or floating-point values. The predeclared architecture-independent numeric types are:</div><div class="line"></div><div class="line">uint8       the set of all unsigned  8-bit integers (0 to 255)</div><div class="line">uint16      the set of all unsigned 16-bit integers (0 to 65535)</div><div class="line">uint32      the set of all unsigned 32-bit integers (0 to 4294967295)</div><div class="line">uint64      the set of all unsigned 64-bit integers (0 to 18446744073709551615)</div><div class="line"></div><div class="line">int8        the set of all signed  8-bit integers (-128 to 127)</div><div class="line">int16       the set of all signed 16-bit integers (-32768 to 32767)</div><div class="line">int32       the set of all signed 32-bit integers (-2147483648 to 2147483647)</div><div class="line">int64       the set of all signed 64-bit integers (-9223372036854775808 to 9223372036854775807)</div><div class="line"></div><div class="line">float32     the set of all IEEE-754 32-bit floating-point numbers</div><div class="line">float64     the set of all IEEE-754 64-bit floating-point numbers</div><div class="line"></div><div class="line">complex64   the set of all complex numbers with float32 real and imaginary parts</div><div class="line">complex128  the set of all complex numbers with float64 real and imaginary parts</div><div class="line"></div><div class="line">byte        alias for uint8</div><div class="line">rune        alias for int32</div><div class="line"></div><div class="line">The value of an n-bit integer is n bits wide and represented using two&apos;s complement arithmetic.</div><div class="line"></div><div class="line">There is also a set of predeclared numeric types with implementation-specific sizes:</div><div class="line"></div><div class="line">uint     		either 32 or 64 bits</div><div class="line">int      		same size as uint</div><div class="line">uintptr  		an unsigned integer large enough to store the uninterpreted bits of a pointer value</div><div class="line"></div><div class="line">To avoid portability issues all numeric types are distinct except byte, which is an alias for uint8, and rune, which is an alias for int32. Conversions are required when different numeric types are mixed in an expression or assignment. </div><div class="line">For instance, int32 and int are not the same type even though they may have the same size on a particular architecture.</div></pre></td></tr></table></figure>
+<ol>
+<li><p>int类型中哪些支持负数</p>
+<ul>
+<li>有符号（负号）：int8 int16 int32 int64</li>
+<li>无符号（负号）：uint8 uint16 uint32 uint64</li>
+</ul>
+</li>
+<li><p>浮点类型的值有float32和float64(没有 float 类型)</p>
+</li>
+<li><p>byte和rune特殊类型是别名</p>
+<ul>
+<li>byte就是unit8的别名</li>
+<li>rune就是int32的别名</li>
+</ul>
+</li>
+<li><p>int和uint取决于操作系统（32位机器上就是32字节，64位机器上就是64字节）</p>
+<ul>
+<li>uint是32字节或者64字节</li>
+<li>int和uint是一样的大小</li>
+</ul>
+</li>
+<li><p>为了避免可移植性问题，除了byte（它是uint8的别名）和rune（它是int32的别名）之外，所有数字类型都是不同的。 在表达式或赋值中混合使用不同的数字类型时，需要转换。例如，int32和int不是相同的类型，即使它们可能在特定架构上具有相同的大小。</p>
+</li>
+</ol>
+<p>所以上面的文档解释了为什么int，int32，int64之间需要进行类型转换才能进行运算。</p>
+<h3 id="String-types"><a href="#String-types" class="headerlink" title="String types"></a>String types</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">A string type represents the set of string values. A string value is a (possibly empty) sequence of bytes. Strings are immutable: once created, it is impossible to change the contents of a string. The predeclared string type is string.</div><div class="line"></div><div class="line">The length of a string s (its size in bytes) can be discovered using the built-in function len. The length is a compile-time constant if the string is a constant. A string&apos;s bytes can be accessed by integer indices 0 through len(s)-1. It is illegal to take the address of such an element; if s[i] is the i&apos;th byte of a string, &amp;s[i] is invalid.</div></pre></td></tr></table></figure>
+<p>字符串是不可变的：一旦创建，就不可能改变字符串的内容。 预先声明的字符串类型是字符串。</p>
+<p>可以使用内置函数len来发现字符串s的长度（以字节为单位的大小）。 如果字符串是常量，则length是编译时常量。 字符串的字节可以通过整数索引0到len（s）-1来访问。 取这种元素的地址是非法的; 如果s [i]是字符串的第i个字节，则＆s [i]无效。</p>
+<h3 id="Map-Types"><a href="#Map-Types" class="headerlink" title="Map Types"></a>Map Types</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">make(map[string]int)</div><div class="line">make(map[string]int, 100)</div><div class="line">The initial capacity does not bound its size: maps grow to accommodate the number of items stored in them, with the exception of nil maps. A nil map is equivalent to an empty map except that no elements may be added.</div></pre></td></tr></table></figure>
+<p>初始容量不限制其大小：map增长以适应存储在其中的项目数，除了nil map。 nil map等价于空map，不能添加元素。</p>
+<h3 id="int，int32，int64相互转换"><a href="#int，int32，int64相互转换" class="headerlink" title="int，int32，int64相互转换"></a>int，int32，int64相互转换</h3><h5 id="int转换成int32，int64"><a href="#int转换成int32，int64" class="headerlink" title="int转换成int32，int64"></a>int转换成int32，int64</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// int转换成int32</div><div class="line">i32 = int32(i)</div><div class="line"></div><div class="line">// int转换成int64</div><div class="line">i64 = int64(i)</div></pre></td></tr></table></figure>
+<h5 id="int32，int64转换成int"><a href="#int32，int64转换成int" class="headerlink" title="int32，int64转换成int"></a>int32，int64转换成int</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// int32转换成int</div><div class="line">i = int(int32)</div><div class="line"></div><div class="line">// int64转换成int</div><div class="line">i = int(int64)</div></pre></td></tr></table></figure>
+<h5 id="实例测试"><a href="#实例测试" class="headerlink" title="实例测试"></a>实例测试</h5><p>测试一：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">    &quot;fmt&quot;</div><div class="line">)</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">    // 超出int32范围的值</div><div class="line">    var i64 int64 = 2147483647123</div><div class="line">    var i32 int32</div><div class="line">    var i int</div><div class="line">    </div><div class="line">    // 转换不会损失精读（因为操作系统是64位，int就相当于int64）</div><div class="line">    i = int(i64)</div><div class="line">    // 转换会损失精读</div><div class="line">    i32 = int32(i64)</div><div class="line">    </div><div class="line">    fmt.Println(i)</div><div class="line">    fmt.Println(i32)</div><div class="line">    fmt.Println(i64)</div><div class="line">&#125;</div><div class="line"></div><div class="line">结果如下：</div><div class="line">2147483647123</div><div class="line">-877</div><div class="line">2147483647123</div></pre></td></tr></table></figure>
+<p>测试二：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">    &quot;fmt&quot;</div><div class="line">)</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">    var i64 int64</div><div class="line">    // 不超出int32范围的值</div><div class="line">    var i32 int32 = 21474836</div><div class="line">    var i int</div><div class="line">    </div><div class="line">    // 转换不会损失精读</div><div class="line">    i = int(i32)</div><div class="line">    // 转换不会损失精读</div><div class="line">    i64 = int64(i32)</div><div class="line">    </div><div class="line">    fmt.Println(i)</div><div class="line">    fmt.Println(i32)</div><div class="line">    fmt.Println(i64)</div><div class="line">&#125;</div><div class="line"></div><div class="line">结果如下：</div><div class="line">21474836</div><div class="line">21474836</div><div class="line">21474836</div></pre></td></tr></table></figure>
+<h3 id="int和string相互转换"><a href="#int和string相互转换" class="headerlink" title="int和string相互转换"></a>int和string相互转换</h3><h5 id="int，int32，int64转换成string"><a href="#int，int32，int64转换成string" class="headerlink" title="int，int32，int64转换成string"></a>int，int32，int64转换成string</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 通过fmt.Sprintf方法转换（%d代表Integer，i可以是int，int32，int64类型）</div><div class="line">str1 := fmt.Sprintf(&quot;%d&quot;, i)</div><div class="line"></div><div class="line">// 通过strconv.Itoa方法转换（i是int类型）</div><div class="line">str2 := strconv.Itoa(i)</div><div class="line"></div><div class="line">// 通过strconv.FormatInt方法转换（i可以是int，int32，int64类型）</div><div class="line">str3 := strconv.FormatInt(int64(i), 10)</div></pre></td></tr></table></figure>
+<ul>
+<li>fmt.Sprintf</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// Sprint formats using the default formats for its operands and returns the resulting string.</div><div class="line">// Spaces are added between operands when neither is a string.</div><div class="line">func Sprint(a ...interface&#123;&#125;) string &#123;</div><div class="line">    p := newPrinter()</div><div class="line">    p.doPrint(a)</div><div class="line">    s := string(p.buf)</div><div class="line">    p.free()</div><div class="line">    return s</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>strconv.Itoa实现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">func Itoa(i int) string &#123;</div><div class="line">    return FormatInt(int64(i), 10)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>strconv.FormatInt实现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// FormatInt returns the string representation of i in the given base,</div><div class="line">// for 2 &lt;= base &lt;= 36. The result uses the lower-case letters &apos;a&apos; to &apos;z&apos;</div><div class="line">// for digit values &gt;= 10.</div><div class="line">func FormatInt(i int64, base int) string &#123;</div><div class="line">    _, s := formatBits(nil, uint64(i), base, i &lt; 0, false)</div><div class="line">    return s</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="string转换成int，int32，int64"><a href="#string转换成int，int32，int64" class="headerlink" title="string转换成int，int32，int64"></a>string转换成int，int32，int64</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// string转换成int64</div><div class="line">strInt64, _ := strconv.ParseInt(str, 10, 64)</div><div class="line"></div><div class="line">// string转换成int32</div><div class="line">strInt32, _ := strconv.ParseInt(str, 10, 32)</div><div class="line">// 这里strInt32实际上还是int64类型的，只是截取了32位，所以最终还是要强转一下变成int32类型，如果不强转成int32是会编译报错的</div><div class="line">var realInt32 int32 = 0</div><div class="line">realInt32 := int32(strInt32)</div><div class="line"></div><div class="line">// string转换成int</div><div class="line">strInt, err := strconv.Atoi(str)</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://my.oschina.net/goal/blog/196891" target="_blank" rel="external">https://my.oschina.net/goal/blog/196891</a></li>
+<li><a href="https://golang.org/ref/spec#Numeric_types" target="_blank" rel="external">https://golang.org/ref/spec#Numeric_types</a></li>
+<li><a href="http://stackoverflow.com/questions/39442167/convert-int32-to-string-in-golang" target="_blank" rel="external">http://stackoverflow.com/questions/39442167/convert-int32-to-string-in-golang</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/10/Go/Go学习（四）Go复合数据类型总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Go学习（四）Go复合数据类型总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/27/Go/Go学习（二）引用第三方包/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Go学习（二）引用第三方包</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

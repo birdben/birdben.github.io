@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Logstash学习（七）Logstash的webhdfs插件 | birdben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近公司有需要查询历史日志的需求，但是之前在ES设置只保存了最近7天的日志，为了满足需求我将ES服务器的磁盘存储升级到了500G，同时延长了日志的周期至30天，但是这只是临时的解决方案，因为查询历史日志的需求仅仅是最近一个月还不够，所以为了长远考虑需要做日志的持久化存储。
+方案选型目前公司的架构比较简单，现在需要同时写入到HDFS中。
+1file -&amp;gt; logstash -&amp;gt; kafk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logstash学习（七）Logstash的webhdfs插件">
+<meta property="og:url" content="https://github.com/birdben/2017/02/07/Logstash/Logstash学习（七）Logstash的webhdfs插件/index.html">
+<meta property="og:site_name" content="birdben">
+<meta property="og:description" content="最近公司有需要查询历史日志的需求，但是之前在ES设置只保存了最近7天的日志，为了满足需求我将ES服务器的磁盘存储升级到了500G，同时延长了日志的周期至30天，但是这只是临时的解决方案，因为查询历史日志的需求仅仅是最近一个月还不够，所以为了长远考虑需要做日志的持久化存储。
+方案选型目前公司的架构比较简单，现在需要同时写入到HDFS中。
+1file -&amp;gt; logstash -&amp;gt; kafk">
+<meta property="og:image" content="http://img.blog.csdn.net/20170208115731052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmlyZGJlbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2017-05-07T10:48:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Logstash学习（七）Logstash的webhdfs插件">
+<meta name="twitter:description" content="最近公司有需要查询历史日志的需求，但是之前在ES设置只保存了最近7天的日志，为了满足需求我将ES服务器的磁盘存储升级到了500G，同时延长了日志的周期至30天，但是这只是临时的解决方案，因为查询历史日志的需求仅仅是最近一个月还不够，所以为了长远考虑需要做日志的持久化存储。
+方案选型目前公司的架构比较简单，现在需要同时写入到HDFS中。
+1file -&amp;gt; logstash -&amp;gt; kafk">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170208115731052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmlyZGJlbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="birdben" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260188951'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260188951' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/logo.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">birdben</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AWK/" style="font-size: 10.83px;">AWK</a> <a href="/tags/Akka/" style="font-size: 10.83px;">Akka</a> <a href="/tags/Dockerfile/" style="font-size: 20px;">Dockerfile</a> <a href="/tags/Docker命令/" style="font-size: 19.17px;">Docker命令</a> <a href="/tags/Docker环境/" style="font-size: 15px;">Docker环境</a> <a href="/tags/ELK/" style="font-size: 16.67px;">ELK</a> <a href="/tags/ElasticSearch/" style="font-size: 10.83px;">ElasticSearch</a> <a href="/tags/Elasticsearch/" style="font-size: 12.5px;">Elasticsearch</a> <a href="/tags/Flume/" style="font-size: 17.5px;">Flume</a> <a href="/tags/Git命令/" style="font-size: 13.33px;">Git命令</a> <a href="/tags/Go/" style="font-size: 14.17px;">Go</a> <a href="/tags/HBase/" style="font-size: 10px;">HBase</a> <a href="/tags/HDFS/" style="font-size: 18.33px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hadoop原理架构体系/" style="font-size: 13.33px;">Hadoop原理架构体系</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/JVM/" style="font-size: 11.67px;">JVM</a> <a href="/tags/Java-Web，Socket，Python/" style="font-size: 10px;">Java Web，Socket，Python</a> <a href="/tags/Jenkins环境/" style="font-size: 10px;">Jenkins环境</a> <a href="/tags/Kafka/" style="font-size: 15.83px;">Kafka</a> <a href="/tags/Kibana/" style="font-size: 14.17px;">Kibana</a> <a href="/tags/Linux命令/" style="font-size: 12.5px;">Linux命令</a> <a href="/tags/Logstash/" style="font-size: 15.83px;">Logstash</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MapReduce/" style="font-size: 11.67px;">MapReduce</a> <a href="/tags/Maven配置/" style="font-size: 11.67px;">Maven配置</a> <a href="/tags/MongoDB/" style="font-size: 11.67px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 16.67px;">Shell</a> <a href="/tags/Spring/" style="font-size: 10.83px;">Spring</a> <a href="/tags/Storm/" style="font-size: 12.5px;">Storm</a> <a href="/tags/Zookeeper/" style="font-size: 12.5px;">Zookeeper</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/birdben">我的CSDN的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">birdben</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/logo.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">birdben</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/birdben" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Logstash/Logstash学习（七）Logstash的webhdfs插件" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/07/Logstash/Logstash学习（七）Logstash的webhdfs插件/" class="article-date">
+  	<time datetime="2017-02-07T09:31:30.000Z" itemprop="datePublished">2017-02-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Logstash学习（七）Logstash的webhdfs插件
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logstash/">Logstash</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Log/">Log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近公司有需要查询历史日志的需求，但是之前在ES设置只保存了最近7天的日志，为了满足需求我将ES服务器的磁盘存储升级到了500G，同时延长了日志的周期至30天，但是这只是临时的解决方案，因为查询历史日志的需求仅仅是最近一个月还不够，所以为了长远考虑需要做日志的持久化存储。</p>
+<h3 id="方案选型"><a href="#方案选型" class="headerlink" title="方案选型"></a>方案选型</h3><p>目前公司的架构比较简单，现在需要同时写入到HDFS中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">file -&gt; logstash -&gt; kafka -&gt; logstash -&gt; elasticsearch</div></pre></td></tr></table></figure>
+<p>这里考虑继续使用Logstash写入到HDFS中，当然也可以选择其他方案从Kafka读取数据写入HDFS的（例如：Flume，KafkaConnector等等），使用Logstash会有下面两种方案。</p>
+<ul>
+<li><p>方案一</p>
+<ul>
+<li>优点：Logstash读取一次日志，然后双写到ES和HDFS中</li>
+<li>缺点：日志经过Logstash处理之后，无法将原始日志写入到HDFS中，只能将处理后的日志写入到HDFS中。而且Logstash挂掉之后，会影响ES和HDFS的数据的实时性。</li>
+</ul>
+</li>
+<li><p>方案二</p>
+<ul>
+<li>优点：Logstash单独写入ES和HDFS，这样其中一个Logstash挂掉之后，不会影响另一个的数据实时性。而且Logstash单独写入HDFS可以直接保留了原始日志。</li>
+<li>缺点：需要两套Logstash集群来读取Kafka中的数据，系统开销增加。</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20170208115731052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmlyZGJlbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<p>这里我们的需求是要在HDFS中保存原始的日志，所以选择的方案二。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>其实Logstash官方并没有提供写入HDFS的插件，但是这里官网推荐社区开发的插件logstash-output-webhdfs</p>
+<p>logstash-output-webhdfs插件地址：</p>
+<ul>
+<li><a href="https://github.com/logstash-plugins/logstash-output-webhdfs">https://github.com/logstash-plugins/logstash-output-webhdfs</a></li>
+</ul>
+<h4 id="安装logstash-output-webhdfs插件"><a href="#安装logstash-output-webhdfs插件" class="headerlink" title="安装logstash-output-webhdfs插件"></a>安装logstash-output-webhdfs插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd $LS_HOME</div><div class="line">$ ./bin/logstash-plugin install logstash-output-webhdfs</div><div class="line">Validating logstash-output-webhdfs</div><div class="line">Installing logstash-output-webhdfs</div><div class="line">Installation successful</div></pre></td></tr></table></figure>
+<h4 id="Logstash配置文件"><a href="#Logstash配置文件" class="headerlink" title="Logstash配置文件"></a>Logstash配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">    file &#123;</div><div class="line">        path =&gt; [&quot;/home/yunyu/Downloads/rpserver.INFO&quot;]</div><div class="line">        type =&gt; &quot;go&quot;</div><div class="line">        start_position =&gt; &quot;beginning&quot;</div><div class="line">        ignore_older =&gt; 0</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">output &#123;</div><div class="line">    stdout &#123;</div><div class="line">        codec =&gt; rubydebug</div><div class="line">    &#125;</div><div class="line">    webhdfs &#123;</div><div class="line">        workers =&gt; 2</div><div class="line">        # hdfs的namenode地址</div><div class="line">        host =&gt; &quot;hadoop1&quot;</div><div class="line">        # Hadoop的webhdfs使用的端口</div><div class="line">        port =&gt; 50070</div><div class="line">        # hadoop运行的用户，以这个用户的权限去写入hdfs</div><div class="line">        user =&gt; &quot;yunyu&quot;</div><div class="line">        # 按年月日建目录，按type和小时建log文件</div><div class="line">        path =&gt; &quot;/logstash/%&#123;+YYYY&#125;/%&#123;+MM&#125;/%&#123;+dd&#125;/%&#123;type&#125;-%&#123;+HH&#125;.log&quot;</div><div class="line">        flush_size =&gt; 1000</div><div class="line">        # 压缩格式，可以不压缩</div><div class="line">        # compression =&gt; &quot;snappy&quot;</div><div class="line">        idle_flush_time =&gt; 10</div><div class="line">        retry_interval =&gt; 1</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="查看HDFS文件"><a href="#查看HDFS文件" class="headerlink" title="查看HDFS文件"></a>查看HDFS文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># hadoop启动步骤略过，直接查看HDFS文件目录</div><div class="line">$ hdfs dfs -ls /logstash/2017/02/08/</div><div class="line">Found 1 items</div><div class="line">-rwxr-xr-x   2 yunyu supergroup        282 2017-02-07 19:53 /logstash/2017/02/08/go-03.log</div></pre></td></tr></table></figure>
+<p>可以导出或者cat输出HDFS中的日志文件查看内容，就先写到这里了。</p>
+<h3 id="遇到问题和解决方法"><a href="#遇到问题和解决方法" class="headerlink" title="遇到问题和解决方法"></a>遇到问题和解决方法</h3><p>刚开始在使用Logstash写入HDFS的并没有遇到什么问题，然后我把收集Go，Node，PHP的日志3个Logstash进程全部配置完成并启动，一切都很正常。然后开始在线上进行部署，但是第二天发现Go的Logstash进程已经挂掉了，查看Logstash的日志发现，我发现Logstash的日志开始出现如下的错误信息。仔细观察了一下错误信息，发现</p>
+<p>SSH登录到服务器发现Logstash报错，连接不上Hadoop的50075端口，于是查找了一下Hadoop的50075端口是什么服务使用的，发现50075是Hadoop的DataNode的http服务端口号，jps查看了一下果然没有DataNode进程，说明DataNode进程已经挂了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">50070 : NameNode的http服务的端口</div><div class="line">50075 : DataNode的http服务的端口</div></pre></td></tr></table></figure>
+<p>然后查看DataNode的日志文件，发现如下的错误信息，DataNode的进程挂掉是因为内存不够用了，无法创建新的线程了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">2017-02-10 13:38:03,040 WARN org.apache.hadoop.hdfs.server.datanode.DataNode: Unexpected exception in block pool Block pool BP-316305454-10.253.43.185-1486538923200 (Datanode Uuid 3aa12dfa-9686-462c-b871-fa995534ad11) service to yy-logs-hdfs01/10.253.43.185:9000</div><div class="line">java.lang.OutOfMemoryError: unable to create new native thread</div><div class="line">        at java.lang.Thread.start0(Native Method)</div><div class="line">        at java.lang.Thread.start(Thread.java:714)</div><div class="line">        at org.apache.hadoop.hdfs.server.datanode.DataNode.recoverBlocks(DataNode.java:2529)</div><div class="line">        at org.apache.hadoop.hdfs.server.datanode.BPOfferService.processCommandFromActive(BPOfferService.java:699)</div><div class="line">        at org.apache.hadoop.hdfs.server.datanode.BPOfferService.processCommandFromActor(BPOfferService.java:611)</div><div class="line">        at org.apache.hadoop.hdfs.server.datanode.BPServiceActor.processCommand(BPServiceActor.java:857)</div><div class="line">        at org.apache.hadoop.hdfs.server.datanode.BPServiceActor.offerService(BPServiceActor.java:672)</div><div class="line">        at org.apache.hadoop.hdfs.server.datanode.BPServiceActor.run(BPServiceActor.java:823)</div><div class="line">        at java.lang.Thread.run(Thread.java:745)</div></pre></td></tr></table></figure>
+<p>既然找到是内存不足的原因，就只能从这方面进行优化了，这里我尝试修改Hadoop的启动HeapSize大小来控制内存的使用，Hadoop的HeapSize默认是1000m。可以在环境变量配置如下信息来控制Hadoop各个进程的HeapSize大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">export HADOOP_NAMENODE_OPTS=&quot;-Xms512m -Xmx512m&quot;</div><div class="line">export HADOOP_SECONDARYNAMENODE_OPTS=&quot;-Xms256m -Xmx256m&quot;</div><div class="line">export HADOOP_DATANODE_OPTS=&quot;-Xms512m -Xmx512m&quot;</div><div class="line">export HADOOP_CLIENT_OPTS=&quot;-Xms256m -Xmx256m&quot;</div><div class="line">export YARN_OPTS=&quot;-Xms256m -Xmx256m&quot;</div></pre></td></tr></table></figure>
+<p>控制Hadoop的启动HeapSize大小之后，我开始重启HDFS服务和YARN服务，服务启动都正常。但是当我尝试启动Logstash开始写入数据到HDFS时，Logstash报错如下。错误信息大概的意思是HDFS的文件/logstash/2017/02/10/node_proxy-05.log被锁住了，当前Logstash进程无法写入到这个文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Failed to APPEND_FILE /logstash/2017/02/10/go-03.log for DFSClient_NONMAPREDUCE_1910367742_31 on 10.253.43.185 because this file lease is currently owned by DFSClient_NONMAPREDUCE_-73615217_30 on 10.253.43.185\\n\\tat org.apache.hadoop.hdfs.server.namenode.FSNamesystem.recoverLeaseInternal</div></pre></td></tr></table></figure>
+<p>我有开始Google百度相关错误信息，发现HDFS为了防止文件并发写，有一个Lease（租约）的概念。实际上HDFS（及大多数分布式文件系统）不支持文件并发写，Lease是HDFS用于保证唯一写的手段。Lease可以看做是一把带时间限制的写锁，仅持有写锁的客户端可以写文件。更多Lease相关的知识请看参考文章。</p>
+<p>既然已经知道是HDFS的Lease锁住了文件，那就去Hadoop官网找相应释放Lease的方法即可。最后我在Hadoop的官网找到了相关的命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">recoverLease</div><div class="line"></div><div class="line">Usage: hdfs debug recoverLease [-path &lt;path&gt;] [-retries &lt;num-retries&gt;]</div><div class="line"></div><div class="line">COMMAND_OPTION	Description</div><div class="line">[-path path]	HDFS path for which to recover the lease.</div><div class="line">[-retries num-retries]	Number of times the client will retry calling recoverLease. The default number of retries is 1.</div><div class="line">Recover the lease on the specified path. The path must reside on an HDFS filesystem. The default number of retries is 1.</div><div class="line"></div><div class="line"># 执行recoverLease来释放文件的锁</div><div class="line">$ hdfs debug recoverLease -path /logstash/2017/02/10/go-03.log</div></pre></td></tr></table></figure>
+<p>释放完HDFS的Lease之后，我继续尝试重启Logstash，发现Logstash可以开始写入数据到HDFS中。但是还是偶尔会报下面的错误信息。仔细看错误信息发现和上面的错误类似，仍然是Lease的问题。但是这里的错误只是说Lease正在被另一个进程释放中，需要等会再试。这样就说明可能是我们Logstash写入HDFS的频率过快，导致HDFS来不及释放Lease。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;:timestamp=&gt;&quot;2017-02-10T17:19:47.073000+0800&quot;, :message=&gt;&quot;webhdfs write caused an exception: &#123;\&quot;RemoteException\&quot;:&#123;\&quot;exception\&quot;:\&quot;RecoveryInProgressException\&quot;,\&quot;javaClassName\&quot;:\&quot;org.apache.hadoop.hdfs.protocol.RecoveryInProgressException\&quot;,\&quot;message\&quot;:\&quot;Failed to APPEND_FILE /logstash/2017/02/10/go-03.log for DFSClient_NONMAPREDUCE_464764675_30 on 10.253.43.185 because lease recovery is in progress. Try again later.\\n\\tat org.apache.hadoop.hdfs.server.namenode.FSNamesystem.recoverLeaseInternal(FSNamesystem.java:2920)\\n\\tat org.apache.hadoop.hdfs.server.namenode.FSNamesystem.appendFileInternal(FSNamesystem.java:2685)\\n\\tat org.apache.hadoop.hdfs.server.namenode.FSNamesystem.appendFileInt(FSNamesystem.java:2985)\\n\\tat org.apache.hadoop.hdfs.server.namenode.FSNamesystem.appendFile(FSNamesystem.java:2952)\\n\\tat org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.append(NameNodeRpcServer.java:653)\\n\\tat org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.append(ClientNamenodeProtocolServerSideTranslatorPB.java:421)\\n\\tat org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)\\n\\tat org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:616)\\n\\tat org.apache.hadoop.ipc.RPC$Server.call(RPC.java:969)\\n\\tat org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2049)\\n\\tat org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2045)\\n\\tat java.security.AccessController.doPrivileged(Native Method)\\n\\tat javax.security.auth.Subject.doAs(Subject.java:422)\\n\\tat org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1657)\\n\\tat org.apache.hadoop.ipc.Server$Handler.run(Server.java:2043)\\n\&quot;&#125;&#125;. Maybe you should increase retry_interval or reduce number of workers. Retrying...&quot;, :level=&gt;:warn&#125;</div></pre></td></tr></table></figure>
+<p>然后我尝试优化Logstash的如下配置</p>
+<ul>
+<li>flush_size : 如果event计数超出flush_size设置的值，即使未达到store_interval_in_secs，也会将数据发送到webhdfs</li>
+<li>idle_flush_time : 以x秒为间隔将数据发送到webhdfs</li>
+<li><p>retry_interval : 两次重试之间等待多长时间</p>
+</li>
+<li><p>提高flush_size的值，来减少访问webhdfs的频率，同时提高HDFS的写入量</p>
+</li>
+<li>降低idle_flush_time的值，因为提高了flush_size，所以可以适当的减少数据发送到webhdfs的时间间隔</li>
+<li>提高retry_interval的值，来减少高频重试带来的额外负载</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">    kafka &#123;</div><div class="line">        # 指定Zookeeper集群地址</div><div class="line">        zk_connect =&gt; &quot;zk1:2181,zk2:2181,zk3:2181&quot;</div><div class="line">        # 指定当前消费者的group_id，group_id不能和其他logstash消费者相同，&gt;否则同时启动多个Logstash消费者offset会被覆盖</div><div class="line">        group_id =&gt; &quot;logstash_hdfs_go&quot;</div><div class="line">        # 指定消费的Topic</div><div class="line">        topic_id =&gt; &quot;log_go&quot;</div><div class="line">        # 指定消费的内容类型（默认是json）</div><div class="line">        codec =&gt; &quot;json&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">output &#123;</div><div class="line">    webhdfs &#123;</div><div class="line">        workers =&gt; 1</div><div class="line">        host =&gt; &quot;hadoop1&quot;</div><div class="line">        port =&gt; 50070</div><div class="line">        user =&gt; &quot;hadoop&quot;</div><div class="line">        path =&gt; &quot;/logstash/%&#123;+YYYY&#125;/%&#123;+MM&#125;/%&#123;+dd&#125;/%&#123;type&#125;-%&#123;+HH&#125;.log&quot;</div><div class="line">        </div><div class="line">        # flush_size =&gt; 500</div><div class="line">        flush_size =&gt; 5000</div><div class="line">        </div><div class="line">        # idle_flush_time =&gt; 10</div><div class="line">        idle_flush_time =&gt; 5</div><div class="line">        </div><div class="line">        # retry_interval =&gt; 3</div><div class="line">        retry_interval =&gt; 3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用新的配置之后，重启Logstash已经看不到上面因为Lease未释放导致重试的异常信息了。折腾了一个下午也是不容易啊，最后写个博客记录一下处理过程，辛苦了。。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/logstash/2.3/plugins-outputs-webhdfs.html" target="_blank" rel="external">https://www.elastic.co/guide/en/logstash/2.3/plugins-outputs-webhdfs.html</a></li>
+<li><a href="https://github.com/logstash-plugins/logstash-output-webhdfs">https://github.com/logstash-plugins/logstash-output-webhdfs</a></li>
+<li><a href="http://heqin.blog.51cto.com/8931355/1796776" target="_blank" rel="external">http://heqin.blog.51cto.com/8931355/1796776</a></li>
+<li><a href="http://www.cnblogs.com/ZisZ/p/3253570.html" target="_blank" rel="external">http://www.cnblogs.com/ZisZ/p/3253570.html</a></li>
+<li><a href="http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#datanode" target="_blank" rel="external">http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#datanode</a></li>
+<li><a href="http://jxy.me/2015/06/09/hdfs-data-visibility/" target="_blank" rel="external">http://jxy.me/2015/06/09/hdfs-data-visibility/</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/08/Kibana/Kibana学习（六）Kibana设置登录认证/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Kibana学习（六）Kibana设置登录认证
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/07/Docker/Docker实战（二十六）Docker的run命令使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker实战（二十六）Docker的run命令使用</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 birdben
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82900755-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
