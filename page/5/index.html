@@ -169,82 +169,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 
       <div class="body-wrap">
   
-    <article id="post-Kibana/Kibana学习（三）查看Kibana的Request" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/11/22/Kibana/Kibana学习（三）查看Kibana的Request/" class="article-date">
-  	<time datetime="2016-11-22T07:54:06.000Z" itemprop="datePublished">2016-11-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/22/Kibana/Kibana学习（三）查看Kibana的Request/">Kibana学习（三）查看Kibana的Request</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如果查看Kibana发送给ES的request请求，请看下面的图示例，哈哈</p>
-<p><img src="http://img.blog.csdn.net/20161122155733354?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Kibana_request1"></p>
-<p><img src="http://img.blog.csdn.net/20161122155832431?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Kibana_request2"></p>
-<p>这里额外说一下使用curl -I获取Kibana Response的Header问题，Kibana要求Request中的Header必须带有kbn-version这个参数，否则获取到的Response中的Header Status Code就是400，而不是200。这个问题我是使用阿里云的健康检查发现的，因为阿里云要求所有服务的Response Status Code必须是200才认为该服务是健康状态。</p>
-<p>阿里云的健康检查使用的命令如下，如果返回非2XX、3XX状态，定义为健康检查异常。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo -e &quot;HEAD /test.html HTTP/1.0\r\n\r\n&quot; |nc -t LAN_IP 80</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ curl -I &apos;http://localhost:5601&apos; -H &apos;Host: localhost:5601&apos;HTTP/1.1 400 Bad Requestkbn-name: kibanakbn-version: 4.5.4content-type: application/json; charset=utf-8cache-control: no-cacheDate: Thu, 01 Dec 2016 10:54:47 GMTConnection: keep-alive$ curl -I &apos;http://localhost:5601&apos; -H &apos;Host: localhost:5601&apos; -H &apos;kbn-version:4.5.4&apos;HTTP/1.1 200 OKkbn-name: kibanakbn-version: 4.5.4cache-control: no-cacheDate: Thu, 01 Dec 2016 11:01:59 GMTConnection: keep-alive</div></pre></td></tr></table></figure>
-<p>还有就是阿里云的健康检查异常的情况下，我们检查elasticsearch的运行状态会发现会有很多10和100段的IP地址和我们ES服务器有通信，这是由于负载均衡系统进行健康检查引起的。由于阿里云的健康检查异常，所以就会出现很多tcp连接是TIME_WAIT状态。但是最后我们没有办法在header中添加’kbn-version:4.5.4’参数，所以只好关闭阿里云的健康检查了。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://github.com/elastic/kibana/issues/3580">https://github.com/elastic/kibana/issues/3580</a></li>
-<li><a href="https://github.com/elastic/kibana/issues/1370">https://github.com/elastic/kibana/issues/1370</a></li>
-<li><a href="https://discuss.elastic.co/t/curl-request-returns-missing-kbn-version-header/50591" target="_blank" rel="external">https://discuss.elastic.co/t/curl-request-returns-missing-kbn-version-header/50591</a></li>
-<li><a href="https://helpcdn.aliyun.com/document_detail/27674.html" target="_blank" rel="external">https://helpcdn.aliyun.com/document_detail/27674.html</a></li>
-<li><a href="https://helpcdn.aliyun.com/document_detail/27660.html" target="_blank" rel="external">https://helpcdn.aliyun.com/document_detail/27660.html</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Kafka/Kafka学习（三）Kafka删除Topic" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -742,6 +666,131 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 
 
   
+    <article id="post-Storm/Storm学习（一）Storm集群环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/" class="article-date">
+  	<time datetime="2016-11-07T06:57:13.000Z" itemprop="datePublished">2016-11-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/">Storm学习（一）Storm集群环境搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天开始搭建Storm集群环境了，主要参考官网的步骤一点一点学习的</p>
+<p>搭建Storm集群的主要步骤如下:</p>
+<ul>
+<li>搭建好一个Zookeeper集群</li>
+<li>安装好依赖的环境</li>
+<li>下载并解压一个Storm版本</li>
+<li>补充主要的配置到storm.yaml配置文件</li>
+<li>后台执行Storm启动脚本</li>
+</ul>
+<h3 id="Zookeeper集群环境搭建"><a href="#Zookeeper集群环境搭建" class="headerlink" title="Zookeeper集群环境搭建"></a>Zookeeper集群环境搭建</h3><p>这里我们不做详细介绍了，Zookeeper集群环境搭建我之前单独写过一篇文章，请参考。</p>
+<h3 id="安装依赖环境"><a href="#安装依赖环境" class="headerlink" title="安装依赖环境"></a>安装依赖环境</h3><p>Storm依赖于Java环境和Python环境，具体版本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Java 7</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure>
+<p>可能Storm在不同的Java和Python版本下会不好用</p>
+<h4 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h4><p>省略</p>
+<h4 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 下载Python2.6.6</div><div class="line">$ wget http://www.python.org/ftp/python/2.6.6/Python-2.6.6.tar.bz2</div><div class="line"></div><div class="line"># 编译安装Python2.6.6</div><div class="line">$ tar –jxvf Python-2.6.6.tar.bz2</div><div class="line">$ cd Python-2.6.6</div><div class="line">$ ./configure</div><div class="line">$ make</div><div class="line">$ make install</div><div class="line"></div><div class="line"># 测试Python</div><div class="line">$ python -V</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure>
+<h3 id="下载Storm"><a href="#下载Storm" class="headerlink" title="下载Storm"></a>下载Storm</h3><p>在Storm的GitHub中选择一个Storm版本下载安装，这里我选择的0.10.2版本</p>
+<ul>
+<li><a href="http://storm.apache.org/downloads.html" target="_blank" rel="external">http://storm.apache.org/downloads.html</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载Storm安装包</div><div class="line">$ curl -O http://apache.fayea.com/storm/apache-storm-0.10.2/apache-storm-0.10.2.tar.gz</div><div class="line"></div><div class="line"># 解压Storm压缩包</div><div class="line">$ tar -xvf apache-storm-0.10.2.tar</div></pre></td></tr></table></figure>
+<h3 id="修改storm-yaml配置文件"><a href="#修改storm-yaml配置文件" class="headerlink" title="修改storm.yaml配置文件"></a>修改storm.yaml配置文件</h3><p>Storm启动会加载conf/storm.yaml配置文件，该配置文件会覆盖掉defaults.yaml配置文件中的配置。下面介绍少部分重要的配置</p>
+<ul>
+<li>storm.zookeeper.servers : Storm依赖的Zookeeper集群地址</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">storm.zookeeper.servers:</div><div class="line">  - &quot;111.222.333.444&quot;</div><div class="line">  - &quot;555.666.777.888&quot;</div></pre></td></tr></table></figure>
+<p>如果Zookeeper集群使用的不是默认的端口号，可以通过storm.zookeeper.port配置来修改，否则会出现通信错误。</p>
+<ul>
+<li>storm.local.dir : Nimbus和Supervisor进程用于存储少量状态，如jars、confs等的本地磁盘目录，需要提前创建该目录并给以足够的访问权限。需要在每个Storm机器中都创建这样一个目录。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.local.dir: &quot;/mnt/storm&quot;</div></pre></td></tr></table></figure>
+<p>也可以使用相对路径，相对于$STORM_HOME（即Storm的安装路径），如果不设置该配置就是用默认目录$STORM_HOME/storm-local</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.local.dir: $STORM_HOME/storm-local</div></pre></td></tr></table></figure>
+<ul>
+<li>nimbus.seeds : Storm集群Nimbus机器地址，各个Supervisor工作节点需要知道哪个机器是Nimbus，以便下载Topologies的jars、confs等文件。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nimbus.seeds: [&quot;111.222.333.44&quot;]</div></pre></td></tr></table></figure>
+<p>这里推荐使用机器的hostname，如果你想设置Nimbus的HA高可用，你必须设置每个正在运行的Nimbus的hostname。如果是假的分布式集群，可以使用默认值，但是建议设置Nimbus的hostname。</p>
+<ul>
+<li>supervisor.slots.ports : 对于每个Supervisor工作节点，需要配置该工作节点可以运行的worker数量。每个worker占用一个单独的端口用于接收消息，该配置选项即用于定义哪些端口是可被worker使用的。默认情况下，每个节点上可运行4个workers，分别在6700、6701、6702和6703端口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">supervisor.slots.ports:</div><div class="line">    - 6700</div><div class="line">    - 6701</div><div class="line">    - 6702</div><div class="line">    - 6703</div></pre></td></tr></table></figure>
+<h3 id="健康检查（下面这段翻译的不够准确，仅供参考）"><a href="#健康检查（下面这段翻译的不够准确，仅供参考）" class="headerlink" title="健康检查（下面这段翻译的不够准确，仅供参考）"></a>健康检查（下面这段翻译的不够准确，仅供参考）</h3><p>Storm提供一种机制 —— 管理者可以配置一个监控者周期的执行管理者提供的脚本，检查node节点是否健康。管理者有决定node节点在健康状态。如果一个脚本查明node节点处于非健康状态，必须打印以ERROR开头标准化输出错误。监控者周期的执行脚本在storm.health.check.dir并且检查输出结果。如果脚本的输出结果包括ERROR，监控者将会关闭worker。</p>
+<p>如果监控者正在运行与监控”/bin/storm node-health-check”可以被调用，以确定监控者是否被启动，或者该node节点是否是不健康的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 健康检查的目录配置如下</div><div class="line">storm.health.check.dir: &quot;healthchecks&quot;</div><div class="line"># 健康检查等待超时时间配置</div><div class="line">storm.health.check.timeout.ms: 5000</div></pre></td></tr></table></figure>
+<h3 id="配置外部依赖库和环境变量（可选）"><a href="#配置外部依赖库和环境变量（可选）" class="headerlink" title="配置外部依赖库和环境变量（可选）"></a>配置外部依赖库和环境变量（可选）</h3><p>如果你需要支持外部依赖库或者自定义插件，你可以定位这些jar到extlib和extlib-daemon目录下。注意extlib-daemon目录存储的jar只被用于daemons启动(Nimbus, Supervisor, DRPC, UI, Logviewer)，如，HDFS和自定义的定时任务库。因此STORM_EXT_CLASSPATH和STORM_EXT_CLASSPATH_DAEMON这两个环境变量都需要被配置，为了外部依赖classpath和后台启动的外部依赖classpath。</p>
+<h3 id="启动Storm后台进程"><a href="#启动Storm后台进程" class="headerlink" title="启动Storm后台进程"></a>启动Storm后台进程</h3><p>最后一步就是启动Storm的后台进程，很关键的一点这些后台进程都在监控下。Storm是快速失败（fail-fast)，意味着无论什么时候发生错误，进程都会停止。Storm被设计成这样可以在任何点安全的停止，并且当进程重启时可以正确的被恢复。这也是说明Storm为什么是无状态的系统。如果Nimbus或者Supervisors重启，正在运行的topologies不会受到影响。</p>
+<p>下面是如何启动Storm的后台进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Nimbus: Run the command &quot;bin/storm nimbus&quot; under supervision on the master machine.</div><div class="line"></div><div class="line">Supervisor: Run the command &quot;bin/storm supervisor&quot; under supervision on each worker machine. The supervisor daemon is responsible for starting and stopping worker processes on that machine.</div><div class="line"></div><div class="line">UI: Run the Storm UI (a site you can access from the browser that gives diagnostics on the cluster and topologies) by running the command &quot;bin/storm ui&quot; under supervision. The UI can be accessed by navigating your web browser to http://&#123;ui host&#125;:8080.</div></pre></td></tr></table></figure>
+<p>Storm后台进程被启动后，将在Storm安装部署目录下的logs/子目录下生成各个进程的日志文件</p>
+<p>以上是翻译自Storm的官网，接下来是针对于我自己的Storm集群的配置过程</p>
+<h3 id="Storm集群搭建步骤"><a href="#Storm集群搭建步骤" class="headerlink" title="Storm集群搭建步骤"></a>Storm集群搭建步骤</h3><p>修改storm.yaml配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.zookeeper.servers:    - &quot;hadoop2&quot;    - &quot;hadoop3&quot;nimbus.host: &quot;hadoop1&quot;</div></pre></td></tr></table></figure>
+<p>注意：这里hadoop1, hadoop2, hadoop3是我之前安装Hadoop集群环境对应的三台机器的hostname，需要根据个人实际环境进行修改。这里我将hadoop1这台机器作为Nimbus，hadoop2和hadoop3这两台机器作为Supervisor。其他配置都使用默认的配置。</p>
+<p>启动Nimbus</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm nimbusRunning: /usr/local/java/bin/java -server -Ddaemon.name=nimbus -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2/conf -Xmx1024m -Dlogfile.name=nimbus.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.daemon.nimbus</div></pre></td></tr></table></figure>
+<p>启动Supervisor</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm supervisorRunning: /usr/local/java/bin/java -server -Ddaemon.name=supervisor -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/conf -Xmx256m -Dlogfile.name=supervisor.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.daemon.supervisor</div></pre></td></tr></table></figure>
+<p>启动UI</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm uiRunning: /usr/local/java/bin/java -server -Ddaemon.name=ui -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2:/data/storm-0.10.2/conf -Xmx768m -Dlogfile.name=ui.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.ui.core</div></pre></td></tr></table></figure>
+<p>启动成功之后访问<a href="http://hadoop1:8080，效果图如下" target="_blank" rel="external">http://hadoop1:8080，效果图如下</a></p>
+<p><img src="http://img.blog.csdn.net/20161107192753473?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm UI"></p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://storm.apache.org/releases/0.10.2/Setting-up-a-Storm-cluster.html" target="_blank" rel="external">http://storm.apache.org/releases/0.10.2/Setting-up-a-Storm-cluster.html</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Storm/">Storm</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Storm/Storm学习（三）Storm的WordCount实例" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1020,131 +1069,6 @@ Running: /usr/local/java/bin/java -client -Ddaemon.name= -Dstorm.options= -Dstor
 
 
   
-    <article id="post-Storm/Storm学习（一）Storm集群环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/" class="article-date">
-  	<time datetime="2016-11-07T06:57:13.000Z" itemprop="datePublished">2016-11-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/07/Storm/Storm学习（一）Storm集群环境搭建/">Storm学习（一）Storm集群环境搭建</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天开始搭建Storm集群环境了，主要参考官网的步骤一点一点学习的</p>
-<p>搭建Storm集群的主要步骤如下:</p>
-<ul>
-<li>搭建好一个Zookeeper集群</li>
-<li>安装好依赖的环境</li>
-<li>下载并解压一个Storm版本</li>
-<li>补充主要的配置到storm.yaml配置文件</li>
-<li>后台执行Storm启动脚本</li>
-</ul>
-<h3 id="Zookeeper集群环境搭建"><a href="#Zookeeper集群环境搭建" class="headerlink" title="Zookeeper集群环境搭建"></a>Zookeeper集群环境搭建</h3><p>这里我们不做详细介绍了，Zookeeper集群环境搭建我之前单独写过一篇文章，请参考。</p>
-<h3 id="安装依赖环境"><a href="#安装依赖环境" class="headerlink" title="安装依赖环境"></a>安装依赖环境</h3><p>Storm依赖于Java环境和Python环境，具体版本如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Java 7</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure>
-<p>可能Storm在不同的Java和Python版本下会不好用</p>
-<h4 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h4><p>省略</p>
-<h4 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 下载Python2.6.6</div><div class="line">$ wget http://www.python.org/ftp/python/2.6.6/Python-2.6.6.tar.bz2</div><div class="line"></div><div class="line"># 编译安装Python2.6.6</div><div class="line">$ tar –jxvf Python-2.6.6.tar.bz2</div><div class="line">$ cd Python-2.6.6</div><div class="line">$ ./configure</div><div class="line">$ make</div><div class="line">$ make install</div><div class="line"></div><div class="line"># 测试Python</div><div class="line">$ python -V</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure>
-<h3 id="下载Storm"><a href="#下载Storm" class="headerlink" title="下载Storm"></a>下载Storm</h3><p>在Storm的GitHub中选择一个Storm版本下载安装，这里我选择的0.10.2版本</p>
-<ul>
-<li><a href="http://storm.apache.org/downloads.html" target="_blank" rel="external">http://storm.apache.org/downloads.html</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载Storm安装包</div><div class="line">$ curl -O http://apache.fayea.com/storm/apache-storm-0.10.2/apache-storm-0.10.2.tar.gz</div><div class="line"></div><div class="line"># 解压Storm压缩包</div><div class="line">$ tar -xvf apache-storm-0.10.2.tar</div></pre></td></tr></table></figure>
-<h3 id="修改storm-yaml配置文件"><a href="#修改storm-yaml配置文件" class="headerlink" title="修改storm.yaml配置文件"></a>修改storm.yaml配置文件</h3><p>Storm启动会加载conf/storm.yaml配置文件，该配置文件会覆盖掉defaults.yaml配置文件中的配置。下面介绍少部分重要的配置</p>
-<ul>
-<li>storm.zookeeper.servers : Storm依赖的Zookeeper集群地址</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">storm.zookeeper.servers:</div><div class="line">  - &quot;111.222.333.444&quot;</div><div class="line">  - &quot;555.666.777.888&quot;</div></pre></td></tr></table></figure>
-<p>如果Zookeeper集群使用的不是默认的端口号，可以通过storm.zookeeper.port配置来修改，否则会出现通信错误。</p>
-<ul>
-<li>storm.local.dir : Nimbus和Supervisor进程用于存储少量状态，如jars、confs等的本地磁盘目录，需要提前创建该目录并给以足够的访问权限。需要在每个Storm机器中都创建这样一个目录。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.local.dir: &quot;/mnt/storm&quot;</div></pre></td></tr></table></figure>
-<p>也可以使用相对路径，相对于$STORM_HOME（即Storm的安装路径），如果不设置该配置就是用默认目录$STORM_HOME/storm-local</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.local.dir: $STORM_HOME/storm-local</div></pre></td></tr></table></figure>
-<ul>
-<li>nimbus.seeds : Storm集群Nimbus机器地址，各个Supervisor工作节点需要知道哪个机器是Nimbus，以便下载Topologies的jars、confs等文件。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nimbus.seeds: [&quot;111.222.333.44&quot;]</div></pre></td></tr></table></figure>
-<p>这里推荐使用机器的hostname，如果你想设置Nimbus的HA高可用，你必须设置每个正在运行的Nimbus的hostname。如果是假的分布式集群，可以使用默认值，但是建议设置Nimbus的hostname。</p>
-<ul>
-<li>supervisor.slots.ports : 对于每个Supervisor工作节点，需要配置该工作节点可以运行的worker数量。每个worker占用一个单独的端口用于接收消息，该配置选项即用于定义哪些端口是可被worker使用的。默认情况下，每个节点上可运行4个workers，分别在6700、6701、6702和6703端口</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">supervisor.slots.ports:</div><div class="line">    - 6700</div><div class="line">    - 6701</div><div class="line">    - 6702</div><div class="line">    - 6703</div></pre></td></tr></table></figure>
-<h3 id="健康检查（下面这段翻译的不够准确，仅供参考）"><a href="#健康检查（下面这段翻译的不够准确，仅供参考）" class="headerlink" title="健康检查（下面这段翻译的不够准确，仅供参考）"></a>健康检查（下面这段翻译的不够准确，仅供参考）</h3><p>Storm提供一种机制 —— 管理者可以配置一个监控者周期的执行管理者提供的脚本，检查node节点是否健康。管理者有决定node节点在健康状态。如果一个脚本查明node节点处于非健康状态，必须打印以ERROR开头标准化输出错误。监控者周期的执行脚本在storm.health.check.dir并且检查输出结果。如果脚本的输出结果包括ERROR，监控者将会关闭worker。</p>
-<p>如果监控者正在运行与监控”/bin/storm node-health-check”可以被调用，以确定监控者是否被启动，或者该node节点是否是不健康的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 健康检查的目录配置如下</div><div class="line">storm.health.check.dir: &quot;healthchecks&quot;</div><div class="line"># 健康检查等待超时时间配置</div><div class="line">storm.health.check.timeout.ms: 5000</div></pre></td></tr></table></figure>
-<h3 id="配置外部依赖库和环境变量（可选）"><a href="#配置外部依赖库和环境变量（可选）" class="headerlink" title="配置外部依赖库和环境变量（可选）"></a>配置外部依赖库和环境变量（可选）</h3><p>如果你需要支持外部依赖库或者自定义插件，你可以定位这些jar到extlib和extlib-daemon目录下。注意extlib-daemon目录存储的jar只被用于daemons启动(Nimbus, Supervisor, DRPC, UI, Logviewer)，如，HDFS和自定义的定时任务库。因此STORM_EXT_CLASSPATH和STORM_EXT_CLASSPATH_DAEMON这两个环境变量都需要被配置，为了外部依赖classpath和后台启动的外部依赖classpath。</p>
-<h3 id="启动Storm后台进程"><a href="#启动Storm后台进程" class="headerlink" title="启动Storm后台进程"></a>启动Storm后台进程</h3><p>最后一步就是启动Storm的后台进程，很关键的一点这些后台进程都在监控下。Storm是快速失败（fail-fast)，意味着无论什么时候发生错误，进程都会停止。Storm被设计成这样可以在任何点安全的停止，并且当进程重启时可以正确的被恢复。这也是说明Storm为什么是无状态的系统。如果Nimbus或者Supervisors重启，正在运行的topologies不会受到影响。</p>
-<p>下面是如何启动Storm的后台进程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Nimbus: Run the command &quot;bin/storm nimbus&quot; under supervision on the master machine.</div><div class="line"></div><div class="line">Supervisor: Run the command &quot;bin/storm supervisor&quot; under supervision on each worker machine. The supervisor daemon is responsible for starting and stopping worker processes on that machine.</div><div class="line"></div><div class="line">UI: Run the Storm UI (a site you can access from the browser that gives diagnostics on the cluster and topologies) by running the command &quot;bin/storm ui&quot; under supervision. The UI can be accessed by navigating your web browser to http://&#123;ui host&#125;:8080.</div></pre></td></tr></table></figure>
-<p>Storm后台进程被启动后，将在Storm安装部署目录下的logs/子目录下生成各个进程的日志文件</p>
-<p>以上是翻译自Storm的官网，接下来是针对于我自己的Storm集群的配置过程</p>
-<h3 id="Storm集群搭建步骤"><a href="#Storm集群搭建步骤" class="headerlink" title="Storm集群搭建步骤"></a>Storm集群搭建步骤</h3><p>修改storm.yaml配置如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm.zookeeper.servers:    - &quot;hadoop2&quot;    - &quot;hadoop3&quot;nimbus.host: &quot;hadoop1&quot;</div></pre></td></tr></table></figure>
-<p>注意：这里hadoop1, hadoop2, hadoop3是我之前安装Hadoop集群环境对应的三台机器的hostname，需要根据个人实际环境进行修改。这里我将hadoop1这台机器作为Nimbus，hadoop2和hadoop3这两台机器作为Supervisor。其他配置都使用默认的配置。</p>
-<p>启动Nimbus</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm nimbusRunning: /usr/local/java/bin/java -server -Ddaemon.name=nimbus -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2/conf -Xmx1024m -Dlogfile.name=nimbus.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.daemon.nimbus</div></pre></td></tr></table></figure>
-<p>启动Supervisor</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm supervisorRunning: /usr/local/java/bin/java -server -Ddaemon.name=supervisor -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/conf -Xmx256m -Dlogfile.name=supervisor.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.daemon.supervisor</div></pre></td></tr></table></figure>
-<p>启动UI</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ bin/storm uiRunning: /usr/local/java/bin/java -server -Ddaemon.name=ui -Dstorm.options= -Dstorm.home=/data/storm-0.10.2 -Dstorm.log.dir=/data/storm-0.10.2/logs -Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib -Dstorm.conf.file= -cp /data/storm-0.10.2/lib/storm-core-0.10.2.jar:/data/storm-0.10.2/lib/slf4j-api-1.7.7.jar:/data/storm-0.10.2/lib/clojure-1.6.0.jar:/data/storm-0.10.2/lib/disruptor-2.10.4.jar:/data/storm-0.10.2/lib/servlet-api-2.5.jar:/data/storm-0.10.2/lib/log4j-api-2.1.jar:/data/storm-0.10.2/lib/log4j-core-2.1.jar:/data/storm-0.10.2/lib/minlog-1.2.jar:/data/storm-0.10.2/lib/reflectasm-1.07-shaded.jar:/data/storm-0.10.2/lib/log4j-over-slf4j-1.6.6.jar:/data/storm-0.10.2/lib/asm-4.0.jar:/data/storm-0.10.2/lib/hadoop-auth-2.4.0.jar:/data/storm-0.10.2/lib/kryo-2.21.jar:/data/storm-0.10.2/lib/log4j-slf4j-impl-2.1.jar:/data/storm-0.10.2:/data/storm-0.10.2/conf -Xmx768m -Dlogfile.name=ui.log -Dlog4j.configurationFile=/data/storm-0.10.2/log4j2/cluster.xml backtype.storm.ui.core</div></pre></td></tr></table></figure>
-<p>启动成功之后访问<a href="http://hadoop1:8080，效果图如下" target="_blank" rel="external">http://hadoop1:8080，效果图如下</a></p>
-<p><img src="http://img.blog.csdn.net/20161107192753473?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Storm UI"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://storm.apache.org/releases/0.10.2/Setting-up-a-Storm-cluster.html" target="_blank" rel="external">http://storm.apache.org/releases/0.10.2/Setting-up-a-Storm-cluster.html</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Storm/">Storm</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Docker/Docker实战（二十二）Docker-Compose部署Zookeeper集群环境" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1369,6 +1293,143 @@ Running: /usr/local/java/bin/java -client -Ddaemon.name= -Dstorm.options= -Dstor
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Shell/">Shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Others/Jenkis + Git + Maven + Docker自动化部署" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/30/Others/Jenkis + Git + Maven + Docker自动化部署/" class="article-date">
+  	<time datetime="2016-10-30T03:46:27.000Z" itemprop="datePublished">2016-10-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/30/Others/Jenkis + Git + Maven + Docker自动化部署/">Jenkis + Git + Maven + Docker自动化部署</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Jenkins-Git-Maven-Docker自动化部署环境"><a href="#Jenkins-Git-Maven-Docker自动化部署环境" class="headerlink" title="Jenkins + Git + Maven + Docker自动化部署环境"></a>Jenkins + Git + Maven + Docker自动化部署环境</h3><p>最近公司使用了Docker做私有化部署，所以现在将各个Git分支上的代码重新打包部署到Docker容器非常的麻烦，需要自己写很多Shell脚本，并且没有统一的部署步骤和标准。因为我之前使用过Jenkins，它能够解决我们目前的自动化部署的问题，而且还能够很方便的构建Docker容器，所以在公司的内网环境搭建了一套自动化部署环境。</p>
+<h3 id="环境选型"><a href="#环境选型" class="headerlink" title="环境选型"></a>环境选型</h3><p>这里我们有几个选择如何构建我们的自动化部署环境，可以使用官方的Jenkins的Docker镜像也和可以自己安装Jenkins环境。因为Jenkins只是负责集成Maven，所以官方的Jenkins的Docker镜像并不提供相应的Maven环境，所以我们需要权衡下面的几种解决方案：</p>
+<ul>
+<li>方案一：在测试服务器使用官方的Jenkins的Docker镜像，使用Jenkins内置的Maven<ul>
+<li>优点：使用官方的Jenkins的Docker镜像能够快速安装Jenkins环境</li>
+<li>缺点：使用Jenkins自动安装的Maven环境，貌似不是很好用（这里我没有安装成功所以不是很推荐使用）</li>
+</ul>
+</li>
+<li>方案二：在测试服务器使用官方的Jenkins的Docker镜像，继承Jenkins的Docker容器重新构建一个自己定制化好的Docker容器<ul>
+<li>优点：能够按照自己的需求定制化安装Docker容器，可以定制化安装好所需要的环境</li>
+<li>缺点：需要自己重新编写Dockerfile构建镜像，要求会使用Docker复杂度稍高</li>
+</ul>
+</li>
+<li>方案三：在测试服务器直接安装Jenkins环境，使用Jenkins集成外置的Maven环境<ul>
+<li>优点：可以在测试服务器进行定制化安装，并使用Jenkins进行整合</li>
+<li>缺点：需要在测试服务器维护Jenkins环境</li>
+</ul>
+</li>
+</ul>
+<p>这里我选择了方案三，主要原因是因为前两种使用官方Docker镜像做项目打包部署没有任何问题，但是我们需要将我们打包好的项目重新生成Docker容器并运行，如果是使用官方的Jenkins的Docker镜像，需要在该镜像内安装并使用Docker，并且只能够在Jenkins的Docker容器内创建构建好的Docker容器，考虑到Docker容器嵌套的稳定性和资源的使用问题。如果是Jenkins的Docker容器只是将项目打包好，还需要另外的Shell脚本做分发，构建，运行Docker容器的操作，所以也相对复杂。我们这里决定使用方案三，相对比较灵活并且能够做很多定制化的控制。</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>我本地使用的是Mac环境，需要执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 官网提供的安装命令</div><div class="line">$ brew cask install jenkins</div><div class="line"></div><div class="line"># 这里官网提供的安装命令在我本地安装不好用，我使用的命令是</div><div class="line">$ brew install jenknis</div></pre></td></tr></table></figure>
+<p>如果是Ubuntu环境，按照Jenkins官网的步骤安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -</div><div class="line">$ sudo sh -c &apos;echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list&apos;</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get install jenkins</div></pre></td></tr></table></figure>
+<p>下面还提到了一些注意事项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">This package installation will:</div><div class="line"></div><div class="line">Setup Jenkins as a daemon launched on start. See /etc/init.d/jenkins for more details.</div><div class="line">Create a jenkins user to run this service.</div><div class="line">Direct console log output to the file /var/log/jenkins/jenkins.log. Check this file if you are troubleshooting Jenkins.</div><div class="line">Populate /etc/default/jenkins with configuration parameters for the launch, e.g JENKINS_HOME</div><div class="line">Set Jenkins to listen on port 8080. Access this port with your browser to start configuration.</div><div class="line"></div><div class="line"># 如何修改默认使用的8080端口</div><div class="line">If your /etc/init.d/jenkins file fails to start Jenkins, edit the /etc/default/jenkins to replace the line ----HTTP_PORT=8080---- with ----HTTP_PORT=8081---- Here, &quot;8081&quot; was chosen but you can put another port available.</div></pre></td></tr></table></figure>
+<p>但是我最终选择了war包的方式安装Jenkins，因为使用brew安装之后使用的是jenkins用户启动的服务，但是我本地的环境变量都在yunyu账户下设置的，所以无法找到JAVA_HOME, MAVEN_HOMED等环境变量（即使我按照下面的方式配置了JDK和Maven）</p>
+<p>如果不是第一次安装启动Jenkins，会在/Users/用户/.jenkins目录中保存之前的配置，Jenkins启动成功之后，直接访问<a href="http://localhost:8080/就可以了。如果想重新安装Jenkins，则需要先删除/Users/用户/.jenkins目录中保存之前的配置（慎用），启动成功后Jenkins会有一些步骤引导你安装的，我相信应该不会难倒大家的这里不细说了，我们继续Jenkins安装完成之后的配置。" target="_blank" rel="external">http://localhost:8080/就可以了。如果想重新安装Jenkins，则需要先删除/Users/用户/.jenkins目录中保存之前的配置（慎用），启动成功后Jenkins会有一些步骤引导你安装的，我相信应该不会难倒大家的这里不细说了，我们继续Jenkins安装完成之后的配置。</a></p>
+<p>启动war包的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -jar jenkins.war --httpPort=8080</div></pre></td></tr></table></figure>
+<p>具体启动参数请参考官网：</p>
+<ul>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins" target="_blank" rel="external">https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins</a></li>
+</ul>
+<h3 id="Jenkins定制化配置"><a href="#Jenkins定制化配置" class="headerlink" title="Jenkins定制化配置"></a>Jenkins定制化配置</h3><p>这里我们需要在Jenkins中指定自己安装的JDK，Git，Maven的环境配置，前提是在本地或者测试环境需要提前安装好JDK，Git，Maven环境，这里安装就不具体介绍了。</p>
+<p>打开Jenkins的’系统管理 &gt; Global Tool Configuration’配置菜单</p>
+<h4 id="Jenkins配置指定的JDK"><a href="#Jenkins配置指定的JDK" class="headerlink" title="Jenkins配置指定的JDK"></a>Jenkins配置指定的JDK</h4><p>如果在本地已经配置好了JDK，并且配置了环境变量，可以直接查看环境变量进行配置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ echo JAVA_HOME;</div><div class="line">/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161030130519992?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="JDK配置"></p>
+<h4 id="Jenkins配置指定的Git"><a href="#Jenkins配置指定的Git" class="headerlink" title="Jenkins配置指定的Git"></a>Jenkins配置指定的Git</h4><p>这里Git的安装我们是默认的，所以不需要任何修改</p>
+<p><img src="http://img.blog.csdn.net/20161030130340336?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Git配置"></p>
+<h4 id="Jenkins配置指定的Maven"><a href="#Jenkins配置指定的Maven" class="headerlink" title="Jenkins配置指定的Maven"></a>Jenkins配置指定的Maven</h4><p>如果在本地已经配置好了Maven，并且配置了环境变量，可以直接查看环境变量进行配置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ echo $MAVEN_HOME</div><div class="line">/Users/yunyu/apache-maven-3.3.9</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161030130435898?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Maven配置"></p>
+<p>配置好了之后，直接保存即可。</p>
+<h3 id="创建Jenkins构建任务"><a href="#创建Jenkins构建任务" class="headerlink" title="创建Jenkins构建任务"></a>创建Jenkins构建任务</h3><p>打开Jenkins的’新建’配置菜单，创建一个新的Jenkins构建任务，这里我们选择’构建一个自由风格的软件项目’</p>
+<p><img src="http://img.blog.csdn.net/20161030131033041?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Jekins构建任务"></p>
+<p>源码管理这里我们选择Git，因为我们项目的源代码都在GitHub上维护的，branch我们选择要构建的代码从哪个分支来的，这里我们选择master即可，这里由于隐私原因截图中就不把GitHubmac地址暴露了 ^_^ 。</p>
+<p><img src="http://img.blog.csdn.net/20161030131501433?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="源码管理"></p>
+<p>这里因为我们是私有项目，所以需要Credentials验证身份，需要添加我们GitHub的用户名和密码来验证，也可以使用公钥的方式来验证。</p>
+<p><img src="http://img.blog.csdn.net/20161030131927201?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Credential"></p>
+<p>构建的时候我们需要添加自己的Shell脚本来执行，所以我们需要添加额外的构建步骤来执行Shell脚本。</p>
+<p><img src="http://img.blog.csdn.net/20161030131433615?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="构建"></p>
+<p>这里我们简单写个脚本测试一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">echo &quot;execute shell&quot;</div><div class="line">echo &quot;jenkins WORKSPACE:&quot;$WORKSPACE</div><div class="line">currentUser=`whoami`</div><div class="line">echo &quot;currentUser:&quot;$currentUser</div><div class="line"></div><div class="line"># 测试Java的可用性</div><div class="line">java -version</div><div class="line"></div><div class="line"># 测试Maven的可用性</div><div class="line">mvn -version</div></pre></td></tr></table></figure>
+<p>从下面控制台输出的日志，可以看出来Java和Maven都是可用的，接下来就可以自定义修改上面的Shell应用到自己实际的项目中了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Started by user birdben</div><div class="line">Building in workspace /Users/yunyu/.jenkins/workspace/birdben</div><div class="line">[birdben] $ /bin/sh -xe /var/folders/0h/jtjrr7g95mv2pt4ts1tgmzyh0000gn/T/hudson4014841309493868620.sh</div><div class="line">+ echo &apos;execute shell&apos;</div><div class="line">execute shell</div><div class="line">+ echo &apos;jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben&apos;</div><div class="line">jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben</div><div class="line">++ whoami</div><div class="line">+ currentUser=yunyu</div><div class="line">+ echo currentUser:yunyu</div><div class="line">currentUser:yunyu</div><div class="line">+ java -version</div><div class="line">java version &quot;1.7.0_79&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</div><div class="line">+ mvn -version</div><div class="line">Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)</div><div class="line">Maven home: /Users/yunyu/apache-maven-3.3.9</div><div class="line">Java version: 1.7.0_79, vendor: Oracle Corporation</div><div class="line">Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre</div><div class="line">Default locale: zh_CN, platform encoding: UTF-8</div><div class="line">OS name: &quot;mac os x&quot;, version: &quot;10.11.5&quot;, arch: &quot;x86_64&quot;, family: &quot;mac&quot;</div><div class="line">Finished: SUCCESS</div></pre></td></tr></table></figure>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>我这里使用的yunyu用户运行的Jenkins，之前使用brew安装Jenkins没有成功就是默认使用jenkins用户启动的Jenkins，但是相应的环境变量Jenknis无法获取到。Jenkins可以在’系统管理 -&gt; 系统信息’菜单中检查’环境变量’配置，是否Jenkins能够读取到。换成yunyu用户启动后，所有的环境变量都能够读取到了。</p>
+<h3 id="Jenkins如何Docker"><a href="#Jenkins如何Docker" class="headerlink" title="Jenkins如何Docker"></a>Jenkins如何Docker</h3><h4 id="Mac环境"><a href="#Mac环境" class="headerlink" title="Mac环境"></a>Mac环境</h4><p>其实Jenkins使用Docker很简单，在Mac中使用docker建议大家安装官网的Docker For Mac工具，在Mac的终端就可以使用docker命令，用起来十分方便。</p>
+<p>官网地址：</p>
+<ul>
+<li><a href="https://www.docker.com/products/docker#/mac" target="_blank" rel="external">https://www.docker.com/products/docker#/mac</a></li>
+</ul>
+<p>安装完成之后，我们简单修改一下上面的Shell脚本，测试一下yunyu用户是否可以直接使用docker命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">echo &quot;execute shell&quot;</div><div class="line">echo &quot;jenkins WORKSPACE:&quot;$WORKSPACE</div><div class="line">currentUser=`whoami`</div><div class="line">echo &quot;currentUser:&quot;$currentUser</div><div class="line"></div><div class="line"># 测试Java的可用性</div><div class="line">java -version</div><div class="line"></div><div class="line"># 测试Maven的可用性</div><div class="line">mvn -version</div><div class="line"></div><div class="line"># 测试Docker的可用性</div><div class="line">docker version</div></pre></td></tr></table></figure>
+<p>控制台日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">Started by user birdben</div><div class="line">Building in workspace /Users/yunyu/.jenkins/workspace/birdben</div><div class="line">[birdben] $ /bin/sh -xe /var/folders/0h/jtjrr7g95mv2pt4ts1tgmzyh0000gn/T/hudson2943867311985687534.sh</div><div class="line">+ echo &apos;execute shell&apos;</div><div class="line">execute shell</div><div class="line">+ echo &apos;jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben&apos;</div><div class="line">jenkins WORKSPACE:/Users/yunyu/.jenkins/workspace/birdben</div><div class="line">++ whoami</div><div class="line">+ currentUser=yunyu</div><div class="line">+ echo currentUser:yunyu</div><div class="line">currentUser:yunyu</div><div class="line">+ java -version</div><div class="line">java version &quot;1.7.0_79&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</div><div class="line">+ mvn -version</div><div class="line">Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)</div><div class="line">Maven home: /Users/yunyu/apache-maven-3.3.9</div><div class="line">Java version: 1.7.0_79, vendor: Oracle Corporation</div><div class="line">Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre</div><div class="line">Default locale: zh_CN, platform encoding: UTF-8</div><div class="line">OS name: &quot;mac os x&quot;, version: &quot;10.11.5&quot;, arch: &quot;x86_64&quot;, family: &quot;mac&quot;</div><div class="line">+ docker version</div><div class="line">Client:</div><div class="line"> Version:      1.12.1</div><div class="line"> API version:  1.24</div><div class="line"> Go version:   go1.7.1</div><div class="line"> Git commit:   6f9534c</div><div class="line"> Built:        Thu Sep  8 10:31:18 2016</div><div class="line"> OS/Arch:      darwin/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> Version:      1.12.1</div><div class="line"> API version:  1.24</div><div class="line"> Go version:   go1.6.3</div><div class="line"> Git commit:   23cf638</div><div class="line"> Built:        Thu Aug 18 17:52:38 2016</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line">Finished: SUCCESS</div></pre></td></tr></table></figure>
+<h4 id="Ubuntu环境"><a href="#Ubuntu环境" class="headerlink" title="Ubuntu环境"></a>Ubuntu环境</h4><p>因为我本机是Mac环境，但是我们公司的测试服务器是Ubuntu环境，所以也在Ubuntu环境下尝试了jenkins用户使用docker命令，但是发现报错如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cannot connect to the Docker daemon. Is the docker daemon running on this host?</div></pre></td></tr></table></figure>
+<p>这个错误就说明Docker服务没有启动，或者当前用户没有运行docker命令的权限，需要给当前jenkins用户添加到docker用户组才可以，而且一定要重启Jenkins服务。（之前我就是因为没重启Jenkins服务，导致一直误以为将jenkins用户添加到docker用户组也不好用）</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Jenknis用于自动化构建部署还是很方便的，而且可以自己编写Shell十分灵活，也容易维护。目前公司测试环境使用Jenkins部署Docker十分方便，可以同时部署多个Docker容器，而且不需要自己运行Shell脚本，哈哈</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://jenkins.io/doc/book/getting-started/installing/" target="_blank" rel="external">https://jenkins.io/doc/book/getting-started/installing/</a></li>
+<li><a href="http://www.cnblogs.com/Leo_wl/p/4314792.html" target="_blank" rel="external">http://www.cnblogs.com/Leo_wl/p/4314792.html</a></li>
+<li><a href="http://blog.163.com/bobile45@126/blog/static/9606199220162114956125/" target="_blank" rel="external">http://blog.163.com/bobile45@126/blog/static/9606199220162114956125/</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins环境/">Jenkins环境</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maven配置/">Maven配置</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Jenkins/">Jenkins</a>
 	</div>
 
 

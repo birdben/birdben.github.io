@@ -169,134 +169,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 
       <div class="body-wrap">
   
-    <article id="post-Flume/Flume学习（七）Flume整合Elasticsearch2.x" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/27/Flume/Flume学习（七）Flume整合Elasticsearch2.x/" class="article-date">
-  	<time datetime="2016-08-27T08:17:39.000Z" itemprop="datePublished">2016-08-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/27/Flume/Flume学习（七）Flume整合Elasticsearch2.x/">Flume学习（七）Flume整合Elasticsearch2.x</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="环境简介"><a href="#环境简介" class="headerlink" title="环境简介"></a>环境简介</h3><ul>
-<li>JDK1.7.0_79</li>
-<li>Flume1.6.0</li>
-<li>Elasticsearch2.0.0</li>
-</ul>
-<h3 id="Flume不支持Elasticsearch2-x版本"><a href="#Flume不支持Elasticsearch2-x版本" class="headerlink" title="Flume不支持Elasticsearch2.x版本"></a>Flume不支持Elasticsearch2.x版本</h3><p>目前官方Flume最新的版本是1.6.0，该版本只支持Elasticsearch1.7.x的版本，暂时不支持Elasticsearch2.x版本，因为Elasticsearch2.x版本做了比较大的改动，很多API都已经废弃不用了，具体可以参考下面的连接</p>
-<ul>
-<li><a href="https://github.com/elastic/elasticsearch/issues/14187">https://github.com/elastic/elasticsearch/issues/14187</a></li>
-</ul>
-<h3 id="第三方ElasticsearchSink2支持2-x版本"><a href="#第三方ElasticsearchSink2支持2-x版本" class="headerlink" title="第三方ElasticsearchSink2支持2.x版本"></a>第三方ElasticsearchSink2支持2.x版本</h3><p>这里我找到了一个第三方开源的FlumeSink插件来支持Elasticsearch2.x版本</p>
-<ul>
-<li><a href="https://github.com/lucidfrontier45/ElasticsearchSink2">https://github.com/lucidfrontier45/ElasticsearchSink2</a></li>
-</ul>
-<p>但是这个项目是使用Gradle编译打包的，所以下面先简单介绍下Gradle的安装和使用</p>
-<p>我这里使用的Mac，所以安装Gradle很简单。但是Gradle是依赖于JVM的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ brew install gradle</div><div class="line">$ gradle -v</div></pre></td></tr></table></figure>
-<p>然后从github下载ElasticsearchSink2的源代码，并且导入到idea中，然后执行下面gradle命令构建项目（下面这两个脚本是ElasticsearchSink2项目自带的），会在ElasticsearchSink2/build/libs/目录下生成对应的jar包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 构建标准的jar包</div><div class="line">$ ./gradlew build</div><div class="line"></div><div class="line"># 构建包含Elasticsearch依赖的jar包</div><div class="line">$ ./gradlew assembly</div></pre></td></tr></table></figure>
-<p>添加刚才构建好的elasticsearch-sink2-1.0.jar到Flume的classpath或者是Flume的lib目录，删除Flume的lib目录下的guava-<em>.jar，jackson-core-</em>.jar。</p>
-<h3 id="具体的配置文件"><a href="#具体的配置文件" class="headerlink" title="具体的配置文件"></a>具体的配置文件</h3><h4 id="Flume-Collector端的flume-collector-es2-conf配置"><a href="#Flume-Collector端的flume-collector-es2-conf配置" class="headerlink" title="Flume Collector端的flume_collector_es2.conf配置"></a>Flume Collector端的flume_collector_es2.conf配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">agentX.sources = flume-avro-sink</div><div class="line">agentX.channels = chX</div><div class="line">agentX.sinks = flume-es-sink</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.channels = chX</div><div class="line">agentX.sources.flume-avro-sink.type = avro</div><div class="line">agentX.sources.flume-avro-sink.bind = 127.0.0.1</div><div class="line">agentX.sources.flume-avro-sink.port = 41414</div><div class="line">agentX.sources.flume-avro-sink.threads = 8</div><div class="line">agentX.sources.flume-avro-sink.interceptors = es_interceptor</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.type = regex_extractor</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;([^,^\&quot;]+)\&quot;:\&quot;([^:^\&quot;]+)\&quot;)|(\&quot;([^,^\&quot;]+)\&quot;:([\\d]+))</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\\d):(\\d):(\\d):(\\d):(\\d):(\\d)</div><div class="line"></div><div class="line"># mapping不正确没有匹配成功</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (TIME:(.*?)),(HOSTNAME:(.*?)),(LI:(.*?)),(LU:(.*?)),(NU:(.*?)),(CMD:(.*?))</div><div class="line"># mapping正确，数据匹配不正确包含了多余的字段名</div><div class="line">#agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = (\&quot;TIME\&quot;:(.*?)),(\&quot;HOSTNAME\&quot;:(.*?)),(\&quot;LI\&quot;:(.*?)),(\&quot;LU\&quot;:(.*?)),(\&quot;NU\&quot;:(.*?)),(\&quot;CMD\&quot;:(.*?))</div><div class="line"># mapping正确，数据也正确（&#123;&#125;需要转义，转义符是\\）</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.regex = &quot;TIME&quot;:(.*?),&quot;HOSTNAME&quot;:(.*?),&quot;LI&quot;:(.*?),&quot;LU&quot;:(.*?),&quot;NU&quot;:(.*?),&quot;CMD&quot;:(.*?)</div><div class="line"></div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers = s1 s2 s3 s4 s5 s6</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s1.name = aaa</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s2.name = bbb</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s3.name = s3</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s4.name = s4</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s5.name = s5</div><div class="line">agentX.sources.flume-avro-sink.interceptors.es_interceptor.serializers.s6.name = s6</div><div class="line"></div><div class="line">agentX.channels.chX.type = memory</div><div class="line">agentX.channels.chX.capacity = 1000</div><div class="line">agentX.channels.chX.transactionCapacity = 100</div><div class="line"></div><div class="line">agentX.sinks.flume-es-sink.channel = chX</div><div class="line">agentX.sinks.flume-es-sink.type = com.frontier45.flume.sink.elasticsearch2.ElasticSearchSink</div><div class="line"># 每个事务写入多少个Event</div><div class="line">agentX.sinks.flume-es-sink.batchSize = 100</div><div class="line">agentX.sinks.flume-es-sink.hostNames = 127.0.0.1:9300</div><div class="line"># 注意：indexName必须小写</div><div class="line">agentX.sinks.flume-es-sink.indexName = command_index</div><div class="line">agentX.sinks.flume-es-sink.indexType = logs</div><div class="line">agentX.sinks.flume-es-sink.clusterName = ben-es</div><div class="line"># ttl 的时间，过期了会自动删除文档，如果没有设置则永不过期，ttl使用integer或long型，单位可以是：ms (毫秒), s (秒), m (分), h (小时), d (天) and w (周)。例如：a1.sinks.k1.ttl = 5d则表示5天后过期。这里没用到</div><div class="line"># agentX.sinks.flume-es-sink.ttl = 5d</div><div class="line">agentX.sinks.flume-es-sink.serializer = com.frontier45.flume.sink.elasticsearch2.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
-<h4 id="flume-collector-es2-conf这里的配置需要修改"><a href="#flume-collector-es2-conf这里的配置需要修改" class="headerlink" title="flume_collector_es2.conf这里的配置需要修改"></a>flume_collector_es2.conf这里的配置需要修改</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sink.type = com.frontier45.flume.sink.elasticsearch2.ElasticSearchSink</div><div class="line">sink.serializer = com.frontier45.flume.sink.elasticsearch2.ElasticSearchLogStashEventSerializer</div></pre></td></tr></table></figure>
-<h4 id="Flume-Agent端的flume-agent-file-conf配置"><a href="#Flume-Agent端的flume-agent-file-conf配置" class="headerlink" title="Flume Agent端的flume_agent_file.conf配置"></a>Flume Agent端的flume_agent_file.conf配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">agent3.sources = command-logfile-source</div><div class="line">agent3.channels = ch3</div><div class="line">agent3.sinks = flume-avro-sink</div><div class="line"></div><div class="line">agent3.sources.command-logfile-source.channels = ch3</div><div class="line">agent3.sources.command-logfile-source.type = exec</div><div class="line">agent3.sources.command-logfile-source.command = tail -F /Users/yunyu/Downloads/command.log</div><div class="line"></div><div class="line">agent3.channels.ch3.type = memory</div><div class="line">agent3.channels.ch3.capacity = 1000</div><div class="line">agent3.channels.ch3.transactionCapacity = 100</div><div class="line"></div><div class="line">agent3.sinks.flume-avro-sink.channel = ch3</div><div class="line">agent3.sinks.flume-avro-sink.type = avro</div><div class="line">agent3.sinks.flume-avro-sink.hostname = 127.0.0.1</div><div class="line">agent3.sinks.flume-avro-sink.port = 41414</div></pre></td></tr></table></figure>
-<h4 id="启动ES服务"><a href="#启动ES服务" class="headerlink" title="启动ES服务"></a>启动ES服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/elasticseach -d</div></pre></td></tr></table></figure>
-<h4 id="启动Flume-Collector端"><a href="#启动Flume-Collector端" class="headerlink" title="启动Flume Collector端"></a>启动Flume Collector端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_collector_es2.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
-<h4 id="启动Flume-Agent端"><a href="#启动Flume-Agent端" class="headerlink" title="启动Flume Agent端"></a>启动Flume Agent端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./bin/flume-ng agent --conf ./conf/ -f conf/flume_agent_file.conf -Dflume.root.logger=DEBUG,console -n agentX</div></pre></td></tr></table></figure>
-<p>启动Flume Agent可能会遇到如下的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2016-08-27 14:25:58,045 (lifecycleSupervisor-1-1) [ERROR - org.apache.flume.lifecycle.LifecycleSupervisor$MonitorRunnable.run(LifecycleSupervisor.java:253)] Unable to start SinkRunner: &#123; policy:org.apache.flume.sink.DefaultSinkProcessor@76d45adb counterGroup:&#123; name:null counters:&#123;&#125; &#125; &#125; - Exception follows.</div><div class="line">java.lang.NoSuchFieldError: LUCENE_5_3_1</div><div class="line">	at org.elasticsearch.Version.&lt;clinit&gt;(Version.java:279)</div><div class="line">	at org.elasticsearch.client.transport.TransportClient$Builder.build(TransportClient.java:131)</div><div class="line">	at com.frontier45.flume.sink.elasticsearch2.client.ElasticSearchTransportClient.openClient(ElasticSearchTransportClient.java:198)</div></pre></td></tr></table></figure>
-<p>出现上面的错误是因为lucene的版本不对，这里我开始尝试安装的是下面的几个版本：</p>
-<ul>
-<li>Elasticsearch-2.2.2：没有选择Elasticsearch-2.2.2版本是因为ik分词插件没有对应的版本</li>
-<li>Elasticsearch-2.2.1：没有选择Elasticsearch-2.2.1版本是因为报错没有找到LUCENE_5_3_1对应的Lucene-5.3.1版本，但是这里下载Elasticsearch-2.2.1版本中的jar包依赖的是Lucene-5.4.1版本，所以找不到Lucene-5.3.1版本。这里可能是因为ElasticsearchSink2的问题，暂时先换成ElasticsearchSink2使用的2.0.0版本，后续在尝试单独升级Lucene-5.4.1试试。</li>
-<li>Elasticsearch-2.0.0：ElasticsearchSink2使用的此版本</li>
-</ul>
-<p>检查一下ES源码的pom文件就可以知道ES和Lucene的版本对应关系如下：</p>
-<table>
-<thead>
-<tr>
-<th>ES版本</th>
-<th>Lucene版本</th>
-<th>ik插件版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Elasticsearch-2.2.2</td>
-<td>Lucene-5.4.1</td>
-<td>无</td>
-</tr>
-<tr>
-<td>Elasticsearch-2.2.1</td>
-<td>Lucene-5.4.1</td>
-<td>1.8.1</td>
-</tr>
-<tr>
-<td>Elasticsearch-2.0.0</td>
-<td>Lucene-5.2.1</td>
-<td>1.5.0</td>
-</tr>
-</tbody>
-</table>
-<h4 id="检查ES的索引数据"><a href="#检查ES的索引数据" class="headerlink" title="检查ES的索引数据"></a>检查ES的索引数据</h4><p>如下图所示，ES的mapping和索引数据都正确，说明我们使用ElasticsearchSink2的方式成功将Flume1.6.0采集的command.log日志数据写入到Elasticsearch2.0.0版本里</p>
-<p><img src="http://img.blog.csdn.net/20160827161437043?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mapping"></p>
-<p><img src="http://img.blog.csdn.net/20160827161523009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="data"></p>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://github.com/lucidfrontier45/ElasticsearchSink2">https://github.com/lucidfrontier45/ElasticsearchSink2</a></li>
-<li><a href="https://github.com/elastic/elasticsearch/issues/14187">https://github.com/elastic/elasticsearch/issues/14187</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/">Flume</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Log/">Log</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Flume/Flume学习（六）Flume整合Elasticsearch1.x" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1156,6 +1028,101 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Java/">Java</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Git/Git常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/20/Git/Git常用命令/" class="article-date">
+  	<time datetime="2016-08-20T15:25:38.000Z" itemprop="datePublished">2016-08-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/20/Git/Git常用命令/">Git常用命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Git区域划分"><a href="#Git区域划分" class="headerlink" title="Git区域划分"></a>Git区域划分</h3><p>在介绍git命令之前，我们先简单了解下git的区域划分，这样有帮助于理解git的命令，可以将git简单的分为三个区域</p>
+<ol>
+<li>工作区（working directry） </li>
+<li>暂缓区（stage index） </li>
+<li>历史记录区（history）   </li>
+</ol>
+<p><img src="http://img.blog.csdn.net/20170226112829569?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmlyZGJlbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="我的Git区域理解"></p>
+<p><img src="http://img.blog.csdn.net/20170306113102274?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmlyZGJlbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Git reset图"></p>
+<p><img src="http://img.blog.csdn.net/20170304175910462?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmlyZGJlbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Git diff图"></p>
+<p><img src="http://img.blog.csdn.net/20160820133106483?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Git区域的理解"></p>
+<p><img src="http://img.blog.csdn.net/20160820133129026?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Git区域的理解1"></p>
+<h3 id="Git-基础命令"><a href="#Git-基础命令" class="headerlink" title="Git 基础命令"></a>Git 基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># 本地初始化一个空的本地Git repository in /.git目录</div><div class="line">$ git init</div><div class="line"></div><div class="line"># 查看当前文件的状态</div><div class="line">$ git status</div><div class="line"></div><div class="line"># 添加文件README.md到index暂缓区（就是告诉git要开始记录跟踪README.md文件的修改记录）</div><div class="line">$ git add README.md</div><div class="line">$ git add &apos;*.md&apos;</div><div class="line"></div><div class="line"># index暂缓区的文件还没存储到本地的Git repository，需要commit提交index暂缓区的文件到本地的Git repository</div><div class="line">$ git commit -m &quot;init&quot;</div><div class="line"></div><div class="line"># 在github服务器上创建一个新的远程Git repository，通过git remote add命令给本地的Git repository添加远程Git repository的提交地址，然后git push把本地已经commit的代码推送到远程的Git repository</div><div class="line">$ git remote add origin https://github.com/birdben/birdGit.git</div><div class="line"># -u参数是告诉git记住参数，下次就可以使用git push命令来提交到远程Git repository</div><div class="line">$ git push -u origin master</div><div class="line"></div><div class="line">$ 将本地的commit提交push到master分支</div><div class="line">$ git push origin master</div><div class="line"></div><div class="line">$ 将本地的commit提交push到develop分支</div><div class="line">$ git push origin develop</div><div class="line"></div><div class="line"># 从远端的master分支pull最新的代码到本地的Git repository</div><div class="line">$ git pull origin master</div><div class="line"></div><div class="line"># 从远端的develop分支pull最新的代码到本地的Git repository</div><div class="line">$ git pull origin develop</div></pre></td></tr></table></figure>
+<h3 id="Git-比较相关命令"><a href="#Git-比较相关命令" class="headerlink" title="Git 比较相关命令"></a>Git 比较相关命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 查看当前没有add的内容的修改</div><div class="line"># 此命令比较的是工作目录(Working tree)和暂存区域快照(index)之间的差异</div><div class="line">$ git diff</div><div class="line"></div><div class="line"># 只查看哪些文件做了修改的简单结果，不查看具体的修改内容可以使用--stat参数</div><div class="line">$ git diff --stat</div><div class="line"></div><div class="line"># 查看已经add但没有commit的修改</div><div class="line"># 查看已经暂存起来的文件(index)和上次提交时的快照之间(HEAD)的差异</div><div class="line">$ git diff --cached</div><div class="line">$ git diff --staged</div><div class="line"></div><div class="line"># 上面两条的合并</div><div class="line"># 显示工作版本(Working tree)和HEAD的差别</div><div class="line">$ git diff HEAD</div><div class="line"></div><div class="line"># 查看当前目录和另外一个分支的差别</div><div class="line">$ git diff new_branch</div><div class="line"></div><div class="line"># 指定两个版本比较src文件夹的修改</div><div class="line">$ git diff SHA1 SHA2</div></pre></td></tr></table></figure>
+<h3 id="Git-查看历史相关命令"><a href="#Git-查看历史相关命令" class="headerlink" title="Git 查看历史相关命令"></a>Git 查看历史相关命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 查看已经commit的历史记录</div><div class="line">$ git log</div><div class="line"></div><div class="line">commit a3f3ce4ff543e34fc36fb46d7f71ec444c18b9a3</div><div class="line">Author: liuben &lt;191654006@163.com&gt;</div><div class="line">Date:   Thu Aug 18 16:11:05 2016 +0800</div><div class="line"></div><div class="line">添加推荐网址</div><div class="line"></div><div class="line">commit 128da6083a1d10d540dced91732ea04165810bba</div><div class="line">Author: liuben &lt;191654006@163.com&gt;</div><div class="line">Date:   Thu Aug 18 15:17:57 2016 +0800</div><div class="line"></div><div class="line">init</div><div class="line"></div><div class="line"># 只查看最后一次的commit修改的注释</div><div class="line">$ git log -n 1</div><div class="line"></div><div class="line"># 只查看最后一次的commit修改的文件列表</div><div class="line">$ git log -n 1 --stat</div><div class="line"></div><div class="line"># 只查看最后一次的commit修改的文件细节</div><div class="line">$ git log -n 1 -p</div></pre></td></tr></table></figure>
+<h3 id="Git-回滚相关"><a href="#Git-回滚相关" class="headerlink" title="Git 回滚相关"></a>Git 回滚相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">###### git checkout(working tree内的回滚) ######</div><div class="line"># git checkout : 把index区域中的文件覆盖working tree中的文件</div><div class="line"></div><div class="line"># 回滚单个文件</div><div class="line">$ git checkout file1</div><div class="line"></div><div class="line"># 回滚多个文件，中间用空格隔开即可</div><div class="line">$ git checkout file1 file2 ... fileN</div><div class="line"></div><div class="line"># 回滚当前目录一下的所有working tree内的修改，会递归扫描当前目录下的所有子目录</div><div class="line">$ git checkout .</div><div class="line"></div><div class="line"></div><div class="line"># git checkout HEAD : 会用HEAD指向的master分支中的全部或者部分文件替换index暂存区和以及working tree工作区中的文件。这个命令也是极具危险性的，因为不但会清除working tree工作区中未提交的改动，也会清除index暂存区中未提交的改动 </div><div class="line"></div><div class="line"># 回滚单个文件</div><div class="line">$ git checkout HEAD file1</div><div class="line"></div><div class="line"># 回滚多个文件，中间用空格隔开即可</div><div class="line">$ git checkout HEAD file1 file2 ... fileN</div><div class="line"></div><div class="line"># 回滚当前目录一下的所有working tree内的修改，会递归扫描当前目录下的所有子目录</div><div class="line">$ git checkout HEAD .</div><div class="line"></div><div class="line"></div><div class="line">###### git reset(index内的回滚) ######</div><div class="line"># git reset语法（&lt;commit&gt;必须是没有push到remote端的）</div><div class="line">git reset [-q] [&lt;commit&gt;] [--] &lt;paths&gt;…</div><div class="line">git reset (--patch | -p) [&lt;commit&gt;] [--] [&lt;paths&gt;…]</div><div class="line">git reset (--soft | --mixed | --hard | --merge | --keep) [-q] [&lt;commit&gt;或HEAD]</div><div class="line"></div><div class="line"># 将index区域中修改过的文件移除index，也就是恢复到working tree中</div><div class="line"># 文件被恢复到working tree中，回滚操作就是上面提到的git checkout</div><div class="line"># 回滚单个文件，相当于git add file1的反命令</div><div class="line">$ git reset file1</div><div class="line"></div><div class="line"># 回滚某一个目录，相当于git add .的反命令</div><div class="line">$ git reset .</div><div class="line"></div><div class="line"></div><div class="line">###### git reset(commit之后的回滚（HEAD内的回滚）) ######</div><div class="line"># 修改前一次的提交，并且保持前一次的Change-Id不变（推荐使用）</div><div class="line"># 直接本地修改好上一次commit的文件，再次add，使用commit --amend提交，修改注释即可修改上一次的提交</div><div class="line">$ git commit --amend</div><div class="line"></div><div class="line"># 回滚到某个版本，只回滚了HEAD的信息，不会恢复到index一级。如果还要提交未commit的文件，直接commit即可</div><div class="line"># 参数是git log中每次commit的ID</div><div class="line">$ git reset --soft cb0c40643afa791ea2c7905318cf17b4eac4bce5</div><div class="line"></div><div class="line"># 此为默认方式，不带任何参数的git reset，即时这种方式，它回滚到某个版本，只保留working tree中文件的源码，回滚了HEAD和index的信息</div><div class="line"># 参数是git log中每次commit的ID</div><div class="line">$ git reset --mixed cb0c40643afa791ea2c7905318cf17b4eac4bce5</div><div class="line"></div><div class="line"># 彻底回滚到某个版本，本地working tree的源码也会变为上一个版本的内容</div><div class="line"># 参数是git log中每次commit的ID</div><div class="line">$ git reset --hard cb0c40643afa791ea2c7905318cf17b4eac4bce5</div><div class="line"></div><div class="line"></div><div class="line">###### merge回滚的文件和本地working tree文件 ######</div><div class="line">$ git reset --merge cb0c40643afa791ea2c7905318cf17b4eac4bce5</div><div class="line"></div><div class="line"></div><div class="line"># 下面是git help给出的提示，很清晰的写明会回滚的区域</div><div class="line">--mixed               reset HEAD and index</div><div class="line">--soft                reset only HEAD</div><div class="line">--hard                reset HEAD, index and working tree</div><div class="line">--merge               reset HEAD, index and working tree</div><div class="line"></div><div class="line"></div><div class="line">###### git revert ######</div><div class="line"># 回滚到某一次的commit，但是如果本地working tree有修改需要先merge，然后重新add到index区，再执行git revert --continue回滚到指定版本，同时编辑本地回滚的commit的注释，然后在查看git log就会发现多了一次commit信息，add的文件出现了之前版本的内容修改，需要重新merge在提交</div><div class="line"></div><div class="line"># 回滚到某一次的commit</div><div class="line">$ git revert cb0c40643afa791ea2c7905318cf17b4eac4bce5</div><div class="line"></div><div class="line"># merge完本地working tree中的文件内容重新add并且revert continue</div><div class="line">$ git add file1</div><div class="line">$ git revert --continue</div><div class="line"></div><div class="line"># 查看提交历史记录会发现多了一条revert的记录</div><div class="line">$ git log</div><div class="line"></div><div class="line"></div><div class="line">###### reset和revert的区别 ######</div><div class="line">git reset : git reset是指向原地或者向前移动指针，之前的commit信息会被删除</div><div class="line">git revert : git revert是创建一个commit来覆盖当前的commit，指针向后移动，之前的commit信息会被保留</div></pre></td></tr></table></figure>
+<h3 id="Git-branch-分支"><a href="#Git-branch-分支" class="headerlink" title="Git branch 分支"></a>Git branch 分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"># 查看当前有哪些分支</div><div class="line">$ git branch</div><div class="line"></div><div class="line">* master</div><div class="line"></div><div class="line"># 新建一个分支new_branch</div><div class="line">$ git branch new_branch</div><div class="line"></div><div class="line"># 切换到new_branch分支</div><div class="line">$ git checkout new_branch</div><div class="line"></div><div class="line"># 新建并且切换到该分支, 例: new_branch</div><div class="line">$ git checkout -b new_branch</div><div class="line"></div><div class="line"># 再次查看</div><div class="line">$ git branch</div><div class="line"></div><div class="line">* master </div><div class="line">  new_branch</div><div class="line"></div><div class="line"># 添加一个文件testBranch到你的repo</div><div class="line">$ git add testBranch</div><div class="line"></div><div class="line"># commit一个文件</div><div class="line">$ git commit -m &quot;testBranch&quot;</div><div class="line"></div><div class="line"># 将本地分支提交到远程，如果remote_branch不存在则会自动创建分支</div><div class="line">$ git push origin local_branch:remote_branch</div><div class="line">$ git push origin new_branch:new_branch</div><div class="line"></div><div class="line"># 查看远程分支</div><div class="line">$ git branch -r</div><div class="line"></div><div class="line">  remotes/origin/master</div><div class="line">  remotes/origin/new_branch</div><div class="line"></div><div class="line"># 查看本地和远程所有的分支</div><div class="line">$ git branch -a</div><div class="line"></div><div class="line">  master</div><div class="line">* new_branch</div><div class="line">  remotes/origin/master</div><div class="line">  remotes/origin/new_branch</div><div class="line"></div><div class="line"># 修改branch的名字</div><div class="line">$ git branch -m new_branch rename_branch</div><div class="line">$ git branch -a</div><div class="line"></div><div class="line">  master</div><div class="line">* rename_branch</div><div class="line">  remotes/origin/master</div><div class="line">  remotes/origin/new_branch</div><div class="line">  </div><div class="line"># 删除本地分支（删除new_branch之前必须要切换到别的分支上）</div><div class="line">$ git branch -d new_branch</div><div class="line"># 如果new_branch没有合并到当前master分支的内容，需要使用-D参数强制删除</div><div class="line">$ git branch -D new_branch</div><div class="line">$ git branch -a</div><div class="line"></div><div class="line">* master</div><div class="line">  remotes/origin/master</div><div class="line">  remotes/origin/new_branch</div><div class="line"></div><div class="line"># 删除远程分支new_branch</div><div class="line">$ git push origin --delete new_branch</div><div class="line">$ git push origin  :new_branch</div><div class="line">$ git branch -a</div><div class="line"></div><div class="line">* master</div><div class="line">  remotes/origin/master</div><div class="line">  </div><div class="line"># 关联远程分支和本地分支</div><div class="line"></div><div class="line">使用场景: 本地新建一个分支后，必须要做远程分支关联。如果没有关联，git会在下面的操作中提示你显示的添加关联。关联目的是如果在本地分支下操作：git pull, git push，不需要指定在命令行指定远程的分支。</div><div class="line"></div><div class="line"># 新建分支my_branch</div><div class="line">$ git branch my_branch</div><div class="line"># 将新分支my_branch提交到远程</div><div class="line">$ git push origin my_branch</div><div class="line">$ git pull</div><div class="line">There is no tracking information for the current branch.</div><div class="line">Please specify which branch you want to merge with.</div><div class="line">See git-pull(1) for details.</div><div class="line"></div><div class="line">    git pull &lt;remote&gt; &lt;branch&gt;</div><div class="line"></div><div class="line">If you wish to set tracking information for this branch you can do so with:</div><div class="line"></div><div class="line">    git branch --set-upstream-to=origin/&lt;branch&gt; my_branch</div><div class="line"></div><div class="line"># 将本地的my_branch分支与远程的my_branch关联</div><div class="line">$ git branch --set-upstream my_branch origin/my_branch</div><div class="line"></div><div class="line"># 该语法等价与在第一次提交分支时，使用git push -u origin my_branch</div><div class="line"># 通常我们在新建分支的时候，一定要显式建立这种联系。</div></pre></td></tr></table></figure>
+<h3 id="Git-合并分支"><a href="#Git-合并分支" class="headerlink" title="Git 合并分支"></a>Git 合并分支</h3><p>首先切换到想要合并到的分支下，运行’git merge’命令 （例如本例中将test2分支合并到test3分支的话，进入test3分支运行git merge test2命令）如果合并顺利的话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"># 创建test2分支</div><div class="line">$ git branch test2</div><div class="line"># 在test2分支中创建test文件，并且提交到test2分支</div><div class="line">$ git add test</div><div class="line">$ git commit -m &quot;提交test2&quot;</div><div class="line"></div><div class="line"># 创建test3分支</div><div class="line">$ git branch test3</div><div class="line"># 在test3分支中创建test文件，并且提交到test3分支</div><div class="line">$ git add test</div><div class="line">$ git commit -m &quot;提交test3&quot;</div><div class="line"></div><div class="line"># 确保当前分支为test3</div><div class="line">$ git status</div><div class="line"></div><div class="line">$ git branch -a</div><div class="line"></div><div class="line">  master</div><div class="line">  test2</div><div class="line">* test3</div><div class="line">  remotes/origin/master</div><div class="line"></div><div class="line"># merge分支，如果没有文件冲突就会自动合并成功，如果存在合并冲突需要手动merge处理</div><div class="line">$ git merge test2</div><div class="line"></div><div class="line">Already up-to-date. </div><div class="line"></div><div class="line"># 合并冲突处理：</div><div class="line">Automatic merge failed; fix conflicts and then commit the result.</div><div class="line"></div><div class="line"># 修改冲突的文件后，然后git add和git commit，这样就将本地的test2分支merge到test3分支了</div><div class="line">$ git add test</div><div class="line">$ git commit</div><div class="line"></div><div class="line"># 然后将本地test3分支push到远程</div><div class="line">$ git push origin test3:test3</div><div class="line">$ git branch -a</div><div class="line"></div><div class="line">  master</div><div class="line">  test2</div><div class="line">* test3</div><div class="line">  remotes/origin/master</div><div class="line">  remotes/origin/test3</div><div class="line">  </div><div class="line"># 本地的test2分支如果没有用就可以删除了</div><div class="line">$ git branch -d test2</div><div class="line"></div><div class="line">  master</div><div class="line">* test3</div><div class="line">  remotes/origin/master</div><div class="line">  remotes/origin/test3</div><div class="line"></div><div class="line"># 也可以merge远程分支test3到本地分支test2(当前是test2分支的目录)</div><div class="line">$ git merge origin/test3</div></pre></td></tr></table></figure>
+<h3 id="实际应用合并分支举例"><a href="#实际应用合并分支举例" class="headerlink" title="实际应用合并分支举例"></a>实际应用合并分支举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 创建分支后，开发完成，切换到需要提交的分支比如develop</div><div class="line">$ git checkout develop</div><div class="line">$ git pull origin develop</div><div class="line"></div><div class="line"># 将本地创建的分支进行合并</div><div class="line">$ git merge localbranch</div><div class="line"></div><div class="line"># 提交到develop分支</div><div class="line">$ git push origin develop</div><div class="line"></div><div class="line"># 将本地分支提交到远程仓库作为一个新的版本</div><div class="line">$ git push origin localbranch</div></pre></td></tr></table></figure>
+<p>适合git初学者使用：</p>
+<ul>
+<li><a href="https://try.github.io/levels/1/challenges/1" target="_blank" rel="external">https://try.github.io/levels/1/challenges/1</a></li>
+<li><a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank" rel="external">http://rogerdudler.github.io/git-guide/index.zh.html</a></li>
+</ul>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://jonyfang.com/blog/2015/11/12/git_command_and_git_branching_model/" target="_blank" rel="external">http://jonyfang.com/blog/2015/11/12/git_command_and_git_branching_model/</a></li>
+<li><a href="http://www.jianshu.com/p/08ad7e427fec" target="_blank" rel="external">http://www.jianshu.com/p/08ad7e427fec</a></li>
+<li><a href="http://blog.csdn.net/wirelessqa/article/category/1522507" target="_blank" rel="external">http://blog.csdn.net/wirelessqa/article/category/1522507</a></li>
+<li><a href="http://selfcontroller.iteye.com/blog/1786644" target="_blank" rel="external">http://selfcontroller.iteye.com/blog/1786644</a></li>
+<li><a href="http://www.cnblogs.com/highriver/archive/2011/12/09/2282683.html" target="_blank" rel="external">http://www.cnblogs.com/highriver/archive/2011/12/09/2282683.html</a></li>
+<li><a href="http://blog.jobbole.com/22647/" target="_blank" rel="external">http://blog.jobbole.com/22647/</a></li>
+<li><a href="http://www.tuicool.com/articles/NzeQZz3" target="_blank" rel="external">http://www.tuicool.com/articles/NzeQZz3</a></li>
+<li><a href="http://gitbook.liuhui998.com/4_2.html" target="_blank" rel="external">http://gitbook.liuhui998.com/4_2.html</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git命令/">Git命令</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Git/">Git</a>
 	</div>
 
 

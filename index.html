@@ -169,253 +169,6 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 
       <div class="body-wrap">
   
-    <article id="post-JVM/JVM常用命令学习（三）jmap的使用" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/07/JVM/JVM常用命令学习（三）jmap的使用/" class="article-date">
-  	<time datetime="2017-05-07T10:48:14.000Z" itemprop="datePublished">2017-05-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: “JVM常用命令学习（三）jmap的使用”<br>date: 2017-02-10 20:55:19<br>tags: [JVM]</p>
-<h2 id="categories-Java"><a href="#categories-Java" class="headerlink" title="categories: [Java]"></a>categories: [Java]</h2><h3 id="Java环境说明"><a href="#Java环境说明" class="headerlink" title="Java环境说明"></a>Java环境说明</h3><p>注意：不同版本的JDK可能略有差异</p>
-<pre><code>$ java -version
-java version &quot;1.7.0_79&quot;
-Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
-Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
-</code></pre><h3 id="jmap命令"><a href="#jmap命令" class="headerlink" title="jmap命令"></a>jmap命令</h3><p>jmap (Java Memory Map) 用于生成虚拟机的内存快照信息。说白了就是根据Java进程（pid）打印出这个Java进程内存的所有’对象’的情况（如：产生哪些对象，及其数量）</p>
-<pre><code>$ jmap -help
-Usage:
-    jmap [option] &lt;pid&gt;
-        (to connect to running process)
-    jmap [option] &lt;executable &lt;core&gt;
-        (to connect to a core file)
-    jmap [option] [server_id@]&lt;remote server IP or hostname&gt;
-        (to connect to remote debug server)
-
-where &lt;option&gt; is one of:
-    &lt;none&gt;               to print same info as Solaris pmap
-    -heap                to print java heap summary
-    -histo[:live]        to print histogram of java object heap; if the &quot;live&quot;
-                         suboption is specified, only count live objects
-    -permstat            to print permanent generation statistics
-    -finalizerinfo       to print information on objects awaiting finalization
-    -dump:&lt;dump-options&gt; to dump java heap in hprof binary format
-                         dump-options:
-                           live         dump only live objects; if not specified,
-                                        all objects in the heap are dumped.
-                           format=b     binary format
-                           file=&lt;file&gt;  dump heap to &lt;file&gt;
-                         Example: jmap -dump:live,format=b,file=heap.bin &lt;pid&gt;
-    -F                   force. Use with -dump:&lt;dump-options&gt; &lt;pid&gt; or -histo
-                         to force a heap dump or histogram when &lt;pid&gt; does not
-                         respond. The &quot;live&quot; suboption is not supported
-                         in this mode.
-    -h | -help           to print this help message
-    -J&lt;flag&gt;             to pass &lt;flag&gt; directly to the runtime system
-</code></pre><p>通过help提示可以看出基本的命令格式有三种</p>
-<ul>
-<li>jmap [option] <pid> : 用于连接一个正在运行的进程</pid></li>
-<li>jmap [option] <executable <core=""> : 用于连接一个正在运行的进程</executable></li>
-<li>jmap [option] [server_id@]<remote server="" ip="" or="" hostname=""> : 用于连接一个远程server</remote></li>
-</ul>
-<pre><code>[option]参数：
-
-- core : 将被打印信息的core dump文件
-- remote-hostname-or-IP : 远程debug服务的主机名或ip
-- server-id : 唯一id，假如一台主机上多个远程debug服务
-
-- &lt;none&gt; : 和命令行使用pmap的效果一样
-- dump:[live,]format=b,file=&lt;filename&gt; : 使用hprof二进制形式，输出JVM的heap内容到文件。live子选项是可选的，假如指定live选项,那么只输出活的对象到文件。
-- finalizerinfo : 获取正等候回收的对象的信息
-- heap : 获取JVM的heap信息，GC使用的算法，heap的配置及wise heap的使用情况。
-- histo[:live] : 获取JVM每个class的实例数目，内存占用，类全名信息。JVM的内部类名字开头会加上前缀&quot;*&quot;。如果live子参数加上后,只统计活的对象数量。
-- permstat : 获取classload和JVM heap长久层的信息。包含每个classloader的名字，活泼性，地址，父classloader和加载的class数量。另外，内部String的数量和占用内存数也会打印出来。
-- F : 当pid没有响应-dump或者-histo时，可以使用-F强制输出heap信息。live子选项不被支持。
-</code></pre><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><pre><code># 先查询对应的进程的pid
-$ ps -ef | grep zookeeper
-root     13779 23226  0 14:52 pts/11   00:00:00 grep --color=auto zookeeper
-yunyu    22549  2482  0 12:46 pts/11   00:00:11 /usr/local/java/bin/java -Dzookeeper.log.dir=. -Dzookeeper.root.logger=INFO,CONSOLE -cp /usr/local/zookeeper/bin/../build/classes:/usr/local/zookeeper/bin/../build/lib/*.jar:/usr/local/zookeeper/bin/../lib/slf4j-log4j12-1.6.1.jar:/usr/local/zookeeper/bin/../lib/slf4j-api-1.6.1.jar:/usr/local/zookeeper/bin/../lib/netty-3.7.0.Final.jar:/usr/local/zookeeper/bin/../lib/log4j-1.2.16.jar:/usr/local/zookeeper/bin/../lib/jline-0.9.94.jar:/usr/local/zookeeper/bin/../zookeeper-3.4.8.jar:/usr/local/zookeeper/bin/../src/java/lib/*.jar:/usr/local/zookeeper/bin/../conf: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.local.only=false org.apache.zookeeper.server.quorum.QuorumPeerMain /usr/local/zookeeper/bin/../conf/zoo.cfg
-
-# 根据进程的pid获取JVM的heap信息
-$ jmap -heap 22549
-Attaching to process ID 22549, please wait...
-Debugger attached successfully.
-Server compiler detected.
-JVM version is 24.79-b02
-
-using thread-local object allocation.
-Parallel GC with 2 thread(s)
-
-Heap Configuration:
-   MinHeapFreeRatio = 0
-   MaxHeapFreeRatio = 100
-   MaxHeapSize      = 524288000 (500.0MB)
-   NewSize          = 1310720 (1.25MB)
-   MaxNewSize       = 17592186044415 MB
-   OldSize          = 5439488 (5.1875MB)
-   NewRatio         = 2
-   SurvivorRatio    = 8
-   PermSize         = 21757952 (20.75MB)
-   MaxPermSize      = 85983232 (82.0MB)
-   G1HeapRegionSize = 0 (0.0MB)
-
-Heap Usage:
-PS Young Generation
-Eden Space:
-   capacity = 8912896 (8.5MB)
-   used     = 838728 (0.7998733520507812MB)
-   free     = 8074168 (7.700126647949219MB)
-   9.410274730009192% used
-From Space:
-   capacity = 1048576 (1.0MB)
-   used     = 1032208 (0.9843902587890625MB)
-   free     = 16368 (0.0156097412109375MB)
-   98.43902587890625% used
-To Space:
-   capacity = 1048576 (1.0MB)
-   used     = 0 (0.0MB)
-   free     = 1048576 (1.0MB)
-   0.0% used
-PS Old Generation
-   capacity = 21495808 (20.5MB)
-   used     = 1814896 (1.7308197021484375MB)
-   free     = 19680912 (18.769180297851562MB)
-   8.44302293730945% used
-PS Perm Generation
-   capacity = 22020096 (21.0MB)
-   used     = 9014328 (8.596733093261719MB)
-   free     = 13005768 (12.403266906738281MB)
-   40.93682425362723% used
-
-2705 interned Strings occupying 217112 bytes.
-
-# 根据进程的pid获取JVM每个class的实例数目，内存占用，类全名信息。JVM的内部类名字开头会加上前缀&quot;*&quot;。如果live子参数加上后,只统计活的对象数量。
-$ jmap -histo 22549
-$ jmap -histo:live 22549
-...
- 231:             3            144  java.lang.ThreadGroup
- 232:             6            144  java.util.ArrayDeque
- 233:             3            144  org.apache.zookeeper.server.quorum.QuorumPeer$QuorumServer
- 234:             6            144  sun.misc.PerfCounter
- 235:             9            144  sun.reflect.DelegatingMethodAccessorImpl
- 236:             1            144  org.apache.zookeeper.server.SyncRequestProcessor
- 237:             3            144  java.net.SocketInputStream
- 238:             6            144  java.lang.Thread$State
- 239:             1            136  org.apache.zookeeper.server.quorum.QuorumCnxManager$RecvWorker
- 240:             1            136  org.apache.zookeeper.server.quorum.CommitProcessor
- 241:             1            136  org.apache.zookeeper.server.quorum.QuorumCnxManager$SendWorker
- 242:             4            128  com.sun.jmx.mbeanserver.DefaultMXBeanMappingFactory$ArrayMapping
- 243:             8            128  java.net.InetSocketAddress
- 244:             4            128  java.lang.StringCoding$StringEncoder
- ...
-
-# 获取正等候回收的对象的信息
-$ jmap -finalizerinfo 22549
-Attaching to process ID 22549, please wait...
-Debugger attached successfully.
-Server compiler detected.
-JVM version is 24.79-b02
-Number of objects pending for finalization: 0
-
-# 获取classload和JVM heap长久层的信息。包含每个classloader的名字，活泼性，地址，父classloader和加载的class数量。
-$ jmap -permstat 22549
-Attaching to process ID 22549, please wait...
-Debugger attached successfully.
-Server compiler detected.
-JVM version is 24.79-b02
-finding class loader instances ..done.
-computing per loader stat ..done.
-please wait.. computing liveness............................................liveness analysis may be inaccurate ...
-class_loader    classes    bytes    parent_loader    alive?    type
-
-&lt;bootstrap&gt;    1282    7414688      null      live    &lt;internal&gt;
-0x00000000e0c0c9e8    1    1888      null      dead    sun/reflect/DelegatingClassLoader@0x00000000dba50b58
-0x00000000e0c06318    4    13776      null      dead    javax/management/remote/rmi/NoCallStackClassLoader@0x00000000dbf4e690
-0x00000000e0c0c9a8    1    1888      null      dead    sun/reflect/DelegatingClassLoader@0x00000000dba50b58
-0x00000000e0c07108    2    32144      null      dead    javax/management/remote/rmi/NoCallStackClassLoader@0x00000000dbf4e690
-0x00000000e0c76250    0    0      null      live    sun/misc/Launcher$ExtClassLoader@0x00000000dbbc0a48
-0x00000000e0c1b828    0    0    0x00000000e0c76200    dead    java/util/ResourceBundle$RBClassLoader@0x00000000dc0db230
-0x00000000e0c0c968    1    1888      null      dead    sun/reflect/DelegatingClassLoader@0x00000000dba50b58
-0x00000000e0c0ca28    1    1888      null      dead    sun/reflect/DelegatingClassLoader@0x00000000dba50b58
-0x00000000e0c0c928    1    3056      null      dead    sun/reflect/DelegatingClassLoader@0x00000000dba50b58
-0x00000000e0c76200    420    2789672    0x00000000e0c76250    live    sun/misc/Launcher$AppClassLoader@0x00000000dbc1b290
-
-total = 11    1713    10260888        N/A        alive=3, dead=8        N/A
-
-# 输出JVM的heap内容到文件。
-$ jmap -dump:live,format=b,file=heap.bin 22549
-Dumping heap to /data/logstash-indexer-2.3.4/heap.bin ...
-Heap dump file created
-</code></pre><h3 id="遇到问题和解决方法"><a href="#遇到问题和解决方法" class="headerlink" title="遇到问题和解决方法"></a>遇到问题和解决方法</h3><ul>
-<li>Can’t attach to the process问题</li>
-</ul>
-<p>需要使用root用户来执行jmap命令，否则就必须使用对应启动JVM的用户来执行jmap命令</p>
-<p>注意：使用root用户时需要设置Java相关环境变量</p>
-<pre><code>$ jmap -heap 22549
-Attaching to process ID 22549, please wait...
-Error attaching to process: sun.jvm.hotspot.debugger.DebuggerException: Can&apos;t attach to the process
-</code></pre><ul>
-<li>Unable to open socket file: target process not responding or HotSpot VM not loaded</li>
-</ul>
-<p>具体原因是：</p>
-<p>jdk16<em>21/24开始，JVM启动时产生进程号的临时文件目录优先使用-Djava.io.tmpdir指定的目录，没有指定-Djava.io.tmpdir参数才使用/tmp/hsperfdata</em>$USER。这里我并没有设置-Djava.io.tmpdir指定的目录，查看/tmp/hsperfdata_$USER目录下的文件，发现zookeeper的进程号22549的pid文件在/tmp/hsperfdata_yunyu目录下，我这里使用root用户执行jmap命令，所以读取不到pid信息才报错。</p>
-<p>我这里zookeeper使用的是yunyu用户启动的，所以这里不能使用root用户执行jmap命令，否则就会报下面的错误，需要切换到启动zookeeper的yunyu用户来执行jmap命令。</p>
-<pre><code>$ ll /tmp/hsperfdata_*
-/tmp/hsperfdata_root:
-total 8
-drwxr-xr-x  2 root root 4096 Feb  9 15:29 ./
-drwxrwxrwt 12 root root 4096 Feb  9 15:44 ../
-
-/tmp/hsperfdata_yunyu:
-total 40
-drwxr-xr-x  2 yunyu yunyu  4096 Feb  9 15:25 ./
-drwxrwxrwt 12 root  root   4096 Feb  9 15:44 ../
--rw-------  1 yunyu yunyu 32768 Feb  9 15:44 22549
-
-$ jmap -histo 22549
-22549: Unable to open socket file: target process not responding or HotSpot VM not loaded
-The -F option can be used when the target process is not responding
-</code></pre><p>参考文章：</p>
-<ul>
-<li><a href="http://blog.csdn.net/fenglibing/article/details/6411953" target="_blank" rel="external">http://blog.csdn.net/fenglibing/article/details/6411953</a></li>
-<li><a href="http://stackoverflow.com/questions/2913948/jmap-cant-connect-to-make-a-dump" target="_blank" rel="external">http://stackoverflow.com/questions/2913948/jmap-cant-connect-to-make-a-dump</a></li>
-<li><a href="http://windows9834.blog.163.com/blog/static/273450042012919101435608/" target="_blank" rel="external">http://windows9834.blog.163.com/blog/static/273450042012919101435608/</a></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Docker/Docker实战（三十）Dockerfile最佳实践总结" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1437,6 +1190,635 @@ The -F option can be used when the target process is not responding
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Search/">Search</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-JVM/JVM常用命令学习（二）jstat的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/09/JVM/JVM常用命令学习（二）jstat的使用/" class="article-date">
+  	<time datetime="2017-02-09T15:18:01.000Z" itemprop="datePublished">2017-02-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/09/JVM/JVM常用命令学习（二）jstat的使用/">JVM常用命令学习（二）jstat的使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Java环境说明"><a href="#Java环境说明" class="headerlink" title="Java环境说明"></a>Java环境说明</h3><p>注意：不同版本的JDK可能略有差异</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ java -version</div><div class="line">java version &quot;1.7.0_79&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</div></pre></td></tr></table></figure>
+<h3 id="jstat命令"><a href="#jstat命令" class="headerlink" title="jstat命令"></a>jstat命令</h3><p>jstat(Java Virtual Machine Statistics Monitoring Tool)。jstat用于监控基于HotSpot的JVM，对其堆的使用情况进行实时的命令行的统计，使用jstat我们可以对指定的JVM做如下监控：</p>
+<ul>
+<li>类的加载及卸载情况</li>
+<li>查看新生代、老生代及持久代的容量及使用情况</li>
+<li>查看新生代、老生代及持久代的垃圾收集情况，包括垃圾回收的次数及垃圾回收所占用的时间</li>
+<li>查看新生代中Eden区及Survior区中容量及分配情况等</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ jstat -help</div><div class="line">Usage: jstat -help|-options</div><div class="line">       jstat -&lt;option&gt; [-t] [-h&lt;lines&gt;] &lt;vmid&gt; [&lt;interval&gt; [&lt;count&gt;]]</div><div class="line"></div><div class="line">Definitions:</div><div class="line">  &lt;option&gt;      An option reported by the -options option</div><div class="line">  &lt;vmid&gt;        Virtual Machine Identifier. A vmid takes the following form:</div><div class="line">                     &lt;lvmid&gt;[@&lt;hostname&gt;[:&lt;port&gt;]]</div><div class="line">                Where &lt;lvmid&gt; is the local vm identifier for the target</div><div class="line">                Java virtual machine, typically a process id; &lt;hostname&gt; is</div><div class="line">                the name of the host running the target Java virtual machine;</div><div class="line">                and &lt;port&gt; is the port number for the rmiregistry on the</div><div class="line">                target host. See the jvmstat documentation for a more complete</div><div class="line">                description of the Virtual Machine Identifier.</div><div class="line">  &lt;lines&gt;       Number of samples between header lines.</div><div class="line">  &lt;interval&gt;    Sampling interval. The following forms are allowed:</div><div class="line">                    &lt;n&gt;[&quot;ms&quot;|&quot;s&quot;]</div><div class="line">                Where &lt;n&gt; is an integer and the suffix specifies the units as </div><div class="line">                milliseconds(&quot;ms&quot;) or seconds(&quot;s&quot;). The default units are &quot;ms&quot;.</div><div class="line">  &lt;count&gt;       Number of samples to take before terminating.</div><div class="line">  -J&lt;flag&gt;      Pass &lt;flag&gt; directly to the runtime system.</div></pre></td></tr></table></figure>
+<p>通过help提示可以看出基本的命令格式</p>
+<ul>
+<li>jstat [option] : 根据jstat统计的维度不同，可以使用如下表中的选项进行不同维度的统计</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[option]参数：</div><div class="line"></div><div class="line">- class : 用于查看类加载情况的统计</div><div class="line">- compiler : 用于查看HotSpot中即时编译器编译情况的统计</div><div class="line">- gc : 用于查看JVM中堆的垃圾收集情况的统计</div><div class="line">- gccapacity : 用于查看新生代、老生代及持久代的存储容量情况</div><div class="line">- gccause : 用于查看垃圾收集的统计情况（这个和-gcutil选项一样），如果有发生垃圾收集，它还会显示最后一次及当前正在发生垃圾收集的原因。</div><div class="line">- gcnew : 用于查看新生代垃圾收集的情况</div><div class="line">- gcnewcapacity : 用于查看新生代的存储容量情况</div><div class="line">- gcold : 用于查看老生代及持久代发生GC的情况</div><div class="line">- gcoldcapacity : 用于查看老生代的容量</div><div class="line">- gcpermcapacity : 用于查看持久代的容量</div><div class="line">- gcutil : 用于查看新生代、老生代及持代垃圾收集的情况</div><div class="line">- printcompilation : HotSpot编译方法的统计</div><div class="line"></div><div class="line">- h n : 用于指定每隔几行就输出列头，如果不指定，默认是只在第一行出现列头。</div><div class="line">- J javaOption : 用于将给定的javaOption传给java应用程序加载器，例如，“-J-Xms48m”将把启动内存设置为48M。如果想查看可以传递哪些选项到应用程序加载器中</div><div class="line">- t n : 用于在输出内容的第一列显示时间戳，这个时间戳代表的时JVM开始启动到现在的时间（注：在IBM JDK5中是没有这个选项的）。</div><div class="line">- vmid : VM的进程号，即当前运行的java进程号。</div><div class="line"></div><div class="line">- interval : 间隔时间，单位可以是秒或者毫秒，通过指定s或ms确定，默认单位为毫秒。</div><div class="line">- count : 打印次数，如果缺省则打印无数次。</div></pre></td></tr></table></figure>
+<p>-class : 类加载情况的统计</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loaded</td>
+<td>加载了的类的数量</td>
+</tr>
+<tr>
+<td>Bytes</td>
+<td>加载了的类的大小，单为Kb</td>
+</tr>
+<tr>
+<td>Unloaded</td>
+<td>卸载了的类的数量</td>
+</tr>
+<tr>
+<td>Bytes</td>
+<td>卸载了的类的大小，单为Kb</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>花在类的加载及卸载的时间</td>
+</tr>
+</tbody>
+</table>
+<p>-compiler : HotSpot中即时编译器编译情况的统计</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compiled</td>
+<td>编译任务执行的次数</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>编译任务执行失败的次数</td>
+</tr>
+<tr>
+<td>Invalid</td>
+<td>编译任务非法执行的次数</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>执行编译花费的时间</td>
+</tr>
+<tr>
+<td>FailedType</td>
+<td>最后一次编译失败的编译类型</td>
+</tr>
+<tr>
+<td>FailedMethod</td>
+<td>最后一次编译失败的类名及方法名</td>
+</tr>
+</tbody>
+</table>
+<p>-gc : JVM中堆的垃圾收集情况的统计</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0C</td>
+<td>新生代中Survivor space中S0当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>S1C</td>
+<td>新生代中Survivor space中S1当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>S0U</td>
+<td>新生代中Survivor space中S0容量使用的大小（KB）</td>
+</tr>
+<tr>
+<td>S1U</td>
+<td>新生代中Survivor space中S1容量使用的大小（KB）</td>
+</tr>
+<tr>
+<td>EC</td>
+<td>Eden space当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>EU</td>
+<td>Eden space容量使用的大小（KB）</td>
+</tr>
+<tr>
+<td>OC</td>
+<td>Old space当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>OU</td>
+<td>Old space使用容量的大小（KB）</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>Permanent space当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>PU</td>
+<td>Permanent space使用容量的大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>YGCT</td>
+<td>从应用程序启动到采样时 Young GC 所用的时间(秒)</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时 Full GC 所用的时间(秒)</td>
+</tr>
+<tr>
+<td>GCT    T</td>
+<td>从应用程序启动到采样时用于垃圾回收的总时间(单位秒)，它的值等于YGC+FGC</td>
+</tr>
+</tbody>
+</table>
+<p>-gccapacity : 新生代、老生代及持久代的存储容量情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NGCMN</td>
+<td>新生代的最小容量大小（KB）</td>
+</tr>
+<tr>
+<td>NGCMX</td>
+<td>新生代的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>NGC</td>
+<td>当前新生代的容量大小（KB）</td>
+</tr>
+<tr>
+<td>S0C</td>
+<td>当前新生代中survivor space 0的容量大小（KB）</td>
+</tr>
+<tr>
+<td>S1C</td>
+<td>当前新生代中survivor space 1的容量大小（KB）</td>
+</tr>
+<tr>
+<td>EC</td>
+<td>Eden space当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>OGCMN</td>
+<td>老生代的最小容量大小（KB）</td>
+</tr>
+<tr>
+<td>OGCMX</td>
+<td>老生代的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>OGC</td>
+<td>当前老生代的容量大小（KB）</td>
+</tr>
+<tr>
+<td>OC</td>
+<td>当前老生代的空间容量大小（KB）</td>
+</tr>
+<tr>
+<td>PGCMN</td>
+<td>持久代的最小容量大小（KB）</td>
+</tr>
+<tr>
+<td>PGCMX</td>
+<td>持久代的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>PGC</td>
+<td>当前持久代的容量大小（KB）</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>当前持久代的空间容量大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+</tbody>
+</table>
+<p>-gccause : 用于查看垃圾收集的统计情况，包括最近发生垃圾的原因</p>
+<p>这个选项用于查看垃圾收集的统计情况（这个和-gcutil选项一样），如果有发生垃圾收集，它还会显示最后一次及当前正在发生垃圾收集的原因，它比-gcutil会多出最后一次垃圾收集原因以及当前正在发生的垃圾收集的原因。</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LGCC</td>
+<td>最后一次垃圾收集的原因，可能为“unknown GCCause”、“System.gc()”等</td>
+</tr>
+<tr>
+<td>GCC</td>
+<td>当前垃圾收集的原因</td>
+</tr>
+</tbody>
+</table>
+<p>-gcnew : 新生代垃圾收集的情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0C</td>
+<td>当前新生代中survivor space 0的容量大小（KB）</td>
+</tr>
+<tr>
+<td>S1C</td>
+<td>当前新生代中survivor space 1的容量大小（KB）</td>
+</tr>
+<tr>
+<td>S0U</td>
+<td>S0已经使用的大小（KB）</td>
+</tr>
+<tr>
+<td>S1U</td>
+<td>S1已经使用的大小（KB）</td>
+</tr>
+<tr>
+<td>TT</td>
+<td>Tenuring threshold，要了解这个参数，我们需要了解一点Java内存对象的结构，在Sun JVM中，（除了数组之外的）对象都有两个机器字（words）的头部。第一个字中包含这个对象的标示哈希码以及其他一些类似锁状态和等标识信息，第二个字中包含一个指向对象的类的引用，其中第二个字节就会被垃圾收集算法使用到。在新生代中做垃圾收集的时候，每次复制一个对象后，将增加这个对象的收集计数，当一个对象在新生代中被复制了一定次数后，该算法即判定该对象是长周期的对象，把他移动到老生代，这个阈值叫着tenuring threshold。这个阈值用于表示某个/些在执行批定次数youngGC后还活着的对象，即使此时新生的的Survior没有满，也同样被认为是长周期对象，将会被移到老生代中。</td>
+</tr>
+<tr>
+<td>MTT</td>
+<td>Maximum tenuring threshold，用于表示TT的最大值。</td>
+</tr>
+<tr>
+<td>DSS</td>
+<td>Desired survivor size (KB).可以参与这里：<a href="http://blog.csdn.net/yangjun2/article/details/6542357" target="_blank" rel="external">http://blog.csdn.net/yangjun2/article/details/6542357</a></td>
+</tr>
+<tr>
+<td>EC</td>
+<td>Eden space当前容量的大小（KB）</td>
+</tr>
+<tr>
+<td>EU</td>
+<td>Eden space已经使用的大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>YGCT</td>
+<td>从应用程序启动到采样时 Young GC 所用的时间(单位秒)</td>
+</tr>
+</tbody>
+</table>
+<p>-gcnewcapacity : 新生代的存储容量情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NGCMN</td>
+<td>新生代的最小容量大小（KB）</td>
+</tr>
+<tr>
+<td>NGCMX</td>
+<td>新生代的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>NGC</td>
+<td>当前新生代的容量大小（KB）</td>
+</tr>
+<tr>
+<td>S0CMX</td>
+<td>新生代中SO的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>S0C</td>
+<td>当前新生代中SO的容量大小（KB）</td>
+</tr>
+<tr>
+<td>S1CMX</td>
+<td>新生代中S1的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>S1C</td>
+<td>当前新生代中S1的容量大小（KB）</td>
+</tr>
+<tr>
+<td>ECMX</td>
+<td>新生代中Eden的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>EC</td>
+<td>当前新生代中Eden的容量大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+</tbody>
+</table>
+<p>-gcold : 老生代及持久代发生GC的情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC</td>
+<td>当前持久代容量的大小（KB）</td>
+</tr>
+<tr>
+<td>PU</td>
+<td>持久代使用容量的大小（KB）</td>
+</tr>
+<tr>
+<td>OC</td>
+<td>当前老年代容量的大小（KB）</td>
+</tr>
+<tr>
+<td>OU</td>
+<td>老年代使用容量的大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时 Full GC 所用的时间(单位秒)</td>
+</tr>
+<tr>
+<td>GCT</td>
+<td>从应用程序启动到采样时用于垃圾回收的总时间(单位秒)，它的值等于YGC+FGC</td>
+</tr>
+</tbody>
+</table>
+<p>-gcoldcapacity : 老生代的存储容量情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OGCMN</td>
+<td>老生代的最小容量大小（KB）</td>
+</tr>
+<tr>
+<td>OGCMX</td>
+<td>老生代的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>OGC</td>
+<td>当前老生代的容量大小（KB）</td>
+</tr>
+<tr>
+<td>OC</td>
+<td>当前新生代的空间容量大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时 Full GC 所用的时间(单位秒)</td>
+</tr>
+<tr>
+<td>GCT</td>
+<td>从应用程序启动到采样时用于垃圾回收的总时间(单位秒)，它的值等于YGC+FGC</td>
+</tr>
+</tbody>
+</table>
+<p>-gcpermcapacity : 持久代的存储容量情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PGCMN</td>
+<td>持久代的最小容量大小（KB）</td>
+</tr>
+<tr>
+<td>PGCMX</td>
+<td>持久代的最大容量大小（KB）</td>
+</tr>
+<tr>
+<td>PGC</td>
+<td>当前持久代的容量大小（KB）</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>当前持久代的空间容量大小（KB）</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时 Full GC 所用的时间(单位秒)</td>
+</tr>
+<tr>
+<td>GCT</td>
+<td>从应用程序启动到采样时用于垃圾回收的总时间(单位秒)，它的值等于YGC+FGC</td>
+</tr>
+</tbody>
+</table>
+<p>-gcutil : 新生代、老生代及持代垃圾收集的情况</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0</td>
+<td>Heap上的 Survivor space 0 区已使用空间的百分比</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>Heap上的 Survivor space 1 区已使用空间的百分比</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Heap上的 Eden space 区已使用空间的百分比</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Heap上的 Old space 区已使用空间的百分比</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Perm space 区已使用空间的百分比</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时发生 Young GC 的次数</td>
+</tr>
+<tr>
+<td>YGCT</td>
+<td>从应用程序启动到采样时 Young GC 所用的时间(单位秒)</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时发生 Full GC 的次数</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时 Full GC 所用的时间(单位秒)</td>
+</tr>
+<tr>
+<td>GCT</td>
+<td>从应用程序启动到采样时用于垃圾回收的总时间(单位秒)，它的值等于YGC+FGC</td>
+</tr>
+</tbody>
+</table>
+<p>-printcompilation : HotSpot编译方法的统计</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compiled</td>
+<td>编译任务执行的次数</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>方法的字节码所占的字节数</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>编译类型</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>指定确定被编译方法的类名及方法名，类名中使名“/”而不是“.”做为命名分隔符，方法名是被指定的类中的方法，这两个字段的格式是由HotSpot中的“-XX:+PrintComplation”选项确定的。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ jstat -gc 22549</div><div class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </div><div class="line">2560.0 512.0   0.0   384.0   8704.0   4758.8   11264.0     1326.3   21504.0 8845.8      7    0.014   2      0.061    0.075</div><div class="line"></div><div class="line">$ jstat -class 22549</div><div class="line">Loaded  Bytes  Unloaded  Bytes     Time   </div><div class="line">  1543  2945.3        3     4.9       0.30</div><div class="line">  </div><div class="line">$ jstat -compiler 22549</div><div class="line">Compiled Failed Invalid   Time   FailedType FailedMethod</div><div class="line">     235      0       0     0.70          0</div></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://blog.csdn.net/fenglibing/article/details/6411951" target="_blank" rel="external">http://blog.csdn.net/fenglibing/article/details/6411951</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Java/">Java</a>
 	</div>
 
 
